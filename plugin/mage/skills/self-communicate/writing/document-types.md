@@ -74,6 +74,11 @@ number of ideas across a long argument, chapter by chapter, without losing the t
 - **A conclusion that ties back to the thesis.** The last chapter returns to the named thesis and shows the
   book delivered on it — the arc closing where it opened, one level richer. A book that stops instead of
   concluding leaves the reader holding chapters they must synthesize themselves.
+- **Recur to compress, not to repeat.** The base rule "cut the recap" ([`voice.md`](voice.md) §"Engineering
+  textbook") is register-scoped: in a concept-dense book with named vocabulary, do not recap at the *same
+  level of abstraction*, but do recur to compress, connect, or advance. A chapter-ending synthesis that
+  folds a long argument into a few operational handles is productive compression, not padding — don't cut
+  it as a recap. A paragraph that restates the one above it is padding — do.
 - **Field notes are sources, not artifacts.** The author's raw field notes are where a fact comes from, not
   a thing the book discloses. Never gesture at the private artifact — "the field notes are blunt about
   this," "a caution the notes earned the hard way" — because the reader then has to take your word for a

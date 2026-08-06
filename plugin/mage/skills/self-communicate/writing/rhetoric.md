@@ -123,8 +123,10 @@ moves — and knowing which one you mean is how you stop defaulting to the same 
   landing pipeline.* · **Tastefully:** natural and compact when the association is shared. Obscure metonymy
   confuses a reader who lacks the reference — the interpretability rule bites here.
 - **Rhetorical question** · a question posed for effect, not an answer (often paired with hypophora). ·
-  *"What good is a gate that never fires?"* · **Tastefully:** sharpens a point. A cluster of them reads as
-  padding; convert most to plain assertions.
+  *"What good is a gate that never fires?"* · **Tastefully:** ask only a question whose answer changes the
+  reader's model of the argument. Do not convert an ordinary transition into a rhetorical question — on a
+  regular beat they read as padding, anticipating an objection every paragraph. When the answer leaves the
+  reader's understanding unchanged, make it a plain assertion.
 - **Direct address** · speak to the reader as "you". · *"You'll hit this the first time two agents share a
   worktree."* · **Tastefully:** warms the prose and matches the house voice. Keep it occasional — constant
   second-person turns instructional prose preachy.

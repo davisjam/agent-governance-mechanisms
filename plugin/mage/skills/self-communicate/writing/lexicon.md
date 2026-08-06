@@ -44,20 +44,24 @@ noted here.)
 
 ## The one disambiguation rule — "agent" vs "model"
 
-This is the single most load-bearing pair of terms in the catalogue, and every skill reasons in it. Reserve
-"model" for the map, never the coder.
+This is the most load-bearing cluster of terms in the catalogue, and every skill reasons in it. Three things
+tempt the word "model"; keep them apart. Use **`model`** alone for the represented map, **`foundation model`**
+for the trained reasoner, and **`agent`** for the acting coding system.
 
 | Term | What it means — the ONLY sanctioned sense | Never use it for |
 |---|---|---|
-| **the software agent** / **the agent** | the coding actor and its underlying LLM — the thing that reads a brief, reasons, edits files, commits. When you must name the LLM tier, say **the LLM**, **the agent's LLM**, or **the model tier / agent tier** (a qualified form) — never bare "model". | — |
-| **model** | RESERVED for the **MBSE / system / typed model** — the map/territory artifact, the **models-bridge**: the typed, queryable, drift-checked representation of the system the fleet reasons *through* and the codebase is governed / generated *from*. Compounds keep it in this sense: *model-driven*, *model-based*, *typed model*, *object model*, *world-model*, *visibility model*. | the coding actor / LLM |
+| **the software agent** / **the agent** | the acting coding system — the thing that reads a brief, reasons, edits files, commits. It is *driven by* a foundation model but is not itself "the model". | the represented map; the trained reasoner (say "foundation model") |
+| **foundation model** | the trained reasoner behind the agent — the LLM tier. Reach for the two-word term when the tier is the subject (Opus vs Sonnet, a cost/capability tradeoff); it names the reasoner without letting bare "model" drift to the coder. The qualified forms **the agent's LLM** and **the model tier / agent tier** are fine; bare "model" for it is not. | the represented map |
+| **model** | RESERVED for the **MBSE / system / typed model** — the map/territory artifact, the **models-bridge**: the typed, queryable, drift-checked representation of the system the fleet reasons *through* and the codebase is governed / generated *from*. Compounds keep it in this sense: *model-driven*, *model-based*, *typed model*, *object model*, *world-model*, *visibility model*. | the acting agent; the foundation model |
 
 **Why the rule exists.** The LLM behind the agent genuinely *is* a model in the ML sense, so "model" drifts
 toward the coding actor by reflex. But the catalogue's central abstraction — the **models-bridge** — claims
 the word "model" for the typed system-model. If "model" also means the coder, the catalogue's most important
 sentence ("the model the fleet reasons *through*") turns ambiguous. So the rule is strict: the actor is **the
-agent**; the map is **the model**. Where the LLM tier is genuinely the subject (Opus vs Sonnet), name it **the
-LLM** or **model tier** with the qualifier attached — the bare noun stays with the bridge.
+agent**, the map is **the model**, and the trained reasoner is **the foundation model** — the two-word term
+you reach for when the tier is genuinely the subject (Opus vs Sonnet). The bare noun "model" stays with the
+bridge; "foundation model", spelled in full, is the sanctioned name for the reasoner the book needs — the
+rule reserves the bare word, it does not ban the compound.
 
 ---
 

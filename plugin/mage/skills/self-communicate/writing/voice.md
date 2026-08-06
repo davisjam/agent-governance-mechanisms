@@ -113,9 +113,14 @@ the result; cut the warm-up and cut the recap.
 - **Cut the warm-up.** The keynote signals that a good part is coming before delivering it — "Here is the
   interesting part…", "It turns out…", "Now for the fun bit." The textbook just states the thing. Delete
   the throat-clearing and open on the result.
-- **Cut the recap.** The keynote restates its point after making it, for effect. The textbook trusts the
-  reader to have read the sentence. This is the self-commentary curl one level up — a whole restated
-  point, not just a trailing rating clause — and the fix is the same: keep the point, drop the echo.
+- **Do not recap at the same level of abstraction; recur only to compress, connect, or advance.** The
+  keynote restates its point after making it, for effect, and the textbook trusts the reader to have read
+  the sentence — so a paragraph that restates the one above it is padding, and gets cut. But not every
+  return to a point is a recap. Recurring to *compress* a long argument into operational handles, to
+  *connect* it to a later idea, or to *advance* it a step is productive; a chapter-ending synthesis that
+  turns a forty-page argument into five named commandments is compression, not padding. This is the
+  self-commentary curl one level up — keep the point, drop the echo — but do not delete a synthesis that
+  does new work.
 - **Definition first, motivation second.** Open with the result, the definition, the claim; let a
   sentence of motivation follow only where it earns its place. This is the principle behind the glossary's
   definition-first entries and the warm-up-deletion pass across the prose.
@@ -139,6 +144,10 @@ get conflated here; hold them apart.
 - **This is pacing, not word-cutting.** The gain is not a smaller word count. It is the language doing more
   work the further in the reader is. A first introduction earns two pages; the tenth invocation of the same
   term earns one dense sentence.
+- **The four scales, made operational.** Progressive density plays out at four scales, each with its own
+  rule for how much to repeat. Within a **page**: do not restate. Within a **chapter**: repeat only in
+  compressed or applied form. Across **Parts**: reuse the canonical NAME, not the full explanation. At the
+  **conclusion**: invoke the idea, do not re-teach it.
 
 The failure it catches: a late chapter that reopens a settled concept with a fresh from-first-principles
 meditation. State the dense invocation and move on. Trusting the reader to hold the concept is itself the
@@ -422,7 +431,10 @@ Two more transformations from the author's own edits, same conservative posture 
 
 7. **Figure captions carry implications/interpretation, not just description.** A caption that only says
    what the figure *shows* stops short; the author's captions also say what it *means* — the conclusion to
-   draw, the decision it drives, the fallback to take.
+   draw, the decision it drives, the fallback to take. Hold the division of labor: the **prose** motivates
+   and develops the idea, the **figure** spatializes it, and the **caption** tells the reader how to read
+   the spatial relation and what follows from it. A caption may stand alone, but it must not duplicate the
+   prose sentence-for-sentence.
    - *Before (caption):* "…A hard task goes to supervised autonomy, where you supply correctness conditions…"
      *(describes the branches, then stops.)*
    - *After (caption):* "…If you're not sure, try to one-shot it. But if the one-shot effort doesn't pan out,

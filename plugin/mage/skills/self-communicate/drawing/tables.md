@@ -65,7 +65,9 @@ and no `border-left`/`border-right` anywhere.)
 - **A caption sits above the table.** Unlike a figure caption (which sits below its picture), a table's caption
   sits **above** it — the reader reads the caption, then reads down into the table it introduces. The caption
   names what the table shows and any scope it carries (a sample size, a "preliminary" flag), in the same
-  ≤50-word economy the prose rule demands ([`../writing/voice.md`](../writing/voice.md) §"Economy").
+  ≤50-word economy the prose rule demands ([`../writing/voice.md`](../writing/voice.md) §"Economy"). Like a
+  figure caption, it tells the reader how to read the table and what follows from it; it must not restate the
+  prose that introduces it.
 
 ---
 
