@@ -71,7 +71,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 21
+            "occ": 23
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
@@ -367,7 +367,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 79
+            "occ": 81
           },
           {
             "file": "book/index.html",
@@ -893,7 +893,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 1
+            "occ": 2
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
@@ -901,7 +901,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/4.1-brownfield.html",
@@ -961,7 +961,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 58
+            "occ": 59
           },
           {
             "file": "book/list-of-figures.html",
@@ -2033,7 +2033,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 167
+            "occ": 169
           },
           {
             "file": "book/3.2-the-logical-view.html",
@@ -2041,7 +2041,7 @@
           },
           {
             "file": "book/3.3-the-process-view.html",
-            "occ": 28
+            "occ": 29
           },
           {
             "file": "book/3.4-the-development-view.html",
@@ -2053,7 +2053,7 @@
           },
           {
             "file": "book/3.6-the-scenarios-view.html",
-            "occ": 36
+            "occ": 37
           },
           {
             "file": "book/3.7-the-scope-of-modeling.html",
@@ -2313,7 +2313,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 251
+            "occ": 255
           },
           {
             "file": "book/index.html",
@@ -4303,7 +4303,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 16
+            "occ": 17
           },
           {
             "file": "book/3.2-the-logical-view.html",
@@ -4579,7 +4579,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 23
+            "occ": 24
           },
           {
             "file": "book/index.html",
