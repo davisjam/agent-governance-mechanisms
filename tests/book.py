@@ -714,13 +714,14 @@ def check_no_stray_comments() -> "tuple[str, list[str]]":
 
 
 def check_part_opener_traceability() -> "tuple[str, list[str]]":
-    """AUDIT-ONLY (rule-#55 landing): every claim a Part opener foreshadows must trace to the book's spine.
+    """BLOCKING (rule-#55 promotion): every claim a Part opener foreshadows must trace to the book's spine.
     Each `book/part<N>/00-part-intro.md` declares a `<!-- part-foreshadows: <spine-id>, … -->` decorator; for
     each id the loop must close — it resolves in the argument spine, at least one chapter WITHIN that Part
-    advances it, and it reconciles to at least one Big Idea. Seeds a handful of leg-(c) findings today
-    (opener premises like `abundant-implementation` / `grounded-in-one-case` that reconcile to no Big Idea),
-    so it lands audit-only; promotes to blocking once the loop closes for every declared id. The source lint
-    lives under `book-models/` (the `part-opener-traceability` lint)."""
+    advances it, and it reconciles to an ARGUMENT ANCHOR: a Big Idea OR a What-This-Book-Argues claim
+    (`argues_claims_declared.json`). Landed audit-only with five leg-(c) findings (opener premises like
+    `abundant-implementation` / `grounded-in-one-case` that reconcile to no Big Idea); those premises now
+    reconcile to their WTBA-claim id, so the loop closes for every declared id and this is promoted to
+    blocking. The source lint lives under `book-models/` (the `part-opener-traceability` lint)."""
     import sys as _sys  # noqa: E402 — local path bootstrap so the book-models lint module is importable
     bm = os.path.join(ROOT, "book-models")
     if bm not in _sys.path:

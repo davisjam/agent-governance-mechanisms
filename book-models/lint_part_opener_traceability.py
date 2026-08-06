@@ -13,9 +13,13 @@ THE CHECK — the loop must CLOSE for every declared id:
   (a) RESOLVES — the id is a real node in `argument_spine_declared.json` `spine[]`.
   (b) ADVANCED-IN-PART — at least one chapter WITHIN that same Part advances it (intersect the chapter's
       `spine_advances` from `chapter-shape.json` with the Part's chapter slugs, keyed by the `N.` prefix).
-  (c) TRACES-TO-A-BIG-IDEA — the spine node reconciles to at least one Big Idea via its
-      `reconciles.big_ideas` (each slug resolving in `landing-big-ideas.json`). There is no transitive
-      claim→big-idea path in the models, so this is the direct spine→big-idea join.
+  (c) TRACES-TO-AN-ARGUMENT-ANCHOR — the spine node reconciles to at least one of the book's headline
+      arguments: either a Big Idea via `reconciles.big_ideas` (each slug resolving in
+      `landing-big-ideas.json`), OR a "What This Book Argues" claim via `reconciles.argues_claims` (each
+      slug resolving in `argues_claims_declared.json`). A Part opener may foreshadow an argument PREMISE
+      that headlines the argument on the What-This-Book-Argues page but is not a landing Big Idea; that
+      premise still closes the loop by reconciling to its WTBA-claim id. There is no transitive
+      claim→anchor path in the models, so this is the direct spine→anchor join.
 
 A declared id that fails any leg is a finding, reported as `part<N>: <id> — <which leg failed>`. The lint
 reads the three models at lint-time (the stable-lint-reads-the-SSOT discipline); a spine or chapter-shape
@@ -23,8 +27,10 @@ edit re-derives the answer with no second copy to maintain. Stdlib-only, matchin
 clone-and-run posture.
 
 Run `python3 book-models/lint_part_opener_traceability.py` (audit-only, exit 0) or `--strict` (exit 1 on any
-finding). Lands audit-only while any opener foreshadows a spine premise not yet reconciled to a Big Idea;
-promotes to blocking once the loop closes for every declared id.
+finding). Landed audit-only while a few openers foreshadowed argument premises that reconciled to no
+anchor; those five (`abundant-implementation`, `sync-cost-reduced`, `mage-becomes-practical`,
+`grounded-in-one-case`) now reconcile to their What-This-Book-Argues claim, so the loop closes for every
+declared id and this lint is BLOCKING (0 findings).
 """
 from __future__ import annotations
 
@@ -80,6 +86,8 @@ def findings() -> "list[str]":
     spine_by_id = {n["id"]: n for n in spine_model["spine"]}
     big_ideas = _load("landing-big-ideas.json")
     big_idea_slugs = set(big_ideas.get("_order", []))
+    argues_claims = _load("argues_claims_declared.json")
+    argues_claim_slugs = set(argues_claims.get("_order", []))
 
     # spine id -> the set of Part numbers whose chapters advance it (from chapter-shape's spine_advances).
     shape = _load("chapter-shape.json")
@@ -100,9 +108,12 @@ def findings() -> "list[str]":
                 continue
             if part not in advanced_in_part.get(sid, set()):
                 out.append(f"part{part}: {sid} — (b) NOT-ADVANCED-IN-PART: no part-{part} chapter advances it")
-            bis = [b for b in node.get("reconciles", {}).get("big_ideas", []) if b in big_idea_slugs]
-            if not bis:
-                out.append(f"part{part}: {sid} — (c) NO-BIG-IDEA: spine node reconciles to no Big Idea")
+            reconciles = node.get("reconciles", {})
+            bis = [b for b in reconciles.get("big_ideas", []) if b in big_idea_slugs]
+            acs = [a for a in reconciles.get("argues_claims", []) if a in argues_claim_slugs]
+            if not bis and not acs:
+                out.append(f"part{part}: {sid} — (c) NO-ARGUMENT-ANCHOR: spine node reconciles to no Big "
+                           f"Idea and no What-This-Book-Argues claim")
     return out
 
 
@@ -111,9 +122,9 @@ def main(argv: "list[str]") -> int:
     fs = findings()
     mode = "STRICT (exit 1 on any finding)" if strict else "AUDIT-ONLY (prints, exits 0)"
     print(f"== part-opener-traceability — every foreshadowed spine id must resolve, be advanced in its Part, "
-          f"and trace to a Big Idea [{mode}] ==")
+          f"and trace to an argument anchor (Big Idea or What-This-Book-Argues claim) [{mode}] ==")
     if not fs:
-        print("  clean — every declared foreshadow id closes the loop (spine ✓ chapter ✓ big-idea ✓)")
+        print("  clean — every declared foreshadow id closes the loop (spine ✓ chapter ✓ anchor ✓)")
         return 0
     print(f"  {len(fs)} finding(s):")
     for f in fs:

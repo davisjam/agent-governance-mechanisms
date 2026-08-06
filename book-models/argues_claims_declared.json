@@ -1,0 +1,42 @@
+{
+  "_note": "\"What This Book Argues\" claims model — the SSOT for the six headline claims named on book/frontmatter/0.2-what-this-book-argues.md. These are the book's ARGUMENT (the six things the chapters set out to convince you of), distinct from claims_declared.json (which holds the 19 finer discussion-level claims the spine reconciles against) and from landing-big-ideas.json (the six Big Ideas rendered on the site landing). Kept as its own registry because several Part-opener foreshadows trace to an argument PREMISE that maps to no Big Idea — a premise headlines the argument here even when it is not a landing slot. Each key is a stable slug; `id` is the `argues-<slug>` node id; `order` mirrors the on-page 1-6 order; `statement` is the claim's bold headline plus its one-line gloss. Consumed by book-models/lint_part_opener_traceability.py: leg (c) of the traceability loop closes when a foreshadowed spine node reconciles to a Big Idea OR to one of these argument-claims (the ids appear as `reconciles.argues_claims` slugs in argument_spine_declared.json). No site projection — a pure lint-consumed registry, mirroring the brick-fitness.json genre.",
+  "_order": [
+    "cheap-code-costly-judgment",
+    "se-is-long-horizon-reasoning",
+    "models-help-reason",
+    "reliability-from-environment",
+    "every-failure-becomes-infrastructure",
+    "engineers-role-changes"
+  ],
+
+  "cheap-code-costly-judgment": {
+    "id": "argues-cheap-code-costly-judgment",
+    "order": 1,
+    "statement": "Cheap code, costly judgment. Coding agents have made writing code fast and cheap; once implementation stops being the bottleneck, the scarce and expensive work moves up a level — to judgment, architecture, validation, and governing what the agents produce."
+  },
+  "se-is-long-horizon-reasoning": {
+    "id": "argues-se-is-long-horizon-reasoning",
+    "order": 2,
+    "statement": "Large software engineering is a reasoning problem, not merely a coding problem. A big system eventually grows too complicated for anyone, person or AI, to keep entirely in mind at once; the hard part is holding coherent reasoning over the whole as it changes, and that becomes a principal limit on how large a system a team or fleet can build."
+  },
+  "models-help-reason": {
+    "id": "argues-models-help-reason",
+    "order": 3,
+    "statement": "Models are valuable because they help humans and AI reason about large systems. An explicit model lets people and agents reason about a system without holding all of its code in mind at once — not documentation pinned beside the code, but the thing you think through. The book calls this the Modeling Thesis."
+  },
+  "reliability-from-environment": {
+    "id": "argues-reliability-from-environment",
+    "order": 4,
+    "statement": "Reliability should come from the engineering environment, not from repeated human inspection. Software should be trustworthy because the environment itself — the constraints, sensors, validators, and gates — holds every change to the standard automatically. The book calls this the Alignment Thesis."
+  },
+  "every-failure-becomes-infrastructure": {
+    "id": "argues-every-failure-becomes-infrastructure",
+    "order": 5,
+    "statement": "Every recurring failure should become permanent engineering infrastructure. When a mistake reveals a recurring or consequential failure class, build something that makes the mistake impossible or catches it every time, so the lesson is captured in the environment once and never has to be learned again."
+  },
+  "engineers-role-changes": {
+    "id": "argues-engineers-role-changes",
+    "order": 6,
+    "statement": "The engineer's job changes. The engineer spends less time writing implementation and more time deciding the shape of the system, building the models everyone reasons through, checking that the work is right, and governing the fleet that produces it. Architecture, modeling, validation, and governance become the work."
+  }
+}

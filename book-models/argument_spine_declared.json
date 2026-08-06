@@ -6,7 +6,7 @@
       "order": 1,
       "statement": "Coding agents make implementation abundant, fast, and cheap — and individually unreliable.",
       "seeds": [1],
-      "reconciles": {"claims": [], "big_ideas": []},
+      "reconciles": {"claims": [], "big_ideas": [], "argues_claims": ["cheap-code-costly-judgment"]},
       "reviewed_hash": "36f4f3b40095",
       "quantifiable": true, "reality_claim": true, "measurand": "throughput and cost per change — velocity, per-document cost, refactor wall-clock"
     },
@@ -96,7 +96,7 @@
       "order": 11,
       "statement": "The sync economics changed. Agents sharply reduce the recurring labor of keeping models and implementation reconciled.",
       "seeds": [8],
-      "reconciles": {"claims": [], "big_ideas": []},
+      "reconciles": {"claims": [], "big_ideas": [], "argues_claims": ["models-help-reason"]},
       "reviewed_hash": "681d832a8c6d",
       "quantifiable": true, "reality_claim": true, "measurand": "recurring reconciliation labor keeping models and implementation consistent"
     },
@@ -105,7 +105,7 @@
       "order": 12,
       "statement": "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern.",
       "seeds": [9],
-      "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": []},
+      "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": [], "argues_claims": ["se-is-long-horizon-reasoning"]},
       "reviewed_hash": "09abeb08db9f",
       "quantifiable": false, "reality_claim": false
     },
@@ -123,7 +123,7 @@
       "order": 14,
       "statement": "The DocAble case grounds the method and motivates hypotheses for broader use — a single-case field report, never a proof.",
       "seeds": [10],
-      "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": []},
+      "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": [], "argues_claims": ["every-failure-becomes-infrastructure"]},
       "reviewed_hash": "d27760687c37",
       "quantifiable": false, "reality_claim": false
     }
