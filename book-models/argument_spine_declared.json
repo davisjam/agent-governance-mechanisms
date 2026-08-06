@@ -105,7 +105,7 @@
       "order": 12,
       "statement": "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern.",
       "seeds": [9],
-      "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": [], "argues_claims": ["se-is-long-horizon-reasoning"]},
+      "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": [], "argues_claims": ["models-help-reason"]},
       "reviewed_hash": "09abeb08db9f",
       "quantifiable": false, "reality_claim": false
     },
@@ -123,7 +123,7 @@
       "order": 14,
       "statement": "The DocAble case grounds the method and motivates hypotheses for broader use — a single-case field report, never a proof.",
       "seeds": [10],
-      "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": [], "argues_claims": ["every-failure-becomes-infrastructure"]},
+      "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": [], "argues_claims": []},
       "reviewed_hash": "d27760687c37",
       "quantifiable": false, "reality_claim": false
     }
