@@ -1,8 +1,15 @@
-An agent runs inside a stack of layers, and every layer is a place to steer. This Part builds
-the environment that does the steering. You will see why a structured model — not prose, not
-raw code — is the sweet spot for handing an agent intent, and why enforcing a property at the
-wrong level lets it slip through. From there the environment fills in: the things you can
-decide up front and the ones you learn only by building, the lifecycles and runbooks that give
-an agent its operating context, the metrics that let a loop sense whether it is working, and
-what to do when two controls demand incompatible things. By the end you hold a working
-vocabulary of constraints and sensors, and a graph that draws what lies between them.
+Part 1 argued that reliability should come from the environment rather than from repeatedly
+reading code. This Part builds that environment.
+
+Reliability is not one mechanism but a collection of them. Some obligations are known before
+the first line of code is written. Others surface only when a fast-moving agent makes a new
+mistake. This Part develops the environment that captures both: the policies you encode from
+the start, and the mechanisms that grow later, as governance conversion turns experience into
+infrastructure. Along the way you assemble a working vocabulary of constraints, sensors,
+validators, gates, runbooks, metrics, and control graphs. None of these is an isolated tool;
+each is a piece of one governed engineering environment. What you are building is not the
+software but the machinery that builds trustworthy software.
+
+By the end you will see that environment not as a collection of tools but as an engineered
+system in its own right, one that increasingly carries the judgment that would otherwise have
+stayed in people's heads.

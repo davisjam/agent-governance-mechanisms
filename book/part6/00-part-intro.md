@@ -1,8 +1,10 @@
-The case has been seen in depth; this Part lets it speak past itself. You will find a
-middle-range theory of the method — a dynamic model of how a fleet turns abundant
-implementation into durable progress or into churn, with the loops, constructs, and falsifiable
-predictions that make it a theory rather than a story. From there the wider implications for
-software engineering: how the work migrates from writing code to governing the environment that
-writes it, why models become the field's common language, and what that changes for how we
-measure, staff, and teach. It closes on the part that stays yours: the judgment no printer
-holds, and where to take the method next.
+Every book eventually reaches the same question: what should change because of everything that
+came before? This final Part asks that question of software engineering itself. If
+implementation has become abundant, what remains the scarce work? If coding agents can build
+almost anything we describe, what distinguishes engineering from programming? Drawing together
+the theory, the governed environment, the models, and the DocAble case study, these chapters
+argue that software engineering is not disappearing but changing shape. The engineer
+increasingly becomes the author of intent, the designer of environments, the builder of models,
+and the governor of systems that evolve faster than any individual can inspect. The book closes
+by asking what this means for research, education, organizations, and the next generation of
+engineering practice.
