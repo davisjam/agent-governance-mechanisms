@@ -457,23 +457,11 @@
       "location": "part4",
       "rationale": "the right-size-the-fix 2x2; caption interprets the cells"
     },
-    "the-skills::The self-operate skill, by layer": {
+    "the-skills::The three skills, by construction layer": {
       "tier": "C",
       "kind": "reference-structure",
       "location": "part4",
-      "rationale": "layer lookup"
-    },
-    "the-skills::The self-governance skill, by layer": {
-      "tier": "C",
-      "kind": "reference-structure",
-      "location": "part4",
-      "rationale": "layer lookup"
-    },
-    "the-skills::The self-communicate skill, by layer": {
-      "tier": "C",
-      "kind": "reference-structure",
-      "location": "part4",
-      "rationale": "layer lookup"
+      "rationale": "construction-layer matrix lookup"
     },
     "lessons-learned::Lessons learned, quotable": {
       "tier": "B",

@@ -14,8 +14,8 @@
     "universe": {
       "section_ids": 257,
       "concepts": 158,
-      "labels": 95,
-      "refs": 95,
+      "labels": 93,
+      "refs": 93,
       "chapters": 77,
       "parts": 8,
       "points": 549,
@@ -739,7 +739,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-49",
+          "element": "4.2-the-skills::block-55",
           "role": "paragraph-point"
         }
       ]
@@ -774,7 +774,7 @@
         }
       ]
     },
-    "point:a-mastery-skill-installs-judgment-not-a-tool-interface": {
+    "point:a-mastery-skill-packages-knowledge-and-a-decision-procedure": {
       "kind": "point",
       "dependents": [
         {
@@ -889,7 +889,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-42",
           "role": "paragraph-point"
         }
       ]
@@ -1429,7 +1429,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-34",
+          "element": "4.2-the-skills::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -1899,7 +1899,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-18",
+          "element": "4.2-the-skills::block-19",
           "role": "paragraph-point"
         }
       ]
@@ -2119,7 +2119,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-57",
+          "element": "4.2-the-skills::block-63",
           "role": "paragraph-point"
         }
       ]
@@ -3054,12 +3054,12 @@
         }
       ]
     },
-    "point:minted-rules-live-in-claude-md-mission-method-rules": {
+    "point:minted-rules-live-in-the-boot-context-mission-method-rules": {
       "kind": "point",
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-30",
+          "element": "4.2-the-skills::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -3849,7 +3849,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-24",
+          "element": "4.2-the-skills::block-25",
           "role": "paragraph-point"
         }
       ]
@@ -4019,7 +4019,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-44",
+          "element": "4.2-the-skills::block-50",
           "role": "paragraph-point"
         }
       ]
@@ -4384,7 +4384,7 @@
         }
       ]
     },
-    "point:the-book-ships-three-installable-claude-skills": {
+    "point:the-book-ships-three-skills-of-a-portable-kind": {
       "kind": "point",
       "dependents": [
         {
@@ -5289,7 +5289,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-27",
+          "element": "4.2-the-skills::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -5419,7 +5419,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-68",
+          "element": "4.2-the-skills::block-69",
           "role": "paragraph-point"
         }
       ]
@@ -9829,12 +9829,12 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-24",
+          "element": "4.2-the-skills::block-25",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-34",
+          "element": "4.2-the-skills::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10529,7 +10529,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-44",
+          "element": "4.2-the-skills::block-50",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10599,7 +10599,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-18",
+          "element": "4.2-the-skills::block-19",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10734,7 +10734,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-18",
+          "element": "4.2-the-skills::block-19",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11039,12 +11039,12 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-27",
+          "element": "4.2-the-skills::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-30",
+          "element": "4.2-the-skills::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11594,7 +11594,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-27",
+          "element": "4.2-the-skills::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11604,7 +11604,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-23",
+          "element": "4.2-the-skills::block-24",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11669,7 +11669,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-27",
+          "element": "4.2-the-skills::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12089,7 +12089,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-30",
+          "element": "4.2-the-skills::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12219,7 +12219,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-42",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12644,17 +12644,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-49",
+          "element": "4.2-the-skills::block-55",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-43",
+          "element": "4.2-the-skills::block-49",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-48",
+          "element": "4.2-the-skills::block-54",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13869,7 +13869,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-57",
+          "element": "4.2-the-skills::block-63",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13889,7 +13889,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-56",
+          "element": "4.2-the-skills::block-62",
           "role": "section-term[tier-1]"
         },
         {
@@ -14154,7 +14154,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-57",
+          "element": "4.2-the-skills::block-63",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14219,7 +14219,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-57",
+          "element": "4.2-the-skills::block-63",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14234,7 +14234,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-56",
+          "element": "4.2-the-skills::block-62",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14829,7 +14829,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-42",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15004,7 +15004,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-34",
+          "element": "4.2-the-skills::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15029,7 +15029,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-33",
+          "element": "4.2-the-skills::block-36",
           "role": "section-term[tier-1]"
         },
         {
@@ -15389,17 +15389,17 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-44",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "4.2-the-skills::block-5",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-43",
+          "element": "4.2-the-skills::block-50",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.2-the-skills::block-49",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15414,7 +15414,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-24",
+          "element": "4.2-the-skills::block-25",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15424,7 +15424,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-23",
+          "element": "4.2-the-skills::block-24",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15614,7 +15614,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-24",
+          "element": "4.2-the-skills::block-25",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15824,7 +15824,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-42",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -16339,7 +16339,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-68",
+          "element": "4.2-the-skills::block-69",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -16364,7 +16364,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-34",
+          "element": "4.2-the-skills::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16384,7 +16384,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-33",
+          "element": "4.2-the-skills::block-36",
           "role": "section-term[tier-1]"
         }
       ]
