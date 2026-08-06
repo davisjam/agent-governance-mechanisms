@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 31,
     "slugs_rendered": 24,
-    "total_sites": 1173,
+    "total_sites": 1174,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 836,
+      "book-web": 837,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -1379,7 +1379,7 @@
           },
           {
             "file": "book/7.2-colophon.html",
-            "occ": 9
+            "occ": 21
           },
           {
             "file": "book/appendices-front-door.html",
@@ -2129,7 +2129,7 @@
           },
           {
             "file": "book/7.2-colophon.html",
-            "occ": 29
+            "occ": 33
           },
           {
             "file": "book/appendices-front-door.html",
@@ -3979,7 +3979,7 @@
           },
           {
             "file": "book/7.2-colophon.html",
-            "occ": 3
+            "occ": 6
           },
           {
             "file": "book/appendices-front-door.html",
@@ -4944,6 +4944,10 @@
             "occ": 1
           },
           {
+            "file": "book/7.2-colophon.html",
+            "occ": 2
+          },
+          {
             "file": "book/appendix-a-context-management-stack.html",
             "occ": 2
           },
@@ -4975,7 +4979,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 24
+            "occ": 25
           }
         ]
       },
