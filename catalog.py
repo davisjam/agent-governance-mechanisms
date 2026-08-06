@@ -1070,16 +1070,20 @@ def cmd_validate(_args) -> int:
               f"run `python3 book-models/lint_appendix_b_note_word_cap.py` (does not gate)")
     # CAPTION LENGTH — every authored figure/table caption sized to its argumentative TIER (A anchor /
     # B supporting / C reference), read from book-models/figure-caption-tiers.json. HARD bands, NO noqa
-    # escape (author instruction); remedy is always to resize to the band. AUDIT-ONLY at landing (rule #55):
-    # the retired uniform ≤3/≤50 cap squeezed every caption short, so all A-tier captions are under their
-    # 60-120-word floor today — it PRINTS its finding count but does NOT increment n_issues. The Phase-3
-    # caption-rewrite wave drains the findings to 0, then a follow-up promotes it back to blocking. See
+    # escape (author instruction); remedy is always to resize to the band. BLOCKING: the Phase-3 caption-
+    # rewrite wave drained every off-band caption to 0 — all A-tier anchors rewritten up into their
+    # 60-120-word floor, terse data-table captions expanded to 2-4 sentences, over-ceiling captions trimmed —
+    # so an off-band caption now increments n_issues. This is the audit->drain->promote move (rule #55): it
+    # landed audit-only, a rewrite wave drained it, and this follow-up flips it blocking. See
     # book-models/lint_caption_length.py + book/_design/drafts/caption-tier-model-260806.md.
-    import lint_caption_length as lcl  # noqa: E402 — audit-only tier-aware caption-length sensor
+    import lint_caption_length as lcl  # noqa: E402 — blocking tier-aware caption-length lint
     off_band_caps = lcl.findings()
     if off_band_caps:
-        print(f"  [caption] AUDIT-ONLY: {lcl.summary_line(off_band_caps)} — "
-              f"run `python3 book-models/lint_caption_length.py` (does not gate)")
+        print(f"  [caption] {lcl.summary_line(off_band_caps)} — "
+              f"run `python3 book-models/lint_caption_length.py`:")
+        for f in off_band_caps:
+            print(f"          {f.file}: {f.kind} {f.ref} [{f.tier} {f.reason} {f.words}w {f.sentences}s]")
+        n_issues += len(off_band_caps)
     caption_orphans = lcl.orphan_rows()  # reverse join — a tier row no live directive uses (audit-only)
     if caption_orphans:
         print(f"  [caption] AUDIT-ONLY: {len(caption_orphans)} orphan caption-tier row(s) (declared tier, "

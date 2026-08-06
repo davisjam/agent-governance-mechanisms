@@ -40,9 +40,11 @@ Counting (after stripping markdown emphasis and reducing `[text](url)` links to 
 
     python3 book-models/lint_caption_length.py            # print findings, exit 1 if any
 
-LANDING: AUDIT-ONLY first (rule #55). The tree carried every caption at the retired <=3/<=50 cap, so all
-A-tier captions are under-length on day one. `catalog.py validate` invokes this as a NON-gating sensor; the
-Phase-3 caption-rewrite wave drains the findings to zero, then a follow-up promotes it to blocking. See
+LANDING: BLOCKING (rule #55 audit->drain->promote). This landed AUDIT-ONLY while the tree carried every
+caption at the retired <=3/<=50 cap; the Phase-3 caption-rewrite wave drained the off-band findings to zero
+(A-tier anchors rewritten up into their 60-120-word floor, terse data captions expanded, over-ceiling
+captions trimmed), and a follow-up flipped it blocking in `catalog.py validate`. The forward band check
+gates; the reverse-orphan guard remains audit-only (a stale row is drift, not a broken build). See
 book/_design/drafts/caption-tier-model-260806.md.
 """
 from __future__ import annotations
