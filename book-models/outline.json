@@ -7,7 +7,7 @@
     "derived_ids": 226,
     "missing_topic_sentence": 5,
     "sections_drained": 172,
-    "paragraph_points": 550
+    "paragraph_points": 549
   },
   "chapters": [
     {
@@ -3170,27 +3170,27 @@
           "heading_text": "Start with the model you already have",
           "topic_sentence": "Do not dismiss a drifted wiki as failed documentation.",
           "id_source": "derived",
-          "block_index": 13,
+          "block_index": 11,
           "points": [
             {
               "slug": "treat-a-drifted-wiki-as-an-immature-model",
               "text": "Treat a drifted wiki as an immature model.",
-              "block_index": 15
+              "block_index": 13
             },
             {
               "slug": "what-the-wiki-lacks-is-a-disciplined-join-to-the-territory",
               "text": "The wiki lacks a disciplined join to the territory.",
-              "block_index": 17
+              "block_index": 16
             },
             {
               "slug": "the-first-brownfield-move-is-to-connect-the-wiki-not-replace-it",
               "text": "First move: connect the wiki, don't replace it.",
-              "block_index": 19
+              "block_index": 18
             },
             {
               "slug": "a-round-trip-join-lets-an-audit-sort-every-gap-into-three-cases",
               "text": "Round-trip links let an audit sort every gap three ways.",
-              "block_index": 22
+              "block_index": 21
             }
           ]
         },
@@ -3200,17 +3200,17 @@
           "heading_text": "The minimum package",
           "topic_sentence": "Four small additions turn the wiki from optional documentation into the start of an engineering environment.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 25,
           "points": [
             {
               "slug": "four-small-additions-turn-the-wiki-into-an-engineering-environment",
               "text": "Four additions turn the wiki into an engineering environment.",
-              "block_index": 28
+              "block_index": 27
             },
             {
               "slug": "never-add-metadata-without-adding-consumers",
               "text": "Never add metadata without adding consumers.",
-              "block_index": 31
+              "block_index": 30
             }
           ]
         },
@@ -3220,32 +3220,32 @@
           "heading_text": "Audit, synchronize, govern, extend",
           "topic_sentence": "The migration runs in four stages.",
           "id_source": "derived",
-          "block_index": 33,
+          "block_index": 32,
           "points": [
             {
               "slug": "the-migration-runs-in-four-stages-each-a-useful-stopping-point",
               "text": "Four stages, each a useful stopping point.",
-              "block_index": 35
+              "block_index": 34
             },
             {
               "slug": "audit-builds-the-graph-and-stays-an-audit-not-a-gate",
               "text": "Audit builds the graph and stays advisory.",
-              "block_index": 37
+              "block_index": 36
             },
             {
               "slug": "synchronize-drains-drift-with-a-boy-scout-rule",
               "text": "Synchronize drains drift with a boy-scout rule.",
-              "block_index": 39
+              "block_index": 38
             },
             {
               "slug": "govern-promotes-the-wiki-from-optional-context-to-required-input",
               "text": "Govern promotes the wiki from optional context to required input.",
-              "block_index": 41
+              "block_index": 40
             },
             {
               "slug": "extend-adds-structured-fields-only-where-a-consumer-exists",
               "text": "Extend adds structured fields only where a consumer exists.",
-              "block_index": 43
+              "block_index": 42
             }
           ]
         },
@@ -3255,27 +3255,27 @@
           "heading_text": "The starting point and the destinations",
           "topic_sentence": "Name the starting point and both destinations before you move.",
           "id_source": "derived",
-          "block_index": 45,
+          "block_index": 44,
           "points": [
             {
               "slug": "name-the-starting-point-and-both-destinations-before-moving",
               "text": "Name the starting point and both destinations before moving.",
-              "block_index": 47
+              "block_index": 46
             },
             {
               "slug": "the-first-destination-is-a-trusted-linked-map",
               "text": "The first destination is a trusted, linked map.",
-              "block_index": 50
+              "block_index": 49
             },
             {
               "slug": "the-far-destination-is-models-code-and-a-traceable-quality-case",
               "text": "The far destination: models, matching code, a traceable quality case.",
-              "block_index": 52
+              "block_index": 51
             },
             {
               "slug": "the-wiki-path-gives-the-three-approaches-somewhere-to-meet",
               "text": "The wiki path gives the three approaches somewhere to meet.",
-              "block_index": 56
+              "block_index": 55
             }
           ]
         },
@@ -3285,17 +3285,17 @@
           "heading_text": "Approach one: top-down, from a whiteboard",
           "topic_sentence": "Start coarse and refine.",
           "id_source": "derived",
-          "block_index": 60,
+          "block_index": 59,
           "points": [
             {
               "slug": "top-down-starts-coarse-and-refines-to-diminishing-returns",
               "text": "Top-down starts coarse, refines until diminishing returns.",
-              "block_index": 62
+              "block_index": 61
             },
             {
               "slug": "every-model-code-mismatch-means-one-of-three-things",
               "text": "Each model-code mismatch is refine, remodel, or bug.",
-              "block_index": 65
+              "block_index": 64
             }
           ]
         },
@@ -3345,9 +3345,9 @@
           ]
         },
         {
-          "section_id": "squash-zero-promote",
+          "section_id": "audit-drain-promote",
           "level": 3,
-          "heading_text": "Squash, zero, promote",
+          "heading_text": "Audit, Drain, Promote",
           "topic_sentence": "[ref:squash-zero-promote] draws how a lint is worn into a legacy tree without breaking any in-flight agent — the order is what keeps it safe.",
           "id_source": "derived",
           "block_index": 87,
@@ -3455,37 +3455,37 @@
           ]
         },
         {
-          "section_id": "how-i-know-this",
+          "section_id": "field-note-the-docable-retrofit-month",
           "level": 2,
-          "heading_text": "How I know this",
-          "topic_sentence": "I know this because I lived it.",
+          "heading_text": "Field note — the DocAble retrofit month",
+          "topic_sentence": "*What follows is one engineer's account of running this chapter's recipe on his own system — lived experience, not a controlled result.",
           "id_source": "derived",
           "block_index": 128,
           "points": [
             {
               "slug": "an-agent-told-to-type-python-made-everything-strings",
               "text": "An agent told to type Python used strings.",
-              "block_index": 130
+              "block_index": 131
             },
             {
               "slug": "structure-is-compression-300k-janky-became-200k-clean",
               "text": "Structure is compression: 300k janky became 200k clean.",
-              "block_index": 132
+              "block_index": 133
             },
             {
               "slug": "turn-on-every-commodity-lint-and-squash-to-zero-blocking",
               "text": "Turn on every commodity lint, squash to blocking.",
-              "block_index": 134
+              "block_index": 135
             },
             {
               "slug": "induce-a-typed-model-per-dense-primitive-region-iteratively",
               "text": "Induce a structured model per dense primitive region.",
-              "block_index": 136
+              "block_index": 137
             },
             {
               "slug": "the-retrofit-was-governance-conversion-at-brownfield-scale",
               "text": "The retrofit was governance conversion at brownfield scale.",
-              "block_index": 138
+              "block_index": 139
             }
           ]
         }
@@ -3507,14 +3507,9 @@
           "block_index": 6
         },
         {
-          "slug": "high-velocity-and-its-risk-predate-agents",
-          "text": "High velocity and its risk predate coding agents.",
-          "block_index": 8
-        },
-        {
           "slug": "mage-rests-on-two-moves-modeling-and-alignment",
           "text": "MAGE rests on two moves: modeling, then alignment.",
-          "block_index": 10
+          "block_index": 8
         }
       ]
     },

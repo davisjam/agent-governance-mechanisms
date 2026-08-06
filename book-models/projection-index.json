@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 26,
-    "total_sites": 1179,
+    "total_sites": 1178,
     "by_projection": {
       "book-pdf": 25,
-      "book-web": 840,
+      "book-web": 839,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -119,7 +119,7 @@
           },
           {
             "file": "book/4.1-brownfield.html",
-            "occ": 29
+            "occ": 28
           },
           {
             "file": "book/4.2-the-skills.html",
@@ -805,7 +805,7 @@
           },
           {
             "file": "book/4.1-brownfield.html",
-            "occ": 3
+            "occ": 2
           },
           {
             "file": "book/4.6-generative-validation.html",
@@ -2059,7 +2059,7 @@
           },
           {
             "file": "book/4.1-brownfield.html",
-            "occ": 79
+            "occ": 91
           },
           {
             "file": "book/4.2-the-skills.html",
@@ -3264,10 +3264,6 @@
             "occ": 1
           },
           {
-            "file": "book/4.1-brownfield.html",
-            "occ": 1
-          },
-          {
             "file": "book/4.6-generative-validation.html",
             "occ": 2
           },
@@ -3303,7 +3299,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 22
+            "occ": 21
           }
         ]
       },
@@ -4389,7 +4385,7 @@
           },
           {
             "file": "book/4.1-brownfield.html",
-            "occ": 11
+            "occ": 14
           },
           {
             "file": "book/4.2-the-skills.html",
