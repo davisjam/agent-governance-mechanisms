@@ -826,12 +826,26 @@ def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str
         _apply_part_refs(_apply_metrics(path.read_text(encoding="utf-8"), metrics))))
     meta = {k: v for k, v in META_RE.findall(text)}
     body = META_RE.sub("", text).strip()
-    # Drop the leading H1 (# Chapter …) — we render it from metadata in the header.
+    # Drop the leading H1 (# Chapter …) — we render it from metadata in the header. Skip any leading blank
+    # lines AND HTML comments (a `<!-- noqa: book-visual … -->` / directive marker) first, so the title H1
+    # is consumed whether it sits at absolute position 0 (the common case) or after a leading metadata
+    # comment (the glossary / acknowledgments / scope / lessons / ada-context chapters). Every chapter
+    # carries exactly one H1 = its title (conformance sensor), so the first H1 found here is always it.
     lines = body.splitlines()
-    while lines and not lines[0].strip():
-        lines.pop(0)
-    if lines and lines[0].startswith("# "):
-        lines.pop(0)
+    idx = 0
+    while idx < len(lines):
+        stripped = lines[idx].strip()
+        if not stripped:
+            idx += 1
+            continue
+        if stripped.startswith("<!--"):
+            while idx < len(lines) and "-->" not in lines[idx]:
+                idx += 1  # consume a multi-line comment through its close
+            idx += 1
+            continue
+        break
+    if idx < len(lines) and lines[idx].startswith("# "):
+        del lines[idx]
     return {
         "slug": path.stem,
         "part": part,

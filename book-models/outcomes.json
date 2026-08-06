@@ -30,7 +30,7 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 259,
+    "sections_total": 257,
     "sections_primary_of_an_outcome": 41,
     "modules": 7,
     "lessons": 33
@@ -318,7 +318,6 @@
             "lesson": "4.5-lessons-learned",
             "own_outcomes": [],
             "section_outcomes": [
-              "lessons-learned::recognize-the-agent-shaped-failure-modes-and-the-d",
               "your-tests-must-survive-agent-shaped-failure-modes::recognize-the-agent-shaped-failure-modes-a-test-su",
               "vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system::distinguish-vibe-coding-from-engineering-program-as",
               "governance-is-a-spectrum-from-soft-to-hard::classify-a-mechanism-on-the-soft-to-hard-spectrum"
@@ -345,9 +344,7 @@
           {
             "lesson": "5.1-the-ada-context",
             "own_outcomes": [],
-            "section_outcomes": [
-              "the-ada-context::explain-why-document-accessibility-is-a-hard-hig"
-            ]
+            "section_outcomes": []
           },
           {
             "lesson": "5.2-the-timeline-and-the-work",

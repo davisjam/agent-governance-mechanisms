@@ -237,9 +237,20 @@ def structural_findings(model: "IdentityModel | None" = None) -> "list[str]":
 
 # ---- conformance sensor + dangling-label backstop (check) -------------------------------------------
 
+#: Chapter files EXEMPT from the H1 leg of the conformance sensor. `acknowledgments` (0.6) is a bare
+#: front-matter apparatus page — a single paragraph of thanks with no body sections. Its only heading IS
+#: its title; promoting that to an H1 gives it zero sections, at which point the outline model stops
+#: counting it as a chapter (a real structural regression, 37→36 outline chapters). It is heading-free by
+#: design, so the H1-arity leg is waived here; the chapter-title leg (title-derivation safety) still applies
+#: to all 40 files, and 0.6 carries its <!-- chapter-title: --> so title() stays safe. (Surfaced to the
+#: author as a frontmatter-H1 judgment call — package §3 "SCOPE DECISION".)
+_H1_EXEMPT_LABELS = frozenset({"acknowledgments"})
+
+
 def _conformance_findings(md_rel: str) -> "list[str]":
-    """Template-conformance for one chapter file: exactly one chapter-title comment + exactly one H1
-    (counted OUTSIDE fenced code blocks — a `# ` inside a ``` fence is a code comment, not a heading)."""
+    """Template-conformance for one chapter file: exactly one chapter-title comment + (unless the chapter is
+    an H1-exempt apparatus page) exactly one H1, counted OUTSIDE fenced code blocks — a `# ` inside a ```
+    fence is a code comment, not a heading."""
     path = os.path.join(_BOOK, md_rel)
     text = open(path, encoding="utf-8").read()
     out: "list[str]" = []
@@ -247,6 +258,11 @@ def _conformance_findings(md_rel: str) -> "list[str]":
     n_ct = len(_CT_RE.findall(text))
     if n_ct != 1:
         out.append(f"{md_rel}: expected exactly one <!-- chapter-title: --> comment, found {n_ct}")
+
+    label = os.path.basename(md_rel)[:-3]
+    label = re.sub(r"^\d+\.\d+-", "", label)
+    if label in _H1_EXEMPT_LABELS:
+        return out  # heading-free apparatus page — the H1-arity leg is waived (see _H1_EXEMPT_LABELS)
 
     in_fence = False
     n_h1 = 0
