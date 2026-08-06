@@ -13,6 +13,7 @@ family's `LICENSE`/`OFL.txt` travels with it below.
 
 | Family | Files | Weights/styles used | Source |
 |---|---|---|---|
+| Source Serif 4 | `SourceSerif4/SourceSerif4-{Regular,It,Semibold,SemiboldIt,Bold,BoldIt}.ttf` | The heading face (display token). Per-level: Part dividers **Bold** (700), chapter + section titles **Semibold** (600), `###` subheads **Regular Italic** (400 italic). Each of the three weights ships with its italic so a bold/semibold heading carrying an `#emph` kicker never falls back. All the base ("text") optical size. | [github.com/adobe-fonts/source-serif](https://github.com/adobe-fonts/source-serif), release `4.005R`, `Desktop/TTF/` — OFL 1.1 |
 | Fraunces | `Fraunces/Fraunces9pt-Bold.ttf`, `Fraunces/Fraunces9pt-BoldItalic.ttf` | Headings render at weight "bold" always (`#show heading: set text(weight: "bold")`); a heading's kicker lead adds italic on top of that inherited bold. No non-bold Fraunces use exists in the Typst path, so only these two ship. | [github.com/undercasetype/Fraunces](https://github.com/undercasetype/Fraunces), `fonts/ttf/` — OFL 1.1 |
 | Source Sans 3 | `SourceSans3/SourceSans3-Regular.ttf`, `SourceSans3/SourceSans3-Bold.ttf`, `SourceSans3/SourceSans3-It.ttf`, `SourceSans3/SourceSans3-BoldIt.ttf` | Document body default; `**bold**` → Bold, `*italic*` → Italic, a bold+italic run → BoldIt, table header row + cover/part-divider titles → Bold. | [github.com/adobe-fonts/source-sans](https://github.com/adobe-fonts/source-sans), `TTF/` (release branch) — OFL 1.1 |
 | IBM Plex Mono | `IBMPlexMono/IBMPlexMono-Regular.ttf` | Inline code / code blocks (`raw`). | [github.com/IBM/plex](https://github.com/IBM/plex), `packages/plex-mono/fonts/complete/ttf/` — OFL 1.1 |
@@ -38,3 +39,28 @@ the large-display range 72pt/144pt are drawn for.
 Source Sans 3 and IBM Plex Mono ship a single un-suffixed static family per style already (family name
 `"Source Sans 3"` / `"IBM Plex Mono"` exactly, confirmed the same way), so no reconciliation was needed
 for those two.
+
+## Family-name reconciliation (Source Serif 4)
+
+None needed — unlike Fraunces. Source Serif 4's static instances group under **one** Typst family. The
+RIBBI four (Regular / Italic / Bold / BoldItalic) carry `name` family (nameID 1) `"Source Serif 4"`
+outright; the Semibold pair carry family `"Source Serif 4 Semibold"` but ALSO a typographic-family
+(nameID 16) of `"Source Serif 4"` with a typographic-subfamily (nameID 17) of `"Semibold"` — which is the
+name Typst matches on. So `typst fonts --font-path book/fonts` reports the family as a single
+`"Source Serif 4"` exposing weights 400 / 600 / 700 in both upright and italic:
+
+```
+Source Serif 4
+  ├ SourceSerif4-Regular.ttf     Style: Normal, Weight: 400
+  ├ SourceSerif4-It.ttf          Style: Italic, Weight: 400
+  ├ SourceSerif4-Semibold.ttf    Style: Normal, Weight: 600
+  ├ SourceSerif4-SemiboldIt.ttf  Style: Italic, Weight: 600
+  ├ SourceSerif4-Bold.ttf        Style: Normal, Weight: 700
+  └ SourceSerif4-BoldIt.ttf      Style: Italic, Weight: 700
+```
+
+`design-tokens.json`'s `type.display.typst-stack` therefore names the family verbatim —
+`["Source Serif 4", "Charter", "New Computer Modern"]` — and the heading show-rules select the face by
+`weight:` ("bold" → 700, "semibold" → 600, "regular" → 400), so every per-level weight resolves to a
+bundled binary with no fallback. The base ("text") optical size was chosen (over Caption / Subhead /
+Display / SmText) because the emitter sets headings at ≈13–19pt — squarely the text optical range.
