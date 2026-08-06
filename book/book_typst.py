@@ -1007,7 +1007,12 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #show figure.where(kind: table): set block(breakable: true)
 // Booktabs table style (matches the HTML book's Tufte/booktabs tables): a heavy top rule, a light rule
 // under the header, a heavy bottom rule — NO vertical rules or cell boxes. Whitespace separates columns.
-#set table(stroke: none, inset: (x: 8pt, y: 5pt))
+// Table body sits ~0.8pt under the 11pt body (10.2pt ≈ 93%): tables read as compact structured reference
+// while the prose stays the star, and the tighter measure removes awkward mid-cell wraps. The vertical
+// inset (y: 6pt, up from 5pt) keeps the row stretch comfortable — the LaTeX `\arraystretch ~1.15` feel —
+// so denser type does not read as cramped.
+#set table(stroke: none, inset: (x: 8pt, y: 6pt))
+#show table.cell: set text(size: 10.2pt)
 #show table.cell.where(y: 0): set text(weight: "bold")
 #show raw.where(block: true): set block(fill: dt.code-bg, inset: 8pt, radius: 3pt, width: 100%)
 #show raw: set text(font: dt.font-mono)

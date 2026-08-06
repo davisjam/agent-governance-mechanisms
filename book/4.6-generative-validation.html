@@ -183,10 +183,13 @@ a { color: var(--accent); }
    rule under the header, a heavy bottom rule — and NO vertical rules or cell borders. Whitespace separates
    columns/rows; rules only group. No zebra striping (row padding does the separating). Numbers
    right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
-table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px;
+/* Table body sits ~91% of the 17px prose body (15.5px), matching the print edition's ~93% — tables read
+   as compact structured reference, the prose stays the star. Roomier rows (padding 0.7rem vertical,
+   line-height 1.5) keep the denser type from reading cramped (the print `rraystretch ~1.15` twin). */
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15.5px;
                     border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
-table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
-                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table th, table.book-table td { border: none; padding: 0.7rem 0.7rem;
+                                             text-align: left; vertical-align: top; line-height: 1.5; }
 table.book-table thead th { background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }
 table.book-table th.num, table.book-table td.num { text-align: right; }
