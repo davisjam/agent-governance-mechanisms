@@ -5,7 +5,7 @@
 
   "ration_rule": "Each declared idea gets ONE canonical slogan (scope invoke-by-name) at its best location. Later appearances are blunt referential invocations, not fresh polished formulations. A `used-once` line appears exactly once; a `commandment` may recur as a refrain. Density/clustering caps ration polished occurrences. A slogan and a metaphor elaborating the SAME idea do not compete — only two invoke-by-name slogans on one idea do.",
 
-  "ratified_counts": { "core": 8, "local": 12, "overlaps": 0, "slogans": 9, "commandments": 1, "used_once": 1 },
+  "ratified_counts": { "core": 9, "local": 11, "overlaps": 0, "slogans": 9, "commandments": 1, "used_once": 1 },
 
   "metaphors": [
     {
@@ -45,7 +45,7 @@
       "payoff": "The stock the positive dual of churn accrues; it earns returns while it stays fit, and depreciates when it does not.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "The vehicle for the compounding principle — attached to the STOCK (engineering capital), so flow (compounding) and stock stay coherent. Named on the glossary page (ground truth for core); pays off in Part 6 (the increasing-returns proposition + the Bureaucracy-vs-Engineering-capital section, where technical debt is set against engineering capital). Compound INTEREST, deliberately: it fixes the valence against the pre-existing opposite-sign term `compounding-failure-probability` (Part 4). No vehicle collision — no prior `capital`/`compound` span exists."
+      "notes": "The vehicle for the compounding principle — attached to the STOCK (engineering capital), so flow (compounding) and stock stay coherent. Named on the glossary page (ground truth for core); pays off in Part 6 (the Compounding-Governance proposition + the Bureaucracy-vs-Engineering-capital section, where technical debt is set against engineering capital). Compound INTEREST, deliberately: it fixes the valence against the pre-existing opposite-sign term `compounding-failure-probability` (Part 4). No vehicle collision — no prior `capital`/`compound` span exists."
     },
     {
       "kind": "metaphor",
@@ -156,7 +156,7 @@
       "payoff": "A goal-directed agent takes indirect steps toward a target.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "Pays off in the paragraph that defines the agent."
+      "notes": "Local (kept, NOT retired). The raven vignette was cut from the §2.1 web body (Part-2 revision); its payoff now lives in the agent DEFINITION aspect (definitions.json -> agent -> aspects[0], 'a raven dropping pebbles to raise the water it cannot otherwise reach') — def-model/PDF-homed and web-absent, not the chapter body. The image still teaches the agent definition via the def-box aspect and the PDF, so it stays a live local metaphor (no count change; local stays local). Elaborates definitions/agent; anchor `intelligence-devises-means-within-constraints` still resolves (M3 clean)."
     },
     {
       "kind": "metaphor",
@@ -283,16 +283,14 @@
       "kind": "metaphor",
       "name": "The model bridge",
       "slug": "model-bridge",
-      "recurrence": "local",
+      "recurrence": "core",
       "vehicle": "a bridge the agents reason across",
-      "elaborates": { "model": "claims", "id": "ssot-not-snapshot" },
+      "elaborates": { "model": "definitions", "id": "models-bridge" },
       "introduced_at": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
-      "pays_off_at": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
-      "stretch": "3.8-keeping-models-in-sync",
-      "payoff": "The models are the bridge the agents reason across — kept as one derived source, not a drifting snapshot.",
+      "payoff": "The governed channel the agents reason across between code and authored models — traceability edges plus drift checks, kept as one derived source, not a drifting snapshot.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "NEW (Part-3 revision, WORK-ORDERS Part A). The teaching handle for the models-bridge / model-code traceability concept (amendment #5's own worked example): canonical term `models-bridge`, teaching handle 'the model bridge'. Elaborates ssot-not-snapshot (one derived source kept equal, not a hand-updated snapshot) — kept OFF the overloaded modeling-thesis per the judge REVISE. Local to Part 3 (not glossary-registered core vocabulary); sole local in the 3.8 stretch, so no overlap. Distinct image from reasoning-horizon (no dup). Anchors empty until the Part-3 fix-wave marks the paragraph. Vehicle word 'model' echoes model-zoo across a different stretch (accepted audit-only vehicle-collision)."
+      "notes": "CORE (reclassified from local, 260806): the teaching handle for the models-bridge concept — model-code traceability + drift-checking, the governed channel between the code (territory) and the authored models (map). Elaborates definitions/models-bridge (the concept's formal def), the same concept-term target the core map-and-territory metaphor uses for definitions/model. Core by CROSS-PART PAYOFF SPAN (2.2 -> 3.8 -> 4.4 -> 6.2), not by 0.3-glossary registration — the engineers-seat 'medium confidence' core basis, an always-live cross-Part vocabulary: SEEDED at 2.2 (structured-model-layer figure, without the literal words), DEFINED at 3.8 (book_home + index-def), PAID OFF at 4.4 (the governed path from authored models into the agent's task context and checks). No pays_off_at (core never ends) and no stretch (overlap-exempt). ssot-not-snapshot is now ADJACENT — a property of the bridge (kept-derived), carried by its own slogan derived-defends-snapshotted-drifts, no longer co-elaborated by this metaphor. Distinct image from reasoning-horizon; vehicle word 'model' echoes model-zoo across a different stretch (accepted audit-only vehicle-collision)."
     }
   ],
 
@@ -444,7 +442,7 @@
       "competitors": [
         "a check that re-reads the code can't fall behind it; a stored copy can"
       ],
-      "notes": "NEW (Part-3 revision). A derived check re-reads the code and cannot fall behind it; a hand-updated snapshot is a second source that drifts. Elaborates ssot-not-snapshot; the model-bridge metaphor co-elaborates the same idea (a metaphor + a slogan do not compete — only two invoke-by-name slogans on one idea do). Anchor empty until the Part-3 fix-wave marks the canonical landing."
+      "notes": "NEW (Part-3 revision). A derived check re-reads the code and cannot fall behind it; a hand-updated snapshot is a second source that drifts. Sole elaborator of ssot-not-snapshot; the model-bridge core metaphor now elaborates the broader models-bridge concept (definitions/models-bridge), of which kept-derived is one property (a metaphor + a slogan do not compete — only two invoke-by-name slogans on one idea do). Anchor empty until the Part-3 fix-wave marks the canonical landing."
     },
     {
       "kind": "slogan",

@@ -50,8 +50,8 @@ _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/
 _DECLARED = os.path.join(_HERE, "metaphor-spans.json")
 
 #: The ratified split — encode the author's set so a silent add/reclassify reddens.
-EXPECT_CORE = 8
-EXPECT_LOCAL = 12
+EXPECT_CORE = 9
+EXPECT_LOCAL = 11
 EXPECT_OVERLAPS = 0
 #: The ratified slogan split (by scope): invoke-by-name canonicals / commandments / used-once lines.
 EXPECT_SLOGANS = 9
