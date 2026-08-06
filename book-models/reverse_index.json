@@ -6314,7 +6314,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.5-acknowledgments::acknowledgments",
+          "element": "0.6-acknowledgments::acknowledgments",
           "role": "section-anchor"
         }
       ]
@@ -6644,7 +6644,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.2-the-books-language::docable-specifics",
+          "element": "0.3-the-books-language::docable-specifics",
           "role": "section-anchor"
         }
       ]
@@ -6899,7 +6899,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.2-the-books-language::glossary",
+          "element": "0.3-the-books-language::glossary",
           "role": "section-anchor"
         }
       ]
@@ -6959,7 +6959,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.2-the-books-language::how-coding-agents-work-and-fail",
+          "element": "0.3-the-books-language::how-coding-agents-work-and-fail",
           "role": "section-anchor"
         }
       ]
@@ -7649,7 +7649,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.4-how-to-read-this-book::the-book-and-the-online-catalogue",
+          "element": "0.5-how-to-read-this-book::the-book-and-the-online-catalogue",
           "role": "section-anchor"
         }
       ]
@@ -7699,7 +7699,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.2-the-books-language::the-core-ideas",
+          "element": "0.3-the-books-language::the-core-ideas",
           "role": "section-anchor"
         }
       ]
@@ -7889,7 +7889,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.2-the-books-language::the-governed-engineering-environment",
+          "element": "0.3-the-books-language::the-governed-engineering-environment",
           "role": "section-anchor"
         }
       ]
@@ -7909,7 +7909,7 @@
         },
         {
           "view": "outline",
-          "element": "0.3-preface::the-grammar-patterns-and-two-theses",
+          "element": "0.4-preface::the-grammar-patterns-and-two-theses",
           "role": "section-anchor"
         }
       ]
@@ -8074,7 +8074,7 @@
         },
         {
           "view": "outline",
-          "element": "0.3-preface::the-lineage-the-modeling-tradition",
+          "element": "0.4-preface::the-lineage-the-modeling-tradition",
           "role": "section-anchor"
         }
       ]
@@ -8294,7 +8294,7 @@
         },
         {
           "view": "outline",
-          "element": "0.3-preface::the-premise-mechanize-discipline",
+          "element": "0.4-preface::the-premise-mechanize-discipline",
           "role": "section-anchor"
         }
       ]
@@ -8574,7 +8574,7 @@
         },
         {
           "view": "outline",
-          "element": "0.3-preface::the-through-line-and-who-it-is-for",
+          "element": "0.4-preface::the-through-line-and-who-it-is-for",
           "role": "section-anchor"
         }
       ]
@@ -8669,7 +8669,7 @@
         },
         {
           "view": "outline",
-          "element": "0.3-preface::three-ways-to-run-a-fleet",
+          "element": "0.4-preface::three-ways-to-run-a-fleet",
           "role": "section-anchor"
         }
       ]
@@ -8754,7 +8754,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.4-how-to-read-this-book::two-ways-to-read-this-book",
+          "element": "0.5-how-to-read-this-book::two-ways-to-read-this-book",
           "role": "section-anchor"
         }
       ]
@@ -8829,7 +8829,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.4-how-to-read-this-book::what-each-appendix-is-for",
+          "element": "0.5-how-to-read-this-book::what-each-appendix-is-for",
           "role": "section-anchor"
         }
       ]
@@ -9029,7 +9029,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.3-preface::where-this-book-sits-on-the-shelf",
+          "element": "0.4-preface::where-this-book-sits-on-the-shelf",
           "role": "section-anchor"
         }
       ]
@@ -9049,7 +9049,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.4-how-to-read-this-book::where-to-look",
+          "element": "0.5-how-to-read-this-book::where-to-look",
           "role": "section-anchor"
         }
       ]
@@ -9124,7 +9124,7 @@
         },
         {
           "view": "outline",
-          "element": "0.3-preface::why-build-a-system-to-study-a-method",
+          "element": "0.4-preface::why-build-a-system-to-study-a-method",
           "role": "section-anchor"
         }
       ]
@@ -9204,7 +9204,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "0.4-how-to-read-this-book::working-the-appendices-together",
+          "element": "0.5-how-to-read-this-book::working-the-appendices-together",
           "role": "section-anchor"
         }
       ]

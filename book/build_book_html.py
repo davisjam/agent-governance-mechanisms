@@ -7,7 +7,7 @@ the .html (re-run `python3 build_book_html.py` to regenerate). Stdlib-only.
 The book source is a Part/Chapter filesystem hierarchy — the directory tree encodes
 the ordering so PART.CHAPTER is explicit in the path:
 
-    book/frontmatter/0.3-preface.md            -> Front matter, order 0.3
+    book/frontmatter/0.4-preface.md            -> Front matter, order 0.4
     book/part1/1.1-the-ada-context.md          -> Part 1, Chapter 1
     book/part1/1.2-the-timeline-and-the-work.md-> Part 1, Chapter 2
     book/part2/2.1-the-printer.md              -> Part 2, Chapter 1
@@ -220,14 +220,14 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 # e.g. "The Printer"→printer-metaphor, "Skill"→skill-soft-control). A term absent here, or whose slug the book
 # never index-def-tagged, stays un-linked (no fabricated target). WEB-ONLY: `_link_glossary_sites` runs on the
 # rendered glossary HTML in `build()`, never on `body_md`, so the print/Typst projection is untouched.
-GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
+GLOSSARY_CHAPTER_SLUG = "0.3-the-books-language"
 # Apparatus one-pagers — pages that are a self-contained *reference apparatus* (not running prose), meant
 # to read as ONE bordered, offset item rather than bleeding visually from the preceding chapter. "How to
 # read this book" (its short prose + the whole-book map figure) is the founding member; the Operator's
 # Dashboard (its metric table, now Appendix D.1 — `appendix-d-operators-dashboard`) is the second. The
 # renderer frames these in a `.apparatus-page` box (HTML) / a `#block` frame (Typst) — see the CSS
 # `.apparatus-page` swap-point block and `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
-_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "appendix-d-operators-dashboard"}
+_APPARATUS_ONEPAGER_SLUGS = {"0.5-how-to-read-this-book", "appendix-d-operators-dashboard"}
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",
@@ -589,7 +589,7 @@ def iter_cite_keys(text: str) -> list[str]:
 
 def _cite_ns(slug: str) -> str:
     """A slug → a citation id namespace (`wc-<ns>-N`), sanitised to the `[a-z0-9-]` an HTML id / CSS
-    selector accepts (the chapter slug carries dots: `0.3-preface` → `0-3-preface`)."""
+    selector accepts (the chapter slug carries dots: `0.4-preface` → `0-4-preface`)."""
     return re.sub(r"[^a-z0-9]+", "-", slug.lower()).strip("-")
 
 

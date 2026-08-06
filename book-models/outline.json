@@ -11,7 +11,7 @@
   },
   "chapters": [
     {
-      "slug": "0.2-the-books-language",
+      "slug": "0.3-the-books-language",
       "part": 0,
       "sections": [
         {
@@ -63,7 +63,7 @@
       "preamble_points": []
     },
     {
-      "slug": "0.3-preface",
+      "slug": "0.4-preface",
       "part": 0,
       "sections": [
         {
@@ -133,7 +133,7 @@
       "preamble_points": []
     },
     {
-      "slug": "0.4-how-to-read-this-book",
+      "slug": "0.5-how-to-read-this-book",
       "part": 0,
       "sections": [
         {
@@ -185,7 +185,7 @@
       "preamble_points": []
     },
     {
-      "slug": "0.5-acknowledgments",
+      "slug": "0.6-acknowledgments",
       "part": 0,
       "sections": [
         {

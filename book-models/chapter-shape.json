@@ -53,7 +53,7 @@
   },
   "chapters": [
     {
-      "slug": "0.2-the-books-language",
+      "slug": "0.3-the-books-language",
       "opening": {
         "failure_question": "absent",
         "answer": "absent",
@@ -75,7 +75,7 @@
       "spine_advances": []
     },
     {
-      "slug": "0.3-preface",
+      "slug": "0.4-preface",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "slug": "0.5-acknowledgments",
+      "slug": "0.6-acknowledgments",
       "opening": {
         "failure_question": "absent",
         "answer": "absent",

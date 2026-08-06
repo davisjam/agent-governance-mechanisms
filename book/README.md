@@ -13,7 +13,7 @@ a Gang-of-Four appendix projected from the sibling catalogue entries.
 
 ```
 book/
-  frontmatter/0.1-the-mage-method-at-a-glance.md, 0.2-the-books-language.md, 0.3-preface.md, 0.4-how-to-read-this-book.md, 0.5-acknowledgments.md
+  frontmatter/0.1-the-mage-method-at-a-glance.md, 0.3-the-books-language.md, 0.4-preface.md, 0.5-how-to-read-this-book.md, 0.6-acknowledgments.md
   part1/  (Part 1 — The Context)
     1.1-the-ada-context.md
     1.2-the-timeline-and-the-work.md
