@@ -30,7 +30,7 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 269,
+    "sections_total": 265,
     "sections_primary_of_an_outcome": 41,
     "modules": 7,
     "lessons": 33
@@ -191,9 +191,9 @@
               "why-the-models-drifted-and-why-that-changes-now::explain-why-hand-maintained-models-rotted-and-wh",
               "the-apex-of-the-documentation-hierarchy-is-a-typed-model::explain-why-a-structured-model-at-the-apex-of-th",
               "a-drift-check-proves-agreement-not-correctness::explain-why-a-drift-check-proves-agreement-betwe",
-              "just-execute-the-model-a-short-history-of-case-and-mda::situate-the-modeling-choice-on-a-spectrum-from-n",
+              "execute-the-model-directly-a-spectrum-not-a-verdict::situate-the-modeling-choice-on-a-spectrum-from-n",
               "the-semantic-gap::define-the-semantic-gap-between-a-model-and-the",
-              "a-worked-example-the-context-fullness-bank-hook::apply-the-semantic-gap-fix-to-the-operator-s-o"
+              "a-second-worked-example-the-context-fullness-bank-hook::apply-the-semantic-gap-fix-to-the-operator-s-o"
             ]
           },
           {
@@ -992,9 +992,9 @@
       "gap_note": null
     },
     {
-      "outcome_id": "a-worked-example-the-context-fullness-bank-hook::apply-the-semantic-gap-fix-to-the-operator-s-o",
+      "outcome_id": "a-second-worked-example-the-context-fullness-bank-hook::apply-the-semantic-gap-fix-to-the-operator-s-o",
       "granularity": "section",
-      "primary_unit": "a-worked-example-the-context-fullness-bank-hook",
+      "primary_unit": "a-second-worked-example-the-context-fullness-bank-hook",
       "secondary_units": [
         "the-semantic-gap"
       ],
@@ -1003,7 +1003,7 @@
       "statement": "After this section, the reader can apply the semantic-gap fix to a second, operator-loop instance: a hook that fires on context-fullness and record-staleness together, and can name why even a roughly-right rung beats a hook that sits too late.",
       "bloom": "apply",
       "provenance": "derived",
-      "anchor": "point: compaction-is-a-lossy-guess-because-the-harness-sits-below-what-is-worth-keeping / the-fix-is-a-hook-at-the-operators-loop-checking-fullness-and-staleness-together / a-single-loose-condition-drives-into-the-ouroboros / this-example-has-no-clean-rung-so-a-roughly-right-hook-beats-both",
+      "anchor": "point: compaction-guesses-below-meaning-so-it-can-only-approximate / fire-the-bank-hook-on-fullness-and-staleness-together / with-no-clean-rung-a-roughly-right-hook-beats-the-perfect-one",
       "gap_note": null
     },
     {
@@ -1105,6 +1105,21 @@
       "gap_note": null
     },
     {
+      "outcome_id": "execute-the-model-directly-a-spectrum-not-a-verdict::situate-the-modeling-choice-on-a-spectrum-from-n",
+      "granularity": "section",
+      "primary_unit": "execute-the-model-directly-a-spectrum-not-a-verdict",
+      "secondary_units": [
+        "3.1-the-executable-zoo"
+      ],
+      "verb": "situate",
+      "obj": "the modeling choice on a spectrum from no modeling to an executable model, an economic call whose sweet spot agents move outward",
+      "statement": "After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the choice as an economic call whose sweet spot agents have moved outward.",
+      "bloom": "analyze",
+      "provenance": "derived",
+      "anchor": "point: executable-modeling-is-a-spectrum-agents-shift-the-optimum-outward",
+      "gap_note": null
+    },
+    {
       "outcome_id": "give-it-a-model-of-the-world::construct-a-model-of-the-world-for-an-agent-to-act",
       "granularity": "section",
       "primary_unit": "give-it-a-model-of-the-world",
@@ -1143,21 +1158,6 @@
       "bloom": "analyze",
       "provenance": "derived",
       "anchor": "Heading text: 'Governance is a spectrum from soft to hard'.",
-      "gap_note": null
-    },
-    {
-      "outcome_id": "just-execute-the-model-a-short-history-of-case-and-mda::situate-the-modeling-choice-on-a-spectrum-from-n",
-      "granularity": "section",
-      "primary_unit": "just-execute-the-model-a-short-history-of-case-and-mda",
-      "secondary_units": [
-        "3.1-the-executable-zoo"
-      ],
-      "verb": "situate",
-      "obj": "the modeling choice on a spectrum from no modeling to an executable model, using the forty-year history of CASE and MDA",
-      "statement": "After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the CASE/MDA history as an economic call whose sweet spot agents have moved outward.",
-      "bloom": "analyze",
-      "provenance": "derived",
-      "anchor": "point: executing-the-model-directly-is-a-forty-year-old-idea-whose-landing-marks-a-boundary / case-and-mda-were-the-named-dreams-of-round-trip-and-executable-models / executable-models-failed-on-tempo-not-tooling-and-settled-into-generating-key-parts / how-far-to-model-is-a-spectrum-trading-strength-for-changeability / the-books-stance-the-sweet-spot-on-the-spectrum-moved-outward-and-is-still-moving",
       "gap_note": null
     },
     {
@@ -1381,7 +1381,7 @@
       "granularity": "section",
       "primary_unit": "the-semantic-gap",
       "secondary_units": [
-        "a-worked-example-the-context-fullness-bank-hook"
+        "a-second-worked-example-the-context-fullness-bank-hook"
       ],
       "verb": "define",
       "obj": "the semantic gap between a model and the code it governs",

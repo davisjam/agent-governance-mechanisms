@@ -262,24 +262,24 @@
     },
     {
       "granularity": "section",
-      "primary_unit": "just-execute-the-model-a-short-history-of-case-and-mda",
+      "primary_unit": "execute-the-model-directly-a-spectrum-not-a-verdict",
       "verb": "situate",
-      "obj": "the modeling choice on a spectrum from no modeling to an executable model, using the forty-year history of CASE and MDA",
-      "statement": "After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the CASE/MDA history as an economic call whose sweet spot agents have moved outward.",
+      "obj": "the modeling choice on a spectrum from no modeling to an executable model, an economic call whose sweet spot agents move outward",
+      "statement": "After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the choice as an economic call whose sweet spot agents have moved outward.",
       "provenance": "derived",
-      "anchor": "point: executing-the-model-directly-is-a-forty-year-old-idea-whose-landing-marks-a-boundary / case-and-mda-were-the-named-dreams-of-round-trip-and-executable-models / executable-models-failed-on-tempo-not-tooling-and-settled-into-generating-key-parts / how-far-to-model-is-a-spectrum-trading-strength-for-changeability / the-books-stance-the-sweet-spot-on-the-spectrum-moved-outward-and-is-still-moving",
+      "anchor": "point: executable-modeling-is-a-spectrum-agents-shift-the-optimum-outward",
       "secondary_units": [
         "3.1-the-executable-zoo"
       ]
     },
     {
       "granularity": "section",
-      "primary_unit": "a-worked-example-the-context-fullness-bank-hook",
+      "primary_unit": "a-second-worked-example-the-context-fullness-bank-hook",
       "verb": "apply",
       "obj": "the semantic-gap fix to the operator's own loop — a bank-hook checking fullness and staleness together",
       "statement": "After this section, the reader can apply the semantic-gap fix to a second, operator-loop instance: a hook that fires on context-fullness and record-staleness together, and can name why even a roughly-right rung beats a hook that sits too late.",
       "provenance": "derived",
-      "anchor": "point: compaction-is-a-lossy-guess-because-the-harness-sits-below-what-is-worth-keeping / the-fix-is-a-hook-at-the-operators-loop-checking-fullness-and-staleness-together / a-single-loose-condition-drives-into-the-ouroboros / this-example-has-no-clean-rung-so-a-roughly-right-hook-beats-both",
+      "anchor": "point: compaction-guesses-below-meaning-so-it-can-only-approximate / fire-the-bank-hook-on-fullness-and-staleness-together / with-no-clean-rung-a-roughly-right-hook-beats-the-perfect-one",
       "secondary_units": [
         "the-semantic-gap"
       ]
@@ -625,7 +625,7 @@
       "provenance": "derived",
       "anchor": "point: enforce-at-the-wrong-level-and-the-property-slips-through / model-drift-at-the-commit-is-the-wrong-granularity / the-semantic-gap-is-enforcing-a-property-at-the-wrong-level-of-abstraction / enforce-at-the-level-where-the-property-is-legible-agent-return-for-model-drift",
       "secondary_units": [
-        "a-worked-example-the-context-fullness-bank-hook"
+        "a-second-worked-example-the-context-fullness-bank-hook"
       ]
     },
     {
