@@ -1,117 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: join-composite).
-     The four real panels of the scenarios join — Journey (M13), Selector (M6), Coverage (M5),
-     Scheduler (M7) — with only the join edges added between them: criticality derives
-     placement, placement joins to coverage, and the deploy Scheduler rations the resulting
-     test set per host. Palette: Umber Monograph tokens (fleet #2f5169 machinery,
-     accent #9a3f12 criticality + the per-host profile, governed #1f7a4d the plans). -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" width="1180" height="640"
+     REVISION (Part-3 §XII / FIG-3.6-1): ENLARGED vertically (this is the Part's flagship figure)
+     and SIMPLIFIED — the parenthetical model IDs (M13/M6/M5/M7) are dropped from the panel titles
+     (they move to the caption legend, stated once); the Scheduler is collapsed to ONE box that
+     emits the plan; and the three cross-panel JOIN edges are drawn as the heaviest strokes, since
+     the join is the figure's subject. The fan-out / serialize distinction is carried by SHAPE
+     (rounded pill vs square block) and label, never by colour alone. Palette: Umber Monograph
+     tokens (fleet #2f5169 machinery, accent #9a3f12 criticality, governed #1f7a4d the plan). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 720" width="1180" height="720"
      role="group" aria-labelledby="jcTitle jcDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="jcTitle">The scenarios join: journey to selector to coverage to scheduler</title>
-  <desc id="jcDesc">A major journey names an endpoint. The Selector derives that endpoint's
-    tests to the local-plus-staging tier (a minor one to staging only), and a coverage-floor
-    lint fails if a major endpoint has no local test. The coverage model joins to the same
-    endpoint node to check it is tested at all. The resulting test set flows to the deploy
-    Scheduler, which reads a per-host profile: when only a cost gate applies it fans the
-    tests out in parallel; when a cost gate and a scarce host combine it serializes them.</desc>
+  <title id="jcTitle">The four-model join: journey to selector to coverage to scheduler</title>
+  <desc id="jcDesc">Four panels compose on one shared key. The Journey panel names a goal with
+    criticality MAJOR, which calls an endpoint. A thick join edge carries that endpoint into the
+    Selector panel, whose “major?” test derives the test tier: a major endpoint runs local plus
+    staging, a minor one staging only, and a coverage-floor lint fails if a major endpoint has no
+    local test. A second thick join edge carries the same endpoint down into the Coverage panel,
+    whose “covered?” check joins on that node to ask whether it is tested at all. A third thick join
+    edge carries the resulting test set into the Scheduler, drawn as one box that reads a per-host
+    profile and emits the plan: a rounded pill for fan-out in parallel when only a cost gate applies,
+    a square block for serialize when a cost gate and a scarce host combine. Shape, not colour,
+    marks the two plan modes.</desc>
 
   <defs>
     <marker id="jc-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
-    <marker id="jc-ah-mut" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <!-- heavier arrowhead for the JOIN edges (the figure's subject) -->
+    <marker id="jc-join" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="jc-join-mut" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
     </marker>
   </defs>
 
-  <!-- ===== Journey (M13) ===== -->
-  <rect x="20" y="50" width="260" height="310" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
-  <text x="36" y="82" font-size="19" font-weight="700" fill="#1c1917">Journey (M13)</text>
+  <!-- ===== Journey ===== -->
+  <rect x="20" y="60" width="280" height="330" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+  <text x="36" y="94" font-size="22" font-weight="700" fill="#1c1917">Journey</text>
 
-  <rect x="45" y="100" width="210" height="92" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="150" y="136" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Journey: goal</text>
-  <text x="150" y="166" text-anchor="middle" font-size="18.88" font-weight="600" fill="#9a3f12">criticality: MAJOR</text>
+  <rect x="40" y="112" width="230" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="155" y="150" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Journey: goal</text>
+  <text x="155" y="184" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3f12">criticality: MAJOR</text>
 
-  <line x1="150" y1="196" x2="150" y2="246" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="172" y="226" font-size="18.88" font-style="italic" fill="#57534e">calls</text>
+  <line x1="155" y1="216" x2="155" y2="264" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <text x="178" y="246" font-size="18" font-style="italic" fill="#57534e">calls</text>
 
-  <polygon points="72,252 240,252 228,308 60,308" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
-  <text x="150" y="286" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">endpoint</text>
+  <polygon points="82,272 250,272 238,330 70,330" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="155" y="306" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">endpoint</text>
 
-  <!-- ===== Selector (M6) ===== -->
-  <rect x="320" y="50" width="380" height="450" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
-  <text x="336" y="82" font-size="19" font-weight="700" fill="#1c1917">Selector (M6)</text>
+  <!-- ===== Selector ===== -->
+  <rect x="310" y="60" width="400" height="470" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+  <text x="326" y="94" font-size="22" font-weight="700" fill="#1c1917">Selector</text>
 
-  <!-- endpoint feeds the derivation -->
-  <path d="M244,280 C320,250 370,210 424,178" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <!-- JOIN edge 1: endpoint -> selector (criticality derives the tier) -->
+  <path d="M252,300 C330,262 380,214 428,178" fill="none" stroke="#1c1917" stroke-width="4" marker-end="url(#jc-join)"/>
 
-  <polygon points="510,115 590,170 510,225 430,170" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="510" y="177" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">major?</text>
+  <polygon points="510,116 596,176 510,236 424,176" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="510" y="184" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">major?</text>
 
-  <path d="M496,222 C478,248 464,260 448,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="452" y="252" text-anchor="end" font-size="18.88" font-style="italic" fill="#57534e">yes</text>
-  <path d="M524,222 C560,250 580,260 618,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="600" y="252" font-size="18.88" font-style="italic" fill="#57534e">no</text>
+  <path d="M486,222 C466,246 452,258 442,272" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <text x="454" y="250" text-anchor="end" font-size="18" font-style="italic" fill="#57534e">yes</text>
+  <path d="M534,222 C566,248 588,258 616,272" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <text x="600" y="250" font-size="18" font-style="italic" fill="#57534e">no</text>
 
-  <rect x="350" y="280" width="190" height="62" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="445" y="318" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">local + staging</text>
+  <rect x="345" y="276" width="200" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="445" y="314" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">local + staging</text>
 
-  <rect x="552" y="280" width="150" height="62" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="627" y="318" text-anchor="middle" font-size="18.88" font-weight="700" fill="#1c1917">staging only</text>
+  <rect x="560" y="276" width="140" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="630" y="314" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">staging only</text>
 
-  <line x1="445" y1="346" x2="455" y2="392" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <line x1="445" y1="340" x2="455" y2="392" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
 
-  <!-- the coverage-floor lint (hexagon) -->
-  <polygon points="345,430 372,396 568,396 595,430 568,464 372,464"
+  <polygon points="355,432 382,398 578,398 605,432 578,466 382,466"
            fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="470" y="437" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Coverage-floor lint</text>
+  <text x="480" y="439" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Coverage-floor lint</text>
 
-  <!-- ===== Coverage (M5) ===== -->
-  <rect x="20" y="400" width="260" height="200" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
-  <text x="36" y="432" font-size="19" font-weight="700" fill="#1c1917">Coverage (M5)</text>
+  <!-- ===== Coverage ===== -->
+  <rect x="20" y="420" width="280" height="240" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+  <text x="36" y="454" font-size="22" font-weight="700" fill="#1c1917">Coverage</text>
 
   <g>
-    <path d="M 55,470 v 70 a 95,10 0 0 0 190,0 v -70" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
-    <ellipse cx="150" cy="470" rx="95" ry="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
-    <text x="150" y="515" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">covered?</text>
+    <path d="M 60,494 v 70 a 95,10 0 0 0 190,0 v -70" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <ellipse cx="155" cy="494" rx="95" ry="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <text x="155" y="540" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">covered?</text>
   </g>
 
-  <!-- the node join: same endpoint, checked for any test at all -->
-  <line x1="200" y1="310" x2="200" y2="452" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#jc-ah-mut)"/>
-  <text x="190" y="388" text-anchor="end" font-size="18.88" font-style="italic" fill="#57534e">node join</text>
+  <!-- JOIN edge 2: endpoint -> coverage (same node, checked for any test at all) -->
+  <line x1="200" y1="332" x2="200" y2="482" stroke="#57534e" stroke-width="4" stroke-dasharray="9 6" marker-end="url(#jc-join-mut)"/>
+  <text x="214" y="408" font-size="18" font-style="italic" fill="#57534e">node join</text>
 
   <!-- covered? feeds the floor lint -->
-  <path d="M247,505 C290,490 310,465 339,436" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <path d="M252,516 C300,498 322,468 352,438" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
 
-  <!-- ===== Scheduler (M7) ===== -->
-  <rect x="740" y="50" width="420" height="530" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
-  <text x="756" y="82" font-size="19" font-weight="700" fill="#1c1917">Scheduler (M7)</text>
+  <!-- ===== Scheduler (ONE box emits the plan) ===== -->
+  <rect x="730" y="60" width="430" height="470" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+  <text x="746" y="94" font-size="22" font-weight="700" fill="#1c1917">Scheduler</text>
 
-  <rect x="760" y="120" width="200" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="860" y="160" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">plan_for(host)</text>
+  <rect x="800" y="150" width="290" height="88" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="945" y="188" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">plan_for(host)</text>
+  <text x="945" y="216" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">reads the per-host profile</text>
 
-  <!-- both tiers feed the plan -->
-  <path d="M544,296 C640,254 700,192 754,162" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <path d="M706,310 C744,290 732,230 754,182" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <!-- JOIN edge 3: the resulting test set -> scheduler (both tiers feed the plan) -->
+  <path d="M547,300 C650,256 720,206 796,184" fill="none" stroke="#1c1917" stroke-width="4" marker-end="url(#jc-join)"/>
+  <path d="M702,300 C744,268 760,224 796,204" fill="none" stroke="#1c1917" stroke-width="4" marker-end="url(#jc-join)"/>
 
-  <!-- the per-host profile (cylinder) -->
-  <g>
-    <path d="M 935,230 v 80 a 105,11 0 0 0 210,0 v -80" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
-    <ellipse cx="1040" cy="230" rx="105" ry="11" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
-    <text x="1040" y="272" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">HostLoadProfile</text>
-    <text x="1040" y="298" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">ceiling · budget</text>
-  </g>
-  <path d="M1010,224 C980,205 950,198 924,188" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <!-- the plan's two modes: SHAPE encodes parallel (rounded) vs serialize (square) -->
+  <path d="M810,270 C800,300 806,320 850,352" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <text x="880" y="330" font-size="18" font-style="italic" fill="#57534e">cost gate only</text>
+  <rect x="770" y="356" width="320" height="60" rx="30" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="930" y="393" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">fan out — parallel</text>
 
-  <!-- the plan's two outcomes -->
-  <path d="M800,188 C780,260 790,320 848,376" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="880" y="368" font-size="18.88" font-style="italic" fill="#57534e">cost gate only</text>
-  <rect x="770" y="380" width="290" height="58" rx="29" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="915" y="417" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">fan out — parallel</text>
-
-  <path d="M780,188 C752,300 755,420 808,486" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="880" y="478" font-size="18.88" font-style="italic" fill="#57534e">cost gate + a scarce host</text>
-  <rect x="770" y="490" width="290" height="58" rx="29" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="915" y="527" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">serialize — fan / join</text>
+  <path d="M790,270 C762,330 764,410 812,462" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
+  <text x="880" y="448" font-size="18" font-style="italic" fill="#57534e">cost gate + a scarce host</text>
+  <rect x="770" y="466" width="320" height="60" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="930" y="503" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">serialize — fan / join</text>
 </svg>
