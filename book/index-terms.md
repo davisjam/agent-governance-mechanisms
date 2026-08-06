@@ -229,6 +229,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: model-from-code | Model-from-code
 - concept: model-to-code | Model-to-code
 - concept: traceability | Traceability
+- concept: models-bridge | The models-bridge
 - concept: derive-and-join | Derive and join
 - concept: join-key | The join key
 - concept: per-model-template | The per-model template
