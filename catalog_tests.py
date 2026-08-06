@@ -366,15 +366,20 @@ CHECKS = [
     Check("html: validity (html-validate)", 2, check_html_valid, needs_run=_html_changed),
     Check("html: axe-core accessibility", 2, check_axe, needs_run=_html_changed),
     Check("skill: claude plugin validate", 2, check_claude_validate, needs_run=_plugin_changed),
-    # BLOCKING: estimates whether a hand-authored figure's text overflows its box or the canvas. Promoted
-    # from audit-only after the figure backlog was driven to 0 (audit->lint; fix-then-flip). See tests/svg_fit.py.
-    Check("svg: text-fit (box/canvas overflow)", 1,
-          lambda strict: check_svg_text_fit()),
-    # BLOCKING: native-construct discipline — a <marker orient=auto> arrowhead not drawn in the +x
+    # AUDIT-ONLY: a crude average-glyph-ratio estimate (~0.55 em) that over-reads label width by ~30-50%
+    # (measured), so it over-flags. Box-overflow is owned by the accurate per-glyph gate (a model of the
+    # print renderer, ~0.8% error) wired into `catalog.py validate`; this crude pass is retained only as a
+    # low-harm pre-filter for the CANVAS-edge case that gate does not cover. audit_only matches the function's
+    # always-PASS behavior and prevents a "promote to blocking" edit from detonating its false positives.
+    Check("svg: text-fit pre-filter (canvas-edge; crude, superseded for box by the per-glyph gate)", 1,
+          lambda strict: check_svg_text_fit(), audit_only=True),
+    # AUDIT-ONLY: native-construct heuristic — a <marker orient=auto> arrowhead not drawn in the +x
     # convention (lands off-axis), a hand-stitched arrowhead outside a marker, or a <line> stroke running
-    # through a <text> glyph box. Promoted from audit-only after the backlog hit 0 (audit->lint; fix-then-flip).
+    # through a <text> glyph box. The function hard-returns PASS (never contributes to the fail count);
+    # audit_only matches that behavior and prevents a "promote to blocking" edit from detonating its
+    # false positives. See tests/svg_fit.py.
     Check("svg: drawing hygiene (marker +x / stitched arrowhead / stroke-through-glyph)", 1,
-          lambda strict: check_svg_drawing_hygiene()),
+          lambda strict: check_svg_drawing_hygiene(), audit_only=True),
     # BLOCKING: a mermaid edge-label pipe (`A -->|label| B`) carrying `[`, `]`, or `~>` breaks the parser
     # at render time with a cryptic message. Lands as a real gate check — the tree is at 0 findings.
     Check("book: mermaid edge-label footguns ([ ] / ~> inside |label|)", 1,

@@ -9,12 +9,15 @@ cheap average-glyph heuristic and flags the two priority cases:
   - **canvas overflow** — a `<text>` whose estimated horizontal extent runs past the `viewBox` width;
     the label likely spills the whole figure.
 
-**This is a HEURISTIC.** Rendered glyph width varies by font, kerning, and the actual glyph mix, so an
-average-ratio estimate (`len(text) * font-size * ~0.55`, `~0.6` bold) WILL produce false positives. So the
-check runs **AUDIT-ONLY**: it reports candidates and returns exit-neutral (never contributes to the suite's
-fail count). A follow-up promotes it to blocking once the ratio and padding are tuned against the real
-corpus. Label-over-arrow overlap is a known gap (precise geometry is hard); box + canvas overflow are the
-priority the author asked for.
+**This is a HEURISTIC, and a crude one.** Rendered glyph width varies by font, kerning, and glyph mix, so an
+average-ratio estimate (`len(text) * font-size * ~0.55`, `~0.6` bold) over-reads real width by ~30-50%
+(measured against the per-glyph model) and WILL produce false positives. It runs **AUDIT-ONLY**: it reports
+candidates and returns exit-neutral (never contributes to the fail count). It is NOT the box-overflow gate —
+box-overflow is owned by the accurate per-glyph sensor (`book-models/lint_figure_overflow.py`, a model of
+the print renderer at ~0.8% error, wired blocking into `catalog.py validate`). The flat ratio cannot be
+promoted to a real box gate: the true per-string ratio varies 0.36-0.43, so no single constant separates
+phantoms from genuine overruns. This pass is retained only as a low-harm pre-filter for the CANVAS-edge case
+the per-glyph gate does not cover. Label-over-arrow overlap is a known gap.
 
 When it flags a figure, the report points the reader at the fix runbook so an agent knows where to go.
 """
