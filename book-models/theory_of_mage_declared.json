@@ -116,7 +116,7 @@
   },
 
   "moderators": [
-    {"id": "capability-fit", "operates_on": "governance-pressure -> structural-diagnosis", "reading": "Fit between the work, agent capability, and the judgment a diagnosis needs. Below fit, pressure arrives but no diagnosis converts it — motion without direction."},
+    {"id": "diagnostic-capability-fit", "operates_on": "governance-pressure -> structural-diagnosis", "reading": "Fit between the work and the DIAGNOSTIC capability a structural reading needs — largely a human/organizational capacity to read a signal as structural, not the fleet's implementation capability (do not read it as the model/task fit of Part 4). Below fit, pressure arrives but no diagnosis converts it — motion without direction."},
     {"id": "authority", "operates_on": "structural-diagnosis -> governance-adaptation", "reading": "Ability or organizational path to modify shared architecture and controls. Need not live in one architect; the failure is a path that terminates in a local patch, leaving the class to recur."},
     {"id": "domain-governability", "operates_on": "governed-environment-quality -> outcomes", "reading": "Degree to which important properties can be represented and mechanically checked."},
     {"id": "control-estate-coherence", "operates_on": "apparatus -> governed-environment-quality", "reading": "Degree to which mechanisms compose without harmful interaction; the guard against a tower of governance."}
@@ -192,7 +192,7 @@
       "name": "Conversion conditions",
       "statement": "Structural failures convert into shared governance faster and more durably when the capability to diagnose structure and the authority to change the environment are colocated, or connected by a working organizational pathway.",
       "falsifier": "Split-authority or low-fit settings convert at the same rate and durability as high-fit, effective-authority ones.",
-      "moderated_by": ["capability-fit", "authority"],
+      "moderated_by": ["diagnostic-capability-fit", "authority"],
       "loops": ["L3-governance-adaptation"]
     }
   ],
