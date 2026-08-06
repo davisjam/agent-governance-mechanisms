@@ -151,12 +151,12 @@
       "provenance": "declared",
       "anchor": "6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours.",
       "secondary_units": [
-        "6.3-conclusion"
+        "conclusion"
       ]
     },
     {
       "granularity": "chapter",
-      "primary_unit": "1.1-the-printer",
+      "primary_unit": "the-printer",
       "verb": "judge",
       "obj": "when an open-ended task needs governance and who is accountable when an agent gets it wrong",
       "statement": "After this chapter, the reader can judge whether a task is open-ended enough to need the book's machinery, and reason about accountability when an agent produces a wrong result.",
@@ -165,7 +165,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "1.2-mage-by-example",
+      "primary_unit": "mage-by-example",
       "verb": "describe",
       "obj": "the system the book's claims are grounded in — what it does, how its six parts fit, why it was built — and the governance-conversion move on two real incidents",
       "statement": "After this chapter, the reader can describe the grounding case — what DocAble does, how its six parts fit together, and why it was built — and recognize the convert-a-failure-into-a-mechanism move in its first two incidents.",
@@ -174,7 +174,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "1.3-loops-and-models",
+      "primary_unit": "loops-and-models",
       "verb": "explain",
       "obj": "why an agent is a loop and why it needs a model of its world",
       "statement": "After this chapter, the reader can explain the agent as a fixed-shape loop and why giving it a model of the world is the first act of governance.",
@@ -183,7 +183,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "1.4-why-mage-follows-from-the-machine",
+      "primary_unit": "why-mage-follows-from-the-machine",
       "verb": "derive",
       "obj": "the two theses and the governed engineering environment from the substrate's properties — four of the foundation model, four of the harness",
       "statement": "After this chapter, the reader can derive the Modeling and Alignment theses from the properties of the foundation model and the agentic harness, and say why their combination requires the governed engineering environment.",
@@ -192,7 +192,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "2.1-the-agent-stack",
+      "primary_unit": "the-agent-stack",
       "verb": "identify",
       "obj": "the four layers of the agent stack as four places to steer",
       "statement": "After this chapter, the reader can identify the four layers of the agent stack and read each as a distinct place to insert a control.",
@@ -217,19 +217,19 @@
       "provenance": "derived",
       "anchor": "point: read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search / mechanisms-interact-and-the-interplay-is-its-own-problem",
       "secondary_units": [
-        "2.6-when-guardrails-collide"
+        "when-guardrails-collide"
       ]
     },
     {
       "granularity": "chapter",
-      "primary_unit": "2.2-models-and-the-semantic-gap",
+      "primary_unit": "models-and-the-semantic-gap",
       "verb": "explain",
       "obj": "why a structured model sits at the apex of the documentation hierarchy and what a drift check does and does not prove",
       "statement": "After this chapter, the reader can explain why a structured model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness.",
       "provenance": "derived",
       "anchor": "point: the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands / a-drift-gate-proves-agreement-not-that-either-side-is-right / a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is",
       "secondary_units": [
-        "3.1-the-executable-zoo",
+        "the-executable-zoo",
         "part-3"
       ]
     },
@@ -269,7 +269,7 @@
       "provenance": "derived",
       "anchor": "point: executable-modeling-is-a-spectrum-agents-shift-the-optimum-outward",
       "secondary_units": [
-        "3.1-the-executable-zoo"
+        "the-executable-zoo"
       ]
     },
     {
@@ -286,15 +286,15 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "2.3-the-governed-environment",
+      "primary_unit": "the-governed-environment",
       "verb": "distinguish",
       "obj": "ex-ante from ex-post decisions and a constraint from a sensor",
       "statement": "After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch).",
       "provenance": "derived",
       "anchor": "point: a-governed-environment-has-an-ex-ante-and-an-ex-post-half / a-mechanism-is-one-of-two-moves-prevent-or-catch / the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor",
       "secondary_units": [
-        "2.6-when-guardrails-collide",
-        "4.5-lessons-learned"
+        "when-guardrails-collide",
+        "lessons-learned"
       ]
     },
     {
@@ -317,7 +317,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "2.4-lifecycles-and-runbooks",
+      "primary_unit": "lifecycles-and-runbooks",
       "verb": "author",
       "obj": "a lifecycle and a runbook that splits the deterministic from the judgment",
       "statement": "After this chapter, the reader can author a lifecycle and its runbook, giving the deterministic parts a tight algorithm and the judgment parts the roughest one that still fits.",
@@ -326,19 +326,19 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "2.5-metrics",
+      "primary_unit": "metrics",
       "verb": "compute",
       "obj": "a metric that measures one level deeper than the surface number",
       "statement": "After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision — and place it on the hard-to-soft spectrum, feeding a hard number into a structured model the metric tool then consumes.",
       "provenance": "derived",
       "anchor": "point: a-metric-is-the-sensing-half-of-the-agent-loop / the-metric-comes-first-and-must-drive-a-decision / measure-one-level-deeper-because-the-surface-number-cannot-act / the-hard-ends-defining-move-is-the-number-feeds-the-model / the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery",
       "secondary_units": [
-        "4.6-generative-validation"
+        "generative-validation"
       ]
     },
     {
       "granularity": "chapter",
-      "primary_unit": "2.6-when-guardrails-collide",
+      "primary_unit": "when-guardrails-collide",
       "verb": "analyze",
       "obj": "what lies between controls when guardrails collide, using a governance graph",
       "statement": "After this chapter, the reader can analyze the space between controls with a governance graph — nodes tagged by event and resource, edges a closed conflict taxonomy joined by the shared resource — and reason about mechanisms whose hooks they do not own.",
@@ -377,19 +377,19 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "3.1-the-executable-zoo",
+      "primary_unit": "the-executable-zoo",
       "verb": "explain",
       "obj": "why a fleet pays for free the modeling expense that once buried MBSE",
       "statement": "After this chapter, the reader can explain why the cost that sank classical MBSE is one an agent fleet absorbs, and read Kruchten's 4+1 as the spine of the model zoo.",
       "provenance": "declared",
       "anchor": "Section titles 'the-expense-that-buried-mbse-is-the-one-a-fleet-pays-for-free' + 'kruchten-s-4-1-promoted-...-to-the-spine'.",
       "secondary_units": [
-        "3.6-the-scenarios-view"
+        "the-scenarios-view"
       ]
     },
     {
       "granularity": "chapter",
-      "primary_unit": "3.2-the-logical-view",
+      "primary_unit": "the-logical-view",
       "verb": "model",
       "obj": "a service-flow model and the domain registries it rests on",
       "statement": "After this chapter, the reader can model the logical view as a structured service-flow model backed by frozen domain registries.",
@@ -398,7 +398,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "3.3-the-process-view",
+      "primary_unit": "the-process-view",
       "verb": "model",
       "obj": "the concurrency of a system with a synchronization model and formal invariant verification",
       "statement": "After this chapter, the reader can model the process view — cataloging every lock in a synchronization model and backing its invariants with formal verification.",
@@ -407,7 +407,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "3.4-the-development-view",
+      "primary_unit": "the-development-view",
       "verb": "model",
       "obj": "a codebase's zones with a component & zone model and a rule-metadata registry",
       "statement": "After this chapter, the reader can model the development view — every component's zone and the governance rules that ride it — as typed registries.",
@@ -416,7 +416,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "3.5-the-physical-view",
+      "primary_unit": "the-physical-view",
       "verb": "model",
       "obj": "where a system runs with a deployment-topology model and an invariant-DAG execution policy",
       "statement": "After this chapter, the reader can model the physical view — deployment topology and a typed deploy DAG — and name the one honest gap in the cost view.",
@@ -425,7 +425,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "3.6-the-scenarios-view",
+      "primary_unit": "the-scenarios-view",
       "verb": "map",
       "obj": "user and developer journeys to test placement through a chain of structured models",
       "statement": "After this chapter, the reader can map journeys to the environment tier that tests them, joining user-journey, orchestration, criticality, and coverage models.",
@@ -434,7 +434,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "4.1-brownfield",
+      "primary_unit": "brownfield",
       "verb": "apply",
       "obj": "three approaches to inducing a model from existing code",
       "statement": "After this chapter, the reader can apply top-down, bottom-up, and lint-cover-then-induce approaches to bring a brownfield codebase under a model.",
@@ -443,7 +443,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "4.2-the-skills",
+      "primary_unit": "the-skills",
       "verb": "use",
       "obj": "the self-operate, self-governance, and self-communicate skills, and the recipe for minting new ones",
       "statement": "After this chapter, the reader can use the three packaged skills and follow the construction recipe to mint a new one well.",
@@ -452,19 +452,19 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "4.3-transformations",
+      "primary_unit": "transformations",
       "verb": "size",
       "obj": "a transformation to the model it produces and the guarantee it must carry",
       "statement": "After this chapter, the reader can size a transformation to its model and guarantee, and tell a right-sized leap from a wrong-shaped one.",
       "provenance": "declared",
       "anchor": "Section titles 'size-the-leap-to-the-model-and-the-guarantee' + 'the-right-sized-leap-and-the-wrong-shaped-one'.",
       "secondary_units": [
-        "4.2-the-skills"
+        "the-skills"
       ]
     },
     {
       "granularity": "chapter",
-      "primary_unit": "4.4-training-data",
+      "primary_unit": "training-data",
       "verb": "analyze",
       "obj": "where a model's training-data bias helps and where MBSE earns its keep on the novelty axis",
       "statement": "After this chapter, the reader can analyze how training-data bias shapes an agent's reach, and situate MBSE on the novelty axis where it shines.",
@@ -473,7 +473,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "4.5-lessons-learned",
+      "primary_unit": "lessons-learned",
       "verb": "recognize",
       "obj": "the agent-shaped failure modes and the disciplines that survive them",
       "statement": "After this chapter, the reader can recognize the recurring agent-shaped failure modes — optionality, false 'done', broken estimates, vibe coding — and adopt the disciplines that survive them.",
@@ -482,7 +482,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "4.6-generative-validation",
+      "primary_unit": "generative-validation",
       "verb": "choose",
       "obj": "among property testing, fuzzing, and fuzz-MBSE by which specification a generator hunts against",
       "statement": "After this chapter, the reader can choose among generative-validation strategies by the specification each one attacks, treating the structured model as an oracle.",
@@ -491,7 +491,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "5.1-the-ada-context",
+      "primary_unit": "the-ada-context",
       "verb": "explain",
       "obj": "why document accessibility is a hard, high-burden problem worth this machinery",
       "statement": "After this chapter, the reader can explain the accessibility problem the case-study system solves and why a document is not just a file.",
@@ -500,7 +500,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "5.2-the-timeline-and-the-work",
+      "primary_unit": "the-timeline-and-the-work",
       "verb": "describe",
       "obj": "the stages, velocity, and kinds of work the case-study system required",
       "statement": "After this chapter, the reader can describe how the case-study project unfolded across its stages and the range of work it demanded.",
@@ -509,7 +509,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "5.3-the-built-system",
+      "primary_unit": "the-built-system",
       "verb": "analyze",
       "obj": "the built system through three views of the same architecture",
       "statement": "After this chapter, the reader can analyze the built system end-to-end through three complementary views over one shared edit language.",
@@ -518,7 +518,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "5.4-the-road-to-mage",
+      "primary_unit": "the-road-to-mage",
       "verb": "trace",
       "obj": "the author's path from solo co-coder to tech lead of an agent crew",
       "statement": "After this chapter, the reader can trace the role progression — co-coder, QA, review-lead, tech-lead — that grew a single developer into an agent organization.",
@@ -527,7 +527,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "6.2-implications-for-se",
+      "primary_unit": "implications-for-se",
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",
       "statement": "After this chapter, the reader can evaluate the discipline-level implications: where judgment moved, what saturates, and why models are the universal language of engineering.",
@@ -536,7 +536,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "6.3-conclusion",
+      "primary_unit": "conclusion",
       "verb": "situate",
       "obj": "the book within the software-engineering literature and identify what stays the reader's own",
       "statement": "After this chapter, the reader can situate the book in the SE literature and identify the part of the work that stays human.",
@@ -553,7 +553,7 @@
       "anchor": "point: a-mechanism-is-one-of-two-moves-prevent-or-catch / a-sensor-detects-drift-after-the-fact-and-costs-iterations / a-constraint-prevents-drift-within-the-iteration-and-costs-no-iteration / form-and-move-are-two-independent-axes / most-real-mechanisms-are-a-package-so-tag-the-primary-move",
       "secondary_units": [
         "governance-is-a-spectrum-from-soft-to-hard",
-        "2.6-when-guardrails-collide"
+        "when-guardrails-collide"
       ]
     },
     {
@@ -604,7 +604,7 @@
       "provenance": "derived",
       "anchor": "point: the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery / a-component-distance-grade-is-a-metric-that-drives-a-gate-three-ways / the-grade-is-a-metric-read-from-the-model-that-drives-a-sensors-decision",
       "secondary_units": [
-        "2.6-when-guardrails-collide"
+        "when-guardrails-collide"
       ]
     },
     {
@@ -769,7 +769,7 @@
       "provenance": "derived",
       "anchor": "point: some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified / the-residual-is-a-human-job-that-sets-the-throughput-ceiling / the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis / naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible / the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
       "secondary_units": [
-        "6.2-implications-for-se"
+        "implications-for-se"
       ]
     }
   ]

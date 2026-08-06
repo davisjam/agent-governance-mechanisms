@@ -353,9 +353,16 @@ def coverage_findings(model: OutcomeModel) -> "list[str]":
          the tiering silently disagrees with the flat spine.
     Section-level gaps are reported by `section_gap_findings` (informational, not a U-invariant, since not
     every section must primarily deliver its own outcome — the author decides which do)."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+
+    def _lab(slug: str) -> str:
+        return chapter_identity.label_for_slug(slug) or slug
+
     outline = om.derive_outline()
     section_ids = {s.section_id for _c, s in outline.sections()}
-    chapter_slugs = {c.slug for c in outline.chapters}
+    # Chapter units are referenced by number-free identity LABEL now; resolve against the union of outline
+    # slugs and labels (permissive, half-migration-safe). The label-scoped backstop is the precision net.
+    chapter_slugs = {c.slug for c in outline.chapters} | chapter_identity.labels()
     parts = {c.part for c in outline.chapters}
 
     findings: "list[str]" = []
@@ -395,14 +402,16 @@ def coverage_findings(model: OutcomeModel) -> "list[str]":
 
     # PRIMARY drives coverage — only primary_unit counts a unit as covered.
     primary = model.by_primary()
-    section_to_chapter = {s.section_id: c.slug for c in outline.chapters for s in c.sections}
+    # covered_chapters is keyed by LABEL (a chapter primary is a label; a section primary maps to its
+    # chapter's label), so U3 compares each chapter's label — not its numbered slug.
+    section_to_chapter = {s.section_id: _lab(c.slug) for c in outline.chapters for s in c.sections}
     # U3 — every chapter is primary of ≥1 outcome (directly, or via a section it owns as that section's primary).
     covered_chapters = {u for u in primary if u in chapter_slugs}
     covered_chapters |= {section_to_chapter[u] for u in primary if u in section_to_chapter}
     for c in outline.chapters:
         if c.part == 0:
             continue  # front/back matter (preface, acknowledgments) — not a taught chapter
-        if c.slug not in covered_chapters:
+        if _lab(c.slug) not in covered_chapters:
             findings.append(f"U3 chapter {c.slug!r} (part {c.part}) is no outcome's PRIMARY — pedagogy gap")
     # U4 — every taught Part is primary of ≥1 part-level outcome.
     covered_parts = {int(u.removeprefix("part-")) for u in primary if u.startswith("part-")}
