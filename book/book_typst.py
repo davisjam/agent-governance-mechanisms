@@ -1179,22 +1179,38 @@ def _is_part_page(ch: "ir.Chapter") -> bool:
 
 
 def _part_nav_typst(current_part: int) -> str:
-    """The Part-nav strip closing a Part landing page in the PDF — a small bordered block naming the six numbered
-    Parts. The current Part is plain `#strong` text (no link); every other Part is a `#link(<part-N>)` that jumps
-    to that Part's divider page (labeled in `_part_divider_typst`). The Typst twin of `_part_nav_html`; both read
-    `build_book_html._PART_TITLES` restricted to Parts 1–6, so the two projections cannot disagree."""
+    """The Part-nav strip closing a Part landing page in the PDF — a row of separate boxed chips, one per
+    numbered Part, matching the web pill bar (`_part_nav_html`) button-for-button. Each chip is an inline
+    `#box(...)`, so Typst's own paragraph line-breaking wraps the row across lines exactly the way the web's
+    `flex-wrap` does — no manual line math. The current Part renders as a filled, bold, non-link chip
+    (`#strong`, no `#link`); every other Part is an outline chip wrapping a `#link(<part-N>)` that jumps to
+    that Part's divider page (labeled in `_part_divider_typst`). Both projections read
+    `build_book_html._PART_TITLES` restricted to Parts 1–6 — one list, two renderings, so they cannot
+    disagree on which Parts exist or what they're called."""
     titles = bb._PART_TITLES
-    sep = " #text(fill: dt.muted)[·] "
-    entries: list[str] = []
+    chips: list[str] = []
     for n in range(1, 7):
-        label = f"Part {n} — {titles.get(n, '')}"
+        raw_label = f"Part {n} — {titles.get(n, '')}"
+        label = f"#upper[{inline_typst(raw_label)}]"
         if n == current_part:
-            entries.append(f"#strong[{inline_typst(label)}]")
+            text = f"#text(size: 8pt, tracking: 0.02em, fill: dt.ink, weight: \"bold\")[{label}]"
+            chips.append(
+                "#box(inset: (x: 8pt, y: 5pt), radius: 4pt, stroke: 1pt + dt.accent, "
+                f"fill: dt.panel)[{text}]"
+            )
         else:
-            entries.append(f"#link(<part-{n}>)[{inline_typst(label)}]")
-    return ("#block(width: 100%, inset: (x: 10pt, y: 8pt), radius: 6pt, "
-            "stroke: (left: 2pt + dt.accent, rest: 0.5pt + dt.rule), fill: dt.panel)[\n"
-            "  #text(size: 0.85em)[" + sep.join(entries) + "]\n]")
+            text = f"#text(size: 8pt, tracking: 0.02em, fill: dt.accent, weight: \"semibold\")[{label}]"
+            chips.append(
+                "#box(inset: (x: 8pt, y: 5pt), radius: 4pt, stroke: 0.5pt + dt.rule, "
+                f"fill: dt.paper)[#link(<part-{n}>)[{text}]]"
+            )
+    row = " ".join(chips)  # a plain space between inline boxes is the wrap point Typst breaks lines on
+    return (
+        "#v(0.6em)\n"
+        "#line(length: 100%, stroke: 0.5pt + dt.rule)\n"
+        "#v(0.9em)\n"
+        f"{row}\n"
+    )
 
 
 def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
