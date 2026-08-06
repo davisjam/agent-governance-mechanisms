@@ -14,12 +14,12 @@
 
   "_book_home_map": {
     "book": "book/index.html",
-    "part-1": "book/1.1-the-printer.html",
-    "part-2": "book/2.1-the-agent-stack.html",
-    "part-3": "book/3.1-the-executable-zoo.html",
-    "part-4": "book/4.1-brownfield.html",
-    "part-5": "book/5.1-the-ada-context.html",
-    "part-6": "book/6.0-implications-for-se.html",
+    "part-1": "the-printer",
+    "part-2": "the-agent-stack",
+    "part-3": "the-executable-zoo",
+    "part-4": "brownfield",
+    "part-5": "the-ada-context",
+    "part-6": "toward-a-theory-of-mage",
     "_note": "book-home link per primary_unit — book-level outcomes point at the book index; a Part outcome points at that Part's first chapter (book/index.html has no per-part anchor). Derived from book-models/outline.json (part -> first chapter slug); regenerate if the book's part->first-chapter mapping changes."
   },
 

@@ -2096,7 +2096,9 @@ def _landing_outcomes() -> str:
 
     def _row(o: dict, label: str, sub: str = "") -> str:
         oid = o["outcome_id"]
-        home = home_map.get(o.get("primary_unit", ""), "book/index.html")
+        # _book_home_map stores a chapter LABEL per part now (book -> book/index.html stays a URL); resolve
+        # the label to its built-HTML href at build. _chapter_href passes a non-label value through.
+        home = _chapter_href(home_map.get(o.get("primary_unit", ""), "book/index.html"))
         sub_html = f"<small>{_esc(sub)}</small>" if sub else ""
         return (
             f'<li id="{_outcome_row_id(oid)}" class="oc-row">'
