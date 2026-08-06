@@ -150,6 +150,7 @@ def derive_universe() -> SymbolUniverse:
     """Enumerate every symbol the book DEFINES today. Section ids + chapters + parts come from the outline
     view (one structural source, no parallel parse); concepts / labels / refs / points come from `book_ir`;
     terms come from the two-tier registry in `index-terms.md`."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
     doc = bs.book_ir.parse_book()
     u = SymbolUniverse()
     outline = om.derive_outline()
@@ -158,6 +159,10 @@ def derive_universe() -> SymbolUniverse:
         u.parts.add(c.part)
         for s in c.sections:
             u.section_ids.add(s.section_id)
+    # A chapter is referenced by its number-free identity LABEL (chapter_identity model), so the chapter
+    # symbol set includes the labels alongside the outline slugs — a migrated claim/outcome/… chapter ref
+    # resolves as a `chapter`, not a dangling section-id. Both are kept so a half-migrated tree resolves.
+    u.chapters.update(chapter_identity.labels())
     for c in doc.chapters:
         for b in c.blocks:
             m = _CONCEPT_DIRECTIVE.match(b.raw.strip()) if b.kind is bs.book_ir.BlockKind.DIRECTIVE else None
