@@ -20,6 +20,15 @@ and the design record for the annotation work.
   checkout with nothing installed).
 - **Never hand-edit the `.html`.** Every page is generated and overwritten on the next build. Edit the
   markdown source, then rebuild.
+- **Mermaid needs `mmdc` on `PATH`.** The build renders each ` ```mermaid ` fence to a static SVG through
+  `book/node_modules/.bin/mmdc` and fails loud if it is absent. A draft or writer agent that renders a
+  diagram outside the build (to eyeball it) must first `export PATH="/opt/homebrew/bin:$PATH"` so `node`
+  and `mmdc` resolve — agent shells strip that directory, so `mmdc` reads as "not found" without it.
+- **Long verification runs synchronously, never backgrounded.** The full check
+  (`python3 catalog.py validate && python3 catalog.py build && python3 catalog_tests.py`) can exceed the
+  600-second shell cap. Run it as one foreground call with the tool timeout raised (or poll it in-turn) and
+  wait for it inline; do NOT background it and end the turn on a completion notification — the parent reads
+  your final output, not a pending process, so a turn that exits waiting lands nothing.
 
 **What the build emits, all flat in `book/`:**
 
