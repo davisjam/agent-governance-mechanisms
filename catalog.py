@@ -1257,6 +1257,22 @@ def cmd_validate(_args) -> int:
             print(f"           {f}")
     else:
         print("  [slogan] AUDIT-ONLY: clean — competitors blunted, ration within budget, tags consistent")
+    # GOVERNED-LITERAL-LEAK — AUDIT-ONLY. Flag a KNOWN ledger value (a metrics.json displayed value / a
+    # data-claims.json holds[] literal / a canonical stale word-form) typed RAW in chapter prose, outside a
+    # {{token}} / [data:] marker — the deterministic mirror of the renderer's fail-loud-on-unknown-token.
+    # Lands AUDIT-ONLY-first (rule-#55 discipline): it finds >0 today (the D1-D6 raw-literal sites whose
+    # {{token}} placeholder insertion is deferred to Part-5 assembly), so it PRINTS the worklist but does NOT
+    # increment n_issues. A follow-up promotes it to BLOCKING once the placeholders land and the count drains
+    # to 0. See book-models/lint_governed_literal_leak.py.
+    import lint_governed_literal_leak as lgll  # noqa: E402 — audit-only governed-literal-leak gate
+    gll_audit = lgll.audit_findings()
+    if gll_audit:
+        print(f"  [ledger-leak] AUDIT-ONLY: {lgll.summary_line(gll_audit)} (does not gate) — "
+              f"run `python3 book-models/lint_governed_literal_leak.py`:")
+        for f in gll_audit:
+            print(f"                {f}")
+    else:
+        print("  [ledger-leak] AUDIT-ONLY: clean — no governed value typed raw outside a marker")
     # DEFINE-BEFORE-USE (term ordering) — BLOCKING. Extends the claims model's C1 site-resolution to the
     # ORDERING of the glossary/concept TERM class: a term's canonical definition (its `index-def`, or the front
     # glossary when registered there — front matter, always define-first) must sit no later than the page that
