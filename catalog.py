@@ -841,7 +841,10 @@ def check_big_ideas() -> list[str]:
         if slug not in recs:
             problems.append(f"_order references {slug!r} with no record")
     for slug, rec in recs.items():
-        bh = (rec.get("book_home") or "").split("#")[0]
+        # book_home stores a number-free identity LABEL now (+ optional #anchor); resolve it to its
+        # built-HTML href, then assert that page exists on disk (a chapter renumber updates the link, so
+        # this reddens only on a genuinely dangling label).
+        bh = _chapter_href(rec.get("book_home") or "").split("#")[0]
         if not bh or not os.path.exists(os.path.join(ROOT, bh)):
             problems.append(f"big-ideas: {slug!r} book_home {rec.get('book_home')!r} does not resolve "
                             f"to a real chapter/page on disk")
