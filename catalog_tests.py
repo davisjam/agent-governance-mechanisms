@@ -80,6 +80,8 @@ from tests.html import (
     check_definitions_site,
     check_exactly_one_h1_per_page,
     check_exactly_one_h1_selftest,
+    check_one_h1_per_served_source,
+    check_one_h1_per_served_source_selftest,
     check_outcomes_site,
     check_html_links,
     check_no_duplicate_ids,
@@ -145,6 +147,13 @@ CHECKS = [
     # page on synthetic input, so a future refactor cannot silently degrade it to a green no-op.
     Check("html: one-<h1> check flags injected 2-<h1> / 0-<h1> pages (self-test)", 1,
           lambda strict: check_exactly_one_h1_selftest()),
+    # Source-side twin of the one-<h1> check: renders each served markdown and checks its h1 arity, so a
+    # page whose built .html is SHADOWED on a case-insensitive FS (INDEX.md -> INDEX.html coalesced with
+    # index.html on macOS) is still checked. Closes the os.walk case-collision blind spot. See tests/html.py.
+    Check("html: exactly one <h1> per served source (case-collision-immune twin)", 1,
+          lambda strict: check_one_h1_per_served_source()),
+    Check("html: source-side one-<h1> twin flags injected 2-<h1> source (self-test)", 1,
+          lambda strict: check_one_h1_per_served_source_selftest()),
     Check("book: no stray HTML comments in source (source-side twin of notation-leak; stray-book-comment)", 1, lambda strict: check_no_stray_comments()),
     # BLOCKING (rule #55 promotion): every claim a Part opener foreshadows (its `<!-- part-foreshadows: … -->`
     # decorator) must trace to the spine — the id resolves, a chapter WITHIN that Part advances it, and it
