@@ -228,6 +228,10 @@ GLOSSARY_CHAPTER_SLUG = "0.3-the-books-language"
 # renderer frames these in a `.apparatus-page` box (HTML) / a `#block` frame (Typst) — see the CSS
 # `.apparatus-page` swap-point block and `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
 _APPARATUS_ONEPAGER_SLUGS = {"0.5-how-to-read-this-book", "appendix-d-operators-dashboard"}
+# "What This Book Argues" — the six central claims. The renderer wraps its content in an `.argues-page`
+# class so the claims list reads as a deliberate front-matter feature (larger body, more air between
+# claims, accent numerals) rather than a manuscript page — see the CSS `.argues-page` block.
+_WHAT_THIS_BOOK_ARGUES_SLUG = "0.2-what-this-book-argues"
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",
@@ -1643,6 +1647,12 @@ p {{ margin: 0 0 1rem; }}
 ul {{ margin: 0 0 1rem; padding-left: 1.3rem; }}
 ol {{ margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }}
 li {{ margin: 0.3rem 0; }}
+/* "What This Book Argues" claims list — a page-scoped feature treatment (wrapper class set in the render
+   loop). The six claims get a slightly larger body, more air between them, and accent-coloured bold
+   numerals set into the margin; the prose is otherwise untouched (no boxes, no icons). */
+.argues-page ol {{ font-size: 1.06em; line-height: 1.72; padding-left: 2.1rem; margin: 1.7rem 0; }}
+.argues-page ol > li {{ margin: 0.62rem 0; padding-left: 0.25rem; }}
+.argues-page ol > li::marker {{ color: var(--accent); font-weight: 700; }}
 blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid var(--rule);
               color: var(--muted); font-style: italic; background: var(--panel); }}
 /* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
@@ -6187,8 +6197,14 @@ def build() -> int:
         # An apparatus one-pager (how-to-read) frames its header + body in a bordered, offset box so it reads
         # as one distinct reference item, not a continuation of the preceding chapter. The nav bar and footer
         # stay OUTSIDE the frame (they are page chrome, not part of the apparatus item).
-        content = (f'<div class="apparatus-page">{header}{body}</div>'
-                   if c["slug"] in _APPARATUS_ONEPAGER_SLUGS else header + body)
+        if c["slug"] in _APPARATUS_ONEPAGER_SLUGS:
+            content = f'<div class="apparatus-page">{header}{body}</div>'
+        elif c["slug"] == _WHAT_THIS_BOOK_ARGUES_SLUG:
+            # The claims-page scoping wrapper (see `.argues-page` CSS) — page chrome (nav bar, footer) stays
+            # outside it, exactly like the apparatus-page frame above.
+            content = f'<div class="argues-page">{header}{body}</div>'
+        else:
+            content = header + body
         main = content + nav_bar + foot
         toc = toc_html(chapters, c["slug"])
         out = HERE / f'{c["slug"]}.html'

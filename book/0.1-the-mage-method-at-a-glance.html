@@ -117,6 +117,12 @@ p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 ol { margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }
 li { margin: 0.3rem 0; }
+/* "What This Book Argues" claims list — a page-scoped feature treatment (wrapper class set in the render
+   loop). The six claims get a slightly larger body, more air between them, and accent-coloured bold
+   numerals set into the margin; the prose is otherwise untouched (no boxes, no icons). */
+.argues-page ol { font-size: 1.06em; line-height: 1.72; padding-left: 2.1rem; margin: 1.7rem 0; }
+.argues-page ol > li { margin: 0.62rem 0; padding-left: 0.25rem; }
+.argues-page ol > li::marker { color: var(--accent); font-weight: 700; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid var(--rule);
               color: var(--muted); font-style: italic; background: var(--panel); }
 /* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
