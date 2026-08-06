@@ -32,8 +32,10 @@ def book_dir() -> str:
 
 
 def book_page_slugs() -> "set[str]":
-    """Every chapter page slug the book currently defines (part dirs + front/back matter) — the resolve set
-    a declared model's `page_slug` fields must land in."""
+    """The chapter resolve set for a declared model's chapter reference. DUAL: the numbered file stems
+    (`1.1-the-printer`) AND the number-free identity labels (`the-printer`), so both a legacy numbered value
+    and a migrated label resolve (the migration to the chapter_identity model is per-model, so a half-migrated
+    tree must resolve both). The new canonical reference is the label."""
     slugs: "set[str]" = set()
     for sub in _SUBDIRS:
         d = os.path.join(_BOOK, sub)
@@ -42,12 +44,19 @@ def book_page_slugs() -> "set[str]":
         for fn in os.listdir(d):
             if fn.endswith(".md") and _CHAPTER_RE.match(fn):
                 slugs.add(fn[:-3])
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+    slugs |= chapter_identity.labels()
     return slugs
 
 
 def chapter_md_path(page_slug: str) -> "str | None":
-    """The on-disk `.md` path for a chapter page slug, searched across the chapter subdirs, or None if the
-    slug names no chapter. Used to walk a chapter's anchors."""
+    """The on-disk `.md` path for a chapter reference, or None if it names no chapter. Accepts EITHER a
+    number-free identity label (resolved via chapter_identity.filename — the new canonical form) OR a legacy
+    numbered file stem (globbed across the chapter subdirs). Used to walk a chapter's anchors."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+    if page_slug in chapter_identity.labels():
+        p = os.path.join(_BOOK, chapter_identity.filename(page_slug))
+        return p if os.path.isfile(p) else None
     for sub in _SUBDIRS:
         p = os.path.join(_BOOK, sub, f"{page_slug}.md")
         if os.path.isfile(p):

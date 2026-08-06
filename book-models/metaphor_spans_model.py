@@ -103,7 +103,7 @@ class Metaphor:
 
     def stretch_key(self) -> str:
         """The collision unit — the explicit `stretch`, else the intro chapter page_slug."""
-        return self.stretch or (self.introduced_at or {}).get("page_slug", "")
+        return self.stretch or (self.introduced_at or {}).get("label", "")
 
 
 @dataclass
@@ -341,10 +341,10 @@ def structural_findings(model: "MetaphorModel | None" = None) -> "list[str]":
             elif f not in ("overlap_ok", "introduced_at", "overlap_rationale", "notes", "elaborates") \
                     and not str(rawm[f]).strip():
                 findings.append(f"M1 metaphor {m.slug!r} has empty field {f!r}")
-        if not isinstance(m.introduced_at, dict) or not m.introduced_at.get("chapter") or not m.introduced_at.get("page_slug"):
-            findings.append(f"M1 metaphor {m.slug!r} introduced_at lacks chapter/page_slug")
-        if m.pays_off_at is not None and (not isinstance(m.pays_off_at, dict) or not m.pays_off_at.get("chapter") or not m.pays_off_at.get("page_slug")):
-            findings.append(f"M1 metaphor {m.slug!r} pays_off_at lacks chapter/page_slug")
+        if not isinstance(m.introduced_at, dict) or not m.introduced_at.get("label"):
+            findings.append(f"M1 metaphor {m.slug!r} introduced_at lacks a label")
+        if m.pays_off_at is not None and (not isinstance(m.pays_off_at, dict) or not m.pays_off_at.get("label")):
+            findings.append(f"M1 metaphor {m.slug!r} pays_off_at lacks a label")
 
         # M2 — slug + recurrence + kind + bool.
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", m.slug):
@@ -363,7 +363,7 @@ def structural_findings(model: "MetaphorModel | None" = None) -> "list[str]":
         for where, site in (("introduced_at", m.introduced_at), ("pays_off_at", m.pays_off_at)):
             if not isinstance(site, dict):
                 continue
-            page, anchor = site.get("page_slug", ""), site.get("anchor", "")
+            page, anchor = site.get("label", ""), site.get("anchor", "")
             if page and page not in page_slugs:
                 findings.append(f"M3 metaphor {m.slug!r} {where} page {page!r} resolves to no book chapter")
             if anchor and page in page_slugs and _anchor_position(page, anchor) is None:
@@ -408,10 +408,10 @@ def structural_findings(model: "MetaphorModel | None" = None) -> "list[str]":
             findings.append(f"S2 slogan {s.slug!r} competitors is not a list")
 
         # S3 — home resolution.
-        if not isinstance(s.home, dict) or not s.home.get("chapter") or not s.home.get("page_slug"):
-            findings.append(f"S3 slogan {s.slug!r} home lacks chapter/page_slug")
+        if not isinstance(s.home, dict) or not s.home.get("label"):
+            findings.append(f"S3 slogan {s.slug!r} home lacks a label")
         else:
-            page, anchor = s.home.get("page_slug", ""), s.home.get("anchor", "")
+            page, anchor = s.home.get("label", ""), s.home.get("anchor", "")
             if page and page not in page_slugs:
                 findings.append(f"S3 slogan {s.slug!r} home page {page!r} resolves to no book chapter")
             if anchor and page in page_slugs and _anchor_position(page, anchor) is None:
@@ -463,11 +463,11 @@ def overlap_findings(model: "MetaphorModel | None" = None) -> "list[str]":
 
     for stretch, locals_ in sorted(by_stretch.items()):
         def intro_pos(mm: Metaphor) -> int:
-            p = _anchor_position(mm.introduced_at.get("page_slug", ""), mm.introduced_at.get("anchor", ""))
+            p = _anchor_position(mm.introduced_at.get("label", ""), mm.introduced_at.get("anchor", ""))
             return p if p is not None else 1 << 30
         ordered = sorted(locals_, key=intro_pos)
         for i, a in enumerate(ordered):
-            a_payoff = _anchor_position((a.pays_off_at or {}).get("page_slug", ""), (a.pays_off_at or {}).get("anchor", ""))
+            a_payoff = _anchor_position((a.pays_off_at or {}).get("label", ""), (a.pays_off_at or {}).get("anchor", ""))
             for b in ordered[i + 1:]:
                 b_intro = intro_pos(b)
                 if a_payoff is not None and b_intro <= a_payoff:
@@ -530,10 +530,16 @@ def coverage_note(model: "MetaphorModel | None" = None) -> str:
 # ---- projection: the inventory table ----------------------------------------------------------------
 
 def _site_cell(site: "dict | None") -> str:
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
     if not isinstance(site, dict):
         return "—"
-    chapter, page, anchor = site.get("chapter", ""), site.get("page_slug", ""), site.get("anchor", "")
-    href = f"{page}.html#{anchor}" if anchor else f"{page}.html"
+    label, anchor = site.get("label", ""), site.get("anchor", "")
+    if not label:
+        return "—"
+    # DERIVE the displayed chapter number + the href stem from the identity label (neither is stored).
+    chapter = chapter_identity.number(label) if label in chapter_identity.labels() else label
+    stem = os.path.basename(chapter_identity.html_href(label))[:-5] if label in chapter_identity.labels() else label
+    href = f"{stem}.html#{anchor}" if anchor else f"{stem}.html"
     return f"[{chapter}]({href})"
 
 
