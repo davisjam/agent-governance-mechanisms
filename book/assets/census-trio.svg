@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" width="1280" height="600"
+     role="img" aria-labelledby="ctTitle ctDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="ctTitle">One control set, three re-views: catalogue, interaction graph, and coverage census</title>
+  <desc id="ctDesc">Three panels over the same three control chips — squash-rule, brief-guard, and
+    lint-gate. Left panel, the catalogue, lists the three controls that exist. Middle panel, the
+    interaction graph, draws the same three as nodes with one red dashed edge marking the collision
+    between squash-rule and brief-guard; lint-gate has no edge. Right panel, the coverage census, bins
+    the same three by the target each guards — all three fall under the agent target, while the models
+    target and the product target hold none, and each empty cell is flagged as a finding. The point:
+    one node-set, viewed three ways. The graph and the census add no new data; they re-view the list.</desc>
+
+  <defs>
+    <marker id="ct-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
+    </marker>
+  </defs>
+
+  <line x1="427" y1="30" x2="427" y2="500" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <line x1="853" y1="30" x2="853" y2="500" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <text x="213" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Catalogue</text>
+  <text x="213" y="80" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">what exists</text>
+
+  <g fill="#e7edf3" stroke="#2f5169" stroke-width="2">
+    <rect x="138" y="140" width="150" height="46" rx="6"/>
+    <rect x="138" y="222" width="150" height="46" rx="6"/>
+    <rect x="138" y="304" width="150" height="46" rx="6"/>
+  </g>
+  <g font-size="18" fill="#1c1917" text-anchor="middle">
+    <text x="213" y="169">squash-rule</text>
+    <text x="213" y="251">brief-guard</text>
+    <text x="213" y="333">lint-gate</text>
+  </g>
+  <text x="213" y="404" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">the controls, listed</text>
+
+  <text x="640" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Interaction graph</text>
+  <text x="640" y="80" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">what collides</text>
+
+  <text x="645" y="150" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">collision</text>
+  
+  <line x1="597" y1="186" x2="693" y2="186" stroke="#b23b3b" stroke-width="2.4" stroke-dasharray="7 6"
+        marker-start="url(#ct-ah)" marker-end="url(#ct-ah)"/>
+
+  <g fill="#e7edf3" stroke="#2f5169" stroke-width="2">
+    <rect x="445" y="163" width="150" height="46" rx="6"/>
+    <rect x="695" y="163" width="150" height="46" rx="6"/>
+    <rect x="565" y="300" width="150" height="46" rx="6"/>
+  </g>
+  <g font-size="18" fill="#1c1917" text-anchor="middle">
+    <text x="520" y="192">squash-rule</text>
+    <text x="770" y="192">brief-guard</text>
+    <text x="640" y="329">lint-gate</text>
+  </g>
+  <text x="640" y="404" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">same controls — now the edges</text>
+
+  <text x="1066" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Coverage census</text>
+  <text x="1066" y="80" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">what lacks coverage</text>
+
+  
+  <text x="928" y="145" text-anchor="start" font-size="18" font-weight="700" fill="#2f5169">agent</text>
+  <g fill="#e7edf3" stroke="#2f5169" stroke-width="1.6">
+    <rect x="928" y="158" width="98" height="34" rx="5"/>
+    <rect x="1034" y="158" width="98" height="34" rx="5"/>
+    <rect x="1140" y="158" width="98" height="34" rx="5"/>
+  </g>
+  <g font-size="15" fill="#1c1917" text-anchor="middle">
+    <text x="977" y="180">squash</text>
+    <text x="1083" y="180">brief</text>
+    <text x="1189" y="180">lint</text>
+  </g>
+
+  <text x="928" y="245" text-anchor="start" font-size="18" font-weight="700" fill="#2f5169">models</text>
+  <rect x="928" y="258" width="310" height="34" rx="5" fill="#ffffff" stroke="#b23b3b" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="1083" y="280" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">no coverage — finding</text>
+
+  <text x="928" y="345" text-anchor="start" font-size="18" font-weight="700" fill="#2f5169">product</text>
+  <rect x="928" y="358" width="310" height="34" rx="5" fill="#ffffff" stroke="#b23b3b" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="1083" y="380" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">no coverage — finding</text>
+
+  <text x="1066" y="430" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">same controls — binned by target</text>
+
+  <text x="640" y="540" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">One control set, three re-views</text>
+  <text x="640" y="568" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">the graph and the census add no data — they re-view the list</text>
+</svg>

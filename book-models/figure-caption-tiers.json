@@ -133,6 +133,12 @@
       "location": "part2",
       "rationale": "the conflict is the edge"
     },
+    "assets/census-trio.svg": {
+      "tier": "A",
+      "kind": "conceptual-illustration",
+      "location": "part2",
+      "rationale": "catalogue / graph / census — three views over one control set; author-ratified anchor (best synthesis)"
+    },
     "assets/trunk-and-views.svg": {
       "tier": "A",
       "kind": "architectural-framework",

@@ -594,7 +594,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-d-from-drifted-wiki-to-trusted-model.html">Appendix D - 2. From Drifted Wiki to Trusted Model</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 77 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 78 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
      role="group" aria-labelledby="fig-0-1-1-mmTitle fig-0-1-1-mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-0-1-1-mmTitle">The MAGE method at a glance</title>
@@ -2147,7 +2147,91 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
         marker-start="url(#fig-2-6-1-ce-ah-churn)" marker-end="url(#fig-2-6-1-ce-ah-churn)"/>
   <text x="252" y="192" font-size="19" font-weight="700" fill="#b23b3b">the conflict is this edge:</text>
   <text x="252" y="216" font-size="19" fill="#b23b3b">in neither node’s code</text>
-</svg><figcaption data-short="The Conflict Is the Edge"><span class="fig-label">Figure 2.6-1.</span> <em>The Conflict Is the Edge.</em> Read Control A alone and it is correct; read Control B alone and it is correct. What they demand of the one resource they share collides — and that collision is drawn nowhere until the graph draws it.</figcaption></figure><p class="gallery-source">From <a href="2.6-when-guardrails-collide.html#fig-2-6-1">11 · When Guardrails Collide</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-1-fig-3-1-1" class="book-figure" data-label="trunk-and-views"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470"
+</svg><figcaption data-short="The Conflict Is the Edge"><span class="fig-label">Figure 2.6-1.</span> <em>The Conflict Is the Edge.</em> Read Control A alone and it is correct; read Control B alone and it is correct. What they demand of the one resource they share collides — and that collision is drawn nowhere until the graph draws it.</figcaption></figure><p class="gallery-source">From <a href="2.6-when-guardrails-collide.html#fig-2-6-1">11 · When Guardrails Collide</a></p></section><hr><section class="gallery-item"><figure id="fig-2-6-2-fig-2-6-2" class="book-figure" data-label="census-trio"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600"
+     role="img" aria-labelledby="fig-2-6-2-ctTitle fig-2-6-2-ctDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-2-6-2-ctTitle">One control set, three re-views: catalogue, interaction graph, and coverage census</title>
+  <desc id="fig-2-6-2-ctDesc">Three panels over the same three control chips — squash-rule, brief-guard, and
+    lint-gate. Left panel, the catalogue, lists the three controls that exist. Middle panel, the
+    interaction graph, draws the same three as nodes with one red dashed edge marking the collision
+    between squash-rule and brief-guard; lint-gate has no edge. Right panel, the coverage census, bins
+    the same three by the target each guards — all three fall under the agent target, while the models
+    target and the product target hold none, and each empty cell is flagged as a finding. The point:
+    one node-set, viewed three ways. The graph and the census add no new data; they re-view the list.</desc>
+
+  <defs>
+    <marker id="fig-2-6-2-ct-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
+    </marker>
+  </defs>
+
+  <line x1="427" y1="30" x2="427" y2="500" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <line x1="853" y1="30" x2="853" y2="500" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <text x="213" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Catalogue</text>
+  <text x="213" y="80" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">what exists</text>
+
+  <g fill="#e7edf3" stroke="#2f5169" stroke-width="2">
+    <rect x="138" y="140" width="150" height="46" rx="6"/>
+    <rect x="138" y="222" width="150" height="46" rx="6"/>
+    <rect x="138" y="304" width="150" height="46" rx="6"/>
+  </g>
+  <g font-size="18" fill="#1c1917" text-anchor="middle">
+    <text x="213" y="169">squash-rule</text>
+    <text x="213" y="251">brief-guard</text>
+    <text x="213" y="333">lint-gate</text>
+  </g>
+  <text x="213" y="404" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">the controls, listed</text>
+
+  <text x="640" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Interaction graph</text>
+  <text x="640" y="80" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">what collides</text>
+
+  <text x="645" y="150" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">collision</text>
+  
+  <line x1="597" y1="186" x2="693" y2="186" stroke="#b23b3b" stroke-width="2.4" stroke-dasharray="7 6"
+        marker-start="url(#fig-2-6-2-ct-ah)" marker-end="url(#fig-2-6-2-ct-ah)"/>
+
+  <g fill="#e7edf3" stroke="#2f5169" stroke-width="2">
+    <rect x="445" y="163" width="150" height="46" rx="6"/>
+    <rect x="695" y="163" width="150" height="46" rx="6"/>
+    <rect x="565" y="300" width="150" height="46" rx="6"/>
+  </g>
+  <g font-size="18" fill="#1c1917" text-anchor="middle">
+    <text x="520" y="192">squash-rule</text>
+    <text x="770" y="192">brief-guard</text>
+    <text x="640" y="329">lint-gate</text>
+  </g>
+  <text x="640" y="404" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">same controls — now the edges</text>
+
+  <text x="1066" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Coverage census</text>
+  <text x="1066" y="80" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">what lacks coverage</text>
+
+  
+  <text x="928" y="145" text-anchor="start" font-size="18" font-weight="700" fill="#2f5169">agent</text>
+  <g fill="#e7edf3" stroke="#2f5169" stroke-width="1.6">
+    <rect x="928" y="158" width="98" height="34" rx="5"/>
+    <rect x="1034" y="158" width="98" height="34" rx="5"/>
+    <rect x="1140" y="158" width="98" height="34" rx="5"/>
+  </g>
+  <g font-size="15" fill="#1c1917" text-anchor="middle">
+    <text x="977" y="180">squash</text>
+    <text x="1083" y="180">brief</text>
+    <text x="1189" y="180">lint</text>
+  </g>
+
+  <text x="928" y="245" text-anchor="start" font-size="18" font-weight="700" fill="#2f5169">models</text>
+  <rect x="928" y="258" width="310" height="34" rx="5" fill="#ffffff" stroke="#b23b3b" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="1083" y="280" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">no coverage — finding</text>
+
+  <text x="928" y="345" text-anchor="start" font-size="18" font-weight="700" fill="#2f5169">product</text>
+  <rect x="928" y="358" width="310" height="34" rx="5" fill="#ffffff" stroke="#b23b3b" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="1083" y="380" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">no coverage — finding</text>
+
+  <text x="1066" y="430" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">same controls — binned by target</text>
+
+  <text x="640" y="540" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">One control set, three re-views</text>
+  <text x="640" y="568" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">the graph and the census add no data — they re-view the list</text>
+</svg><figcaption data-short="Catalogue, Graph, Census"><span class="fig-label">Figure 2.6-2.</span> <em>Catalogue, Graph, Census.</em> Three views ride on one set of controls. The catalogue lists what exists; the interaction graph draws which two collide over a shared resource; the coverage census bins the same controls by the target each guards and surfaces the target with none. The move that matters is that the graph and the census are <strong>re-views, not new data</strong> — the identical node-set, asked a different question each time. An empty census cell is not an absence nobody noticed; it is the estate's own blind spot, named, and pointing at where the next control should go.</figcaption></figure><p class="gallery-source">From <a href="2.6-when-guardrails-collide.html#fig-2-6-2">11 · When Guardrails Collide</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-1-fig-3-1-1" class="book-figure" data-label="trunk-and-views"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470"
      role="group" aria-labelledby="fig-3-1-1-tvTitle fig-3-1-1-tvDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-3-1-1-tvTitle">One trunk of drift-proof machinery, five Kruchten views branching from it</title>

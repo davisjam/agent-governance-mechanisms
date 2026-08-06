@@ -83,7 +83,7 @@
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",
-            "occ": 3
+            "occ": 7
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
@@ -371,7 +371,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 84
+            "occ": 86
           },
           {
             "file": "book/index.html",
@@ -2023,7 +2023,7 @@
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",
-            "occ": 17
+            "occ": 16
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
@@ -2759,7 +2759,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 109
+            "occ": 110
           },
           {
             "file": "catalogue-figure.html",
@@ -2873,7 +2873,7 @@
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",
-            "occ": 5
+            "occ": 4
           },
           {
             "file": "book/3.1-the-executable-zoo.html",

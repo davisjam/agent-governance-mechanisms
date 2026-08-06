@@ -7,7 +7,7 @@
     "derived_ids": 232,
     "missing_topic_sentence": 6,
     "sections_drained": 178,
-    "paragraph_points": 558
+    "paragraph_points": 556
   },
   "chapters": [
     {
@@ -1981,9 +1981,9 @@
               "block_index": 21
             },
             {
-              "slug": "the-census-is-a-metamodel-whose-instances-are-the-controls",
-              "text": "The census is a metamodel; its instances are the controls.",
-              "block_index": 23
+              "slug": "the-census-is-a-model-whose-instances-are-the-controls",
+              "text": "The census is a model whose instances are the controls.",
+              "block_index": 24
             }
           ]
         },
@@ -1993,22 +1993,22 @@
           "heading_text": "Growing controls, and auditing the growth",
           "topic_sentence": "The census has a counterpart, and the two are true opposites over one graph.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 27,
           "points": [
             {
               "slug": "the-fleet-grows-controls-reactively-and-that-growth-is-biased",
               "text": "The fleet grows controls reactively, and that growth is biased.",
-              "block_index": 28
+              "block_index": 29
             },
             {
               "slug": "the-census-is-the-proactive-audit-that-corrects-the-bias",
               "text": "The census is the proactive audit that corrects the bias.",
-              "block_index": 30
+              "block_index": 31
             },
             {
               "slug": "static-analyses-keep-the-census-equal-to-the-territory",
               "text": "Static analyses keep the census equal to the territory.",
-              "block_index": 32
+              "block_index": 33
             }
           ]
         },
@@ -2016,24 +2016,14 @@
           "section_id": "when-the-hooks-aren-t-yours",
           "level": 2,
           "heading_text": "When the hooks aren't yours",
-          "topic_sentence": "Every mechanism so far was one you wrote.",
+          "topic_sentence": "**An implication, looking ahead.** Every mechanism so far was one you wrote — but some hooks arrive from outside: a plugin registers one, a teammate adds a personal one, and, plausibly soon, a regulator or model vendor mandates one.",
           "id_source": "derived",
-          "block_index": 34,
+          "block_index": 35,
           "points": [
             {
-              "slug": "outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape",
-              "text": "Outside hooks extend the graph without changing its shape.",
-              "block_index": 36
-            },
-            {
-              "slug": "an-unanalyzed-outside-hook-sits-on-a-possible-conflict-edge-against-its-whole-slot",
-              "text": "An unanalyzed outside hook conflicts with everything on its slot.",
-              "block_index": 38
-            },
-            {
-              "slug": "composing-governance-you-did-not-author-is-checking-the-merged-graph-for-contradiction",
-              "text": "Composing outside governance is checking the merged graph for contradiction.",
-              "block_index": 40
+              "slug": "outside-governance-extends-the-graph-without-changing-shape",
+              "text": "Outside-authored hooks extend the graph without changing its shape.",
+              "block_index": 37
             }
           ]
         },
@@ -2043,17 +2033,17 @@
           "heading_text": "Keeping the model honest",
           "topic_sentence": "Two disciplines keep the model honest, and both are the book's.",
           "id_source": "derived",
-          "block_index": 42,
+          "block_index": 39,
           "points": [
             {
               "slug": "keep-the-graph-honest-by-symbol-anchoring-and-a-descriptive-not-aspirational-model",
               "text": "Keep the graph symbol-anchored and descriptive, not aspirational.",
-              "block_index": 44
+              "block_index": 41
             },
             {
               "slug": "part-2-built-the-environment-part-3-opens-the-models",
               "text": "The environment enforces; the next Part opens the models.",
-              "block_index": 47
+              "block_index": 44
             }
           ]
         }
@@ -2061,7 +2051,7 @@
       "preamble_points": [
         {
           "slug": "a-system-of-controls-has-the-one-failure-a-list-cannot-show",
-          "text": "A control system has a failure a list cannot show.",
+          "text": "Every control correct, the system of controls still wrong.",
           "block_index": 1
         },
         {

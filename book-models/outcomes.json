@@ -724,7 +724,7 @@
       "statement": "After this chapter, the reader can analyze the space between controls with a governance graph — nodes tagged by event and resource, edges a closed conflict taxonomy joined by the shared resource — and reason about mechanisms whose hooks they do not own.",
       "bloom": "analyze",
       "provenance": "derived",
-      "anchor": "point: a-system-of-controls-has-the-one-failure-a-list-cannot-show / each-collision-lives-in-the-space-between-two-controls-drawn-nowhere / the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource / outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape",
+      "anchor": "point: a-system-of-controls-has-the-one-failure-a-list-cannot-show / each-collision-lives-in-the-space-between-two-controls-drawn-nowhere / the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource / outside-governance-extends-the-graph-without-changing-shape",
       "gap_note": null
     },
     {
@@ -1044,7 +1044,7 @@
       ],
       "verb": "analyze",
       "obj": "the collisions between controls as edges in a governance graph joined by the shared resource",
-      "statement": "After this section, the reader can analyze the space between controls with a governance graph — mechanisms as nodes tagged by event and resource, conflicts as edges in a closed contradiction/contention/ordering/soft-versus-hard taxonomy joined by the shared resource — and route each edge to a lint or a human prompt by its type before the control ships.",
+      "statement": "After this section, the reader can analyze the space between controls with a governance graph — mechanisms as nodes tagged by event and resource, conflicts as edges in a closed contradiction/contention/ordering/precedence taxonomy joined by the shared resource — and route each edge to a lint or a human prompt by its type before the control ships.",
       "bloom": "analyze",
       "provenance": "derived",
       "anchor": "point: the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource / the-shared-resource-is-the-only-cross-lifecycle-coupling-surface-and-keeps-the-graph-sparse / the-graph-is-the-catalogues-dynamic-dual-splitting-decidable-edges-from-judgment-ones / the-graph-makes-the-implicit-claim-that-mechanisms-compose-explicit-and-checkable",
@@ -1466,7 +1466,7 @@
       "statement": "After this section, the reader can apply the governance graph to hooks they did not author — entering an outside hook as a node on a conservative possible-conflict edge against its whole slot until analyzed — and reduce satisfying one or several regulators to checking that the merged graph carries no unresolved contradiction, including that no required hard block is overridden by a soft aim.",
       "bloom": "apply",
       "provenance": "derived",
-      "anchor": "point: outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape / an-unanalyzed-outside-hook-sits-on-a-possible-conflict-edge-against-its-whole-slot / composing-governance-you-did-not-author-is-checking-the-merged-graph-for-contradiction",
+      "anchor": "point: outside-governance-extends-the-graph-without-changing-shape",
       "gap_note": null
     },
     {
