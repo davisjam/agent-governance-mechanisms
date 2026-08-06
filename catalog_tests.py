@@ -51,6 +51,7 @@ from tests.book_models import (
     check_outcomes_model,
     check_outline_model,
     check_print_appendix_projection,
+    check_projection_index,
     check_reverse_index,
     check_theory_model,
 )
@@ -199,6 +200,16 @@ CHECKS = [
     # substrate; also the `catalog.py views-audit` pre-commit entry point. See tests/book_models.py.
     Check("book-models: reverse-index drift — structural + freshness (reverse_index.json)", 1,
           lambda strict: check_reverse_index(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the PROJECTION metamodel sync gates. projections.json (authored)
+    # names the book's rendered surfaces book-vs-website; projection-index.json (derived) inverts each
+    # tracked concept slug onto the built HTML sites it renders in — the missing "where does concept X
+    # render on BOTH surfaces" model a cross-cutting edit needs. FRESHNESS (index == a fresh scan of the
+    # built HTML) + COMPLETENESS (every served surface claimed by exactly one projection; every index site
+    # a real file) + SITE-HOME RECONCILE (a book-only definition whose concept has a website concept page —
+    # the stale-site_home catch, 1 finding today: churn). Promote to blocking once the site-home finding is
+    # reconciled and a clean session confirms freshness/completeness stay 0. See tests/book_models.py.
+    Check("book-models: projection-index sync — freshness + completeness + site-home (projection-index.json)", 1,
+          lambda strict: check_projection_index(), audit_only=True),
     # BLOCKING (rule #55 promotion, 260802 — drain confirmed 0 at HEAD): the CLAIMS view-model — a fifth
     # sibling model holding the book's load-bearing propositions + the contradiction predicate none of the
     # others carry (DESIGN book-claims-model-260801). C7-drift (claims.json vs a fresh derivation) + C1-C6

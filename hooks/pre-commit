@@ -48,6 +48,12 @@ _regen("outline_model.py", "outline.json")
 _regen("outcomes_model.py", "outcomes.json")
 _regen("reverse_index.py", "reverse_index.json")
 
+# The PROJECTION index is a DERIVED inversion of the BUILT HTML (which projection + site each tracked
+# concept renders in). It scans the .html the `catalog build` above just wrote, so it regenerates AFTER
+# the build — editing a page without regenerating it leaves the committed index stale, exactly the class
+# the other derived-view regens close. Sub-second; regen + stage on every commit.
+_regen("projections_model.py", "projection-index.json")
+
 # book-models READING VIEW: re-render the browsable HTML view of the book models (outline + outcomes)
 # and stage it, exactly like the site build stays fresh. The page is a PROJECTION of the models, so a
 # model regeneration must re-flow the view; running it on every commit means the committed HTML can

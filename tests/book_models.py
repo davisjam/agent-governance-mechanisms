@@ -362,6 +362,33 @@ def check_reverse_index():
     return (FAIL if issues else PASS), issues
 
 
+def check_projection_index():
+    """The PROJECTION-INDEX sync gates (audit-only first landing, rule-#55). The projection metamodel names
+    the book's rendered surfaces (`projections.json`, authored) and inverts every tracked concept slug onto
+    the built HTML sites it appears in (`projection-index.json`, derived). Three mechanical gates, mirroring
+    the reverse-index freshness discipline:
+
+      - FRESHNESS — the on-disk `projection-index.json` equals a fresh scan of the built HTML. A page
+        rebuilt without regenerating the index is the finding. Same shape as `check_reverse_index`.
+      - COMPLETENESS / JOIN — every served HTML surface is claimed by EXACTLY ONE `projections.json` record
+        (no orphan surface, no double-claim), and every index site resolves to a real built file.
+      - SITE-HOME RECONCILE — the stale-`site_home` catch: a definition marked book-only (`site_home:"N/A"`)
+        whose concept has a dedicated website concept page (the Churn case) is a contradiction.
+
+    Keyed off `book-models/projections.json` + `projection-index.json` + the built HTML."""
+    import projections_model as pm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+    issues.extend(pm.freshness_findings())
+    issues.extend(pm.completeness_findings())
+    issues.extend(pm.site_home_findings())
+
+    # Audit-only: same non-gating contract as the sibling view checks — surfaced as [audt]. The site-home
+    # reconcile surfaces 1 finding today (churn), so this lands audit-only-first (rule #55); a follow-up
+    # promotes the freshness + completeness halves to blocking once a clean session confirms they stay 0.
+    return (FAIL if issues else PASS), issues
+
+
 def check_print_appendix_projection():
     """Guards the print/web appendix split against silent drift from catalogue-classification.json
     (audit-only first landing, rule-#55). The PRINT appendix emits a page only for the flagship subset; the
