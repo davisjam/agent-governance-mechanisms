@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>37</b> chapters · <b>265</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>37</b> chapters · <b>263</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -429,35 +429,27 @@
 <div class="outcomes"><div class="oc-h">After this lesson — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision — and place it on the hard-to-soft spectrum, feeding a hard number into a structured model the metric tool then consumes. <span class="prov">derived</span></span></li></ul></div>
 <div class="section s2" id="sec-2-5-metrics--measure-one-level-deeper">
 <div class="sec-h"><a href="../book/2.5-metrics.html">Measure one level deeper</a></div>
-<p class="topic">John Ousterhout gives the rule in one line [cite: ousterhout2018]: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.</p>
+<p class="topic">John Ousterhout names the rule [cite: ousterhout2018]: **always measure one level deeper** — one level, not as deep as you can go.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this section, the reader can apply Ousterhout&#x27;s rule and measure one level deeper than the surface number — reading a per-service cost split or a boot-time breakdown as a decision the invoice-level number buried. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-5-metrics--the-hard-end-cold-start-latency-machine-read-and-model-fed">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The hard end: cold-start latency, machine-read and model-fed</a></div>
-<p class="topic">Start at the deterministic end, where a metric is a millisecond number nobody argues about.</p>
+<p class="topic">Start at the deterministic end, where a metric is a deterministic quantity with a defined measurement procedure.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-analyze">analyze</span><span class="oc-text">After this section, the reader can analyze a hard, deterministic metric at the level where the decision lives — reading cold-start latency one level deeper to name runtime initialization rather than scale-from-zero, computing a longest-path worst case over a service graph, and feeding the number into a structured deployment model a recompute tool consumes. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-5-metrics--the-flagship-coverage-measured-one-level-deeper">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The flagship: coverage measured one level deeper</a></div>
-<p class="topic">Now the middle of the spectrum, and the chapter&#x27;s teaching example: the &quot;measure one level deeper&quot; rule applied to the number that most often gets it wrong.</p>
+<p class="topic">Now the middle of the spectrum: the &quot;measure one level deeper&quot; rule applied to the number that most often gets it wrong.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this section, the reader can compute coverage measured one level deeper — joining a traceability graph&#x27;s claim-to-anchor edges with the coverage oracle so the metric counts model claims instead of lines, names an unexercised invariant instead of a percentage, and reports an honest exercised/unmeasurable/out-of-surface breakdown. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-5-metrics--mmm-drain">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The dual: draining unmodelled code</a></div>
 <p class="topic">The flagship walks from a model claim *to* the code and asks whether a test exercises it.</p>
 </div>
-<div class="section s3" id="sec-2-5-metrics--the-same-graph-read-backward-a-lens-on-accidental-complexity">
-<div class="sec-h"><a href="../book/2.5-metrics.html">The same graph, read backward: a lens on accidental complexity</a></div>
-<p class="topic">The link graph that drain walks has a second use, and it comes for free.</p>
-</div>
 <div class="section s2" id="sec-2-5-metrics--the-soft-end-doc-derived-tests">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The soft end: doc-derived tests</a></div>
 <p class="topic">Slide to the far end of the spectrum, where the metric stops being a number a threshold can act on and becomes a judgment a human has to make.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-analyze">analyze</span><span class="oc-text">After this section, the reader can classify a soft metric — a doc-derived test&#x27;s coverage-of-doc-claims — as one that aims a reader rather than deciding, recognize why its softness is inseparable from a readiness judgment about the seam, and see why wiring it to a blocking gate manufactures hollow tests. <span class="prov">derived</span></span></li></ul></div>
-</div>
-<div class="section s3" id="sec-2-5-metrics--a-null-result-means-nothing-until-the-benchmark-can-discriminate">
-<div class="sec-h"><a href="../book/2.5-metrics.html">A null result means nothing until the benchmark can discriminate</a></div>
-<p class="topic">The most useful honesty in measurement is the one that catches you before you publish a comfortable non-result.</p>
 </div>
 <div class="section s2" id="sec-2-5-metrics--the-model-runs-the-machinery">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The model runs the machinery</a></div>

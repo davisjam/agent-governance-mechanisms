@@ -79,7 +79,7 @@
           },
           {
             "file": "book/2.5-metrics.html",
-            "occ": 12
+            "occ": 11
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",
@@ -1283,7 +1283,7 @@
           },
           {
             "file": "book/2.5-metrics.html",
-            "occ": 13
+            "occ": 12
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",
@@ -2019,7 +2019,7 @@
           },
           {
             "file": "book/2.5-metrics.html",
-            "occ": 58
+            "occ": 56
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",
@@ -2311,7 +2311,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 257
+            "occ": 256
           },
           {
             "file": "book/index.html",
@@ -4923,7 +4923,7 @@
           },
           {
             "file": "book/2.5-metrics.html",
-            "occ": 6
+            "occ": 5
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",

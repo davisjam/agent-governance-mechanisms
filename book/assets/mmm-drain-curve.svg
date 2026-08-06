@@ -1,75 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Hand-authored SVG (label: mmm-drain-curve). The Missing-Model-Metric orphan rate —
-     the share of tests whose exercised code reaches no model-anchored symbol — draining
-     over nine tracer re-runs as the model-loop modeled each biggest orphan cluster in
-     turn: 56 -> 55 -> 52 -> 39 -> 32.2 -> 30.1 -> 20.9 -> 14.9 -> 7.89 percent. The ninth
-     run crosses the dashed reference that marks the loop's <=10% target. Palette: Umber
-     Monograph tokens (governed #1f7a4d the drain line, muted #57534e the target reference,
-     rule #e4e0d8 gridlines, ink text). -->
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470"
      role="img" aria-labelledby="mmTitle mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="mmTitle">The Missing-Model-Metric drain</title>
   <desc id="mmDesc">A line chart falling from left to right. It plots the Missing-Model-Metric
     orphan rate — the fraction of tests whose exercised code reaches no model-anchored symbol —
-    across nine re-runs of the code-to-model tracer over the dispatch and orchestration test
-    population. Each re-run follows a model-loop Epic that modeled the biggest remaining orphan
-    cluster, so the orphan rate drains: 56 percent at the pilot, then 55, 52, 39, 32.2, 30.1,
-    20.9, 14.9, and 7.89 percent at the latest committed point. Code-to-model coverage rises as
-    the mirror image, from 44 to about 92 percent. A dashed line marks the loop's target of 10
-    percent or below; the final run crosses below it, and the residual orphans are glue code, so
-    the genuine-orphan rate is 0 percent. The population denominator drifts from 144 to 152 tests
-    across the runs, so the series is comparable but not a fixed-N replay.</desc>
+    across nine re-runs of the code-to-model tracer. Each re-run follows a model-loop Epic that
+    modeled the biggest remaining orphan cluster, so the orphan rate drains from 56 percent at the
+    pilot to 7.89 percent at the latest committed point, passing about 39 percent at the wave-1
+    interior. A dashed line marks the loop's target of 10 percent or below; the final run crosses
+    below it. Three anchor labels are shown — pilot, the wave-1 interior, and the final landing —
+    and the chapter's table carries the exact value at every run.</desc>
 
-  <!-- y gridlines (20% / 40%) + ticks; baseline at 0% -->
   <line x1="130" y1="280" x2="920" y2="280" stroke="#e4e0d8" stroke-width="1"/>
   <line x1="130" y1="180" x2="920" y2="180" stroke="#e4e0d8" stroke-width="1"/>
   <text x="118" y="284" text-anchor="end" font-size="16" fill="#57534e">20%</text>
   <text x="118" y="184" text-anchor="end" font-size="16" fill="#57534e">40%</text>
   <text x="118" y="384" text-anchor="end" font-size="16" fill="#57534e">0%</text>
 
-  <!-- x baseline (0%) -->
   <line x1="130" y1="380" x2="920" y2="380" stroke="#1c1917" stroke-width="1.5"/>
 
-  <!-- loop target reference at 10% -->
   <line x1="130" y1="330" x2="920" y2="330" stroke="#57534e" stroke-width="1.5" stroke-dasharray="6 5"/>
-  <text x="912" y="322" text-anchor="end" font-size="16" font-style="italic" fill="#57534e">loop target — orphan rate ≤ 10%</text>
+  <text x="138" y="322" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">loop target — orphan rate ≤ 10%</text>
 
-  <!-- the drain line: 56 -> 55 -> 52 -> 39 -> 32.2 -> 30.1 -> 20.9 -> 14.9 -> 7.89 (crosses target) -->
   <polyline points="130,100 228.8,105 327.5,120 426.3,185 525,219 623.8,229.5 722.5,275.5 821.3,305.5 920,340.6"
             fill="none" stroke="#1f7a4d" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
   <circle cx="130"   cy="100"   r="5" fill="#1f7a4d"/>
   <circle cx="228.8" cy="105"   r="5" fill="#1f7a4d"/>
   <circle cx="327.5" cy="120"   r="5" fill="#1f7a4d"/>
-  <circle cx="426.3" cy="185"   r="5" fill="#1f7a4d"/>
+  <circle cx="426.3" cy="185"   r="6.5" fill="#1f7a4d"/>
   <circle cx="525"   cy="219"   r="5" fill="#1f7a4d"/>
   <circle cx="623.8" cy="229.5" r="5" fill="#1f7a4d"/>
   <circle cx="722.5" cy="275.5" r="5" fill="#1f7a4d"/>
   <circle cx="821.3" cy="305.5" r="5" fill="#1f7a4d"/>
-  <circle cx="920"   cy="340.6" r="5" fill="#1f7a4d"/>
+  <circle cx="920"   cy="340.6" r="6.5" fill="#1f7a4d"/>
 
-  <!-- value labels above each point (the ninth sits below, clearing the target reference line) -->
-  <text x="130"   y="88"  text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">56%</text>
-  <text x="228.8" y="93"  text-anchor="middle" font-size="16" fill="#1f7a4d">55%</text>
-  <text x="327.5" y="108" text-anchor="middle" font-size="16" fill="#1f7a4d">52%</text>
-  <text x="426.3" y="173" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">39%</text>
-  <text x="525"   y="207" text-anchor="middle" font-size="16" fill="#1f7a4d">32.2%</text>
-  <text x="623.8" y="217" text-anchor="middle" font-size="16" fill="#1f7a4d">30.1%</text>
-  <text x="722.5" y="263" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">20.9%</text>
-  <text x="821.3" y="293" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">14.9%</text>
-  <text x="920"   y="360" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">7.89%</text>
+  <text x="130"   y="86"  text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">56%</text>
+  <text x="426.3" y="171" text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">39%</text>
+  <text x="920"   y="362" text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">7.89%</text>
 
-  <!-- x milestone labels -->
   <text x="130"   y="406" text-anchor="middle" font-size="16" fill="#57534e">pilot</text>
-  <text x="228.8" y="406" text-anchor="middle" font-size="16" fill="#57534e">baseline</text>
-  <text x="327.5" y="406" text-anchor="middle" font-size="16" fill="#57534e">C1·p4</text>
   <text x="426.3" y="406" text-anchor="middle" font-size="16" fill="#57534e">wave-1</text>
-  <text x="525"   y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-1</text>
-  <text x="623.8" y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-3</text>
-  <text x="722.5" y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-2</text>
-  <text x="821.3" y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-4</text>
-  <text x="920"   y="406" text-anchor="middle" font-size="16" fill="#57534e">residue-tidy</text>
+  <text x="920"   y="406" text-anchor="middle" font-size="16" fill="#57534e">landing</text>
 
-  <!-- axis caption -->
-  <text x="130" y="440" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">orphan rate (tests whose code reaches no model) · nine tracer re-runs, 2026-07-24 → 08-03 · N drifts 144→152</text>
+  <text x="130" y="440" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">orphan rate over nine tracer re-runs · exact value per run in the table</text>
 </svg>
