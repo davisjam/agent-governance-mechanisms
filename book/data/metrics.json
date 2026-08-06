@@ -54,5 +54,45 @@
   "_missing_model_pilot_note": "The Missing Model Metric pilot (the missing-model-metric pilot, Phase 1). Ran a code->model tracer over 144 tests in the dispatch/orchestration subsystem — deliberately the most heavily-modelled slice. missing_model_pilot_fraction=0.56: 56% of those tests exercise production code that traces to no invariant, state machine, or service edge. missing_model_pilot_test_count=144. The number is a LOWER bound (import-reach over-counts DETAILS_NODE). Sharpening finding: every orphan reached code anchored at the coarse Component level but with no fine behavioral model — a granularity gap. Surfaced three genuine candidate missing-models, down-weighted two missing-anchor clusters.",
   "missing_model_pilot_fraction": "0.56",
   "missing_model_pilot_percent": "56%",
-  "missing_model_pilot_test_count": "144"
+  "missing_model_pilot_test_count": "144",
+
+  "prod_growth_multiple": "eighteen-fold",
+  "orphan_after_first_epic": "39%",
+  "project_elapsed_period": "about five months",
+  "focused_study_period": "twenty weeks",
+  "intensive_build_period": "the mechanization-and-hardening core",
+  "measurement_snapshot": "2026-08-03",
+  "faculty_loaded_hourly_cost": "$67",
+
+  "ada_title_ii_since": "1990",
+  "doj_web_rule_year": "2024",
+  "doj_technical_standard": "WCAG 2.1 Level AA",
+  "doj_remediation_window": "two-year",
+  "doj_deadline": "April 24, 2026",
+  "lawsuit_settlement_range": "thousands to millions of dollars",
+
+  "_ledger_note": "Per-metric provenance ledger (§VII schema: metric ID / snapshot date / category def / source cmd / displayed rounding / consumers). `_`-prefixed so the loader strips it from {{token}} substitution — metadata only, zero renderer change. Miner-INDEPENDENT tokens land here now; the prod_loc/support_loc snapshot reconciliation to ONE canonical SHA (D1/D2) and prod_growth_multiple's exact decimal are miner-gated and land at Part-5 assembly.",
+  "_ledger": {
+    "prod_growth_multiple": {
+      "snapshot_date": "2026-08-03",
+      "category_def": "now-prod / prototype-prod (26,956), Production Code category",
+      "source_cmd": "derived: prod_loc / prototype-prod",
+      "rounding": "word-form 'eighteen-fold' — miner-independent (both 18.2x and 18.6x round to ~18x); the EXACT decimal (18.2 vs 18.6) rides the canonical prod_loc snapshot (D1) and is miner-gated",
+      "consumers": ["5.2#support-ratio", "data-claims:support-ratio-curve.gloss"]
+    },
+    "orphan_after_first_epic": {
+      "snapshot_date": "2026-08-03",
+      "category_def": "Missing-Model-Metric orphan rate after the first modeling wave (waypoint 'wave-1' of the nine-run drain, part2/2.5)",
+      "source_cmd": "part2/2.5 mmm-drain-table; data-claims:mmm-drain",
+      "rounding": "exact percent",
+      "consumers": ["5.4#orphan-waypoints"]
+    },
+    "project_elapsed_period": {"snapshot_date": "2026-08-03", "category_def": "first feasibility probe -> measurement snapshot (~March-August 2026)", "source_cmd": "study calendar span", "rounding": "word-form", "consumers": ["6.2"]},
+    "focused_study_period": {"snapshot_date": "2026-08-03", "category_def": "the measured window (2026-03-12 -> 2026-07-29, study_weeks=20)", "source_cmd": "commit histogram window", "rounding": "word-form", "consumers": ["5.2"]},
+    "intensive_build_period": {"snapshot_date": "2026-08-03", "category_def": "the hardest build stretch (mechanization + hardening core)", "source_cmd": "study windows", "rounding": "descriptive", "consumers": ["5.2", "5.4"]},
+    "measurement_snapshot": {"snapshot_date": "2026-08-03", "category_def": "the LoC / commit census date", "source_cmd": "categorized line-count + commit histogram", "rounding": "ISO date", "consumers": ["5.2"]},
+    "faculty_loaded_hourly_cost": {"snapshot_date": "2026-08-03", "category_def": "loaded (salary + benefits/overhead) research-faculty hourly cost; a book ESTIMATE derived to reconcile diy_cost_per_course ($20,000 / hours_per_course 300 = ~$67) — confirm salary-only vs loaded basis at Part-5 assembly", "source_cmd": "derived: diy_cost_per_course / hours_per_course", "rounding": "nearest dollar", "consumers": ["5.1#cost-inset"]},
+    "doj_deadline": {"category_def": "Title II web-content compliance deadline (large orgs; Purdue qualifies)", "source_cmd": "manuscript ch2:129/211 (DOJTitleIIWebMobileAccessibility2024)", "rounding": "exact date", "consumers": ["5.1", "5.2"]},
+    "lawsuit_settlement_range": {"category_def": "higher-ed ADA settlement cost range", "source_cmd": "manuscript ch2:93 (CarlsonHigherEdAccessibilityLawsuits)", "rounding": "word-form range", "consumers": ["5.1"]}
+  }
 }
