@@ -38,21 +38,16 @@ metric is classified — a genuine zero where collected, or simply absent where 
 
 ```mermaid
 flowchart LR
-  Stream([Telemetry stream]) --> Rec[(Provenance record: origin, landing, coverage vector)]
-  Rec --> Local{local: collected?}
-  Rec --> Stg{staging: collected?}
-  Rec --> Prod{prod: collected?}
-  Recon{{Drift gate}} -.->|reconcile vs real emit + collector config| Rec
-  Recon -->|declared-covered but uncollected| Gap{{Build finding}}
+  O[Origin: emit site] --> S[(Landing sink)]
+  S --> CV[Per-env coverage]
+  CV --> RG{Reconciled?}
+  RG -->|no| F([Coverage gap])
 ```
 
-*Accessible description: a telemetry stream is modeled as a provenance record naming its origin (what
-emits it), its landing sink, and a per-environment coverage vector stating whether the local, staging, and
-production planes each actually collect it. A drift gate reconciles the declared record against the real
-emit points and the collector configuration; a stream declared collected in an environment where the
-collector does not receive it is a build finding. The coverage vector also tells a genuine zero (collected,
-value zero) from an absent stream (never collected here), the exact confusion that makes missing telemetry
-dangerous.*
+*Accessible description: a telemetry stream's origin flows to its landing sink, tracked as per-environment
+coverage. Reconciling that coverage against the real collectors surfaces a coverage gap when a stream is
+declared collected somewhere it isn't — the confusion between a genuine zero and an absent stream that
+makes missing telemetry dangerous.*
 
 ### Sample Code
 

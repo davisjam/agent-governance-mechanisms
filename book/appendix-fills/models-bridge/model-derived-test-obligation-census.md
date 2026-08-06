@@ -37,21 +37,17 @@ surface reopens the gap until a test closes it.
 
 ```mermaid
 flowchart LR
-  Seam[(Seam model)] --> Derive[Derive obligation set]
-  Err[(Error-path model)] --> Derive
-  Inv[(Invariant model)] --> Derive
-  Derive --> Join{Match to test corpus}
-  Tests[(Existing tests)] --> Join
+  Models[(Model surfaces)] --> Derive[Derive obligations]
+  Tests[(Existing tests)] --> Join{Match}
+  Derive --> Join
   Join -->|matched| Covered([Covered])
-  Join -->|no test| Gap{{Gap finding: named, listable}}
+  Join -->|no test| Gap{{Gap: finding}}
 ```
 
-*Accessible description: three models that declare a testable surface — a seam model, an error-path model,
-and an invariant model — feed a derive step that computes the obligation set (seams to fuzz, failure edges
-to inject, invariants to check). Each derived obligation is matched against the existing test corpus. A
-matched obligation is covered; an obligation with no matching test is a named, listable gap finding.
-Because the obligation set is derived from the models, adding a surface regrows the denominator, so a new
-untested surface reappears as a gap until a test closes it.*
+*Accessible description: models that declare a testable surface — seam, error-path, invariant — feed a
+derive step that computes the obligation set; each obligation is matched against the existing tests. A
+match is covered; an obligation with no test is a named gap finding, and because the set is derived a new
+surface reopens the gap until a test closes it.*
 
 ### Sample Code
 

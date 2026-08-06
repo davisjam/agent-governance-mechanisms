@@ -38,21 +38,17 @@ deployed canary.
 
 ```mermaid
 flowchart LR
-  Lib[(Leaf-predicate library)] --> Closure[Typed closure: AND / OR / NOT over leaves]
-  Journey([Major journey]) --> Closure
-  Closure --> Derive{{Strength derivation}}
-  Derive -->|has a non-flow-only leaf| Closed([TASK_CLOSED])
-  Derive -->|every positive leaf flow-only| Flow{{FLOW_ONLY = build finding}}
-  Derive -->|spec switched off| Disabled([DISABLED])
+  Journey([Journey]) --> Closure[Closure expr]
+  Closure --> Derive{Derive strength}
+  Derive -->|real leaf| Closed([TASK_CLOSED])
+  Derive -->|flow-only| Flow([FLOW_ONLY])
+  Derive -->|off| Disabled([DISABLED])
 ```
 
-*Accessible description: a reviewed leaf-predicate library supplies the leaves for a journey's typed
-closure — a sealed boolean algebra of AND, OR, NOT over those leaves, each resolving to an
-accessibility-observable signal. A pure strength derivation reads the expression and returns a verdict:
-TASK_CLOSED when the closure holds at least one non-flow-only positive leaf, FLOW_ONLY when every positive
-leaf is flow-only (navigated-to-a-URL, a-2xx-route) which is a build finding for a major journey, and
-DISABLED when the spec that asserts it is switched off. Because the closure is typed, the same definition
-also drives a headless probe against the pre-promotion canary.*
+*Accessible description: a journey carries a typed closure expression over a shared leaf-predicate library;
+a pure derivation reads it and returns a strength verdict — TASK_CLOSED on a non-flow-only leaf, FLOW_ONLY
+when every positive leaf is flow-only (a build finding for a major journey), DISABLED when the asserting
+spec is switched off.*
 
 ### Sample Code
 

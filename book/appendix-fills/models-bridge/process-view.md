@@ -36,25 +36,16 @@ findings. The view is projected over the machine model and the lock registry, no
 
 ```mermaid
 flowchart LR
-  subgraph WorkerLane[Worker lane]
-    Req([Preemption requeue])
-    Sweep([Stale-sweep])
-  end
-  subgraph HandlerLane[Request-handler lane]
-    Prog([Progress writer])
-  end
-  Req <-->|race on chunk row| Sweep
-  Guard{{Guard: lock / atomic step}} -.->|serializes| Req
-  Guard -.->|serializes| Sweep
-  Check{{edge-to-guard join, both ways}} -.->|unguarded race or orphan lock = finding| Guard
+  PA[Process A] --> SR((Shared state))
+  PB[Process B] --> SR
+  SR --> G{Guarded edge?}
+  G -->|no| Bad([Unguarded race])
+  G -->|yes| OK([Serialized])
 ```
 
-*Accessible description: concurrent processes are grouped into lanes — a worker lane holding the preemption
-requeue and the stale-sweep, a request-handler lane holding the progress writer. A racing edge joins the
-requeue and the stale-sweep because both write the chunk row. Each racing edge names its guard — a lock,
-mediator, or atomic step that serializes it. A both-ways join check fails the build on an edge with no
-guard (an unprotected race) or a guard protecting no declared edge (a dead lock). The whole view is
-projected over the composed machines and the lock registry, so it cannot drift into a pretty diagram.*
+*Accessible description: two concurrent processes both touch one shared-state node, naming a racing edge.
+The edge is checked for a guard — unguarded, it is a race; guarded, it is serialized. The whole view is
+projected over the composed machines and the lock registry, so it cannot drift.*
 
 ### Sample Code
 

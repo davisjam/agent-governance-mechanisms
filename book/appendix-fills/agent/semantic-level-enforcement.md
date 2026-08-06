@@ -40,20 +40,17 @@ place the mechanism there. Below that rung the check is blind or false-fires; at
 decidable.
 
 ```mermaid
-flowchart TB
-  Prop[Property to enforce] --> Q{At what scope is<br/>the property legible?}
-  Q --> L1[Rung 1 · one changed file<br/>syntactic check]
-  Q --> L2[Rung 2 · reasoning over the diff]
-  Q --> L3[Rung 3 · whole worktree / final commit]
-  Q --> L4[Rung 4 · whole task on agent return]
-  L1 -. below legible scope .-> Miss([Misses, or false-fires])
-  L4 ==>|legible here| Fire([Mechanism decides correctly])
+flowchart BT
+  A["Syntactic diff-check"] --> B["Reasoning pass"]
+  B --> C["Whole-worktree commit"]
+  C --> D["Agent-return review"]
+  D --> E["Epic-close review"]
 ```
 
-*Accessible description: a property to enforce is matched against a ladder of placements ordered by widening
-scope — one changed file, reasoning over the diff, the whole worktree, the whole task on agent return. A
-mechanism placed below the scope at which the property is legible either misses it or false-fires on a partial
-state; a mechanism placed at the rung where the property is legible decides correctly.*
+*Accessible description: five rungs of a ladder, read bottom to top as increasing semantic scope —
+syntactic diff-check, reasoning pass over the diff, whole-worktree final commit, agent-return review,
+Epic-close intent review. A mechanism is placed at the lowest rung where the property it checks is legible,
+not the cheapest rung available.*
 
 ### Sample Code
 

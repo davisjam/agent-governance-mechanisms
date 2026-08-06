@@ -37,26 +37,18 @@ each declares a temporal form, and the form *derives* the checker it is routed t
 the declared states against the live lifecycle.
 
 ```mermaid
-flowchart TB
-  subgraph Machines[Composed state machines]
-    P([Parent job]) -. seam .-> C([Per-chunk])
-    C -. seam .-> F([Fan-in completer])
-  end
-  Machines --> Inv[Cross-machine invariants<br/>upload-before-terminal-write · exactly-one-completer]
-  Inv --> Form{Temporal form}
-  Form -->|safety: always P| SS[[Exhaustive state-space search]]
-  Form -->|liveness: P then Q| TC[[Temporal model checker]]
-  Form -->|linear order| PT[[Property test]]
-  Drift{{Drift gate}} -. reconcile declared vs live lifecycle .-> Machines
+flowchart LR
+  Parent["Parent job"] -->|fan-out| Chunk["Per-chunk"]
+  Chunk -->|fan-in| Completer["Completer"]
+  Inv{{Cross-machine invariant}}
+  Inv -.-> Parent
+  Inv -.-> Chunk
+  Inv -.-> Completer
 ```
 
-*Accessible description: three typed state machines — a parent job, a per-chunk machine, and a fan-in
-completer — are declared as one composed set joined at their handoff seams. Cross-machine invariants
-(upload-before-terminal-write, exactly-one-completer, and the rest) hang off the composition. Each
-invariant's temporal form routes it to a checker: a safety form to an exhaustive state-space search, a
-liveness form to a temporal model checker, a linear-ordering form to a property test. A drift gate
-reconciles the declared states against the live lifecycle vocabulary so a state the code reaches but the
-model omits reddens the gate.*
+*Accessible description: a parent-job machine fans out into a per-chunk machine, which fans back in to a
+completer machine; a cross-machine invariant spans all three, checked by the verifier its declared temporal
+form routes it to.*
 
 ### Sample Code
 

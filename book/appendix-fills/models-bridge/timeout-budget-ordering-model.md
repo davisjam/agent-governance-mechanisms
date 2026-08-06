@@ -40,23 +40,14 @@ the checked values are the used values.
 
 ```mermaid
 flowchart LR
-  subgraph Surface[One wall-clock-budget surface]
-    Req[request timeout]
-    Worker[worker deadline]
-    Lock[lock wait]
-  end
-  Nest[(Declared nesting pairs)] --> PropTest{{Property test: each inner budget shorter than its container}}
-  Surface --> PropTest
-  PropTest -->|an inversion| Finding{{Build finding}}
-  Surface -.->|single-sourced| Consumers([Consumers read the budget])
+  Req["Request timeout"] -->|contains| Worker["Worker deadline"]
+  Worker -->|contains| Lock["Lock wait"]
+  Req & Worker & Lock -->|inner strictly less| Prop{{Property test}}
 ```
 
-*Accessible description: request timeouts, worker deadlines, and lock waits live together in one declared
-budget surface rather than scattered across files. A set of declared nesting pairs — which operation runs
-inside which — feeds a property test that asserts each inner budget is strictly shorter than its container,
-across every declared pair and any future edit. An inversion (an inner budget raised past its outer one) is
-a build finding. Consumers source their timeout from the single surface, so the budgets the check reasons
-over are the budgets the running pipeline enforces.*
+*Accessible description: a request timeout contains a worker deadline, which contains a lock wait — a
+nesting chain — and a property test proves, for every declared pair, that the inner budget is strictly
+less than the outer one it sits inside.*
 
 ### Sample Code
 

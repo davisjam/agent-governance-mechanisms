@@ -39,24 +39,16 @@ by construction.
 
 ```mermaid
 flowchart LR
-  Evt([Turn-end / stop event]) --> Hook{{Reflection hook<br/>≤ once per window}}
-  Rec([Recurrence: 2nd occurrence]) --> Hook
-  Hook --> Name[Name the failure CLASS]
-  Name --> Pick{Constraint<br/>buildable?}
-  Pick -->|prefer| Con[Typed seam / closed enum<br/>— wrong move unrepresentable]
-  Pick -->|else| Sen[Lint / gate / test / hook<br/>— detect and fail]
-  Con --> Scaffold[/Scaffold; human or harness installs/]
-  Sen --> Scaffold
-  Scaffold --> Index[(Bounded rule index)]
-  Audit{{Design-time audit}} -.->|prevent by construction| Con
+  Trig(["Turn-end hook<br/>≤1/window"]) --> A["Recurrence: 2nd time"]
+  A --> B["Classify the class"]
+  B -->|constraint > sensor| C["Install control"]
+  C -->|prevents next recurrence| A
 ```
 
-*Accessible description: a turn-end event and a recurrence signal both feed a reflection hook that fires
-at most once per window — the hard, deterministic half. The hook prompts the soft loop: name the failure
-class, then decide whether a constraint is buildable; if so emit a typed seam or closed enum that makes
-the wrong move unrepresentable, else emit a sensor (lint, gate, test, hook) that detects and fails it.
-Either way the scaffolded control is handed to a human or the harness to install into the bounded rule
-index. A design-time audit prevents a class by construction before it is ever felt.*
+*Accessible description: a turn-end hook, firing at most once per window, drives a four-step loop — a
+failure recurs a second time, the class is named, the smallest durable control is chosen (a constraint
+preferred, a sensor as fallback) and installed, and that installed control prevents the next recurrence,
+closing the cycle.*
 
 ### Sample Code
 

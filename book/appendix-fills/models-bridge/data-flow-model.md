@@ -37,21 +37,15 @@ and edges against the real storage and transfer sites.
 
 ```mermaid
 flowchart LR
-  subgraph Graph[Typed sink-and-edge graph]
-    DB[(Database)] --> Cache[(Cache)]
-    DB --> Logs[(Log stream)]
-    Cache --> Vendor[(Third-party vendor)]
-  end
-  Eval{{Policy evaluator}} -.->|erasable? permitted-flow? retention?| Graph
-  Recon{{Drift gate}} -.->|reconcile vs real write and transfer sites| Graph
+  DB[(DB)] --> Cache[(Cache)]
+  Cache --> Vendor[(Vendor)]
+  Eval{Evaluator} -.-> DB
+  Drift{{Drift gate}} -.-> Cache
 ```
 
-*Accessible description: a typed graph of data sinks — a database, a cache, a log stream, a third-party
-vendor — joined by edges that move data between them, each node and edge typed by data category. A policy
-evaluator walks the graph to answer properties no flat list can express: is every personal-data sink
-erasable, does any path carry a category into a forbidden sink kind, is retention honored. A drift gate
-reconciles the declared sinks and edges against the real storage and transfer sites, so a store added in
-code without a model node reddens the gate.*
+*Accessible description: a typed graph of data sinks joined by transfer edges — here a database, a cache,
+and a vendor. A policy evaluator walks the graph to check erasability, permitted-flow, and retention, and a
+drift gate reconciles the declared sinks against the real storage and transfer sites.*
 
 ### Sample Code
 

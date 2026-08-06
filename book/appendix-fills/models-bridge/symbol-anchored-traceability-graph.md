@@ -41,22 +41,15 @@ bidirectionally traversable.
 
 ```mermaid
 flowchart LR
-  Lint{{Enforcing lint}} -->|enforced-by| Model[Model element]
-  Model -->|governs| Code[(Code root)]
-  Proof[[Proof / checker run]] -->|verified-by| Model
-  Reg[(Registry)] -->|derived-from| Model
-  Model -->|points-at live impl| Reg
-  Anchor([Every edge ends on a resolvable SymbolAnchor: path, symbol, resolver — no line number]) -.-> Model
-  Meta{{Meta-lint}} -.->|re-resolve each anchor at DoD cadence; redden on a broken one| Model
+  M[Model element] --> SA((Symbol anchor))
+  SA --> C[Code site]
+  L{{Meta-lint}} -->|re-resolves| SA
+  L -->|broken| F([Drift finding])
 ```
 
-*Accessible description: a central model-element node is joined to four other node genres by typed,
-closed-vocabulary edges — enforced-by its lint, governs its code root, verified-by its proof or checker
-run, derived-from its registry, and points-at the live implementation. Every edge terminates on a
-resolvable SymbolAnchor of (path, symbol, resolver) that carries no line number, so it survives a refactor
-above it. A meta-lint re-resolves each anchor at definition-of-done or audit cadence and reddens a broken
-one. The same resolving anchors let an agent traverse the graph both ways — code to model, or model to
-code — on one index.*
+*Accessible description: a model element points to a symbol anchor, which resolves to a code site. A
+meta-lint re-resolves the anchor at check time; a broken anchor becomes a drift finding. The same resolving
+anchors make the graph traversable both ways — code to model, or model to code.*
 
 ### Sample Code
 

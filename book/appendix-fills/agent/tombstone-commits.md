@@ -31,16 +31,14 @@ live-marker guard refuses a working agent, and cleanup reads the record as its s
 
 ```mermaid
 flowchart LR
-  Close[/Worktree close/] --> Guard{Live marker present?}
-  Guard -->|yes| Refuse([Refuse to tombstone])
-  Guard -->|no| Write[Write tombstone + disposition]
-  Write --> Cleanup{Tombstone + all commits landed?}
-  Cleanup -->|yes| Reclaim([Safe to reclaim])
+  Live["Live (marker set)"] -->|agent finishes| Tomb["Tombstoned (disposition)"]
+  Live -->|still live| Live
+  Tomb -->|cleanup-stale verifies| Reclaimed["Reclaimed"]
 ```
 
-*Accessible description: a worktree close first checks the live marker and refuses to tombstone a working
-agent; otherwise it writes a tombstone carrying the disposition, and cleanup reclaims the directory only
-when a tombstone tips the branch and every non-tombstone commit is cherry-picked or declared skipped.*
+*Accessible description: a worktree starts Live with its marker set; the guard refuses to tombstone it
+while it stays live (self-loop); once the agent finishes, a tombstone commit records the disposition, and
+cleanup-stale verifies that record before the worktree is reclaimed.*
 
 ### Sample Code
 

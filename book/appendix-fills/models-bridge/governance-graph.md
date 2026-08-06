@@ -38,23 +38,16 @@ drift lint re-resolves each node's code anchor to hold the graph equal to the wi
 
 ```mermaid
 flowchart LR
-  M1([Mechanism A<br/>fires-on · reads/writes/locks]) --> R((Shared resource))
-  M2([Mechanism B<br/>fires-on · reads/writes/locks]) --> R
-  R --> Edge{{Conflict edge<br/>contradiction · contention · ordering · soft-vs-hard}}
-  Edge --> Nat{Derived nature}
-  Nat -->|decidable| Lint[Consistency lint / check-new]
-  Nat -->|judgment| Human[Human prompt]
-  Drift{{Drift lint}} -.->|re-resolve anchor| M1
-  Drift -.->|re-resolve anchor| M2
+  M1([Mechanism A]) --> R((Resource))
+  M2([Mechanism B]) --> R
+  R --> Edge{{Conflict edge}}
+  Edge -->|decidable| Lint[Lint]
+  Edge -->|judgment| Human[Human]
 ```
 
-*Accessible description: two mechanism nodes, each tagged by its firing event and its typed
-read/write/lock footprint, both touch one shared resource. Their collision is a typed conflict edge in a
-closed four-value taxonomy — contradiction, contention, ordering, soft-versus-hard. The edge's nature is
-derived from its conflict type: a mechanically decidable edge (contention, ordering) routes to a
-consistency lint or the pre-wiring check-new query; a judgment edge (contradiction, soft-versus-hard)
-routes to a human prompt. A drift lint re-resolves each node's code anchor so the graph tracks the wired
-mechanisms.*
+*Accessible description: two mechanism nodes collide on one shared resource, forming a typed conflict edge
+in a closed taxonomy — contradiction, contention, ordering, soft-versus-hard. The edge's nature routes it:
+a decidable edge to a consistency lint, a judgment edge to a human prompt.*
 
 ### Sample Code
 

@@ -39,18 +39,15 @@ oracles), and a stable output point becomes the oracle a fuzzer checks against.
 
 ```mermaid
 flowchart LR
-  Producer([Producer: handler / emitter / subcommand]) -->|reconcile| Surface[(Typed contract surface: fields + policy metadata)]
-  Consumer([Consumer: client / parser / script]) -->|reconcile| Surface
-  Gate{{Drift gate}} -.->|producer or consumer diverges = finding| Surface
-  Surface -.->|stable output point| Oracle[[Fuzz oracle]]
+  P[Producer shape] --> CS{{Contract surface}}
+  C[Consumer expects] --> CS
+  CS --> G{Both match?}
+  G -->|no| F([Build finding])
 ```
 
-*Accessible description: a typed contract surface holds the boundary's field shapes plus policy metadata —
-which endpoints are public, what auth each demands, which output points are stable. The producer that
-serves the endpoint, emits the marker, or prints the JSON reconciles against the surface; so does the
-consumer that calls, parses, or reads it. A drift gate fails the build when either side diverges from the
-declared shape, so a breaking change is caught at the edit rather than in production. A stable output point
-declared on the surface becomes the oracle a fuzz campaign checks generated output against.*
+*Accessible description: a producer's real shape and a consumer's expectation both reconcile against one
+declared contract surface, which carries policy metadata too. A mismatch on either side is a build finding,
+caught at the edit rather than in production.*
 
 ### Sample Code
 

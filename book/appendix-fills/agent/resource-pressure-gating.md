@@ -34,17 +34,16 @@ callable for operator judgment.
 
 ```mermaid
 flowchart LR
-  Monitor[(Pressure signal<br/>GREEN/YELLOW/RED)] --> Admit{Admission gate}
-  Monitor --> Shed{Execution shed}
-  Monitor --> Advise([Advisory read])
-  Admit -->|RED| Defer([Refuse / defer dispatch])
-  Shed -->|RED| Stop([Shed running job])
+  Sig{{Pressure signal}} --> Admit{Admit?}
+  Sig --> Shed{Shed?}
+  Sig --> Advise([Advisory read])
+  Admit -->|RED| Defer([Defer dispatch])
+  Shed -->|RED| Stop([Shed job])
 ```
 
-*Accessible description: one host-pressure signal feeds three readers — an admission gate that refuses or
-defers a heavy dispatch under RED before a worktree exists, an execution shed that stops a running heavy
-job under RED, and an advisory callable the operator consults — so heavy work is neither started into nor
-left running on an overloaded host.*
+*Accessible description: one pressure signal feeds three readers — an admission gate, an execution shed,
+and an advisory read. Both gates refuse or shed work under a RED reading, so heavy work is neither started
+into nor left running on an overloaded host.*
 
 ### Sample Code
 

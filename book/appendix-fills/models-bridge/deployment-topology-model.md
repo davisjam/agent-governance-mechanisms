@@ -32,21 +32,17 @@ the parts by runtime boundary; parity lints check the declared topology against 
 and imports.
 
 ```mermaid
-flowchart TB
-  subgraph Host ["Build host"]
-    T[Test serializer]
-    B[Build semaphore]
-  end
-  subgraph Cluster ["Runtime cluster"]
-    Web[Web] --> Q[(Queue)]
-    Q --> Wk[Worker]
-  end
-  Host -->|produces image| Cluster
+flowchart TD
+  Topo["Topology: where svc runs"]
+  Tier["Tier: service class"]
+  Bound["Layer bounds"]
+  Topo & Tier & Bound --> Lint{Parity / boundary lint}
+  Lint -->|divergence| Fail([Build finding])
 ```
 
-*Accessible description: a build host runs the test serializer and build semaphore and produces the image
-that the runtime cluster deploys, where the web service enqueues onto a queue drained by a worker. The
-model declares this placement; parity lints hold it to the real deploy tables.*
+*Accessible description: three typed sub-models — the deployment topology (where each service runs), the
+service-tier classification, and the layer-boundary contracts (which layer may import which) — each feed a
+parity or boundary lint; any divergence from the declared model is a build finding.*
 
 ### Sample Code
 

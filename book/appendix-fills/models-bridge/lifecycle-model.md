@@ -37,23 +37,16 @@ predicates are evaluated against the live substrate.
 
 ```mermaid
 flowchart LR
-  subgraph Model[Typed lifecycle map]
-    L1[manage-agents]
-    L2[manage-context]
-    L3[manage-deploy]
-    L4[cron plane]
-  end
-  Symptoms[(Symptom rows, keyed to a lifecycle)] --> Model
-  Model --> Gen[/Generate operator runbook/]
-  Health{{Healthy predicate}} -.->|evaluate vs live substrate| Model
+  L1[Manage-agents]
+  L2[Manage-deploy]
+  L3[...more lifecycles]
+  L1 & L2 & L3 -->|healthy predicate| Check{Predicate checks}
+  Check --> Runbook[/Generated runbook/]
 ```
 
-*Accessible description: a typed map of named operating lifecycles — manage-agents, manage-context,
-manage-deploy, the cron plane, and the rest — each a node with a one-line mechanics summary. A catalog of
-symptom rows, each keyed to the lifecycle it belongs to, hangs off the map, so troubleshooting is sorted by
-the system's real structure. The operator runbook is generated from the nodes and their symptom rows, a
-projection of the model rather than a parallel document. Each lifecycle's healthy-state predicate is
-evaluated against the live substrate, so "is this lifecycle well?" is a check, not a vibe.*
+*Accessible description: each named operating lifecycle — manage-agents, manage-deploy, and others —
+carries a machine-checkable healthy-state predicate; those predicates feed a generation step that projects
+the operator's runbook, so the prose cannot drift from the map.*
 
 ### Sample Code
 

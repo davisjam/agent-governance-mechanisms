@@ -31,16 +31,15 @@ and a cleanup gate queries a chain of it before reclaiming anything.
 
 ```mermaid
 flowchart LR
-  Tools[Lifecycle tools] -->|dual-write| Log[(Append-only registry)]
-  Tools -->|dual-write| Cache[(Marker cache)]
-  Log -->|authoritative| Gate{cleanup / tombstone gate}
-  Cache -->|fast index| Gate
-  Gate -->|marker present = live| Refuse([Refuse to reclaim])
+  Tools[Lifecycle tools] -->|dual-write| Log[(Registry log)]
+  Log -->|authoritative| Gate{3-gate chain}
+  Gate -->|marker live| Refuse([Refuse reclaim])
+  Gate -->|no marker| OK([Reclaim OK])
 ```
 
-*Accessible description: every lifecycle tool dual-writes an append-only registry and a fast marker cache;
-the registry is authoritative and the cache a fast index; a cleanup or tombstone gate reads them and
-refuses to reclaim any agent whose live marker is present.*
+*Accessible description: every lifecycle tool dual-writes an append-only registry log; a three-gate chain
+reads it before any reclaim, refusing to touch an agent whose live marker is set and permitting reclaim
+otherwise.*
 
 ### Sample Code
 

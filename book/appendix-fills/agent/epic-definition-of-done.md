@@ -31,16 +31,16 @@ now and checks each cited commit is reachable, closing only when the re-derived 
 
 ```mermaid
 flowchart LR
-  Claims[/Phase markers, prior claims/] -.->|distrusted| Gate{DoD re-run at HEAD}
-  Pins[(Owned pins + lints)] -->|re-run now| Gate
-  Commits[(Cited commits)] -->|reachability / patch-id| Gate
-  Gate -->|all green| Close([Epic closes])
-  Gate -->|any red| Hold([Close refused])
+  Claims[Old claims] -.-> Gate{Re-run at HEAD}
+  Pins[(Pins+lints)] --> Gate
+  Commits[(Commits)] --> Gate
+  Gate -->|green| Close([Closed])
+  Gate -->|red| Hold([Refused])
 ```
 
 *Accessible description: the definition-of-done gate distrusts recorded phase markers, re-runs the Epic's
 owned pins and lints at HEAD, and checks each cited commit is reachable; the Epic closes only when the
-re-derived verdict is green and is held otherwise.*
+re-derived verdict is green and is refused otherwise.*
 
 ### Sample Code
 

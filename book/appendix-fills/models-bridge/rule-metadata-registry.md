@@ -37,20 +37,14 @@ cross-check flags a block citing an enforcer that doesn't exist or a detail poin
 
 ```mermaid
 flowchart LR
-  Doc[(Governance document: inline metadata block per rule)] --> Extract[/Extract blocks/]
-  Extract --> Reg[(Typed rule registry)]
-  Reg --> Query{{Query: which rules have an enforcer? govern this subtree?}}
-  Reg --> Xcheck{{Cross-check}}
-  Xcheck -.->|enforcer missing or detail pointer dangles = finding| Reg
+  Rule[Rule + metadata block] -->|extract| Reg[(Rule registry)]
+  Reg -->|query| Ask{{Which rules enforce X?}}
+  Reg -->|cross-check| Bad([Dangling enforcer?])
 ```
 
-*Accessible description: a governance document carries an inline machine-readable metadata block on each
-rule — a stable identifier, the rule's scope, its severity, the check that enforces it, and where its full
-detail lives. A build step extracts every block into a typed rule registry, turning the document into a
-queryable model. Aggregate questions — which rules have an automated enforcer, which govern a subtree,
-which are blocking — are answered by walking the registry rather than re-reading the prose. A cross-check
-flags a rule whose block cites an enforcer that no longer exists, or whose detail pointer dangles, so the
-document cannot claim enforcement the system doesn't have.*
+*Accessible description: each governance rule carries an inline metadata block; a build step extracts
+those blocks into a typed rule registry that tooling queries directly, and cross-checks against the real
+enforcers it cites, flagging any rule whose claimed enforcer no longer exists.*
 
 ### Sample Code
 
