@@ -55,7 +55,7 @@
     "observable": "Support-apparatus LoC divided by production LoC at four dated commits (prototype / mechanization / hardening / now): 0.85 -> 2.48 -> 3.68 -> 3.06.",
     "data_source": "A categorized line-count tool (run-cloc) with today's category map applied to four historical worktrees via ADA_CLOC_SCAN_ROOT (contamination-free /tmp clone, tool files never inside the counted tree); SHAs c55f3637 (prototype 04-09), e0f10aea (mechanization 05-31), b1a4c1d4 (hardening 06-30), 07af718a (now 08-03).",
     "limitation": "LoC is a coarse proxy for effort; ~20% by-design side-trees (root configs, assets, non-primary tests, the book itself) sit outside the census; single-repo, single-author-fleet — a revealed preference, not a controlled comparison of governed vs. ungoverned development. The final-window dip is production growing faster (+45%), not support falling (still +21%). Render location + holds pins land in W4.",
-    "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): governance investment led and kept pace with the fleet, crossing from sub-parity to ~3x while production LoC grew ~47x — the build-the-environment-first revealed preference."
+    "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): governance investment led and kept pace with the fleet, crossing from sub-parity to ~3x while production LoC grew ~18x — the build-the-environment-first revealed preference."
   },
   "model-sync-efficacy": {
     "source": "3.8-keeping-models-in-sync",
@@ -71,13 +71,13 @@
   "mmm-drain": {
     "source": "2.5-metrics",
     "anchor": "mmm-drain",
-    "holds": ["56%", "39%", "20.9%", "14.9%"],
-    "status": "partial",
+    "holds": ["56%", "55%", "52%", "39%", "32.2%", "30.1%", "20.9%", "14.9%", "7.89%"],
+    "status": "final",
     "spine_claim": "modeling-thesis",
-    "observable": "The Missing-Model-Metric orphan rate (share of tests whose exercised code reaches no model-anchored symbol) draining as subsystems get modeled: 56% -> 55% -> 52% -> 39% -> 32.2% -> 30.1% -> 20.9% -> 14.9%.",
+    "observable": "The Missing-Model-Metric orphan rate (share of tests whose exercised code reaches no model-anchored symbol) draining as subsystems get modeled across nine tracer re-runs: 56% -> 55% -> 52% -> 39% -> 32.2% -> 30.1% -> 20.9% -> 14.9% -> 7.89%.",
     "data_source": "A code->model tracer (the MMM pilot tracer, trace.py) re-run over the dispatch/orchestration test population (~144-148 tests) after each model-loop Epic modeled the biggest remaining orphan cluster; sources in the missing-model-metric Epic docs + STRATEGY.",
     "limitation": "The population denominator drifts 144->148 across runs, and the first (56%) point was subsystem-scoped — comparable, not a fixed-N series; the cost-rollup cluster's exact landing point is not separately enumerated. A fixed-N reproducible replay is parked (see results log). Render + holds pins land in W4.",
-    "gloss": "The Missing-Model-Metric drain: orphan (code-unmodelled) rate falling from 56% to 14.9% as the model-loop modeled each biggest orphan cluster in turn — code-to-model coverage rising to ~85%."
+    "gloss": "The Missing-Model-Metric drain: orphan (code-unmodelled) rate falling from 56% to 7.89% across nine tracer re-runs as the model-loop modeled each biggest orphan cluster in turn — code-to-model coverage rising to ~92%."
   },
   "churn": {
     "source": "5.2-the-timeline-and-the-work",
