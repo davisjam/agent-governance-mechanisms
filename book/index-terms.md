@@ -384,7 +384,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: service-flow-model | section
 - term: domain-registries | section
 - term: concurrency | section
-- term: inheritance-hierarchy | local
+- term: type-hierarchy | local
 - term: wiring | local
 - term: access-policy | local
 - term: contract-parity | local

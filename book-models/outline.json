@@ -2467,7 +2467,7 @@
           "section_id": "domain-registries",
           "level": 2,
           "heading_text": "The domain registries",
-          "topic_sentence": "The domain registries are the frozen tables the service-flow model rests on: the file types the system handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces.",
+          "topic_sentence": "The domain registries are the frozen tables the service-flow model rests on — the file types the system handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces.",
           "id_source": "explicit",
           "block_index": 31,
           "points": [
@@ -2486,8 +2486,8 @@
           "block_index": 1
         },
         {
-          "slug": "two-general-types-and-two-real-models-carry-the-view",
-          "text": "Two general types and two real models carry the view.",
+          "slug": "the-logical-view-is-embodied-by-service-flow-and-registries",
+          "text": "Data-flow and type-hierarchy forms; DocAble uses service-flow and registries.",
           "block_index": 4
         },
         {
@@ -2497,7 +2497,7 @@
         },
         {
           "slug": "an-inheritance-hierarchy-shows-what-kinds-the-system-handles",
-          "text": "An inheritance hierarchy shows which specializations exist.",
+          "text": "Type hierarchy is the companion form, named and set aside.",
           "block_index": 11
         }
       ]
