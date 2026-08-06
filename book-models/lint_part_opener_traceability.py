@@ -77,9 +77,26 @@ def _opener_declarations() -> "dict[int, list[str]]":
     return out
 
 
+_IDENTITY = os.path.join(_HERE, "chapter_identity_declared.json")
+_LABEL_TO_PART: "dict[str, int] | None" = None
+
+
 def _part_of(slug: str) -> "int | None":
+    """The Part number for a chapter key. chapter-shape.json keys chapters by the number-free identity LABEL
+    now, so resolve the label to its filename's N.M- prefix (via the identity table); fall back to the `N.`
+    prefix for a still-numbered slug (half-migration). A key with neither is None (skipped)."""
     m = _PART_PREFIX_RE.match(slug)
-    return int(m.group("part")) if m else None
+    if m:
+        return int(m.group("part"))
+    global _LABEL_TO_PART
+    if _LABEL_TO_PART is None:
+        decl = json.loads(open(_IDENTITY, encoding="utf-8").read())
+        _LABEL_TO_PART = {}
+        for c in decl.get("chapters", []):
+            pm = _PART_PREFIX_RE.match(os.path.basename(c["filename"]))
+            if pm:
+                _LABEL_TO_PART[c["label"]] = int(pm.group("part"))
+    return _LABEL_TO_PART.get(slug)
 
 
 def findings() -> "list[str]":

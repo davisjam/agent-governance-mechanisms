@@ -735,7 +735,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 46
+            "occ": 40
           },
           {
             "file": "catalogue-figure.html",
@@ -1675,7 +1675,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 30
+            "occ": 28
           },
           {
             "file": "catalogue-figure.html",
@@ -2759,7 +2759,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 114
+            "occ": 100
           },
           {
             "file": "catalogue-figure.html",
@@ -3203,7 +3203,7 @@
         "website-misc": [
           {
             "file": "book-models/models-view.html",
-            "occ": 2
+            "occ": 1
           }
         ]
       }
@@ -4893,7 +4893,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 15
+            "occ": 11
           },
           {
             "file": "constructing-the-gee.html",
