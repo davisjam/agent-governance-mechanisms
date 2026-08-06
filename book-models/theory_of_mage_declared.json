@@ -23,16 +23,16 @@
       "id": "agentic-capacity",
       "role": "exogenous-driver",
       "name": "Agentic capacity",
-      "gloss": "Model capability, concurrency, and raw implementation rate. The amplifier: velocity clusters latent weakness in time, so failure classes that would arrive months apart under human-paced work land in a single afternoon, close enough to see the structure they share."
+      "gloss": "Model capability, concurrency, and raw implementation rate. The amplifier: velocity clusters latent weakness in time, so failure classes that would arrive months apart under human-paced work land in a single afternoon, close enough to see the structure they share. Distinguish the INTRINSIC driver — the foundation model's inherent ability, exogenous to the loops — from DEPLOYED agentic capacity (feasible task size, concurrency, ambition), which the environment raises: the purple capability-amplification loop feeds back into deployed capacity — the frontier the operator dares attempt — not the model's intrinsic capability."
     },
     {
       "id": "governed-environment-quality",
       "role": "latent-intermediate",
       "name": "Effective governed-environment quality (E)",
-      "gloss": "The degree to which the environment gives agents a current, task-relevant representation of the system together with coherent, proportionate, machine-actionable coverage of its important obligations. A QUALITY, not a quantity — apparatus count is an indicator, not a substitute.",
+      "gloss": "The degree to which the environment gives agents a current, task-relevant representation of the system together with coherent, proportionate, machine-actionable coverage of its important obligations. A QUALITY, not a quantity — apparatus count is an indicator, not a substitute. Read E as a conceptual STATE VECTOR E = (R, C, H, Q) over its four dimensions — representation quality, enforcement coverage, coherence, and economy — not a measured scalar index the case could report; a large apparatus raises a dimension of E only when it is coherent, economical, and actually covers the obligations that matter, and can instead be duplicated machinery, stale enforcement, or a tower of governance that lowers E while the control count climbs.",
       "dimensions": [
         {"id": "representation-quality", "question": "Are the relevant properties legible in the environment's current models?"},
-        {"id": "enforcement-coverage", "question": "Are the important known obligations held mechanically, not merely watched?"},
+        {"id": "enforcement-coverage", "question": "Are important obligations covered by controls proportionate to their decidability and risk — hard mechanisms where they fit, judgment-based review where they do not?"},
         {"id": "coherence", "question": "Do the mechanisms compose without harmful collision or duplication?"},
         {"id": "economy", "question": "Is the governance burden proportionate to the risk and value it controls?"}
       ]
@@ -65,7 +65,7 @@
       "id": "governance-adaptation",
       "role": "capability",
       "name": "Governance adaptation",
-      "gloss": "The repertoire that changes E: model (make structure legible), convert (a recurring failure into a durable mechanism), strengthen (weak guidance into harder enforcement), reconcile (duplicated/conflicting controls), retire (stale or net-harmful governance). Subtractive as well as additive."
+      "gloss": "The repertoire that changes E: represent (make structure legible), convert (a recurring failure into a durable mechanism), strengthen (weak guidance into harder enforcement), reconcile (duplicated/conflicting controls), retire (stale or net-harmful governance). Subtractive as well as additive."
     }
   ],
 
@@ -104,7 +104,7 @@
       "color": "purple",
       "type": "reinforcing",
       "type_note": "A REINFORCING loop (see R-loop below): self-amplifying, keeps moving the target.",
-      "reading": "A stronger environment enables bigger tasks, more concurrency, more ambitious requirements, cheaper refactoring, denser use of capacity. The expanded frontier exposes new failure classes and reopens the loop. This is why MAGE does not terminate."
+      "reading": "A stronger environment raises DEPLOYED agentic capacity — feasible task size, more concurrency, more ambitious requirements, cheaper refactoring, denser use of capacity — the frontier the operator dares attempt, NOT the foundation model's intrinsic capability. The expanded frontier exposes new failure classes and reopens the loop. This is why MAGE does not terminate."
     }
   ],
 
@@ -204,7 +204,7 @@
       "statement": "Software engineering is a long-horizon reasoning task. Productivity degrades once the working reasoning state a task requires exceeds the effective reasoning horizon of the human-agent system. Executable models extend that horizon by replacing implementation-level state with semantically richer abstractions whose properties preserve more information under repeated compaction.",
       "falsifier": "Holding task and recall fixed, reasoning over a task-relevant model yields no reduction in reconstruction cost or churn versus reasoning over the implementation, and no gain that widens as the required reasoning state grows.",
       "frame": "offered-for-replication",
-      "bounded_claim": "MAGE moves the scalability wall; it does not remove it. Models raise the level at which reasoning occurs, delaying the point at which working memory becomes the bottleneck; beyond it, further decomposition and modularity become unavoidable.",
+      "bounded_claim": "MAGE moves the scalability wall; it does not remove it. Models raise the level at which reasoning occurs, delaying the point at which working memory becomes the bottleneck; beyond it, further decomposition and modularity become unavoidable. The horizon extends ONLY when the model is task-relevant, adequately complete, synchronized, usable by the agent, and cheaper to interpret than reconstructing the same facts from code; a model that fails those conditions SHORTENS the effective horizon — it confidently routes reasoning toward a stale or wrong picture the agent then pays to detect and undo.",
       "formalized_by": "H4-representation-leverage",
       "reading": "The named theory STATEMENT that H4 encodes as a falsifiable HYPOTHESIS. The proposition names the mechanism — a finite reasoning horizon that models extend by acting as better compression domains — and states the limit MAGE draws from it. H4 supplies the testable prediction; the proposition supplies the mechanism and its bound. Registered offered-for-replication (the chapter's global hedge), so it is honestly situated, not asserted."
     },
@@ -214,7 +214,7 @@
       "statement": "Governed engineering environments exhibit increasing returns. As recurring engineering judgment is converted into durable mechanisms, an increasing fraction of future engineering effort can be spent extending capability rather than re-solving previously understood problems, so the environment becomes progressively more capable of supporting safe change — for as long as the accumulated capital stays fit.",
       "falsifier": "As effective conversion coverage grows, the fraction of future effort available to extend capability does not rise and per-change cost does not fall.",
       "frame": "offered-for-replication",
-      "bounded_claim": "The returns are increasing, not unbounded, and they attach to engineering capital (quality), not apparatus quantity. Two ways accumulation stops compounding: apparatus pushed past the point of fit (the tower-of-governance band of the churn curve) and capital that outlived its fit. That is why mature adaptation is subtractive — reconcile and retire manage capital depreciation, not merely bad apparatus.",
+      "bounded_claim": "The returns compound but are not unbounded, and they attach to engineering capital (quality), not apparatus quantity. Two ways accumulation stops compounding: apparatus pushed past the point of fit (the tower-of-governance band of the churn curve) and capital that outlived its fit. That is why mature adaptation is subtractive — reconcile and retire manage capital depreciation, not merely bad apparatus. A third failure hides inside the first two: accumulated capital that has drifted from the system it models does not merely stop paying — it CONFIDENTLY MISDIRECTS, steering later work against a picture no longer true, which is worse than no capital at all.",
       "formalized_by": "H6-oversight-amortization",
       "reading": "The named theory STATEMENT that H6 encodes as a falsifiable HYPOTHESIS. The proposition names the increasing-returns mechanism — conversions bank engineering capital that lowers the recurring reasoning a future change demands; H6 supplies one testable signature of it (per-change human attention falls as classes convert). H6 is anchored on L3, the green governance-adaptation loop (failure to judgment to conversion to a more capable environment); the full compounding dynamic is the L3-to-L4 (green-to-purple) COMPOSITION, where the more-capable environment raises ambition onto a new frontier. So it is wider than H6's single observable and does not mean the fleet does less — it means higher-leverage, more-ambitious work at a falling per-change cost. Registered offered-for-replication (the chapter's global hedge), honestly situated, not asserted; parallel in form to the Reasoning-Horizon Proposition (different mechanism — H6 amortization vs H4 representation leverage — different falsifier)."
     }
@@ -224,7 +224,7 @@
     {"claim": "Speed and stability do not trade", "status": "Corollary of H2 and H3"},
     {"claim": "Conversion gets faster as tooling matures", "status": "Learning-curve specialization of H7"},
     {"claim": "The substrate heals faster as it accretes controls", "status": "Consequence of H3 and H6"},
-    {"claim": "Grammar coverage beats line coverage", "status": "Domain-specific instance of H4"},
+    {"claim": "Grammar coverage better predicts format-space escapes", "status": "Domain-specific instance of H4"},
     {"claim": "A fidelity gate reduces silent corruption", "status": "Product-specific instance of H3"},
     {"claim": "Deployment pain stays bounded", "status": "Subjective consequence of H6; future work"}
   ],
@@ -234,8 +234,8 @@
       "id": "R1-churn",
       "name": "The churn relation",
       "form": "V_durable = V_raw * (1 - c)",
-      "substantive_claim": "dc/dE < 0 over the under-governed range: churn share falls as effective environment quality climbs. But NOT monotone across all governance accumulation — push apparatus past fit and churn rises again from collisions, false positives, latency, context burden, and constraints that block legitimate work.",
-      "shape": "under-governed -> churn high ; well-fit -> churn lowest ; overgrown -> churn rises from friction",
+      "substantive_claim": "dc/dE < 0, read as a directional sign over one dimension-bundle of the E-vector (not a fitted slope): churn share falls monotonically as effective environment quality E climbs, and keeps falling even in an overgrown estate — because overgrowth is precisely what LOWERS E. The non-monotonic churn curve is drawn against a DIFFERENT x-axis — governance-apparatus QUANTITY, not E: push apparatus past fit and churn rises again from collisions, false positives, latency, context burden, and constraints that block legitimate work, because quantity does not monotonically raise E. Churn is monotone in E, non-monotone in apparatus quantity; the two axes must not be conflated.",
+      "shape": "in E (monotone): churn falls as E rises, through the fit point and beyond. in apparatus QUANTITY (a different, non-monotone axis): under-governed -> churn high ; well-fit -> churn lowest ; overgrown -> churn rises from friction, because quantity past fit lowers E",
       "ties_to": ["H2-governance-moderation", "H5-local-model-deficiency"]
     },
     {
