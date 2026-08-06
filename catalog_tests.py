@@ -47,6 +47,7 @@ from tests.book_models import (
     check_claims_model,
     check_flagship_stack,
     check_lit_positioning,
+    check_metaphor_slogan_index,
     check_metaphor_spans,
     check_outcomes_model,
     check_outline_model,
@@ -288,6 +289,13 @@ CHECKS = [
     # tests/book_models.py.
     Check("book-models: metaphor + slogan registry structure + overlap metric (metaphor-spans.json)", 1,
           lambda strict: check_metaphor_spans(), audit_only=True),
+    # BLOCKING: the slogan/metaphor OCCURRENCE-INDEX freshness gate — the derived metaphor-slogan-index.json
+    # (every slogan canonical + competitor and every local metaphor image, with the site + nearest anchor it
+    # renders at) must equal a fresh scan of the built book HTML, mirroring the projection index's can't-drift
+    # discipline. The pre-commit hook regenerates + stages it after the build; a stale index reddens
+    # catalog.py validate. See tests/book_models.py.
+    Check("book-models: slogan/metaphor occurrence-index freshness (metaphor-slogan-index.json)", 1,
+          lambda strict: check_metaphor_slogan_index()),
     # BLOCKING (rule #55 promotion — drain confirmed 0 at HEAD across a clean session): the THEORY-OF-MAGE
     # projection view-model — the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is projected from
     # theory_of_mage_declared.json (H4 folds its H4a/H4b sub-hypotheses). Asserts the TM1-TM7 structural

@@ -332,6 +332,20 @@ def check_metaphor_spans():
     return (FAIL if issues else PASS), issues
 
 
+def check_metaphor_slogan_index():
+    """The slogan/metaphor OCCURRENCE-INDEX freshness check (BLOCKING in catalog.py validate). The derived
+    `book-models/metaphor-slogan-index.json` inverts every registered slogan (canonical + competitor phrases)
+    and every local metaphor (its distinctive image name) onto the sites + nearest anchors it appears at in
+    the built book HTML — re-derived each run, so it cannot drift. A page edited / rebuilt without
+    regenerating the index is the finding, mirroring `check_projection_index`'s freshness half. Keyed off
+    `book-models/metaphor-slogan-index.json` + the built book-web HTML."""
+    import metaphor_slogan_index_model as msi  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+    issues.extend(msi.freshness_findings())
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

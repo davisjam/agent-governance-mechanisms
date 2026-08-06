@@ -54,6 +54,12 @@ _regen("reverse_index.py", "reverse_index.json")
 # the other derived-view regens close. Sub-second; regen + stage on every commit.
 _regen("projections_model.py", "projection-index.json")
 
+# The SLOGAN/METAPHOR OCCURRENCE index is a second DERIVED inversion of the BUILT book HTML (every slogan +
+# local-metaphor phrase, the site + nearest anchor it appears at). Like the projection index, it scans the
+# .html the build above just wrote, so it regenerates AFTER the build; its freshness gate is BLOCKING in
+# `catalog.py validate`, so a page edited without regenerating it would redden the next commit.
+_regen("metaphor_slogan_index_model.py", "metaphor-slogan-index.json")
+
 # book-models READING VIEW: re-render the browsable HTML view of the book models (outline + outcomes)
 # and stage it, exactly like the site build stays fresh. The page is a PROJECTION of the models, so a
 # model regeneration must re-flow the view; running it on every commit means the committed HTML can

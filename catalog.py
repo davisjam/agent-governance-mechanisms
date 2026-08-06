@@ -1229,6 +1229,18 @@ def cmd_validate(_args) -> int:
     print(f"  [metaphor] AUDIT-ONLY: {msm.coverage_note()}")
     for f in msm.overlap_findings() + msm.vehicle_collision_findings():
         print(f"  [metaphor] AUDIT-ONLY: {f}")
+    # SLOGAN/METAPHOR OCCURRENCE-INDEX FRESHNESS — BLOCKING. The derived metaphor-slogan-index.json (every
+    # slogan canonical + competitor and every local metaphor image, with the site + nearest anchor it appears
+    # at) must equal a fresh scan of the built book HTML — the same can't-drift discipline the projection
+    # index uses. A page edited / rebuilt without regenerating the index reddens validate; the pre-commit hook
+    # regenerates + stages it after the build. See book-models/metaphor_slogan_index_model.py.
+    import metaphor_slogan_index_model as msi  # noqa: E402 — derived occurrence-index (freshness BLOCKING)
+    msi_fresh = msi.freshness_findings()
+    if msi_fresh:
+        print(f"  [slogan-index] {len(msi_fresh)} occurrence-index freshness finding(s):")
+        for f in msi_fresh:
+            print(f"                 {f}")
+        n_issues += len(msi_fresh)
     # DEFINE-BEFORE-USE (term ordering) — BLOCKING. Extends the claims model's C1 site-resolution to the
     # ORDERING of the glossary/concept TERM class: a term's canonical definition (its `index-def`, or the front
     # glossary when registered there — front matter, always define-first) must sit no later than the page that
