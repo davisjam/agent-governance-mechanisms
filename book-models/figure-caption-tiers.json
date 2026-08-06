@@ -349,7 +349,7 @@
       "location": "part6",
       "rationale": "the Churn/Compounding sign contrast — pairs two of the book's core dynamics; Part 6 anchor"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::Churn and its positive duals": {
+    "toward-a-theory-of-mage::Churn and its positive duals": {
       "tier": "B",
       "kind": "conceptual-table",
       "location": "part6",
@@ -367,205 +367,205 @@
       "location": "part7",
       "rationale": "identify the author; one sentence"
     },
-    "frontmatter/0.5-how-to-read-this-book.md::Where to look — surfaces, jobs, and the questions they answer": {
+    "how-to-read-this-book::Where to look — surfaces, jobs, and the questions they answer": {
       "tier": "C",
       "kind": "reference-nav",
       "location": "frontmatter",
       "rationale": "look-up nav table"
     },
-    "part1/1.4-why-mage-follows-from-the-machine.md::Substrate property → problem/opportunity → MAGE response": {
+    "why-mage-follows-from-the-machine::Substrate property → problem/opportunity → MAGE response": {
       "tier": "B",
       "kind": "summary-of-points",
       "location": "part1",
       "rationale": "supports the derivation figure"
     },
-    "part2/2.4-lifecycles-and-runbooks.md::Typing a runbook's steps": {
+    "lifecycles-and-runbooks::Typing a runbook's steps": {
       "tier": "B",
       "kind": "framework",
       "location": "part2",
       "rationale": "governs the step taxonomy"
     },
-    "part2/2.5-metrics.md::Measure one level deeper": {
+    "metrics::Measure one level deeper": {
       "tier": "B",
       "kind": "framework",
       "location": "part2",
       "rationale": "decision-driving table"
     },
-    "part2/2.5-metrics.md::The Missing-Model-Metric drain, run by run": {
+    "metrics::The Missing-Model-Metric drain, run by run": {
       "tier": "B",
       "kind": "data",
       "location": "part2",
       "rationale": "per-run measurements"
     },
-    "part2/2.5-metrics.md::The governance metrics at a glance": {
+    "metrics::The governance metrics at a glance": {
       "tier": "C",
       "kind": "reference-glance",
       "location": "part2",
       "rationale": "lookup summary"
     },
-    "part3/3.2-the-logical-view.md::Invariants of the Logical view": {
+    "the-logical-view::Invariants of the Logical view": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "invariant lookup"
     },
-    "part3/3.3-the-process-view.md::Invariants of the Process view": {
+    "the-process-view::Invariants of the Process view": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "invariant lookup"
     },
-    "part3/3.4-the-development-view.md::Invariants of the Development view": {
+    "the-development-view::Invariants of the Development view": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "invariant lookup"
     },
-    "part3/3.5-the-physical-view.md::Invariants of the Physical view: deployment placement": {
+    "the-physical-view::Invariants of the Physical view: deployment placement": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "invariant lookup"
     },
-    "part3/3.5-the-physical-view.md::Invariants of the Physical view: host-stress edges": {
+    "the-physical-view::Invariants of the Physical view: host-stress edges": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "invariant lookup"
     },
-    "part3/3.6-the-scenarios-view.md::Invariants of the Scenarios view": {
+    "the-scenarios-view::Invariants of the Scenarios view": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "invariant lookup"
     },
-    "part3/3.8-keeping-models-in-sync.md::Model-sync evidence — the derived floor under load": {
+    "keeping-models-in-sync::Model-sync evidence — the derived floor under load": {
       "tier": "B",
       "kind": "data",
       "location": "part3",
       "rationale": "the derived floor under load"
     },
-    "part3/3.8-keeping-models-in-sync.md::Documentation-hygiene aside — not model sync": {
+    "keeping-models-in-sync::Documentation-hygiene aside — not model sync": {
       "tier": "C",
       "kind": "reference-aside",
       "location": "part3",
       "rationale": "small aside table"
     },
-    "part4/4.1-brownfield.md::Sizing the mechanism": {
+    "brownfield::Sizing the mechanism": {
       "tier": "A",
       "kind": "design-decision-table",
       "location": "part4",
       "rationale": "the right-size-the-fix 2x2; caption interprets the cells"
     },
-    "part4/4.2-the-skills.md::The self-operate skill, by layer": {
+    "the-skills::The self-operate skill, by layer": {
       "tier": "C",
       "kind": "reference-structure",
       "location": "part4",
       "rationale": "layer lookup"
     },
-    "part4/4.2-the-skills.md::The self-governance skill, by layer": {
+    "the-skills::The self-governance skill, by layer": {
       "tier": "C",
       "kind": "reference-structure",
       "location": "part4",
       "rationale": "layer lookup"
     },
-    "part4/4.2-the-skills.md::The self-communicate skill, by layer": {
+    "the-skills::The self-communicate skill, by layer": {
       "tier": "C",
       "kind": "reference-structure",
       "location": "part4",
       "rationale": "layer lookup"
     },
-    "part4/4.5-lessons-learned.md::Lessons learned, quotable": {
+    "lessons-learned::Lessons learned, quotable": {
       "tier": "B",
       "kind": "summary-of-points",
       "location": "part4",
       "rationale": "lessons + moves"
     },
-    "part5/5.1-the-ada-context.md::The burden shift": {
+    "the-ada-context::The burden shift": {
       "tier": "C",
       "kind": "reference-context",
       "location": "part5",
       "rationale": "one-row context"
     },
-    "part5/5.2-the-timeline-and-the-work.md::The support ratio across four windows": {
+    "the-timeline-and-the-work::The support ratio across four windows": {
       "tier": "B",
       "kind": "data",
       "location": "part5",
       "rationale": "measured ratio"
     },
-    "part5/5.2-the-timeline-and-the-work.md::Per-path churn across the four windows": {
+    "the-timeline-and-the-work::Per-path churn across the four windows": {
       "tier": "B",
       "kind": "data",
       "location": "part5",
       "rationale": "numstat measurement"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::The four dimensions of E": {
+    "toward-a-theory-of-mage::The four dimensions of E": {
       "tier": "B",
       "kind": "framework",
       "location": "part6",
       "rationale": "dimensioning table"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::Constructs and moderators": {
+    "toward-a-theory-of-mage::Constructs and moderators": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part6",
       "rationale": "per-construct lookup of the model"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::The three MAGE outcomes and their observables": {
+    "toward-a-theory-of-mage::The three MAGE outcomes and their observables": {
       "tier": "B",
       "kind": "summary-of-points",
       "location": "part6",
       "rationale": "the three predicted outcomes"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::MAGE's seven falsifiable hypotheses H1–H7": {
+    "toward-a-theory-of-mage::MAGE's seven falsifiable hypotheses H1–H7": {
       "tier": "A",
       "kind": "design-decision-table",
       "location": "part6",
       "rationale": "the theory's core claims + falsifiers; caption interprets"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::Former predictions mapped to their subordinate status": {
+    "toward-a-theory-of-mage::Former predictions mapped to their subordinate status": {
       "tier": "C",
       "kind": "reference-restatement",
       "location": "part6",
       "rationale": "restated consequences"
     },
-    "part6/6.1-toward-a-theory-of-mage.md::Three study designs mapped to H1–H7": {
+    "toward-a-theory-of-mage::Three study designs mapped to H1–H7": {
       "tier": "B",
       "kind": "summary-of-points",
       "location": "part6",
       "rationale": "three study designs"
     },
-    "part6/6.2-implications-for-se.md::The Null Result": {
+    "implications-for-se::The Null Result": {
       "tier": "B",
       "kind": "data",
       "location": "part6",
       "rationale": "per-cell ablation recall"
     },
-    "part6/6.2-implications-for-se.md::The Three Evidence Forms": {
+    "implications-for-se::The Three Evidence Forms": {
       "tier": "B",
       "kind": "comparison-summary",
       "location": "part6",
       "rationale": "evidence-form comparison"
     },
-    "part7/7.2-colophon.md::The manuscript's governing models and the failures they prevent": {
+    "colophon::The manuscript's governing models and the failures they prevent": {
       "tier": "C",
       "kind": "reference-colophon",
       "location": "part7",
       "rationale": "per-model lookup"
     },
-    "part7/7.2-colophon.md::The governed manuscript as declared source, generated form, and drift check": {
+    "colophon::The governed manuscript as declared source, generated form, and drift check": {
       "tier": "C",
       "kind": "reference-colophon",
       "location": "part7",
       "rationale": "per-model lookup"
     },
-    "part3/3.8-keeping-models-in-sync.md::Token savings from working through a model": {
+    "keeping-models-in-sync::Token savings from working through a model": {
       "tier": "B",
       "kind": "data",
       "location": "part3",
       "rationale": "model-on-vs-off measurement"
     },
-    "part3/3.1-the-executable-zoo.md::The five-field model-page template": {
+    "the-executable-zoo::The five-field model-page template": {
       "tier": "C",
       "kind": "reference-lookup",
       "location": "part3",

@@ -63,6 +63,21 @@ from dataclasses import dataclass
 HERE = pathlib.Path(__file__).resolve().parent
 BOOK = HERE.parent / "book"
 REGISTRY = HERE / "figure-caption-tiers.json"
+_IDENTITY = HERE / "chapter_identity_declared.json"
+
+_FILE_TO_LABEL: "dict[str, str] | None" = None
+
+
+def _label_for_src(rel_to_book: str) -> str:
+    """Map a chapter file path (relative to book/, e.g. 'part6/6.1-toward-a-theory-of-mage.md') to its
+    number-free identity label. Table caption ids are keyed on the label now (chapter_identity model) so a
+    chapter that moves keeps its caption rows valid. Read from the declared identity table directly (stdlib
+    only, invocation-path-independent); falls back to the path for a file with no row (should not happen)."""
+    global _FILE_TO_LABEL
+    if _FILE_TO_LABEL is None:
+        decl = json.loads(_IDENTITY.read_text(encoding="utf-8"))
+        _FILE_TO_LABEL = {c["filename"]: c["label"] for c in decl.get("chapters", [])}
+    return _FILE_TO_LABEL.get(rel_to_book, rel_to_book)
 
 # Chapter source dirs — front/back matter + the five parts. Appendix fills / README / manifests are not
 # authored-caption chapters, matching the book suite's own chapter-source scope.
@@ -162,7 +177,7 @@ def _iter_captions() -> "Iterator[tuple[pathlib.Path, str, str, str, str]]":
             sm = _SHORT_VALUE_RE.search(body)
             short = sm.group(1).strip() if sm else ""
             caption = _SHORT_STRIP_RE.sub("", body)
-            cap_id = f"{rel_to_book}::{short}" if short else ""
+            cap_id = f"{_label_for_src(rel_to_book)}::{short}" if short else ""
             yield f, "table", short, cap_id, caption
 
 
