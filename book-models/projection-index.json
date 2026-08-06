@@ -4919,7 +4919,7 @@
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
-            "occ": 4
+            "occ": 2
           },
           {
             "file": "book/2.5-metrics.html",
@@ -4991,7 +4991,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 16
+            "occ": 14
           }
         ],
         "book-pdf": [

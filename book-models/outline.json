@@ -1647,7 +1647,7 @@
             },
             {
               "slug": "fmea-names-the-way-out-and-the-prohibition-because-the-agent-knows-neither",
-              "text": "FMEA: name each failure's way out and prohibition.",
+              "text": "FMEA-inspired: name each failure's way out and prohibition.",
               "block_index": 7
             },
             {
@@ -1688,32 +1688,32 @@
           "heading_text": "The judgment parts: the roughest algorithm that still fits",
           "topic_sentence": "**The judgment parts get the roughest algorithm that still fits.** For a well-constrained decision, write the algorithm down and let the agent do the glue.",
           "id_source": "derived",
-          "block_index": 24,
+          "block_index": 26,
           "points": [
             {
               "slug": "judgment-parts-get-the-roughest-algorithm-that-still-fits",
               "text": "Judgment steps get the roughest algorithm that fits.",
-              "block_index": 26
+              "block_index": 28
             },
             {
               "slug": "a-judgment-that-is-a-measurement-gets-a-rubric",
               "text": "A judgment that is a measurement gets a rubric.",
-              "block_index": 28
+              "block_index": 30
             },
             {
               "slug": "the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself",
               "text": "The pre-canned brief templates delegation itself.",
-              "block_index": 31
+              "block_index": 33
             },
             {
               "slug": "typing-each-runbook-step-makes-the-deterministic-judgment-split-mechanical",
               "text": "Typing each step makes the deterministic-judgment split mechanical.",
-              "block_index": 35
+              "block_index": 37
             },
             {
               "slug": "operating-judgment-becomes-something-the-environment-holds",
               "text": "Written down, operating judgment becomes something the environment holds.",
-              "block_index": 38
+              "block_index": 40
             }
           ]
         }
