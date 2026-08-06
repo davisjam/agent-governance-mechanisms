@@ -204,8 +204,8 @@
     "book_home": "book/3.8-keeping-models-in-sync.html#idx-def-models-bridge",
     "book_home_owed": {
       "section": "Part 3 — §3.8 Keeping the Models in Sync with the Code",
-      "status": "owed",
-      "note": "Owed until §3.8 tags the definition with `<!-- index-def: models-bridge -->` and renders the def-box (lands in this wave's Phase B3); book-only by design (no landing def-strip). Seeded earlier (no tag) at §2.2's structured-model-layer figure/prose."
+      "status": "landed",
+      "note": "Landed: §3.8 tags the definition with `<!-- index-def: models-bridge -->` and renders the def-box; book-only by design (no landing def-strip). Seeded earlier (no tag) at §2.2's structured-model-layer figure/prose."
     },
     "lexicon_link": "book/0.3-the-books-language.html",
     "concepts_link": "book/data/concepts.json"
