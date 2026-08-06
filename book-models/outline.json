@@ -2737,7 +2737,7 @@
             },
             {
               "slug": "it-assesses-deployment-parity-and-layer-boundary-soundness",
-              "text": "It assesses deployment parity and layer-boundary soundness.",
+              "text": "It assesses deployment parity; layer boundary lives in Development.",
               "block_index": 25
             },
             {
@@ -2756,7 +2756,7 @@
           "section_id": "invariant-dag-execution-policy",
           "level": 2,
           "heading_text": "The invariant-DAG execution policy",
-          "topic_sentence": "*A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.*",
+          "topic_sentence": "The insight is one sentence: **correctness dependencies stay in the graph; host-specific resource limits live in a scheduler profile.** What must be true on *every* host — B is wrong without A — belongs in the deploy graph.",
           "id_source": "explicit",
           "block_index": 40,
           "points": [
@@ -2768,12 +2768,12 @@
             {
               "slug": "it-assesses-graph-portability-and-rationing-correctness",
               "text": "It assesses graph portability and rationing correctness.",
-              "block_index": 46
+              "block_index": 48
             },
             {
               "slug": "the-execution-plan-derives-from-the-host-profile",
               "text": "The execution plan derives from the host profile.",
-              "block_index": 55
+              "block_index": 61
             }
           ]
         },
@@ -2783,12 +2783,12 @@
           "heading_text": "The control↔substrate dependency model",
           "topic_sentence": "The substrate-dependency model makes each governance mechanism declare, as typed metadata, the substrate assumption it bakes in — bound to one substrate, substrate-aware, or substrate-agnostic.",
           "id_source": "explicit",
-          "block_index": 58,
+          "block_index": 64,
           "points": [
             {
               "slug": "declared-substrate-stances-turn-a-migration-grep-into-a-blast-radius",
               "text": "Declared substrate stances make a migration blast radius computable.",
-              "block_index": 60
+              "block_index": 66
             }
           ]
         }

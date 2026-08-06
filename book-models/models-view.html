@@ -619,7 +619,7 @@
 </div>
 <div class="section s2" id="sec-3-5-the-physical-view--invariant-dag-execution-policy">
 <div class="sec-h"><a href="../book/3.5-the-physical-view.html">The invariant-DAG execution policy</a></div>
-<p class="topic">*A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.*</p>
+<p class="topic">The insight is one sentence: **correctness dependencies stay in the graph; host-specific resource limits live in a scheduler profile.** What must be true on *every* host — B is wrong without A — belongs in the deploy graph.</p>
 </div>
 <div class="section s2" id="sec-3-5-the-physical-view--control-substrate-dependency">
 <div class="sec-h"><a href="../book/3.5-the-physical-view.html">The control↔substrate dependency model</a></div>

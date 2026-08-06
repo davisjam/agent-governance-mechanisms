@@ -2738,65 +2738,70 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <rect x="986" y="173" width="130" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="1051" y="213" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Worker</text>
-</svg><figcaption data-short="The model declares placement — the build host that produces the image, and…"><span class="fig-label">Figure 3.5-1.</span> The model declares placement — the build host that produces the image, and the runtime cluster it deploys into. Each service is a frozen record keyed by name, carrying its owning layer and its tier class. A bidirectional parity check reconciles those declared tiers against the real deploy table, so a service that ships at the wrong tier fails the build.</figcaption></figure><p class="gallery-source">From <a href="3.5-the-physical-view.html#fig-3-5-1">16 · The Physical View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-5-2-fig-3-5-2" class="book-figure" data-label="dag-policy-structure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470"
+</svg><figcaption data-short="The model declares placement — the build host that produces the image, and…"><span class="fig-label">Figure 3.5-1.</span> The model declares placement — the build host that produces the image, and the runtime cluster it deploys into. Each service is a frozen record keyed by name, carrying its owning layer and its tier class. A bidirectional parity check reconciles those declared tiers against the real deploy table, so a service that ships at the wrong tier fails the build.</figcaption></figure><p class="gallery-source">From <a href="3.5-the-physical-view.html#fig-3-5-1">16 · The Physical View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-5-2-fig-3-5-2" class="book-figure" data-label="dag-policy-structure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
      role="group" aria-labelledby="fig-3-5-2-dpTitle fig-3-5-2-dpDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-3-5-2-dpTitle">Edge intents route; load leaves the graph for the Scheduler</title>
-  <desc id="fig-3-5-2-dpDesc">A deploy-graph edge carries one of three intents. Correctness and cost-gate
-    edges stay in the graph, host-identical. A load edge is banned from the graph and migrated
-    to the Scheduler, which reads a per-host profile and emits an execution plan — the
-    concurrency and cost-gate decisions for that host. Moving the stress burden between hosts
-    is a profile edit, never a graph edit.</desc>
+  <title id="fig-3-5-2-dpTitle">Load leaves the deploy graph for the Scheduler — a profile edit, not a graph edit</title>
+  <desc id="fig-3-5-2-dpDesc">Two zones. In the deploy graph, correctness and cost-gate edges stay, host-identical.
+    The load intent is banned from the graph and migrates to the second zone, off the graph, where the
+    Scheduler reads a per-host profile and emits an execution plan — the concurrency and cost-gate
+    decisions for that host. Moving the stress burden between hosts edits the profile, never the graph.</desc>
 
   <defs>
     <marker id="fig-3-5-2-dp-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
+    <marker id="fig-3-5-2-dp-thick" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
   </defs>
 
-  <!-- ===== the edge and its three intents ===== -->
-  <rect x="40" y="145" width="220" height="70" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
-  <text x="150" y="188" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Edge intent</text>
+  <!-- ===== Zone 1 — in the deploy graph ===== -->
+  <rect x="30" y="70" width="440" height="400" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+  <text x="50" y="106" font-size="20" font-weight="700" fill="#1c1917">In the deploy graph</text>
 
-  <g stroke="#1c1917" stroke-width="2" fill="none">
-    <path d="M262,162 C300,130 310,100 344,74" marker-end="url(#fig-3-5-2-dp-ah)"/>
-    <line x1="262" y1="180" x2="344" y2="180" marker-end="url(#fig-3-5-2-dp-ah)"/>
-    <path d="M262,198 C300,230 310,262 344,286" marker-end="url(#fig-3-5-2-dp-ah)"/>
-  </g>
+  <rect x="55" y="150" width="390" height="76" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="250" y="190" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">CORRECTNESS</text>
+  <text x="250" y="214" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">host-identical — stays in the graph</text>
 
+  <rect x="55" y="246" width="390" height="76" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="250" y="286" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">COST_GATE</text>
+  <text x="250" y="310" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">host-identical — stays in the graph</text>
+
+  <rect x="55" y="342" width="390" height="76" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
+  <text x="250" y="382" text-anchor="middle" font-size="24" font-weight="700" fill="#b23b3b">LOAD</text>
+  <text x="250" y="406" text-anchor="middle" font-size="16" font-style="italic" fill="#b23b3b">banned from the graph</text>
+
+  <!-- ===== the load intent migrates off the graph ===== -->
+  <path d="M448,380 C530,372 558,268 608,204" fill="none" stroke="#1c1917" stroke-width="4" marker-end="url(#fig-3-5-2-dp-thick)"/>
+  <text x="516" y="304" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">migrates</text>
+
+  <!-- ===== Zone 2 — off the graph, the Scheduler ===== -->
+  <rect x="530" y="70" width="440" height="400" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+  <text x="550" y="106" font-size="20" font-weight="700" fill="#1c1917">Off the graph — the Scheduler</text>
+
+  <rect x="610" y="150" width="300" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="760" y="190" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">Scheduler</text>
+  <text x="760" y="216" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">reads a per-host profile</text>
+
+  <line x1="760" y1="230" x2="760" y2="256" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-5-2-dp-ah)"/>
+
+  <!-- the per-host profile (cylinder) — the thing you edit -->
   <g>
-    <rect x="350" y="30" width="250" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="475" y="64" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">CORRECTNESS</text>
-    <text x="475" y="90" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">in the graph</text>
-
-    <rect x="350" y="140" width="250" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="475" y="174" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">COST_GATE</text>
-    <text x="475" y="200" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">in the graph</text>
-
-    <rect x="350" y="250" width="250" height="80" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
-    <text x="475" y="284" text-anchor="middle" font-size="22" font-weight="700" fill="#b23b3b">LOAD</text>
-    <text x="475" y="310" text-anchor="middle" font-size="19" font-style="italic" fill="#b23b3b">banned from the graph</text>
+    <path d="M 640,272 v 58 a 120,14 0 0 0 240,0 v -58" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+    <ellipse cx="760" cy="272" rx="120" ry="14" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+    <text x="760" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Per-host profile</text>
+    <text x="760" y="336" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">ceiling · budget</text>
   </g>
 
-  <!-- ===== the load intent migrates to the Scheduler ===== -->
-  <line x1="602" y1="290" x2="694" y2="290" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-5-2-dp-ah)"/>
+  <line x1="760" y1="346" x2="760" y2="390" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-5-2-dp-ah)"/>
 
-  <rect x="700" y="258" width="190" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="795" y="298" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Scheduler</text>
+  <rect x="615" y="392" width="290" height="66" rx="33" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="760" y="433" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Execution plan</text>
 
-  <!-- the per-host profile drives the plan -->
-  <g>
-    <path d="M 560,388 v 46 a 118,12 0 0 0 236,0 v -46" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
-    <ellipse cx="678" cy="388" rx="118" ry="12" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
-    <text x="678" y="420" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Per-host profile</text>
-  </g>
-  <path d="M750,376 C770,358 775,346 786,328" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-5-2-dp-ah)"/>
-
-  <!-- scheduler -> execution plan -->
-  <line x1="892" y1="290" x2="948" y2="290" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-5-2-dp-ah)"/>
-  <rect x="954" y="260" width="210" height="60" rx="30" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="1059" y="298" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Execution plan</text>
-</svg><figcaption data-short="Profile Edit, Not Graph Edit"><span class="fig-label">Figure 3.5-2.</span> <em>Profile Edit, Not Graph Edit.</em> Correctness and cost-gate edges stay in the deploy graph; a load edge is banned and migrates to the Scheduler, which reads the per-host profile and emits the execution plan. Moving stress between hosts is a profile edit, never a graph edit.</figcaption></figure><p class="gallery-source">From <a href="3.5-the-physical-view.html#fig-3-5-2">16 · The Physical View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-6-1-fig-3-6-1" class="book-figure" data-label="join-composite"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640"
+  <!-- ===== the registered slogan (verbatim) ===== -->
+  <text x="500" y="520" text-anchor="middle" font-size="22" font-style="italic" font-weight="700" fill="#1c1917">Move stress between hosts — a profile edit, not a graph edit.</text>
+</svg><figcaption data-short="Profile edit, not graph edit"><span class="fig-label">Figure 3.5-2.</span> <em>Profile edit, not graph edit.</em> Correctness and cost-gate edges stay in the deploy graph, host-identical; the load intent is banned from the graph and moves to the Scheduler, which reads a per-host profile and emits the execution plan. Moving stress between hosts edits the profile, never the graph.</figcaption></figure><p class="gallery-source">From <a href="3.5-the-physical-view.html#fig-3-5-2">16 · The Physical View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-6-1-fig-3-6-1" class="book-figure" data-label="join-composite"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640"
      role="group" aria-labelledby="fig-3-6-1-jcTitle fig-3-6-1-jcDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-3-6-1-jcTitle">The scenarios join: journey to selector to coverage to scheduler</title>
