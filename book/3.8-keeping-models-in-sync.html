@@ -595,187 +595,119 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 19 · Keeping the Models in Sync with the Code — A Measurement"><header class="chap"><div class="kicker"><a href="part-3-intro.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 19</a></div><h1><span class="chap-num">3.8</span> Keeping the Models in Sync with the Code — A Measurement</h1></header><h2><span class="sec-num">3.8.1</span> The question: the map must equal the territory, or the bridge lies</h2>
-<p>A context-bounded fleet governs a context-exceeding codebase <em>through</em> structured models. The models are the bridge the agents reason across. So the models must equal the territory — if a model claims something the code no longer does, every agent that trusts the model inherits the lie.</p>
+<p>A context-bounded fleet governs a context-exceeding codebase <em>through</em> structured models. The models are the bridge the agents reason across. So the map must stay equal to the territory — equal over the relations the model claims to represent, not over every line of code. Stated precisely: the model must remain consistent with the territory over its declared surface. If a model claims something the code no longer does, every agent that trusts the model inherits the lie.</p>
 <p>"Keep the model in sync with the code, automatically" is the thesis question. It has a cheap-sounding answer and an expensive-sounding one, and the honest result is that neither alone is enough.</p>
-<h2><span class="sec-num">3.8.2</span> The mechanism: a two-layer net, and liveness as a property</h2>
+<h2><span class="sec-num">3.8.2</span> The mechanism: a two-layer net, and freshness by derivation</h2>
 <p>Sync holds through two layers stacked over the model↔code gap.</p>
-<ul><li><strong>The soft layer — the reading pass.</strong> A definition-of-done review reads the model's prose surface against the code: a frozen status header, a phase index missing a landed phase, a stale count in a sentence. A human or an Opus catches these because they live in prose. This layer aims; it cannot block, and it is fallible.</li><li><strong>The hard layer — the derived floor.</strong> A reconciliation lint resolves each model anchor against a live symbol in the code. The anchor points at a function or class definition a static resolver can find, not at a line number and not at a snapshotted copy. Reading the anchor <em>is</em> reading current truth. There is nothing to re-sync, so nothing can lag between runs.</li></ul>
-<p>The load-bearing property is <strong>liveness as a property, not a process.</strong> A snapshot-plus-sync-process can drift between runs; a resolver over live code cannot. This is the whole finding compressed: <strong>derived defends, snapshotted drifts.</strong> Anchor to a symbol, not a line — and where there is no clean symbol to anchor to, that absence is itself a signal that the model is missing a point of abstraction (a refactoring target, not a gap to paper over).</p>
+<ul><li><strong>The soft layer — the reading pass.</strong> A definition-of-done review reads the model's prose surface against the code: a frozen status header, a phase index missing a landed phase, a stale count in a sentence. A human or an Opus catches these because they live in prose. This layer aims; it cannot block, and it is fallible.</li><li><strong>The hard layer — the derived floor.</strong> A reconciliation lint resolves each model anchor against a live symbol in the code. The anchor points at a function or class definition a static resolver can find, not at a line number and not at a snapshotted copy. Reading the anchor resolves current code, not a stored copy. The relation is recomputed from live code rather than copied from a prior scan, which eliminates one class of temporal staleness — the drift a snapshot accrues between the scan that recorded it and the run that reads it. (A live resolver still depends on the anchor, the parser, the build, and the model's completeness; it removes the <em>snapshot</em> failure, not every failure.)</li></ul>
+<p>The property that does the work is <strong>freshness by derivation, not by process.</strong> A snapshot-plus-sync process can drift between runs; a resolver over live code cannot. <strong>Derived defends, snapshotted drifts.</strong> Anchor to a symbol, not a line — and where there is no clean symbol to anchor to, that absence is itself a signal that the model is missing a point of abstraction (a refactoring target, not a gap to paper over).</p>
 <h2><span class="sec-num">3.8.3</span> The model grows with the system: two worked examples</h2>
 <p>Sync is a living practice, not a one-time alignment. The territory grows; the model is edited to match; a derived gate fails the build if it is not. Two real cases from the study period show the loop.</p>
-<p><strong>Adding a service endpoint (2026-08-01).</strong> The "pictures-not-pages" PDF pilot added a new editor endpoint, <code>GET /api/pdf-page-image/{job_id}/{page}</code> — the PDF analogue of the existing slide-image and docx-page-image endpoints. The service-flow model (the Backstage-dialect Component/API catalogue under <code>system-models/services/</code>) had to gain that endpoint or the generated catalogue would no longer match the source. The commit that landed it (<code>6fd0b6d51a</code>) says so in its own words: the endpoint "was added to the editor cluster YAML but the generated Backstage entity was not regenerated," which "Restores <code>gen-web-api-entities --check</code> to green." The added model fragment is real:</p>
-<pre><code>/api/pdf-page-image/{job_id}/{page}:
-  get:
-    summary: Return the rendered page image for a completed PDF job
-             (pictures-not-pages pilot ... the PDF analogue of
-             /api/slide-image / /api/docx-page-image)
-    responses:
-      "200": { description: Rendered PDF page image (PNG) for the SPA PdfViewAdapter }
-      "400": { description: Job not completed, or not a PDF job }
-      "404": { description: Job / output file / page not found }
-      "502": { description: Render service failed (systemic) }</code></pre>
+<p><strong>Adding a service endpoint (2026-08-01).</strong> The "pictures-not-pages" PDF pilot added a new editor endpoint, <code>GET /api/pdf-page-image/{job_id}/{page}</code> — the PDF analogue of the existing slide-image and docx-page-image endpoints. The service-flow model (the Backstage-dialect Component/API catalogue under <code>system-models/services/</code>) had to gain that endpoint or the generated catalogue would no longer match the source. The commit that landed it (<code>6fd0b6d51a</code>) says so in its own words: the endpoint "was added to the editor cluster YAML but the generated Backstage entity was not regenerated," which "Restores <code>gen-web-api-entities --check</code> to green." The added model fragment names the new endpoint and its responses — <code>/api/pdf-page-image/{job_id}/{page}: get: { summary: "…the PDF analogue of /api/slide-image", 200: PNG, 400 / 404 / 502 }</code>.</p>
 <p>A new service or endpoint is, by construction, either a model edit or a parity failure. The service-flow parity gate (<code>gen-web-api-entities --check</code>, backed by the service-flow-model and service-call-graph drift lints) would have failed the build had the model not been edited to match.</p>
-<p><strong>Adding user journeys (2026-07-16; the model kept growing through the drift window).</strong> The user-journey model gained three Journey entities — <code>batch-remediate</code>, <code>editor-edit</code>, <code>editor-edit-remediate</code> — authored in commit <code>01699c8c47</code>, which in the same change extended the service-flow lint to admit the <code>Journey</code> kind. A Journey names an actor, a goal, and ordered steps, and each step names the service endpoints it calls. The <code>batch-remediate</code> Journey, for instance:</p>
-<pre><code>kind: Journey
-spec:
-  actor: uploader
-  goal: Get an uploaded document remediated end-to-end (chunk, remediate, merge, validate).
-  steps:
-    - seq: 1   # chunk-decision
-      calls: [genai-service-capacity, lo-service-convert]
-    - seq: 2   # per-chunk C# remediation
-      calls: [genai-service-batch, genai-service-complete, genai-service-transcribe,
-              genai-service-detect-bboxes, ocr-service-ocr, font-svc-fonts, font-svc-cmap]
-    - seq: 3   # post-remediation validation
-      calls: [render-service-render, accessibility-conformance-service-check,
-              accessibility-quality-service-validate, ...]</code></pre>
+<p><strong>Adding user journeys (2026-07-16; the model kept growing through the drift window).</strong> The user-journey model gained three Journey entities — <code>batch-remediate</code>, <code>editor-edit</code>, <code>editor-edit-remediate</code> — authored in commit <code>01699c8c47</code>, which in the same change extended the service-flow lint to admit the <code>Journey</code> kind. A Journey names an actor, a goal, and ordered steps, and each step names the service endpoints it calls. The <code>batch-remediate</code> Journey names an actor (<code>uploader</code>), a goal (end-to-end remediation), and ordered steps whose <code>calls:</code> lists the endpoints each step hits — step 1 the chunk-decision capacity/convert calls, step 2 the per-chunk C# GenAI/OCR/font calls, step 3 the render + conformance + quality validation calls.</p>
 <p>The two-way call-site drift lint (<code>lint-journey-endpoint-coverage.py</code> / <code>lint-journey-service-drift.py</code>) holds each journey's declared endpoints to the real <code>internal_service_client(...)</code> call sites, in both directions — a journey that names an endpoint no code calls, or code that calls an endpoint no journey declares, fails. The model kept growing in the drift window too: the same journey model gained a typed MAJOR/MINOR criticality tier and a <code>JourneyClosure</code> join-key substrate (late July), each with its own derived check.</p>
 <p><em>Honesty note:</em> the three Journey entities were authored 2026-07-16 — inside the broader study period, before the 07-22 start of the drift-audit corpus. No brand-new Journey entity landed in the 07-28→08-04 refresh window; the journey model's growth there was the criticality-tier and closure-key expansion. The service-endpoint example (08-01) is squarely in-window.</p>
 <h2><span class="sec-num">3.8.4</span> The evidence</h2>
 <p>The claim is a field-report result, so the numbers come with their provenance. The model↔code sync evidence under load is collected in <a class="xref" href="3.8-keeping-models-in-sync.html#tbl-3-8-1">Table&nbsp;3.8-1</a>; a documentation-hygiene aside, kept strictly separate so it is never miscounted as sync evidence, is in <a class="xref" href="3.8-keeping-models-in-sync.html#tbl-3-8-2">Table&nbsp;3.8-2</a>.</p>
 <h3 id="model-sync-efficacy">The derived floor under load</h3>
 <p>Documentation drift is excluded here by construction; this table is model↔code sync only.</p>
-<table id="tbl-3-8-1" class="book-table" data-label="model-sync-evidence"><caption data-short="Model-sync evidence — the derived floor under load"><span class="tbl-label">Table 3.8-1.</span> Model-sync evidence — the derived floor under load, model↔code sync only, with documentation drift excluded by construction. The top rows are the floor holding: heavy model-bridge churn, zero drift reaching a post-close reopen, and a handful of genuine drifts the derived lint caught at HEAD. The pre-floor row is the class it was built to close — real drift that escaped past green definitions-of-done before the floor existed.</caption><thead><tr><th>Signal</th><th>Value</th><th>Caught by</th></tr></thead><tbody><tr><td>Model-bridge churn, window 07-28→08-04</td><td><strong>+8,970 / −173 lines across 63 commits</strong> (query/reactor + governance-graph + frontend-build models)</td><td>— (this is the load the net held under)</td></tr><tr><td>Model↔code drift reaching a post-close reopen</td><td><strong>0</strong> across cumulative N=56 closes</td><td>—</td></tr><tr><td>Genuine model-drift catches, refresh window</td><td>traceability-broken ×3 (un-registered model consumer / missing component entry / service-call-graph), stale-anchor / stale-test ×3</td><td>the <strong>derived floor re-run at HEAD</strong> (symbol-anchored drift lint · consumer-registry-fresh · service-call-graph drift), not human reading</td></tr><tr><td>Pre-floor retro-audit (before the derived floor existed)</td><td><strong>~27 genuine model↔code drifts at S:N ≈ 1.0</strong>, zero false positives, in closed Epics with green DoDs — including a <strong>prod-blocking pointer-drift incident</strong> and a fully-typed function shipped to zero consumers</td><td>the audit re-ran each Epic's own lints; the drift had escaped the green DoDs</td></tr></tbody></table>
-<p>The pre-floor row is the "hope-for-the-best fails" evidence: real drift, used to escape, silently, past green definitions-of-done. The floor was built to close exactly that class, and the top rows are it holding. For the data, see <a href="3.8-keeping-models-in-sync.html#model-sync-efficacy">Keeping the Models in Sync with the Code — A Measurement →</a> (preliminary)</p>
+<table id="tbl-3-8-1" class="book-table" data-label="model-sync-evidence"><caption data-short="Model-sync evidence — the derived floor under load"><span class="tbl-label">Table 3.8-1.</span> Model-sync evidence — model↔code sync only, documentation drift excluded by construction. Four questions the field report answers: did real drift exist before the derived floor; did the floor catch fresh drift at HEAD; did any drift reach a post-close reopen; and under what change load the floor held.</caption><thead><tr><th>Question</th><th>Evidence</th><th>Interpretation</th></tr></thead><tbody><tr><td>Did real model↔code drift exist <em>before</em> the derived floor?</td><td>~27 genuine model↔code drifts at a signal-to-noise ratio near 1.0, found by re-running each closed Epic's own lints — including a prod-blocking pointer-drift incident and a fully-typed function shipped to zero consumers.¹</td><td>Yes. The drift is real and used to escape <em>silently</em> past green definitions-of-done. This is the class the floor was built to close.</td></tr><tr><td>Did the derived floor catch <em>fresh</em> drift at HEAD?</td><td>Six genuine catches in the refresh window: three traceability-broken (un-registered model consumer / missing component entry / service-call-graph) and three stale-anchor / stale-test.²</td><td>Yes. Caught by the floor re-run at HEAD, not by human reading — the hard layer firing on live code.</td></tr><tr><td>Did any drift reach a <em>post-close reopen</em>?</td><td>0, across a cumulative 56 Epic closes.</td><td>Nothing modeled-and-mechanically-decidable slipped past close to a reopen.</td></tr><tr><td>Under what <em>change load</em> did the floor hold?</td><td>+8,970 / −173 lines across 63 commits to the model-bridge (query/reactor + governance-graph + frontend-build models), window 07-28→08-04.</td><td>Heavy model-bridge churn is the load the net held under — the zero-reopen row is a result <em>under</em> this load, not at rest.</td></tr></tbody></table>
+<p><em>Notes.</em> ¹ Pre-floor retro-audit; the audit re-ran each Epic's own lints, and the drifts showed <strong>no false positives observed in manual review</strong> (classified by hand, not against an independent stated criterion). ² Caught by the derived floor re-run at HEAD — symbol-anchored drift lint, consumer-registry-freshness check, and service-call-graph drift lint.</p>
+<p>For the data, see <a href="3.8-keeping-models-in-sync.html#model-sync-efficacy">Keeping the Models in Sync with the Code — A Measurement →</a> (preliminary)</p>
 <h3>Documentation-hygiene aside (NOT model sync)</h3>
 <p>Stale headers and stale prose numbers are <strong>documentation drift, not model drift.</strong> They are the soft layer's true positives, and they are cheap: a reader catches them, and the close tool heals them. Kept here, clearly labelled, so they are never counted as model-sync evidence.</p>
 <table id="tbl-3-8-2" class="book-table" data-label="doc-hygiene-aside"><caption data-short="Documentation-hygiene aside — not model sync"><span class="tbl-label">Table 3.8-2.</span> Documentation-hygiene aside — stale headers and prose numbers the soft layer catches; documentation drift, not model sync.</caption><thead><tr><th>Doc-hygiene drift</th><th>Refresh-window count</th><th>Caught by</th><th>Healed by</th></tr></thead><tbody><tr><td>STALE-HEADER (a status line frozen at a pre-close phase)</td><td><strong>11</strong></td><td>reading (human / Opus)</td><td>the Epic-close tool auto-rewrites the status atomically</td></tr><tr><td>DOC-CLAIM (a stale prose number: 105→107, 76%→90%, 266→234)</td><td><strong>9</strong></td><td>Opus re-derives the number from code</td><td>a routed one-line <code>[FIX]</code> / <code>[AUDIT]</code></td></tr></tbody></table>
 <p><em>Documentation hygiene, not model sync.</em> These rows describe prose the lints do not parse. They are real, and the soft layer is the only practical control for them — but they say nothing about whether the model equals the code.</p>
 <p>The whole shape — the gap, the two layers, and the two places drift still escapes — is drawn in <a class="xref" href="3.8-keeping-models-in-sync.html#fig-3-8-1">Figure&nbsp;3.8-1</a>.</p>
-<figure id="fig-3-8-1" class="book-figure" data-label="model-sync-two-layer-net"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 700"
+<figure id="fig-3-8-1" class="book-figure" data-label="model-sync-two-layer-net"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640"
      role="group" aria-labelledby="msTitle msDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="msTitle">The model-to-code gap spanned by a two-layer net, with two escape hatches</title>
-  <desc id="msDesc">Between an upper band (the model, the map) and a lower band (the code, the
-    territory) sits the model-to-code gap. Two horizontal nets span it. The upper net is the soft
-    reading layer, dashed blue, which catches doc-legible drift but is fallible; it has a hole in the
-    middle. The lower net is the hard derived floor, solid green, which resolves each model anchor
-    against a live symbol and catches modeled drift; it covers only the modeled region and ends before
-    the right-hand zone. Three drift arrows rise from the code toward the model. On the left, a modeled
-    drift rises and is caught at the derived floor. In the middle, a subtle semantic drift is
-    mechanically green at the floor but slips through the hole in the soft layer and escapes: this is
-    failure mode one, the judgment miss. On the right lies a red hatched zone, the unmodeled, which no
-    net covers; a drift rises through it unopposed and escapes: this is failure mode two, the unmodeled.
-    Below, two cross-references convert the escapes into machinery: a coverage census, or metamodel,
-    measures the unmodeled gap; and a self-governance reflex converts the gap into a new model or
-    control, extending the derived floor into the formerly-unmodeled zone, drawn as a dashed green
-    extension. The caption reads: derived defends, snapshotted drifts, and what is not modeled cannot
-    drift-check.</desc>
+  <title id="msTitle">The two-layer net: modeled surface, two coverage layers, two uncovered regions, two backstops</title>
+  <desc id="msDesc">A horizontal band is the modeled surface, the slice of code a model claims to
+    represent. Two coverage layers sit over it: a hard floor of derived checks, drawn solid green,
+    that resolves each model anchor against a live symbol and holds; and above it a soft reading
+    layer, dashed blue, a person or an Opus checking prose the checks cannot parse. The soft layer
+    covers the modeled-and-decidable zone but has a gap over a second zone, the semantic mismatch,
+    where the anchor still resolves but the meaning drifted, so a drift escapes the reading pass.
+    To the right lies the unmodeled surface, a dashed red band no anchor reaches and no layer covers,
+    where a drift escapes unopposed. Below sit two backstops that turn “someone happens to notice”
+    into machinery: a missing-model metric that measures the unmodeled region, and a
+    failures-become-controls loop that closes it by extending the hard floor into the formerly
+    unmodeled zone, drawn as a dashed green extension. Read the net as coverage, not a guarantee.</desc>
 
   <defs>
-    <marker id="msArrow" markerWidth="10" markerHeight="10" refX="8" refY="3.4"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L9,3.4 L0,6.8 Z" fill="#1c1917"/>
+    <marker id="ms-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
     </marker>
-    <marker id="msArrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3.4"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L9,3.4 L0,6.8 Z" fill="#b23b3b"/>
+    <marker id="ms-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f6fae"/>
     </marker>
-    <marker id="msArrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3.4"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L9,3.4 L0,6.8 Z" fill="#1f6fae"/>
-    </marker>
-    <marker id="msArrowGrn" markerWidth="10" markerHeight="10" refX="8" refY="3.4"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L9,3.4 L0,6.8 Z" fill="#1f7a4d"/>
+    <marker id="ms-grn" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
     </marker>
   </defs>
 
-  <!-- ===== MODEL band (top) ===== -->
-  <rect x="40" y="60" width="900" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="490" y="86" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">THE MODEL — the map</text>
-  <text x="490" y="108" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">typed MBSE models: service-flow · journeys · state machines · governance graph</text>
+  <text x="490" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">The two-layer net</text>
+  <text x="490" y="58" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">read the net as coverage, not a guarantee</text>
 
-  <!-- ===== CODE band (bottom of the gap) ===== -->
-  <rect x="40" y="470" width="900" height="58" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2"/>
-  <text x="490" y="496" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">THE CODE — the territory</text>
-  <text x="490" y="518" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">the live symbols the anchors resolve against</text>
+  <!-- ===== soft layer — the reading pass (covers the decidable zone; a GAP over the mismatch) ===== -->
+  <text x="70" y="300" font-size="15" font-weight="700" fill="#2f5169">soft layer — reading (human / Opus)</text>
+  <line x1="60" y1="326" x2="310" y2="326" stroke="#2f5169" stroke-width="4" stroke-dasharray="10 6"/>
+  <text x="360" y="322" font-size="14" font-style="italic" fill="#b23b3b">gap — meaning slips through</text>
 
-  <!-- gap label -->
-  <text x="52" y="150" font-size="16" fill="#57534e" font-style="italic">the model↔code gap</text>
+  <!-- ===== hard layer — the derived floor (covers both modeled zones) ===== -->
+  <rect x="60" y="356" width="540" height="30" rx="4" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="3"/>
+  <text x="300" y="376" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">hard floor — derived checks (holds)</text>
+  <!-- extension of the floor into the unmodeled zone, added by a control -->
+  <rect x="630" y="356" width="200" height="30" rx="4" fill="none" stroke="#1f7a4d" stroke-width="3" stroke-dasharray="6 6"/>
+  <text x="730" y="376" text-anchor="middle" font-size="13" font-style="italic" fill="#1f7a4d">extended by a new control</text>
 
-  <!-- ===== The UNMODELED zone (right): no net covers it ===== -->
-  <rect x="700" y="122" width="240" height="346" rx="6" fill="#fbeaea" stroke="#b23b3b"
-        stroke-width="2" stroke-dasharray="7 5"/>
-  <text x="820" y="150" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">the unmodeled</text>
-  <text x="820" y="171" text-anchor="middle" font-size="15.68" fill="#b23b3b">no anchor · no net</text>
+  <!-- ===== the surface bands ===== -->
+  <rect x="50" y="440" width="560" height="66" rx="6" fill="#f3efe7" stroke="#57534e" stroke-width="2"/>
+  <text x="330" y="470" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">THE MODELED SURFACE</text>
+  <text x="330" y="492" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">the slice of code a model claims to represent</text>
 
-  <!-- ===== SOFT layer — the reading pass (dashed blue), with a HOLE at x 430..500 ===== -->
-  <text x="70" y="228" font-size="17" font-weight="700" fill="#2f5169">Soft layer — the reading pass</text>
-  <text x="70" y="247" font-size="15.68" fill="#57534e">catches doc-legible drift; cannot block</text>
-  <!-- left segment 70 → 430 -->
-  <line x1="70" y1="262" x2="430" y2="262" stroke="#2f5169" stroke-width="3" stroke-dasharray="10 6"/>
-  <!-- right segment 500 → 690 -->
-  <line x1="500" y1="262" x2="690" y2="262" stroke="#2f5169" stroke-width="3" stroke-dasharray="10 6"/>
-  <!-- mesh ticks on soft layer -->
-  <g stroke="#2f5169" stroke-width="1.5" opacity="0.55">
-    <line x1="130" y1="255" x2="130" y2="269"/><line x1="210" y1="255" x2="210" y2="269"/>
-    <line x1="290" y1="255" x2="290" y2="269"/><line x1="370" y1="255" x2="370" y2="269"/>
-    <line x1="560" y1="255" x2="560" y2="269"/><line x1="640" y1="255" x2="640" y2="269"/>
-  </g>
-  <!-- hole marker -->
-  <text x="438" y="250" text-anchor="end" font-size="15.68" fill="#b23b3b" font-style="italic">hole</text>
+  <rect x="630" y="440" width="300" height="66" rx="6" fill="#fbeaea" stroke="#b23b3b" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="780" y="470" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">THE UNMODELED SURFACE</text>
+  <text x="780" y="492" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">no anchor reaches it</text>
 
-  <!-- ===== HARD layer — the derived floor (solid green), covers modeled region only (70..690) ===== -->
-  <text x="70" y="352" font-size="17" font-weight="700" fill="#1f7a4d">Hard layer — the derived floor (holds)</text>
-  <text x="70" y="371" font-size="15.68" fill="#57534e">resolves each anchor to a live symbol</text>
-  <line x1="70" y1="388" x2="690" y2="388" stroke="#1f7a4d" stroke-width="4"/>
-  <!-- denser mesh ticks on hard floor -->
-  <g stroke="#1f7a4d" stroke-width="2" opacity="0.6">
-    <line x1="120" y1="380" x2="120" y2="396"/><line x1="180" y1="380" x2="180" y2="396"/>
-    <line x1="240" y1="380" x2="240" y2="396"/><line x1="300" y1="380" x2="300" y2="396"/>
-    <line x1="360" y1="380" x2="360" y2="396"/><line x1="420" y1="380" x2="420" y2="396"/>
-    <line x1="540" y1="380" x2="540" y2="396"/><line x1="600" y1="380" x2="600" y2="396"/>
-    <line x1="660" y1="380" x2="660" y2="396"/>
-  </g>
-  <!-- extended-net: self-governance adds a segment into the unmodeled zone (dashed green) -->
-  <line x1="700" y1="388" x2="900" y2="388" stroke="#1f7a4d" stroke-width="3" stroke-dasharray="6 6"/>
-  <text x="712" y="356" text-anchor="start" font-size="15.68" fill="#1f7a4d" font-style="italic">extended by self-governance</text>
+  <!-- zone sublabels -->
+  <text x="190" y="532" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a4d">modeled &amp; decidable</text>
+  <text x="470" y="532" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">semantic mismatch</text>
+  <text x="470" y="551" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">anchor resolves, meaning drifted</text>
 
-  <!-- ===== DRIFT arrows rising from CODE (y=470) toward MODEL (y=118) ===== -->
-  <!-- 1) modeled drift — CAUGHT at the derived floor -->
-  <line x1="180" y1="470" x2="180" y2="396" stroke="#1c1917" stroke-width="2.5" marker-end="url(#msArrow)"/>
-  <circle cx="180" cy="388" r="11" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <path d="M174,388 l4,4 l7,-8" fill="none" stroke="#1f7a4d" stroke-width="2.5"/>
-  <text x="205" y="455" text-anchor="start" font-size="15.68" fill="#1f7a4d" font-weight="700">caught</text>
+  <!-- ===== the two escapes (one per uncovered region) ===== -->
+  <line x1="590" y1="438" x2="590" y2="302" stroke="#b23b3b" stroke-width="2.5" stroke-dasharray="3 3" marker-end="url(#ms-red)"/>
+  <text x="590" y="292" text-anchor="middle" font-size="14" font-weight="700" fill="#b23b3b">escapes — judgment miss</text>
 
-  <!-- 2) judgment miss — mechanically green at the floor, slips the soft hole, ESCAPES -->
-  <line x1="465" y1="470" x2="465" y2="182" stroke="#b23b3b" stroke-width="2.5" stroke-dasharray="2 3" marker-end="url(#msArrowRed)"/>
-  <text x="475" y="430" font-size="15.68" fill="#57534e" font-style="italic">mechanically green</text>
-  <text x="465" y="150" text-anchor="middle" font-size="15.68" fill="#b23b3b" font-weight="700">escapes</text>
-  <text x="465" y="168" text-anchor="middle" font-size="15.68" fill="#b23b3b">fail mode 1: judgment miss</text>
+  <line x1="880" y1="438" x2="880" y2="356" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#ms-red)"/>
+  <text x="880" y="348" text-anchor="middle" font-size="14" font-weight="700" fill="#b23b3b">escapes — unmodeled</text>
 
-  <!-- 3) unmodeled — no net, ESCAPES unopposed -->
-  <line x1="820" y1="468" x2="820" y2="226" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#msArrowRed)"/>
-  <text x="820" y="196" text-anchor="middle" font-size="15.68" fill="#b23b3b" font-weight="700">escapes</text>
-  <text x="820" y="214" text-anchor="middle" font-size="15.68" fill="#b23b3b">fail mode 2: unmodeled</text>
+  <!-- ===== the two backstops ===== -->
+  <rect x="360" y="566" width="260" height="58" rx="8" fill="#eef4fb" stroke="#1f6fae" stroke-width="2"/>
+  <text x="490" y="591" text-anchor="middle" font-size="16" font-weight="700" fill="#1f6fae">missing-model metric</text>
+  <text x="490" y="612" text-anchor="middle" font-size="13" fill="#57534e">measures the unmodeled region</text>
+  <path d="M600,566 C622,540 634,522 648,510" fill="none" stroke="#1f6fae" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ms-blue)"/>
 
-  <!-- ===== Cross-ref boxes (below the code band) ===== -->
-  <!-- Coverage census / metamodel — measures the gap -->
-  <rect x="440" y="566" width="300" height="66" rx="8" fill="#eef4fb" stroke="#1f6fae" stroke-width="2"/>
-  <text x="590" y="590" text-anchor="middle" font-size="16" font-weight="700" fill="#1f6fae">Coverage census · metamodel</text>
-  <text x="590" y="611" text-anchor="middle" font-size="15.68" fill="#57534e">measures the gap: is it modeled at all?</text>
-  <!-- arrow from unmodeled zone down to census box -->
-  <line x1="755" y1="468" x2="650" y2="564" stroke="#1f6fae" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#msArrowBlue)"/>
-
-  <!-- Self-governance — converts the gap to a new model/control -->
-  <rect x="760" y="566" width="180" height="66" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="850" y="590" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">Self-governance</text>
-  <text x="850" y="611" text-anchor="middle" font-size="15.68" fill="#57534e">gap → a new model</text>
-  <!-- arrow from self-gov box up to the extended net -->
-  <line x1="890" y1="564" x2="895" y2="396" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#msArrowGrn)"/>
-
-  <!-- ===== Caption spine ===== -->
-  <text x="40" y="672" font-size="18" font-style="italic" font-weight="700" fill="#1c1917">Derived defends, snapshotted drifts — and what isn't modeled can't drift-check.</text>
-</svg><figcaption data-short="The Two-Layer Net"><span class="fig-label">Figure 3.8-1.</span> <em>The Two-Layer Net.</em> The model↔code gap spanned by two layers, with two escape hatches drawn as gaps in the net. Derived defends, snapshotted drifts — and what isn't modeled can't drift-check.</figcaption></figure>
+  <rect x="670" y="566" width="260" height="58" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="800" y="591" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">failures → controls loop</text>
+  <text x="800" y="612" text-anchor="middle" font-size="13" fill="#57534e">closes it — extends the net</text>
+  <path d="M900,564 C906,480 890,420 828,388" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ms-grn)"/>
+</svg><figcaption data-short="Figure 3.8-1"><span class="fig-label">Figure 3.8-1.</span> <strong>Figure 3.8-1. The two-layer net.</strong> The horizontal band is the modeled surface — the code a model represents. Two layers cover it: a hard floor of derived checks, each anchor resolved to a live symbol, and a soft reading layer — a person or Opus reading prose the checks can't parse. Two regions stay uncovered: a semantic mismatch, where the anchor resolves but the meaning drifted, and the unmodeled surface, which no anchor reaches. Two backstops turn noticing into machinery — the missing-model metric measures the unmodeled region, and the failures-become-controls loop closes it. Read the net as coverage, not a guarantee: the modeled-and-decidable is enforced, the semantic only aimed at, the unmodeled merely measured until a backstop extends it.</figcaption></figure>
+<h3 id="mbse-nav-token">The fewer-tokens leg — a navigation pilot</h3>
+<p>The measurement above is the <em>quality</em> leg — the model stays true to the code. The Modeling Thesis also claims a <em>fewer-tokens</em> leg, and that one is directly measurable. In a controlled A/B pilot, an agent answered four navigation questions about the modeled codebase — locate a component, trace an invariant, resolve a tier, find an anchor — once with the MBSE navigation guidance loaded (ON) and once without it (OFF), counting the tokens each arm spent to reach the answer. <a class="xref" href="3.8-keeping-models-in-sync.html#tbl-3-8-3">Table&nbsp;3.8-3</a> reports the four tasks. For the data, see <a href="3.8-keeping-models-in-sync.html#mbse-nav-token">Keeping the Models in Sync with the Code — A Measurement →</a> (preliminary)</p>
+<table id="tbl-3-8-3" class="book-table" data-label="nav-token-savings"><caption data-short="Token savings from working through a model"><span class="tbl-label">Table 3.8-3.</span> Token cost of four navigation tasks with the model ON versus OFF — the measured saving from working through a structured model instead of raw code.</caption><thead><tr><th>Task</th><th>Type</th><th class="num">ON</th><th class="num">OFF</th><th class="num">Tokens saved</th></tr></thead><tbody><tr><td>NAV-01 component</td><td>modeled</td><td class="num">12,463</td><td class="num">15,507</td><td class="num">20%</td></tr><tr><td>NAV-02 invariant</td><td>modeled</td><td class="num">13,520</td><td class="num">15,421</td><td class="num">12%</td></tr><tr><td>NAV-03 tier</td><td>modeled</td><td class="num">8,975</td><td class="num">50,419</td><td class="num">82%</td></tr><tr><td>NAV-04 anchor</td><td>modeled</td><td class="num">11,396</td><td class="num">22,629</td><td class="num">50%</td></tr></tbody></table>
+<p><em>Preliminary — a controlled pilot (N=4 modeled navigation tasks; 2 placebo arms pending).</em></p>
+<p>The pilot spent about <strong>35% fewer tokens</strong> at the median, at <strong>zero accuracy loss</strong> — all four modeled arms answered correctly on both ON and OFF, so the guidance bought cheaper answers, not different ones. The biggest win (NAV-03) resolved a tier in one tool-call with guidance where the naive path took twenty-two, and that gap states the rule: the more derivation the naive path must redo, the more the guidance is worth.</p>
 <h2><span class="sec-num">3.8.5</span> The two failure modes: where drift still escapes</h2>
 <p>The net has two escape hatches. Neither is a footnote; they bound the claim.</p>
 <p><strong>Failure mode 1 — the judgment miss.</strong> A mis-alignment that is not mechanically decidable needs subjective judgment. The anchor resolves (the code exists, so the hard floor reads green), yet the <em>meaning</em> drifted. The soft reading layer is the only net for this, and it is fallible by construction — a subtle semantic drift can pass a green definition-of-done. This is the drift that slips through a hole in the soft layer.</p>
-<p><strong>Failure mode 2 — the unmodeled.</strong> A fact or relation that <em>should</em> be modeled but is not has no anchor, so no drift-check can fire over it. You cannot detect drift of a thing you never modeled. Here the net has no coverage at all — not a hole in a layer, but a region with no layer. When there is no clean symbol to anchor to, that absence is the signal: it names a missing point of abstraction, a refactoring target.</p>
+<p><strong>Failure mode 2 — the unmodeled.</strong> The unmodeled is the Modeling-Thesis form of the residual Part 2 named: a fact or relation that <em>should</em> be modeled but is not, so it has no anchor and no drift-check can fire over it. You cannot detect drift of a thing you never modeled. Here the net has no coverage at all — not a hole in a layer, but a region with no layer. When there is no clean symbol to anchor to, that absence is the signal: it names a missing point of abstraction, a refactoring target.</p>
 <h3>The systematic backstops (cross-references)</h3>
 <p>Both failure modes lean, by default, on an engineer or an agent <em>noticing</em>. The book has two mechanisms that convert that noticing into machinery — the right in-book targets to cross-link:</p>
-<ul><li><strong>The coverage census</strong> (<code>control-coverage-census</code>, appendix-b) measures failure mode 2. It classifies every control by which target it guards, derives the classification from each control's own anchor, and reports an empty target as a first-class finding. It turns "the estate's blind spot" into a queryable map instead of a thing you learn about when it bites. <sup class="note-ref"><a href="#note-3-8-keeping-models-in-sync-1" role="doc-noteref" aria-label="note 1">*</a></sup><span class="editorial-note" id="note-3-8-keeping-models-in-sync-1"><span class="cn-mark">*</span> A note on metamodels. An object model maps the code — service-flow, journeys, state machines — and its drift-check asks "does this model still match the code?" A metamodel checks the completeness of the model set over the territory: "is the right thing modeled at all?" The coverage census and the missing-model metric are metamodels in this sense — the systematic backstop for failure mode 2, converting "an engineer happens to notice something isn't modeled" into "a metamodel measures the coverage gap."</span></li><li><strong>Self-governance — convert failures to controls</strong> (the governance-conversion / "failures become machinery" loop; the reflection-facet substrate that extends the governance graph, and chapter 2.6's treatment) converts a recurring gap into a new model or control. Where the census <em>measures</em> the gap, this <em>closes</em> it: the unmodeled fact becomes a modeled one, and the net gains a segment it did not have.</li></ul>
+<ul><li><strong>The missing-model metric</strong> (the orphan-coverage tracer) measures failure mode 2. It walks the <em>code</em> and asks, for each governance-relevant site, whether any model row or control node reaches it, then scores the remainder — the sites nothing models — as a rate and clusters them, so each cluster becomes a candidate for a new model. It turns "the estate's blind spot" into a queryable map instead of a thing you learn about when it bites. (A sibling metamodel, the <strong>control-coverage census</strong>, rolls <em>controls</em> up per control-target and flags an under-governed target — a distinct axis, not a measure of the unmodeled; do not read one for the other.) <sup class="note-ref"><a href="#note-3-8-keeping-models-in-sync-1" role="doc-noteref" aria-label="note 1">*</a></sup><span class="editorial-note" id="note-3-8-keeping-models-in-sync-1"><span class="cn-mark">*</span> A note on metamodels. An object model maps the code — service-flow, journeys, state machines — and its drift-check asks "does this model still match the code?" A metamodel instead checks the completeness of the model set over the territory: "is the right thing modeled at all?" The missing-model metric is the metamodel for failure mode 2 — it converts "an engineer happens to notice something isn't modeled" into a measured coverage gap. The control-coverage census is a different metamodel: it asks whether each control-target is governed, not whether each system fact is modeled. Same genre, different question — keep them apart.</span></li><li><strong>Self-governance — convert failures to controls</strong> (the governance-conversion / "failures become machinery" loop; the reflection-facet substrate that extends the governance graph, and chapter 2.6's treatment) converts a recurring gap into a new model or control. Where the census <em>measures</em> the gap, this <em>closes</em> it: the unmodeled fact becomes a modeled one, and the net gains a segment it did not have.</li></ul>
 <h2><span class="sec-num">3.8.6</span> The honest reading</h2>
 <p>The result is narrow, and stating its limits is part of stating it. Four readings bound what this measurement does and does not show.</p>
-<ul><li><strong>Preliminary, small N.</strong> Per window, the count of <em>genuine</em> model↔code drifts is small — a handful, not a headline. The cumulative 23/23 catch-rate mixes doc-legible catches with modeled ones; the model-sync claim rests on the small set of genuine model drifts the derived floor caught, plus zero model-drift reopens under heavy churn. This is a field-report result, not a proof. Do not quote "23/23" as a model-sync catch-rate — it is a <em>combined</em> rate, and its denominator is small for the model-sync slice.</li><li><strong>The catch-rate rose by composition, not by loosening.</strong> The refresh window caught more drift (17 of 20 closes vs. the original's 6 of 36) because it moved more territory — product-heavy Epics with more doc surface — exactly where the reading layer is the only practical control. The net did not get weaker; there was more for it to catch.</li><li><strong>The claim is narrow and it is about sync, not hygiene.</strong> The three legs: the drift is real and used to escape (the ~27 pre-floor findings); the mechanism is derived reconciliation, not snapshot-and-sync (liveness as a property); and it held under load (the churn row, with zero model-drift reopens). The doc-hygiene aside is kept separate on purpose.</li><li><strong>The two failure modes are the boundary of the claim.</strong> Sync is enforced for the modeled and mechanically-decidable; it is <em>aimed</em> for the semantic; and it is <em>absent</em> for the unmodeled until a metamodel or a self-governance reflex extends the net. That boundary is the honest shape of the result.</li></ul>
+<ul><li><strong>Preliminary, small N.</strong> Per window, the count of <em>genuine</em> model↔code drifts is small — a handful, not a headline. The model-sync claim rests on that small set of genuine model drifts the derived floor caught, plus zero model-drift reopens under heavy churn — not on any headline catch-rate, which would mix doc-legible catches with modeled ones and rest on a denominator too small for the model-sync slice. This is a field-report result, not a proof.</li><li><strong>The catch-rate rose by composition, not by loosening.</strong> The refresh window caught more drift (17 of 20 closes vs. the original's 6 of 36) because it moved more territory — product-heavy Epics with more doc surface — exactly where the reading layer is the only practical control. The net did not get weaker; there was more for it to catch.</li><li><strong>The claim is narrow and it is about sync, not hygiene.</strong> The three legs: the drift is real and used to escape (the ~27 pre-floor findings); the mechanism is derived reconciliation, not snapshot-and-sync (freshness by derivation); and it held under load (the churn row, with zero model-drift reopens). The doc-hygiene aside is kept separate on purpose.</li><li><strong>The two failure modes are the boundary of the claim.</strong> Sync is enforced for the modeled and mechanically-decidable; it is <em>aimed</em> for the semantic; and it is <em>absent</em> for the unmodeled until a metamodel or a self-governance reflex extends the net. That boundary is the honest shape of the result.</li></ul>
 <p>That honest reading closes the zoo. This Part walked each kind of model on real code and showed the drift gate that holds each one to the code, so the map cannot quietly rot away from the territory. What it has not shown is how you reach that state from a codebase that carries none of it. The next Part starts from spaghetti.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="part-3-intro.html" aria-label="Beginning of Part 3 — The Model Zoo">« Beginning of part</a><a href="3.7-the-scope-of-modeling.html" aria-label="Previous chapter — 18 · The Scope of Modeling">« Previous chapter</a></div><span class="chapnav-here" title="19 · Keeping the Models in Sync with the Code — A Measurement">19 · Keeping the Models in Sync with the Code — A Measurement</span><div class="chapnav-fwd"><a href="part-4-intro.html" aria-label="Next chapter — Putting It to Work">Next chapter »</a><a href="part-4-intro.html" aria-label="Next part — Part 4 — Putting It to Work">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

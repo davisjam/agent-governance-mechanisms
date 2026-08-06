@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 34,
     "slugs_rendered": 25,
-    "total_sites": 1176,
+    "total_sites": 1177,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 838,
+      "book-web": 839,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -115,7 +115,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 5
+            "occ": 6
           },
           {
             "file": "book/4.1-brownfield.html",
@@ -909,7 +909,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 4
+            "occ": 3
           },
           {
             "file": "book/4.1-brownfield.html",
@@ -2055,7 +2055,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 58
+            "occ": 60
           },
           {
             "file": "book/4.1-brownfield.html",
@@ -2311,7 +2311,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 261
+            "occ": 254
           },
           {
             "file": "book/index.html",
@@ -2319,7 +2319,7 @@
           },
           {
             "file": "book/list-of-figures.html",
-            "occ": 15
+            "occ": 16
           },
           {
             "file": "book/part-1-intro.html",
@@ -3260,6 +3260,10 @@
             "occ": 1
           },
           {
+            "file": "book/3.8-keeping-models-in-sync.html",
+            "occ": 1
+          },
+          {
             "file": "book/4.1-brownfield.html",
             "occ": 1
           },
@@ -3299,7 +3303,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 21
+            "occ": 22
           }
         ]
       },
@@ -4365,7 +4369,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/4.1-brownfield.html",

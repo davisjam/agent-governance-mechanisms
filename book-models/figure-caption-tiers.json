@@ -200,10 +200,10 @@
       "rationale": "the four-model join — synthesizes the whole Part-3 model set"
     },
     "assets/model-sync-two-layer-net.svg": {
-      "tier": "B",
+      "tier": "A",
       "kind": "mechanism-illustration",
       "location": "part3",
-      "rationale": "the two-layer net"
+      "rationale": "the two-layer net — teaches how to read coverage vs guarantee"
     },
     "assets/wiki-linkage.svg": {
       "tier": "B",
