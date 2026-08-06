@@ -133,6 +133,33 @@ moves — and knowing which one you mean is how you stop defaulting to the same 
 
 ---
 
+## Metaphor → operational meaning → boundary
+
+Metaphors are models too. A recurring metaphor may stay even when it is not technically exact, as long as
+it does real explanatory work — the same license this file gives every other figure, applied to the
+sustained conceptual image. A metaphor is not the decorative prose the "no literary-cute" rule cuts
+([`voice.md`](voice.md) §"Drift tells"); it is a mental model the reader reasons with.
+
+**Preserve a metaphor when it** gives the reader a stable mental handle, predicts useful behavior, recurs
+across the book, and can be followed by a precise statement of its boundary. The catalogue runs several:
+
+- **map and territory** — for a model and the system it represents.
+- **the model bridge** — for the representation the agents reason across.
+- **the printer** — shifts diagnosis from the machine's "personality" to its instructions and environment.
+- **the pink elephant** — a prohibition that makes the forbidden action cognitively salient.
+
+Do not replace a working metaphor with sterile precision. Run the sequence instead:
+
+1. **the metaphor** — the memorable image;
+2. **its operational meaning** — what it actually asserts;
+3. **the boundary** — where the image stops.
+
+Prefer "the map must stay equal to the territory" in the sentence the reader remembers, then "equal over
+the relations the model claims to represent" when precision matters. The vivid line carries the idea; the
+boundary clause keeps it honest. This is the prose twin of the metaphor registry, which records each
+sustained image and the declared idea it elaborates — the model holds the one-image-per-idea line; this
+rule says how to write the image once it is registered.
+
 ## The one rule that governs all of them
 
 Every figure above is legitimate. The tell is never a single use — it is **sameness and density**: the

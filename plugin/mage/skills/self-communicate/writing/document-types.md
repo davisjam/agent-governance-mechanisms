@@ -79,6 +79,20 @@ number of ideas across a long argument, chapter by chapter, without losing the t
   level of abstraction*, but do recur to compress, connect, or advance. A chapter-ending synthesis that
   folds a long argument into a few operational handles is productive compression, not padding — don't cut
   it as a recap. A paragraph that restates the one above it is padding — do.
+- **Some chapters are deliberately dual-purpose: worked argument plus optional primer.** A technical book
+  may need to *demonstrate* a real system and *teach* the background needed to understand it. Do not delete
+  the primer because it interrupts the argument. Separate the two tracks instead — the two-track move that
+  extends [`engineering.md`](engineering.md)'s rule that explanation and reference not be braided into one
+  paragraph:
+  - the **mainline** carries the book's argument and the worked system (the MAGE argument, the DocAble
+    evidence);
+  - an **inset** supplies the portable tutorial or reference concept (see §"Pedagogical insets" below);
+  - the mainline must stay intelligible to a reader who skims the inset;
+  - the inset must explain enough that a reader without the background can rejoin the argument.
+
+  The test is not "could this material be moved elsewhere?" It is **"does the reader need it at this point,
+  and can they choose how deeply to enter it?"** Progressive density applies to the repeated book concept,
+  not to a newly-introduced outside one ([`voice.md`](voice.md) §"Progressive density").
 - **Field notes are sources, not artifacts.** The author's raw field notes are where a fact comes from, not
   a thing the book discloses. Never gesture at the private artifact — "the field notes are blunt about
   this," "a caution the notes earned the hard way" — because the reader then has to take your word for a
@@ -170,6 +184,38 @@ completeness.
 - **Persuasion is licensed — briefly.** The discursive register is right here and wrong in a reference. Reach
   for direct address, the rhetorical question, the objection raised and rebutted. Keep it tight: one
   flourish that lands beats three that decorate.
+
+## Pedagogical insets — the optional second track
+
+The dual-purpose engineering book needs a construct the base taxonomy does not name: the **inset** — a
+boxed, skippable second reading track. The main argument should not assume every reader already knows
+automata, data-flow diagrams, invariants, model checking, or traceability. But teaching each concept inline
+buries the book's own contribution. An inset carries the teaching so the mainline carries the argument, and
+the reader chooses which track to read.
+
+**Use an inset when all three conditions hold:**
+
+1. the concept is needed to understand the worked example;
+2. it is established *background*, not the book's central contribution;
+3. some intended readers already know it (so inlining it would bore them, and cutting it would lose the
+   newcomer).
+
+**An inset should:**
+
+- answer one literal question;
+- begin with the plain intuition;
+- carry one concrete example;
+- give only the formalism the surrounding chapter needs;
+- end by stating what the reader should now be able to recognize or check;
+- not pretend to be a complete treatment.
+
+The surrounding prose points into the inset **once**, then uses the concept's canonical name without
+re-teaching it (the progressive-density discipline, [`voice.md`](voice.md)). **Inset titles are literal
+questions or definitions** — "What is an invariant?", "State properties versus sequence properties", "What
+does bounded model checking establish?" — not an ornamental title like "A brief mathematical excursion." An
+inset that teaches a simplified account still owes the [`voice.md`](voice.md) §"Teach the curious engineer"
+test: the simplification must be scoped and must not teach a false operational rule. The audit runs an
+inset-specific check over these ([`audit.md`](audit.md) §"Inset audit").
 
 ## The contrast, stated plainly
 

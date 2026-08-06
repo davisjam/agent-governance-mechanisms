@@ -63,6 +63,23 @@ you reach for when the tier is genuinely the subject (Opus vs Sonnet). The bare 
 bridge; "foundation model", spelled in full, is the sanctioned name for the reasoner the book needs — the
 rule reserves the bare word, it does not ban the compound.
 
+### Canonical term and teaching handle may coexist
+
+The "name the concept once" rule reaches for **one** term per idea — but it should not push an editor to
+delete a useful phrase because a more formal term exists. A concept may carry two names that do different
+jobs:
+
+- **one precise canonical term** — used in definitions, checks, tables, and cross-references;
+- **one recurring teaching handle** — a memorable, often metaphorical phrase that carries the idea in prose.
+
+The teaching handle must map consistently to the canonical concept and must not spawn competing synonyms.
+Define the relationship once, then keep both. The worked example is this catalogue's own: the canonical term
+is **`models-bridge`** (model–code traceability and drift-checking, used hyphenated in tables and
+cross-refs); the teaching handle is **"the model bridge"** (the representation the agents reason across).
+Do not force every memorable phrase to become a glossary term, and do not delete every phrase that is not
+itself the formal name. (The book's metaphor registry is the mechanical side of this rule: it records each
+teaching handle and the canonical idea it elaborates, so a handle can be checked for drift.)
+
 ---
 
 ## Architecture & design patterns
@@ -276,7 +293,7 @@ below. It doubles as a worked example of a filled table. The **agent-vs-model** 
 
 | Term | What it means in the house dialect | PORTABLE rename? |
 |---|---|---|
-| **models-bridge** | The third catalogue role: the typed MBSE substrate that *couples* the agent fleet and the codebase — models the fleet reads to reason and that govern/generate the product. | coinage (renames "MBSE substrate / model layer"); always hyphenated, never "model bridge" |
+| **models-bridge** | The third catalogue role: the typed MBSE substrate that *couples* the agent fleet and the codebase — models the fleet reads to reason and that govern/generate the product. Its **teaching handle** in prose is *"the model bridge"* (the [canonical-term-plus-teaching-handle](#canonical-term-and-teaching-handle-may-coexist) rule): keep `models-bridge` hyphenated in tables/checks/cross-refs, and use "the model bridge" as the recurring memorable phrase. | coinage (renames "MBSE substrate / model layer") |
 | **the agent** / **the fleet** | The coding actor(s); the set of concurrent agents the orchestrator dispatches. | coinage over "the LLM / the worker pool" — see the disambiguation rule above |
 | **orchestrator** | The main-thread session that composes briefs, dispatches agents, lands their work, and refills slots. | renames "scheduler / coordinator" (portable: *dispatch*, *worker pool* — already in base) |
 | **worktree** | An isolated git working directory one agent edits, so concurrent agents don't trample each other. | **already portable-base** (link `git-worktree`) — house usage is identical |

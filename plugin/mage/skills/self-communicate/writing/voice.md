@@ -69,6 +69,26 @@ before"). The em-dash is a *tool he varies with*, not a reflex — note in the e
 period, a colon, or a plain comma does the work instead. He avoids flowery flourish, passive-voice
 drift, performative hedging, and abstraction untethered from an example.
 
+## Teach the curious engineer, not the specialist
+
+Write formal material for the curious engineer, not for the specialist guarding the boundary of a field.
+Introduce a formal idea at the level needed to *use* it. Begin with the engineering problem and the shape
+of the property; reach for notation only when it shortens later reasoning or decides which tool applies.
+The target reader is not waiting for a miniature formal-methods course — precision matters, but it is not
+the price of admission.
+
+- **Do:** state the useful simplified model; mark its limit in one sentence; point to the deeper
+  literature; return to the system.
+- **Don't:** lead with a taxonomy when an example will do; expand every qualification a specialist might
+  demand; turn a primer into a survey of edge cases; make mathematical appetite the price of following the
+  engineering move.
+
+**A simplification is acceptable when it is explicitly scoped and does not teach a false operational rule.**
+That line is the whole test. A scoped, honest simplification keeps the prose accessible; a simplification
+that leaves the reader with a wrong operational rule is a correctness break, not a stylistic one. Scope it
+in a clause and cite the literature that carries the full account; never trade a true rule for a shorter
+sentence.
+
 ## Economy — less is more
 
 The prose leg of the skill's governing stance (SKILL.md, §"The governing stance: less is more"): **Hemingway's
@@ -148,10 +168,18 @@ get conflated here; hold them apart.
   rule for how much to repeat. Within a **page**: do not restate. Within a **chapter**: repeat only in
   compressed or applied form. Across **Parts**: reuse the canonical NAME, not the full explanation. At the
   **conclusion**: invoke the idea, do not re-teach it.
+- **Progressive density applies to the mainline, not to optional primers.** The rule compresses the book's
+  *own* vocabulary: the mainline should increasingly invoke an established MAGE concept without
+  re-explaining it. It does not forbid a later inset from teaching an *external* concept from first
+  principles when that concept is newly required — an automaton, queueing theory, traceability, a data-flow
+  diagram — even though the book itself is already advanced. Do not confuse "late in the book" with "already
+  known to the reader": compress the repeated MAGE concept, but teach the newly-introduced outside concept
+  where it becomes useful. (The inset is the second track that carries it — see
+  [`document-types.md`](document-types.md) §"Pedagogical insets".)
 
-The failure it catches: a late chapter that reopens a settled concept with a fresh from-first-principles
-meditation. State the dense invocation and move on. Trusting the reader to hold the concept is itself the
-more abstract move, and the right one.
+The failure it catches: a late chapter that reopens a *settled book* concept with a fresh
+from-first-principles meditation. State the dense invocation and move on. Trusting the reader to hold the
+concept is itself the more abstract move, and the right one.
 
 ## Drift tells to avoid — the discursive register's failure modes
 
@@ -183,7 +211,11 @@ live, where he never does any of them.
   word doing plain work is the voice; an ornamental word reaching for a literary effect is the drift. Prefer
   the folksy image over the clever phrase — while allowing that a single well-placed flourish the author
   actively wants ("institutional alchemy," kept by author call) can earn its keep. The tell is *density*,
-  not any one word.
+  not any one word. **A useful conceptual metaphor is not decorative prose** — the map and the territory,
+  the printer, the model bridge do explanatory work no plain paraphrase carries, so this rule does not
+  license editing them out. Keep a metaphor that earns its keep; run the metaphor → operational meaning →
+  boundary sequence rather than replacing it with sterile precision ([`rhetoric.md`](rhetoric.md)
+  §"Metaphor → operational meaning → boundary").
 - **Break mechanical tricolons.** Three parallel imperatives on a fixed beat — "Guard the decisions, hand
   the mechanical work to the substrate, and spend the human where nothing stands in" — read as machine
   cadence precisely because the clauses match in length and rhythm. Vary the clause lengths, or break the
