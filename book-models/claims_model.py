@@ -156,10 +156,16 @@ def derive_model() -> ClaimModel:
 
 def _outline_sets() -> "tuple[set[str], set[str], set[int], set[str]]":
     """(section_ids, chapter_slugs, parts, point_slugs) the book currently defines — the resolve targets for
-    `home` / `asserted_at` (C1). Points come from the outline's decorator-derived paragraph points."""
+    `home` / `asserted_at` (C1). Points come from the outline's decorator-derived paragraph points.
+
+    Chapter references migrated to number-free identity LABELS (chapter_identity model), so the chapter
+    resolve set is the union of the outline slugs (legacy / half-migrated tree) and the identity labels.
+    Permissive union — a value resolves as EITHER — which matches the pre-existing slug ∪ section behavior;
+    the dangling-label backstop resolving specifically against labels() is the precision net."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
     outline = om.derive_outline()
     section_ids = {s.section_id for _c, s in outline.sections()}
-    chapter_slugs = {c.slug for c in outline.chapters}
+    chapter_slugs = {c.slug for c in outline.chapters} | chapter_identity.labels()
     parts = {c.part for c in outline.chapters}
     points: "set[str]" = set()
     for c in outline.chapters:
