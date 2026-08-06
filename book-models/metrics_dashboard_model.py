@@ -157,8 +157,8 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
                 findings.append(f"C2 metric {m.slug!r} is missing field {f!r}")
             elif f != "defined_in" and not str(rawm[f]).strip():
                 findings.append(f"C2 metric {m.slug!r} has empty field {f!r}")
-        if not isinstance(m.defined_in, dict) or not m.defined_in.get("chapter") or not m.defined_in.get("page_slug"):
-            findings.append(f"C2 metric {m.slug!r} defined_in lacks chapter/page_slug")
+        if not isinstance(m.defined_in, dict) or not m.defined_in.get("label"):
+            findings.append(f"C2 metric {m.slug!r} defined_in lacks a label")
 
         # C3 — slug shape + uniqueness + valid mode.
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", m.slug):
@@ -170,9 +170,9 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
             findings.append(f"C3 metric {m.slug!r} mode {m.mode!r} is not one of {_VALID_MODES}")
 
         # C4 — defined_in resolves to a real chapter page.
-        page = (m.defined_in or {}).get("page_slug", "")
+        page = (m.defined_in or {}).get("label", "")
         if page and page not in page_slugs:
-            findings.append(f"C4 metric {m.slug!r} defined_in page {page!r} resolves to no book chapter")
+            findings.append(f"C4 metric {m.slug!r} defined_in label {page!r} resolves to no book chapter")
 
     # C5 — the ratified mode split (all ten present; the mode-classified counts).
     total = len(model.metrics)
@@ -192,9 +192,14 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
 # ---- projection: the markdown table -----------------------------------------------------------------
 
 def _defined_in_cell(d: dict) -> str:
-    """Render the `Defined in` cell as a book cross-chapter link — `[N.M](slug.html#anchor)`."""
-    chapter, page, anchor = d["chapter"], d["page_slug"], d.get("anchor", "")
-    href = f"{page}.html#{anchor}" if anchor else f"{page}.html"
+    """Render the `Defined in` cell as a book cross-chapter link — `[N.M](slug.html#anchor)`. The chapter
+    number + href stem are DERIVED from the identity label (neither is stored)."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+    label, anchor = d.get("label", ""), d.get("anchor", "")
+    known = label in chapter_identity.labels()
+    chapter = chapter_identity.number(label) if known else label
+    stem = os.path.basename(chapter_identity.html_href(label))[:-5] if known else label
+    href = f"{stem}.html#{anchor}" if anchor else f"{stem}.html"
     return f"[{chapter}]({href})"
 
 
@@ -261,7 +266,7 @@ def _cmd_show() -> int:
     model = derive_model()
     print(f"inclusion criterion:\n  {model.inclusion_criterion}\n")
     for m in model.metrics:
-        print(f"[{m.mode:>10}] {m.name}  (defined in {m.defined_in['chapter']})")
+        print(f"[{m.mode:>10}] {m.name}  (defined in {m.defined_in.get('label', '?')})")
         print(f"             {m.rationale}")
     nf, ns, nb = len(model.by_mode("formative")), len(model.by_mode("summative")), len(model.by_mode("both"))
     print(f"\n{len(model.metrics)} metrics · {nf} formative · {ns} summative · {nb} both")

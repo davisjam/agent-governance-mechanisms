@@ -5,7 +5,7 @@
 
   "_page": {
     "slug": "appendix-d-operators-dashboard",
-    "companion_to": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "" }
+    "companion_to": { "label": "metrics", "anchor": "" }
   },
 
   "_mode_bands": {
@@ -20,7 +20,7 @@
       "counts": "Fraction of tests whose exercised code traces to no model claim — the unmodelled surface — plus its drain curve.",
       "informs": "After each model-loop Epic; steer the next at the biggest orphan cluster.",
       "healthy_direction": "Drains toward 10%-or-under (56% to 7.89% over nine re-runs).",
-      "defined_in": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "mmm-drain" },
+      "defined_in": { "label": "metrics", "anchor": "mmm-drain" },
       "mode": "formative",
       "rationale": "Formative: you run the tracer after each model-loop Epic and aim the next Epic at the orphan cluster it surfaces. Feedback that shapes the next step, not a verdict."
     },
@@ -30,7 +30,7 @@
       "counts": "Commits per week.",
       "informs": "Watch the dip where velocity buys hardening.",
       "healthy_direction": "Roughly linear; a hardening dip is expected, not alarming.",
-      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "velocity" },
+      "defined_in": { "label": "the-timeline-and-the-work", "anchor": "velocity" },
       "mode": "formative",
       "rationale": "Formative: commits-per-week reads out throughput week to week, so you steer capacity and read the hardening dip while it happens."
     },
@@ -40,7 +40,7 @@
       "counts": "Lines added and deleted per week per path.",
       "informs": "Reads which build phase you are in.",
       "healthy_direction": "Peaks at mechanization, then collapses as the environment stabilizes.",
-      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "churn" },
+      "defined_in": { "label": "the-timeline-and-the-work", "anchor": "churn" },
       "mode": "formative",
       "rationale": "Formative: the add/delete curve tells you which build phase you are in right now, so you know whether to expect rewrite or stability next."
     },
@@ -50,7 +50,7 @@
       "counts": "Whether the drift and parity gates keep model equal to code.",
       "informs": "Watch that map-equals-territory holds.",
       "healthy_direction": "Gates stay green.",
-      "defined_in": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
+      "defined_in": { "label": "keeping-models-in-sync", "anchor": "" },
       "mode": "formative",
       "rationale": "Formative: the drift and parity gates fire during the work; a red gate steers you to the divergence before it lands. Feedback in the loop, not an end-state score."
     },
@@ -60,7 +60,7 @@
       "counts": "Whether the generator exercised every production of the input grammar.",
       "informs": "Watch for corpus holes no line-coverage number reveals.",
       "healthy_direction": "Rises toward full grammar exercise.",
-      "defined_in": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "" },
+      "defined_in": { "label": "generative-validation", "anchor": "" },
       "mode": "formative",
       "rationale": "Formative: a generative-validation oracle you watch while building the corpus — an unexercised production steers the next generator tweak."
     },
@@ -70,7 +70,7 @@
       "counts": "Whether generated inputs drove every declared invariant, transition, and edge.",
       "informs": "The saturation oracle for generative validation.",
       "healthy_direction": "Rises toward full claim exercise.",
-      "defined_in": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "" },
+      "defined_in": { "label": "generative-validation", "anchor": "" },
       "mode": "formative",
       "rationale": "Formative: the saturation oracle you steer generative validation by — an unexercised claim tells you which input to generate next."
     },
@@ -80,7 +80,7 @@
       "counts": "Tokens spent to reach an answer, model on versus off.",
       "informs": "Certify the model earned its context budget.",
       "healthy_direction": "Lower with the model on.",
-      "defined_in": { "chapter": "3.1", "page_slug": "3.1-the-executable-zoo", "anchor": "" },
+      "defined_in": { "label": "the-executable-zoo", "anchor": "" },
       "mode": "summative",
       "rationale": "Summative: a payoff verdict measured with the model mature. You certify the model earned its context budget; you do not steer the daily loop by it."
     },
@@ -90,7 +90,7 @@
       "counts": "Support-apparatus LoC (tests, lints, docs, infra, tooling) over production LoC.",
       "informs": "Watch the apparatus keeps leading as feature work resumes.",
       "healthy_direction": "Leads production; settles around 3x it at maturity.",
-      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "support-ratio-curve" },
+      "defined_in": { "label": "the-timeline-and-the-work", "anchor": "support-ratio-curve" },
       "mode": "both",
       "rationale": "Both: watched formatively as the apparatus forms (is it still leading?), reported summatively at maturity as the ~3x verdict. Seated in the summative band because its reference number is the mature ratio."
     },
@@ -100,7 +100,7 @@
       "counts": "Project-specific lint files and gate scripts, per window.",
       "informs": "Watch the environment still accrete controls.",
       "healthy_direction": "Climbs steadily (lints 0 to 747; gates 0 to 102).",
-      "defined_in": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "control-growth" },
+      "defined_in": { "label": "the-governed-environment", "anchor": "control-growth" },
       "mode": "both",
       "rationale": "Both: watched formatively as controls accrete one failure class at a time, reported summatively at maturity as the final control count. A trajectory metric — steered by while forming, certified at the end."
     },
@@ -110,7 +110,7 @@
       "counts": "Epics moved into the closed set per week — the finishing rate, not the commit rate.",
       "informs": "Whether an operating-mode shift converts to durable throughput rather than raw output.",
       "healthy_direction": "Rises when the environment absorbs autonomous loops; flat velocity beside a rising closure rate is the healthy anti-decay shape.",
-      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "" },
+      "defined_in": { "label": "the-timeline-and-the-work", "anchor": "" },
       "mode": "both",
       "rationale": "Both: steered by formatively as an operating-mode shift lands (does the environment convert velocity into finishes rather than raw output?), certified summatively as the loop-mode payoff. Observed over a ~2-week, single-data-point window so far — a direction, not yet a rate; the figures + caveats live in the epic-closure-rate data-claim."
     }
