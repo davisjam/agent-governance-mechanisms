@@ -456,19 +456,40 @@ def _load_data_claims() -> dict[str, dict]:
     return {k: v for k, v in raw.items() if not k.startswith("_")}
 
 
+_DATA_SOURCE_STEM: "dict[str, str] | None" = None
+
+
+def _chapter_stem_for(label: str) -> str:
+    """A data-claim `source` is a number-free identity LABEL now (chapter_identity model); resolve it to the
+    numbered file stem (`the-timeline-and-the-work` -> `5.2-the-timeline-and-the-work`) that keys the build's
+    slug->title map and names the built HTML page. A value that is not a bare label (legacy numbered stem)
+    passes through unchanged, so a half-migrated field still renders."""
+    global _DATA_SOURCE_STEM
+    if _DATA_SOURCE_STEM is None:
+        import json as _json
+        import os as _os
+        p = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
+                          "book-models", "chapter_identity_declared.json")
+        decl = _json.loads(open(p, encoding="utf-8").read())
+        _DATA_SOURCE_STEM = {c["label"]: _os.path.basename(c["filename"])[:-3]
+                             for c in decl.get("chapters", [])}
+    return _DATA_SOURCE_STEM.get(label, label)
+
+
 def _apply_data_claims(md: str, claims: dict[str, dict], chapter_titles: dict[str, str]) -> str:
     """Substitute every `[data: <slug>]` marker with a footnote-style cross-ref into the chapter that
     reports the datum: "For the data, see [<Chapter Title> →](<source>.html#<anchor>)" — appending
     " (preliminary)" when the claim's status is preliminary or partial. An unknown slug fails the build
     LOUD (like an unknown `{{token}}`) — a rotted reference must stop the build, not ship a dead cross-ref.
     The `chapter_titles` map (slug -> title) is the build's own discovery, so the link text can never
-    drift from the source chapter's real title. Emits a markdown link that `inline()` then renders to <a>."""
+    drift from the source chapter's real title. The claim's `source` is a chapter LABEL, resolved to the
+    numbered page stem at build. Emits a markdown link that `inline()` then renders to <a>."""
     def repl(m: "re.Match[str]") -> str:
         slug = m.group(1).strip()
         if slug not in claims:
             raise SystemExit(f"data marker [data: {slug}] has no entry in data/data-claims.json")
         entry = claims[slug]
-        source = entry["source"]
+        source = _chapter_stem_for(entry["source"])
         anchor = entry.get("anchor", "")
         title = chapter_titles.get(source, source)
         href = f"{source}.html" + (f"#{anchor}" if anchor else "")
