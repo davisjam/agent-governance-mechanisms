@@ -36,19 +36,15 @@ XML.
 
 ```mermaid
 flowchart LR
-  S[Slides sites] --> SM[Slides model]
-  D[Docs sites] --> DM[Docs model]
-  X[Sheets sites] --> XM[Sheets model]
-  SM --> Common["Shared common layer"]
-  DM --> Common
-  XM --> Common
-  Common --> Raw[(Raw office SDK)]
-  L{{Two ban-lints}} -. raw SDK + raw-XML regex .-> Raw
+  Sites[3 format sites] --> M[Format models]
+  M --> Common[Shared layer]
+  Common --> Raw[(Raw SDK)]
+  L{{Two ban-lints}} -. raw + regex .-> Sites
 ```
 
-*Accessible description: three format-specific call sites route through three structured models into a shared
-common layer, which is the only path to the raw office SDK. Two ban-lints guard the raw edges — one bans
-the raw SDK, one bans regexing the serialized XML — so no site skips the models.*
+*Accessible description: three format-specific call sites route through their structured models into a
+shared common layer, which is the only path to the raw office SDK. Two ban-lints guard the raw edges — one
+bans the raw SDK, one bans regexing the serialized XML — so no site skips the models.*
 
 ### Sample Code
 

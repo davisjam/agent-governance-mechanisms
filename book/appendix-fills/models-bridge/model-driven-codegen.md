@@ -33,10 +33,9 @@ hand-edit that dropped the marker.
 ```mermaid
 flowchart LR
   M[(Model)] --> Gen[Generator]
-  Gen --> Art[/Artifact + provenance header/]
+  Gen --> Art[/Provenance artifact/]
   Art --> Fresh{{Freshness lint}}
-  M --> Fresh
-  Fresh -->|differs| Fail([build blocked])
+  Fresh -->|stale| Fail([Blocked])
 ```
 
 *Accessible description: a generator reads the model and emits an artifact carrying a provenance header. A

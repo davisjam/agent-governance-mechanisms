@@ -37,21 +37,17 @@ backstop. An unplaceable finding fails closed to HARD.
 
 ```mermaid
 flowchart LR
-  Lints{{Lints emit structured findings}} --> Grader[One central grader]
-  Model[(Component model, read at check time)] --> Grader
-  Changed([Changed files]) --> Grader
-  Grader -->|site or cause in change| Hard{{HARD: block}}
-  Grader -->|component touched| Soft([SOFT: warn])
-  Grader -->|neither| Silent([SILENT: backstop])
-  Grader -->|cannot place| Hard
+  F[/Finding/] --> Grader{{Distance grader}}
+  Model[(Component model)] --> Grader
+  Grader -->|near| Hard([HARD: block])
+  Grader -->|mid| Soft([SOFT: warn])
+  Grader -->|far| Silent([SILENT])
 ```
 
-*Accessible description: every participating lint emits a structured finding rather than deciding relevance
-itself. One central grader reads three inputs — the findings, the component model loaded at check time, and
-the set of changed files. It assigns each finding a tier: HARD blocks the commit when the finding's site or
-one of its causing inputs is in the changed set; SOFT warns when the finding's component is one the commit
-touched; SILENT suppresses at commit time and defers to a downstream no-baseline backstop. A finding the
-grader cannot place fails closed to HARD, so a gap in the contract is treated as most severe, not least.*
+*Accessible description: a finding and the component model feed one central grader that ramps severity by
+distance from the change — near blocks (HARD), a touched component warns (SOFT), and neither defers to a
+downstream backstop (SILENT). A finding the grader cannot place fails closed to HARD, so a gap in the
+contract is treated as most severe, not least.*
 
 ### Sample Code
 

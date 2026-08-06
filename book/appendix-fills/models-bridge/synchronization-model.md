@@ -36,18 +36,6 @@ acquisition.
 erDiagram
   LOCK ||--o{ ACQUIRER : "acquired at"
   LOCK ||--o{ ORDERING : "constrains"
-  LOCK {
-    string path PK
-    int cap
-  }
-  ACQUIRER {
-    string site PK
-    string path FK
-  }
-  ORDERING {
-    string before FK
-    string after FK
-  }
 ```
 
 *Accessible description: a lock record relates to many acquisition sites and many ordering constraints. A

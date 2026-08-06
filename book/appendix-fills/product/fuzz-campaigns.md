@@ -35,9 +35,9 @@ individual seed.
 
 ```mermaid
 flowchart LR
-  Gen[Malformed-input generator] -->|adversarial bytes| Run[Run tool]
-  Run -->|coverage| Base[(Coverage baseline)]
-  Run -->|crash / corruption| Fix["Fix to the spec point<br/>(not the seed)"]
+  Gen[Input generator] --> Run[Run tool]
+  Run --> Base[(Coverage baseline)]
+  Run --> Fix[Fix to spec point]
 ```
 
 *Accessible description: a generator feeds adversarial bytes to the tool; coverage is collected and

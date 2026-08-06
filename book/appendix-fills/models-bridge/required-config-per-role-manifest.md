@@ -38,20 +38,16 @@ at once. A drift gate reconciles the declared set against what each role's code 
 
 ```mermaid
 flowchart LR
-  Manifest[(role x plane -> required set)] --> Admit{{Admission check at start-up}}
-  Env([Process environment]) --> Admit
-  Admit -->|complete| Start([Process starts work])
-  Admit -->|any entry missing| Refuse[/Refuse: report the whole missing set/]
-  Recon{{Drift gate}} -.->|reconcile vs real config reads| Manifest
+  M[(Role manifest)] --> Admit{{Admission check}}
+  Env([Environment]) --> Admit
+  Admit -->|complete| Start([Starts])
+  Admit -->|missing| Refuse[/Refused/]
 ```
 
 *Accessible description: a manifest keyed by role and plane maps to the complete required configuration
-set. At start-up, an admission check compares the process environment against its role-and-plane required
-set. If the environment is complete, the process starts its work; if any entry is missing, admission
-refuses to start and reports the whole missing set at once, at the boundary, rather than letting the
-process run until a request happens to need the value. A drift gate reconciles the declared required set
-against what each role's code actually reads, so a newly-required variable added in code without a manifest
-entry is a build finding.*
+set; at start-up an admission check compares the process environment against it. A complete environment
+starts the process; a missing entry refuses it at the boundary and reports the whole gap at once, rather
+than letting the process run until a request needs the value.*
 
 ### Sample Code
 

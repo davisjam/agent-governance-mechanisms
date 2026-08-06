@@ -34,17 +34,15 @@ the tree fails the build.
 
 ```mermaid
 flowchart LR
-  C1[Visitor A] --> W
-  C2[Visitor B] --> W
-  C3[Visitor C] --> W
-  W["Canonical walker<br/>(owns invariants)"] --> T[(Tree model)]
-  C1 -. banned raw recursion .-> T
-  L{{Ban-lint}} -. fails build .-> C1
+  V[Visitors] --> W[Canonical walker]
+  W --> T[(Tree model)]
+  V -. banned recursion .-> T
+  L{{Ban-lint}} -. fails build .-> V
 ```
 
-*Accessible description: three visitors all reach the tree through one canonical walker that owns the
-traversal invariants. A dashed edge marks a visitor recursing into the tree directly; the ban-lint fails
-the build on that edge, so every surviving path to the tree runs through the walker.*
+*Accessible description: visitors reach the tree only through one canonical walker that owns the traversal
+invariants. A dashed edge marks a visitor recursing into the tree directly; the ban-lint fails the build on
+that edge, so every surviving path to the tree runs through the walker.*
 
 ### Sample Code
 

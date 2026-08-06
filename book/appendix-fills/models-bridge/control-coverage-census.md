@@ -36,21 +36,16 @@ first-class finding.
 
 ```mermaid
 flowchart LR
-  Controls[(Control node-set)] --> Clf{{Classify by code anchor}}
-  Clf -.->|cannot place| Fail[/Fail loud/]
-  Clf --> Roll[Roll up per target]
-  Roll --> T1([Agent: N controls])
-  Roll --> T2([Models-bridge: M controls])
-  Roll --> T3([Product: 0 controls])
-  T3 --> Gap{{Empty or all-soft target = coverage gap}}
+  Controls[(Controls)] --> Clf{{Classify by anchor}}
+  Clf --> Roll[Per-target rollup]
+  Roll --> Gap{{Zero/soft = gap}}
+  Clf -.->|unplaceable| Fail([Fail loud])
 ```
 
-*Accessible description: the typed control node-set feeds a classifier that derives each control's
-governance target from its code anchor. A control the classifier cannot place fails loud rather than
-falling into a silent default bucket. The placed controls roll up per target — agent, models-bridge,
-product — each cell reporting a control count and its soft/hard enforcement shape. A target with zero
-controls, or only soft aims and no hard hold, is a re-derived coverage-gap finding that points at where the
-next control should go.*
+*Accessible description: the control set feeds a classifier that derives each control's target from its
+code anchor, failing loud on one it cannot place. Placed controls roll up per target; a target with zero
+controls, or only soft ones, is a re-derived coverage gap that points at where the next control should
+go.*
 
 ### Sample Code
 

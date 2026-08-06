@@ -32,20 +32,12 @@ presentation surface from it; a parity lint fails when a consumer or generated d
 
 ```mermaid
 erDiagram
-  REGISTRY ||--o{ ENTRY : "holds"
-  REGISTRY {
-    string slice PK
-  }
-  ENTRY {
-    string key PK
-    string slice FK
-    string value
-  }
+  REGISTRY ||--o{ ENTRY : holds
+  REGISTRY ||--o{ CONSUMER : "read by"
 ```
 
-*Accessible description: a registry is keyed by its domain slice and holds many entries, each a key-value
-fact within that slice. Tools read the entries and a doc generator emits from them, with a parity lint
-holding both to the registry.*
+*Accessible description: a registry holds many typed entries and is read by many consumers; tools read the
+entries and a doc generator emits from them, with a parity lint holding both to the registry.*
 
 ### Sample Code
 

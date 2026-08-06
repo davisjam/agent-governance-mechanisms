@@ -30,16 +30,15 @@ downstream enforcers refuse a call whose declared role doesn't match.
 
 ```mermaid
 flowchart LR
-  Dispatch[/--role r/] --> Enum{{Role enum}}
-  Enum -->|maps to| Tuple["Policy tuple<br/>model · isolation · gates"]
-  Tuple --> Enforcer{Enforcer at gated op}
-  Enforcer -->|role matches| Run([Operation proceeds])
-  Enforcer -->|role mismatch| Deny([Refused])
+  Dispatch[/Role at dispatch/] --> Enum{{Role enum}}
+  Enum --> Gate{Enforcer}
+  Gate -->|matches| Run([Proceeds])
+  Gate -->|mismatch| Deny([Refused])
 ```
 
-*Accessible description: a dispatch declares a role drawn from a closed enum; the enum maps to one policy
-tuple of model, isolation, and gates; an enforcer at each gated operation lets the call proceed when the
-role matches and refuses it when it does not.*
+*Accessible description: a dispatch declares a role from a closed enum; an enforcer at each gated
+operation checks the declared role and lets the call proceed on a match, refusing it on a mismatch. The
+role's policy fields — model, isolation, gates — are fixed per enum value.*
 
 ### Sample Code
 

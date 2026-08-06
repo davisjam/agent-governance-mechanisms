@@ -35,16 +35,15 @@ path at compile time.
 
 ```mermaid
 flowchart LR
-  C1[Caller A] --> SC
-  C2[Caller B] --> SC
-  SC["Typed client<br/>(takes byte stream)"] -->|bytes on the wire| Peer[Peer service]
-  C1 -. banned raw HTTP .-> Peer
-  L{{Sole-seam lint}} -. fails build .-> C1
+  Callers[Callers] --> SC[Typed client]
+  SC --> Peer[Peer service]
+  Callers -. banned raw HTTP .-> Peer
+  L{{Sole-seam lint}} -. fails build .-> Callers
 ```
 
-*Accessible description: two callers reach a peer service only through one typed client, which posts
-bytes over the wire. A dashed edge marks a caller making a raw HTTP call directly; the sole-seam lint
-fails the build on it, and the client's byte-stream signature makes passing a path a type error.*
+*Accessible description: callers reach a peer service only through one typed client, which posts bytes
+over the wire. A dashed edge marks a caller making a raw HTTP call directly; the sole-seam lint fails the
+build on it, and the client's byte-stream signature makes passing a path a type error.*
 
 ### Sample Code
 

@@ -33,15 +33,15 @@ drift gate holds it equal to reality. Because it is read and checked on every ru
 
 ```mermaid
 flowchart LR
-  M[(Structured model<br/>imports nothing)] --> Agent[Agent reads]
+  M[(Structured model)] --> Agent([Agent reads])
   M --> Gen[Generate artifacts]
   M --> Gate{{Drift gate}}
-  Gate -->|diverges| Fail([build blocked])
+  Gate -.->|diverges| Fail([Build blocked])
 ```
 
-*Accessible description: one structured model that imports nothing feeds three consumers — an agent that reads
-it, generators that emit real artifacts from it, and a drift gate that blocks the build when the model
-diverges from reality. Continuous reads and checks keep it from staling.*
+*Accessible description: one structured model, that imports nothing, feeds three consumers — an agent that
+reads it, generators that emit artifacts from it, and a drift gate that blocks the build when it diverges
+from reality. Continuous reads and checks keep it from staling.*
 
 ### Sample Code
 

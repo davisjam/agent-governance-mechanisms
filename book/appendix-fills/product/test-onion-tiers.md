@@ -33,16 +33,14 @@ fast gates, the full suite at deploy. Touching a high-blast-radius surface escal
 
 ```mermaid
 flowchart TD
-  Edit[Edit loop] --> Targeted["Targeted filter (<5s)"]
-  PreCommit[Commit] --> Lite["Lite (seconds)"]
-  Deploy[Deploy] --> Smoke["Smoke pre-gate"]
-  Smoke --> Full["Full suite (~minutes)"]
-  Hot{High-blast-radius surface?} -->|yes| Full
+  In[Edit / commit / deploy] --> Pick[Cheapest tier]
+  Pick --> Run[Smoke·Lite·Targeted·Full]
+  Hot{Hot surface?} -->|yes, escalate| Run
 ```
 
-*Accessible description: the edit loop runs a sub-five-second targeted filter, a commit runs the Lite
-tier, and deploy runs a Smoke pre-gate then the full suite. A decision node routes any change touching a
-high-blast-radius surface straight to the full tier.*
+*Accessible description: each decision — edit, commit, or deploy — runs the cheapest matching tier from the
+stack of Smoke, Lite, Targeted, and Full. A change touching a high-blast-radius surface escalates to the
+full tier regardless of which decision triggered it.*
 
 ### Sample Code
 

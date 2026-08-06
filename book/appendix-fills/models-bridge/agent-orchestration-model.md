@@ -38,17 +38,16 @@ registry's event vocabulary.
 ```mermaid
 stateDiagram-v2
   [*] --> Dispatched
-  Dispatched --> Working: prepare
-  Working --> Landed: commit + verify
-  Working --> Abandoned: stream-silence
-  Abandoned --> Working: recover
-  Landed --> Tombstoned: clean
+  Dispatched --> Working
+  Working --> Working: recover
+  Working --> Landed
+  Landed --> Tombstoned
   Tombstoned --> [*]
 ```
 
-*Accessible description: an agent moves from dispatched to working to landed to tombstoned, with a branch
-where a stalled agent is abandoned and later recovered back to working. The declared states are what a
-drift gate checks against the live registry.*
+*Accessible description: an agent moves from dispatched to working to landed to tombstoned; a stalled
+agent recovers back into working via a self-loop rather than a separate abandoned state. The declared
+states are what a drift gate checks against the live registry.*
 
 ### Sample Code
 

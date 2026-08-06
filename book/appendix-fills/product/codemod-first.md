@@ -35,10 +35,10 @@ agent.
 
 ```mermaid
 flowchart TD
-  Backlog([Mechanical backlog]) --> Count{Many sites AND deterministic?}
-  Count -->|yes| Codemod[One AST transformer]
-  Count -->|no| PerSite[Agent per site]
-  Codemod --> Apply([applied everywhere, identically])
+  Backlog([Mechanical backlog]) --> Gate{Many + deterministic?}
+  Gate -->|yes| Codemod[AST transformer]
+  Gate -->|no| PerSite[Agent per site]
+  Codemod --> Applied([Applied everywhere])
 ```
 
 *Accessible description: a decision node asks whether the backlog has many sites and a deterministic fix

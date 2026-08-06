@@ -33,12 +33,10 @@ encodes atomic pop-and-move. A sole-seam lint bans the raw client anywhere else.
 
 ```mermaid
 flowchart LR
-  P[Producers] --> Seam
-  C[Consumers] --> Seam
-  M[Metrics] --> Seam
-  Seam["Dispatch module<br/>(key schema + atomic ops)"] --> R[(Store)]
-  P -. banned raw client .-> R
-  L{{Sole-seam lint}} -. fails build .-> P
+  Callers[Callers] --> Seam[Dispatch module]
+  Seam --> Store[(Store)]
+  Callers -. banned raw client .-> Store
+  L{{Sole-seam lint}} -. fails build .-> Callers
 ```
 
 *Accessible description: producers, consumers, and metrics all reach the store through the one dispatch

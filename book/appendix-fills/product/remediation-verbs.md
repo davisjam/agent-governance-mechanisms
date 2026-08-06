@@ -34,11 +34,10 @@ wires its stamp and, if it inserts, registers the insert — so the outcome is a
 
 ```mermaid
 flowchart LR
-  P1[Pass A] --> Verbs
-  P2[Pass B] --> Verbs
-  Verbs["Closed verb set<br/>(typed mutators)"] --> Doc[(Document)]
-  Verbs -.->|each verb stamps + registers| Gov[Attribution + validation]
-  P1 -. no edits outside the set .-> Doc
+  Passes[Passes] --> Verbs[Closed verb set]
+  Verbs --> Doc[(Document)]
+  Verbs --> Gov[Stamp + validate]
+  Passes -. no edits outside set .-> Doc
 ```
 
 *Accessible description: every remediation pass mutates the document only through a closed set of typed

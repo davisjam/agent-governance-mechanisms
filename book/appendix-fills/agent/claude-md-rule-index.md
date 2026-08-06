@@ -33,15 +33,16 @@ predicate, and a per-rule cross-reference — each held by a blocking lint.
 
 ```mermaid
 flowchart LR
-  Doc["Governance document<br/>(booted by every agent)"] --> Agents([Every agent])
-  Cap{{Cap / bloat lint}} -.->|fail if over budget| Doc
-  Conf{{Conformance lint}} -.->|fail if a rule cites no canonical doc| Doc
-  Admit{{Admission test}} -.->|route non-qualifying rules out| Doc
+  Rule[/New rule/] --> Admit{{Admission test}}
+  Admit -->|passes| Index[(Rule index)]
+  Admit -->|fails| SubDoc([Sub-doc])
+  Index --> Boot([Booted by agents])
+  Cap{{Cap lint}} -.-> Index
 ```
 
-*Accessible description: the governance document is booted by every agent; a cap lint fails the build if
-it exceeds its size budget, a conformance lint fails if any rule stops citing a canonical doc, and an
-admission test routes rules that don't earn a spot into sub-docs.*
+*Accessible description: a new rule hits an admission test; if it passes it joins the rule index, which
+every agent boots; if it fails it routes to a sub-doc instead. A separate cap lint bounds the index's
+size.*
 
 ### Sample Code
 
