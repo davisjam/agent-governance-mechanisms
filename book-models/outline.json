@@ -2509,8 +2509,8 @@
         {
           "section_id": "formal-invariant-verification",
           "level": 2,
-          "heading_text": "Formal invariant verification",
-          "topic_sentence": "Formal invariant verification is the backbone the other three models hang their invariant tables on.",
+          "heading_text": "Formal invariant verification: the verification backbone",
+          "topic_sentence": "Formal invariant verification is the backbone the three models hang their invariant tables on — a governance method over the models, not a model of the running system.",
           "id_source": "explicit",
           "block_index": 20,
           "points": [
@@ -2536,7 +2536,7 @@
             },
             {
               "slug": "it-assesses-lock-coverage-and-deadlock-freedom",
-              "text": "It assesses lock coverage and deadlock-freedom.",
+              "text": "It assesses lock coverage and lock-order consistency.",
               "block_index": 33
             },
             {
