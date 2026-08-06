@@ -255,6 +255,7 @@
       "recurrence": "local",
       "vehicle": "a scar that heals into a load-bearing wall",
       "elaborates": { "model": "argument-spine", "id": "failures-become-machinery" },
+      "used_once": true,
       "introduced_at": { "chapter": "1.2", "page_slug": "1.2-mage-by-example", "anchor": "" },
       "pays_off_at": { "chapter": "1.2", "page_slug": "1.2-mage-by-example", "anchor": "" },
       "stretch": "1.2-mage-by-example",

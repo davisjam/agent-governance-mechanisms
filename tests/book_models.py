@@ -346,6 +346,22 @@ def check_metaphor_slogan_index():
     return (FAIL if issues else PASS), issues
 
 
+def check_slogan_density():
+    """The slogan-density worklist (AUDIT-ONLY, rule-#55 first landing). Reads the registry + occurrence-index
+    + the book's `<!-- slogan: id -->` tags and reports the four ration classes: (b) a competitor phrase still
+    at full strength, (c) a canonical over its ration budget or two occurrences clustered within a window,
+    (d) a used-once slogan/metaphor appearing more than once, (e) a tag naming no registered slogan or a
+    registered slogan with no tag. The Part-1 prose is over-sloganed, so this lands audit-only-first — the
+    findings are the net-subtractive fix-wave worklist, not a gate. The two born-blocking classes
+    (a competing-canonical, f dangling) are asserted by `check_metaphor_spans` instead. Keyed off
+    `book-models/metaphor-spans.json` + `metaphor-slogan-index.json` + the book chapters."""
+    import lint_slogan_density as lsd  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = list(lsd.audit_findings())
+    # Audit-only: surfaced as [audt], non-gating — the fix-wave drives it to 0, then a follow-up promotes.
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

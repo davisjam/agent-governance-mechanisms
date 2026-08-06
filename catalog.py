@@ -1241,6 +1241,22 @@ def cmd_validate(_args) -> int:
         for f in msi_fresh:
             print(f"                 {f}")
         n_issues += len(msi_fresh)
+    # SLOGAN-DENSITY WORKLIST — AUDIT-ONLY. The ration classes (b competitor-at-full-strength / c over-use /
+    # d used-once / e tag-consistency) over the registry + occurrence-index + the book's `<!-- slogan: id -->`
+    # author tags. The current Part-1 prose is over-sloganed, so this lands AUDIT-ONLY-first (rule-#55
+    # discipline) — it PRINTS the net-subtractive worklist so a committer sees it, but does NOT increment
+    # n_issues. The two born-blocking classes (a competing-canonical, f dangling-elaboration) are enforced
+    # above via metaphor_spans_model.structural_findings. A follow-up promotes (b/c/d/e) once the fix-wave
+    # drains them. See book-models/lint_slogan_density.py.
+    import lint_slogan_density as lsd  # noqa: E402 — audit-only slogan-density worklist
+    sl_audit = lsd.audit_findings()
+    if sl_audit:
+        print(f"  [slogan] AUDIT-ONLY: {lsd.summary_line(sl_audit)} (does not gate) — "
+              f"run `python3 book-models/lint_slogan_density.py`:")
+        for f in sl_audit:
+            print(f"           {f}")
+    else:
+        print("  [slogan] AUDIT-ONLY: clean — competitors blunted, ration within budget, tags consistent")
     # DEFINE-BEFORE-USE (term ordering) — BLOCKING. Extends the claims model's C1 site-resolution to the
     # ORDERING of the glossary/concept TERM class: a term's canonical definition (its `index-def`, or the front
     # glossary when registered there — front matter, always define-first) must sit no later than the page that

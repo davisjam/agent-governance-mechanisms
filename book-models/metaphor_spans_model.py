@@ -98,6 +98,7 @@ class Metaphor:
     notes: str
     pays_off_at: "dict | None" = None
     stretch: str = ""
+    used_once: bool = False   # a vivid image that must appear exactly once (density class d, audit-only)
     kind: str = "metaphor"
 
     def stretch_key(self) -> str:
@@ -170,7 +171,7 @@ def derive_model() -> MetaphorModel:
             introduced_at=m["introduced_at"], payoff=m["payoff"],
             overlap_ok=bool(m.get("overlap_ok", False)), overlap_rationale=m.get("overlap_rationale", ""),
             notes=m.get("notes", ""), pays_off_at=m.get("pays_off_at"), stretch=m.get("stretch", ""),
-            kind=m.get("kind", "metaphor"),
+            used_once=bool(m.get("used_once", False)), kind=m.get("kind", "metaphor"),
         )
         for m in raw.get("metaphors", [])
     ]

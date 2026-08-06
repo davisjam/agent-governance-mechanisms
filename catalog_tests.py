@@ -54,6 +54,7 @@ from tests.book_models import (
     check_print_appendix_projection,
     check_projection_index,
     check_reverse_index,
+    check_slogan_density,
     check_theory_model,
 )
 from tests.citations import (
@@ -296,6 +297,14 @@ CHECKS = [
     # catalog.py validate. See tests/book_models.py.
     Check("book-models: slogan/metaphor occurrence-index freshness (metaphor-slogan-index.json)", 1,
           lambda strict: check_metaphor_slogan_index()),
+    # AUDIT-ONLY (rule #55 first landing): the SLOGAN-DENSITY worklist — the four ration classes (b competitor
+    # at full strength / c over-use or clustering / d used-once violated / e tag-consistency) over the
+    # registry + occurrence-index + the book's `<!-- slogan: id -->` tags. The Part-1 prose is over-sloganed,
+    # so this surfaces the net-subtractive fix-wave worklist without gating; a follow-up promotes it once the
+    # fix-wave drains it. The two born-blocking classes (a competing-canonical, f dangling) are asserted by
+    # check_metaphor_spans. See tests/book_models.py.
+    Check("book-models: slogan-density ration worklist (metaphor-spans.json + index + tags)", 1,
+          lambda strict: check_slogan_density(), audit_only=True),
     # BLOCKING (rule #55 promotion — drain confirmed 0 at HEAD across a clean session): the THEORY-OF-MAGE
     # projection view-model — the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is projected from
     # theory_of_mage_declared.json (H4 folds its H4a/H4b sub-hypotheses). Asserts the TM1-TM7 structural
