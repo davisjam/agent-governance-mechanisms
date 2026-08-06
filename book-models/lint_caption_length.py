@@ -2,7 +2,10 @@
 
 A caption's length should match the job the figure does. An anchor figure that introduces or summarizes a
 major idea earns a rich caption a reader can learn the idea from; a reference visual earns one identifying
-sentence. The retired uniform cap (<=3 sentences AND <=50 words for every caption) squeezed the book's
+sentence. GUARD (A-tier redundancy): an A-tier anchor earns its length by telling the reader how to read the
+figure and what follows from it — NOT by re-teaching the adjacent prose. The standalone-teaching allowance
+must not create local sentence-for-sentence redundancy with the paragraph above the figure; length spent
+echoing prose the reader just read is padding, not an anchor caption doing its job. The retired uniform cap (<=3 sentences AND <=50 words for every caption) squeezed the book's
 central method diagram and its author photo to the same budget. This check replaces that one ceiling with
 **per-tier bands**, read from the declared registry `book-models/figure-caption-tiers.json`:
 
