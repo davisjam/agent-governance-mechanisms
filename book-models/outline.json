@@ -870,7 +870,7 @@
           "section_id": "the-lifecycle-it-keeps",
           "level": 2,
           "heading_text": "The lifecycle it keeps",
-          "topic_sentence": "Engineering ran on the same handful of activities long before software, and software inherits them whole: **requirements** (find out what the system must do, and for whom — usually the hard part, since the people who need it cannot state it), **specification** (say what it will do, precisely enough to check later), **design** (decide the parts, the seams, and how the whole meets its constraints), **implementation** (build it — for software, write the code), **validation** (show the built thing meets the spec), and **maintenance** (change it over the long life without breaking what already works).",
+          "topic_sentence": "Engineering ran on the same handful of activities long before software, and software inherits them whole: **requirements**, **specification**, **design**, **implementation** (for software, writing the code), **validation**, and **maintenance**.",
           "id_source": "derived",
           "block_index": 2,
           "points": [

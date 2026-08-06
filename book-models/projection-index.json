@@ -43,7 +43,7 @@
           },
           {
             "file": "book/1.1-the-printer.html",
-            "occ": 17
+            "occ": 16
           },
           {
             "file": "book/1.2-mage-by-example.html",
@@ -1263,7 +1263,7 @@
           },
           {
             "file": "book/1.5-the-engineers-seat.html",
-            "occ": 24
+            "occ": 23
           },
           {
             "file": "book/2.1-the-agent-stack.html",
@@ -3863,7 +3863,7 @@
           },
           {
             "file": "book/1.5-the-engineers-seat.html",
-            "occ": 8
+            "occ": 7
           },
           {
             "file": "book/2.1-the-agent-stack.html",
