@@ -14,7 +14,8 @@
 Churn is the wall the catalogue exists to hold off: effort spent rediscovering, undoing, and reconciling
 rather than advancing the system. Compounding is what the same environment does when it works. Convert a
 recurring failure into a durable mechanism and you do not merely retire one failure — you leave the
-environment permanently better able to absorb the next change. The judgment spent once keeps paying.
+environment more able to absorb the next change, for as long as the accumulated capital stays fit. The
+judgment spent once keeps paying.
 
 The unit that compounds has a name: **engineering capital**. A validator, a structured model, an
 architectural constraint, a generated artifact — each is capital on the balance sheet of the environment,
