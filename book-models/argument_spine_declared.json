@@ -126,6 +126,15 @@
       "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": [], "argues_claims": []},
       "reviewed_hash": "d27760687c37",
       "quantifiable": false, "reality_claim": false
+    },
+    {
+      "id": "conversions-compound",
+      "order": 15,
+      "statement": "Each conversion banks engineering capital that lowers the future cost of change, so effort compounds — later work extends capability instead of re-solving settled problems, while that capital stays fit.",
+      "seeds": [6, 7],
+      "reconciles": {"claims": ["conversions-compound"], "big_ideas": ["convert-failures"]},
+      "reviewed_hash": "3d5cdcd1963c",
+      "quantifiable": false, "reality_claim": true, "frame": "offered-for-replication", "measurand": "share of future effort extending capability versus re-solving settled problems, as effective conversion coverage grows"
     }
   ],
   "claim_exemptions": {
@@ -178,7 +187,8 @@
     "5.2-the-timeline-and-the-work": ["abundant-implementation", "grounded-in-one-case"],
     "5.3-the-built-system": ["modeling-thesis", "grounded-in-one-case"],
     "5.4-the-road-to-mage": ["oversight-does-not-scale", "seat-moves", "grounded-in-one-case"],
-    "6.2-implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "grounded-in-one-case"],
-    "6.3-conclusion": ["fault-lies-in-instructions", "mage-becomes-practical", "seat-moves"]
+    "6.1-toward-a-theory-of-mage": ["conversions-compound"],
+    "6.2-implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "grounded-in-one-case", "conversions-compound"],
+    "6.3-conclusion": ["fault-lies-in-instructions", "mage-becomes-practical", "seat-moves", "conversions-compound"]
   }
 }

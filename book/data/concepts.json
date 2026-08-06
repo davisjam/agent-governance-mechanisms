@@ -188,6 +188,12 @@
     "status": "book-only",
     "note": "Core construct 5 of 6 (_hierarchy) — the governance-conversion loop. The registered concept slug is `governance-conversion` (renamed 260804 from `failure-to-mechanism` so the slug matches the display name the prose uses). The method level: velocity surfaces a failure, judgment converts each recurrence into a mechanism the environment enforces. Book index-def tagged at the 2.3 ex-post engine paragraph."
   },
+  "compounding": {
+    "kind": "axis",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "The positive dual of churn (core construct 4) — NOT a seventh core construct and NOT a seventh landing Big Idea; a threaded PRINCIPLE the book names once and carries through the argument. Where churn is the negative-feedback regime in which effort dissipates, compounding is the positive-feedback regime in which effort accrues as ENGINEERING CAPITAL (the stock; modeled as a rider on this concept, carried by the compound-interest/capital metaphor span). The claim is bounded, per the Theory chapter's non-monotonicity: a conversion raises the environment's capability only while the capital stays FIT — bureaucracy (accumulation that never compounds) and depreciation (capital that outlived its fit) are the two ways accumulation stops compounding, which is exactly why mature adaptation is subtractive (reconcile/retire). Book index-def tagged in the glossary (0.3 The Book's Language, core-ideas group), with the formal treatment in Part 6 (the increasing-returns proposition + the Bureaucracy-vs-Engineering-capital section). Names the collision with the pre-existing, opposite-valence registered term `compounding-failure-probability` (Part 4, risk multiplying across a long leap) and fixes valence via the compound-INTEREST vehicle. Renders a website concept ENTRY page (concept-compounding.html, reachable as churn's Counterpart), but no landing Big-Idea card (six stays six). Reconciles to Big Idea `convert-failures` as its downstream dynamic via the spine claim `conversions-compound`."
+  },
   "governed-environment": {
     "kind": "core-construct",
     "site_home": "N/A",

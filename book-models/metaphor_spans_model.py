@@ -39,7 +39,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 _DECLARED = os.path.join(_HERE, "metaphor-spans.json")
 
 #: The ratified split — encode the author's set so a silent add/reclassify reddens (C6).
-EXPECT_CORE = 7
+EXPECT_CORE = 8
 EXPECT_LOCAL = 9
 EXPECT_OVERLAPS = 0
 

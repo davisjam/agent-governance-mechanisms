@@ -244,6 +244,24 @@
       "anchor": "Preface 'three ways' close + 2.3 ex-post: velocity surfaces the unforeseeable failure; judgment converts each recurrence into infrastructure."
     },
     {
+      "id": "conversions-compound",
+      "kind": "causal",
+      "statement": "Each governance conversion is engineering capital: it lowers the future cost of change while it stays fit.",
+      "distinguishes": [],
+      "home": "6.1-toward-a-theory-of-mage",
+      "asserted_at": [
+        "6.1-toward-a-theory-of-mage",
+        "6.2-implications-for-se"
+      ],
+      "contradicted_by": "Treating more governance as monotonically better, or accumulation that raises apparatus without lowering future reasoning (bureaucracy that never compounds, or capital left unretired past its fit).",
+      "watch_phrases": [],
+      "relates_to": [
+        "big-idea:convert-failures"
+      ],
+      "provenance": "stated",
+      "anchor": "Part 6: each conversion is engineering capital, not technical debt; compounding is the positive dual of churn, bounded by fit (bureaucracy and depreciation are the two ways it stops)."
+    },
+    {
       "id": "soft-to-hard-spectrum",
       "kind": "distinction",
       "statement": "Mechanisms sit on a soft-to-hard spectrum; push a recurring failure as far toward hard enforcement as possible.",

@@ -60,6 +60,7 @@ No mechanism edge is declared yet — this concept ships thin for now; the edge 
 ## Related concepts
 
 - [Governance-centric — the enabling substrate](concept-governance-centric.md)
+- [Compounding — the positive dual, effort accruing as engineering capital](concept-compounding.md)
 
 ## Read in the book →
 

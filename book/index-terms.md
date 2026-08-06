@@ -200,6 +200,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: ex-ante-governance | Ex-ante governance
 - concept: ex-post-governance | Ex-post governance
 - concept: governance-conversion | Governance conversion
+- concept: compounding | Compounding
 - concept: constraints-and-sensors | Constraints and sensors
 - concept: residual | The residual (goals no mechanism reaches; stays-human)
 - concept: sensor | Sensor (detects drift)
