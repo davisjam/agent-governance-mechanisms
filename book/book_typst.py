@@ -725,7 +725,19 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
 # moving to an appendix card whose title reads "Appendix D - 1. The Operator's Dashboard". "How to read this
 # book" (its short prose + the whole-book map) is the founding member; the Operator's Dashboard (now Appendix
 # D.1) is the second.
-_APPARATUS_ONEPAGER_TITLES = {"how to read this book", "the operator's dashboard"}
+def _how_to_read_title() -> str:
+    """The 'How to read this book' chapter title, resolved THROUGH its identity label so a retitle updates
+    the apparatus-frame match automatically (chapter_identity model). Falls back to the known literal if the
+    identity model is unavailable during a partial build — the literal is the current title, so the frame
+    still matches; this is a convenience derivation, not a correctness dependency."""
+    try:
+        import chapter_identity_model as _cim  # book-models is on sys.path (bb imported above)
+        return _cim.title("how-to-read-this-book").lower()
+    except Exception:  # noqa: BLE001 — see docstring: derivation is a convenience; the literal is the truth
+        return "how to read this book"
+
+
+_APPARATUS_ONEPAGER_TITLES = {_how_to_read_title(), "the operator's dashboard"}
 
 # A subset of the apparatus one-pagers that carry a WIDE table: typeset on a single LANDSCAPE page so a
 # 6-column reference fits without cramping.
@@ -931,7 +943,7 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         # Page-scoped: the six central claims on "What This Book Argues" get the print twin of the web
         # `.argues-page ol` feature treatment (larger text, more air, accent-bold numerals). Only that page's
         # ordered list is rerouted; every other numbered list in the book renders through _render_ordered_list.
-        if chapter.slug == bb._WHAT_THIS_BOOK_ARGUES_SLUG and b.kind is ir.BlockKind.ORDERED_LIST:
+        if bb._stem_to_label(chapter.slug) == bb._WHAT_THIS_BOOK_ARGUES_LABEL and b.kind is ir.BlockKind.ORDERED_LIST:
             frag = _render_argues_claims(b.raw)
         else:
             frag = render_typst(b, caption_md, is_def=is_def, section_no=sec)

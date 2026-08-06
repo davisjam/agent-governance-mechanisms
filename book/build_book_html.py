@@ -220,18 +220,21 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 # e.g. "The Printer"→printer-metaphor, "Skill"→skill-soft-control). A term absent here, or whose slug the book
 # never index-def-tagged, stays un-linked (no fabricated target). WEB-ONLY: `_link_glossary_sites` runs on the
 # rendered glossary HTML in `build()`, never on `body_md`, so the print/Typst projection is untouched.
-GLOSSARY_CHAPTER_SLUG = "0.3-the-books-language"
+# Chapter constants below store the number-free identity LABEL (chapter_identity model); the use sites
+# compare a chapter's label (via _stem_to_label) so a renumber updates the match automatically.
+GLOSSARY_CHAPTER_LABEL = "the-books-language"
 # Apparatus one-pagers — pages that are a self-contained *reference apparatus* (not running prose), meant
 # to read as ONE bordered, offset item rather than bleeding visually from the preceding chapter. "How to
 # read this book" (its short prose + the whole-book map figure) is the founding member; the Operator's
 # Dashboard (its metric table, now Appendix D.1 — `appendix-d-operators-dashboard`) is the second. The
 # renderer frames these in a `.apparatus-page` box (HTML) / a `#block` frame (Typst) — see the CSS
 # `.apparatus-page` swap-point block and `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
-_APPARATUS_ONEPAGER_SLUGS = {"0.5-how-to-read-this-book", "appendix-d-operators-dashboard"}
+_APPARATUS_ONEPAGER_LABELS = {"how-to-read-this-book"}  # chapter members — matched by identity label
+_APPARATUS_ONEPAGER_APPENDIX_SLUGS = {"appendix-d-operators-dashboard"}  # appendix — off the renumber axis
 # "What This Book Argues" — the six central claims. The renderer wraps its content in an `.argues-page`
 # class so the claims list reads as a deliberate front-matter feature (larger body, more air between
 # claims, accent numerals) rather than a manuscript page — see the CSS `.argues-page` block.
-_WHAT_THIS_BOOK_ARGUES_SLUG = "0.2-what-this-book-argues"
+_WHAT_THIS_BOOK_ARGUES_LABEL = "what-this-book-argues"  # 0.2 — a non-outline identity row
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",
@@ -474,6 +477,25 @@ def _chapter_stem_for(label: str) -> str:
         _DATA_SOURCE_STEM = {c["label"]: _os.path.basename(c["filename"])[:-3]
                              for c in decl.get("chapters", [])}
     return _DATA_SOURCE_STEM.get(label, label)
+
+
+_STEM_TO_LABEL: "dict[str, str] | None" = None
+
+
+def _stem_to_label(stem: str) -> str:
+    """The number-free identity LABEL for a chapter's numbered file stem (`0.3-the-books-language` ->
+    `the-books-language`), for comparing a chapter against the label-keyed apparatus/glossary constants. A
+    non-chapter stem (an appendix slug) has no identity row and passes through unchanged."""
+    global _STEM_TO_LABEL
+    if _STEM_TO_LABEL is None:
+        import json as _json
+        import os as _os
+        p = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
+                          "book-models", "chapter_identity_declared.json")
+        decl = _json.loads(open(p, encoding="utf-8").read())
+        _STEM_TO_LABEL = {_os.path.basename(c["filename"])[:-3]: c["label"]
+                          for c in decl.get("chapters", [])}
+    return _STEM_TO_LABEL.get(stem, stem)
 
 
 def _apply_data_claims(md: str, claims: dict[str, dict], chapter_titles: dict[str, str]) -> str:
@@ -6373,7 +6395,7 @@ def build() -> int:
                           section_prefix=section_prefix)
         body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
         body = _resolve_xrefs(body, ref_map, for_print=False)
-        if c["slug"] == GLOSSARY_CHAPTER_SLUG:
+        if _stem_to_label(c["slug"]) == GLOSSARY_CHAPTER_LABEL:
             body = _link_glossary_sites(body, gloss_link_map)
         body += works_cited_section()  # per-chapter numbered Works Cited (empty when nothing is cited)
         if c.get("is_part_page"):
@@ -6384,9 +6406,10 @@ def build() -> int:
         # An apparatus one-pager (how-to-read) frames its header + body in a bordered, offset box so it reads
         # as one distinct reference item, not a continuation of the preceding chapter. The nav bar and footer
         # stay OUTSIDE the frame (they are page chrome, not part of the apparatus item).
-        if c["slug"] in _APPARATUS_ONEPAGER_SLUGS:
+        if _stem_to_label(c["slug"]) in _APPARATUS_ONEPAGER_LABELS \
+                or c["slug"] in _APPARATUS_ONEPAGER_APPENDIX_SLUGS:
             content = f'<div class="apparatus-page">{header}{body}</div>'
-        elif c["slug"] == _WHAT_THIS_BOOK_ARGUES_SLUG:
+        elif _stem_to_label(c["slug"]) == _WHAT_THIS_BOOK_ARGUES_LABEL:
             # The claims-page scoping wrapper (see `.argues-page` CSS) — page chrome (nav bar, footer) stays
             # outside it, exactly like the apparatus-page frame above.
             content = f'<div class="argues-page">{header}{body}</div>'

@@ -77,7 +77,9 @@ def findings() -> "list[Finding]":
     pos = {c["slug"]: i for i, c in enumerate(chapters)}
     registry, _ = bbh._harvest_concept_tags(chapters)
     glossary_slugs = set(bbh._GLOSS_TERM_SLUGS.values())
-    glossary_pos = pos.get(bbh.GLOSSARY_CHAPTER_SLUG)
+    # The glossary chapter is named by its identity LABEL now; resolve it to the numbered stem `pos` keys on.
+    _glossary_stem = bbh._chapter_stem_for(bbh.GLOSSARY_CHAPTER_LABEL)
+    glossary_pos = pos.get(_glossary_stem)
 
     out: "list[Finding]" = []
     for slug, slot in sorted(registry.items()):
@@ -89,7 +91,7 @@ def findings() -> "list[Finding]":
         # front-matter definition that outranks any later `index-def`.
         candidates: "list[tuple[int, str]]" = []
         if slug in glossary_slugs and glossary_pos is not None:
-            candidates.append((glossary_pos, bbh.GLOSSARY_CHAPTER_SLUG))
+            candidates.append((glossary_pos, _glossary_stem))
         if slot.get("def"):
             def_page = slot["def"][0]["slug"]
             candidates.append((pos[def_page], def_page))

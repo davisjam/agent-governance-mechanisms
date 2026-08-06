@@ -33,6 +33,7 @@ import os
 import sys
 from dataclasses import dataclass
 
+import chapter_identity_model as chapter_identity  # sibling in book-models/; the chapter surrogate-key model
 import theory_model_check as _tmc  # sibling in book-models/; the internal well-formedness check (TM1-TM7)
 from _projection_parity import page_block_parity  # shared authored-page table-parity check (extract-on-3rd-site)
 
@@ -42,7 +43,9 @@ _BOOK = os.path.join(_ROOT, "book")
 _DECLARED = os.path.join(_HERE, "theory_of_mage_declared.json")
 
 #: The page the hypotheses table is authored into (parity target).
-_PAGE_REL = os.path.join("part6", "6.1-toward-a-theory-of-mage.md")
+# The theory chapter, resolved through the chapter-identity model — a renumber of 6.1 updates this
+# automatically (the label is frozen; the filename is the one field a reorg edits).
+_PAGE_REL = chapter_identity.filename("toward-a-theory-of-mage")
 
 #: The ratified counts — encode the author's set so a silent add/drop/reclassify reddens (the dashboard
 #: model's C5-analogue: the count guard is the backstop against silent H-table drift).

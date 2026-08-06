@@ -179,8 +179,19 @@ def concept_card_lines(c: Concept, model: ConceptModel) -> "list[str]":
         f"| Claim | {c.claim} |",
         f"| Mechanisms | {_card_mechanisms_cell(c)} |",
         f"| Related | {' · '.join(_related_slugs(model, c)) or '—'} |",
-        f"| In the book | {c.book_home} |",
+        f"| In the book | {_book_home_href(c.book_home)} |",
     ]
+
+
+def _book_home_href(book_home: str) -> str:
+    """`book_home` stores a number-free identity LABEL (+ optional #anchor) now; project it to the chapter's
+    built-HTML href `book/<N.M-slug>.html[#anchor]` so the concept card's 'In the book' cell keeps pointing
+    at the page (a renumber updates it). A non-label value passes through unchanged."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+    label, sep, anchor = book_home.partition("#")
+    if label in chapter_identity.labels():
+        return chapter_identity.html_href(label) + (sep + anchor if sep else "")
+    return book_home
 
 
 # ---- the drift check (CC1-CC6; non-overlapping with check_big_ideas) ---------------------------------
