@@ -156,7 +156,7 @@
       "home": "the-lineage-the-modeling-tradition",
       "asserted_at": [
         "the-lineage-the-modeling-tradition",
-        "beat-2-name-the-direction-of-derivation"
+        "state-the-derivation-direction"
       ],
       "contradicted_by": "Prose stating MAGE prescribes model→code (or code→model) as its own authoring direction — the drift the 3.1 scope-box fix corrected.",
       "watch_phrases": [
@@ -449,9 +449,9 @@
         "one source of truth kept equal either way",
         "a parallel hand-updated snapshot — a second source"
       ],
-      "home": "beat-1-a-model-is-derived-and-joined-never-repeated",
+      "home": "derive-and-join-do-not-repeat",
       "asserted_at": [
-        "beat-1-a-model-is-derived-and-joined-never-repeated",
+        "derive-and-join-do-not-repeat",
         "the-lineage-the-modeling-tradition"
       ],
       "contradicted_by": "Endorsing a model kept as a separate hand-updated artifact (a second source), or asserting one fixed derivation direction as the rule.",

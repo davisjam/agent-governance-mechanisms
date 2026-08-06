@@ -2311,17 +2311,20 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     <text x="853" y="388" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Read + generate</text>
     <text x="853" y="412" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">surfaces</text>
   </g>
-</svg><figcaption data-short="One Trunk, Five Views"><span class="fig-label">Figure 3.1-1.</span> <em>One Trunk, Five Views.</em> The trunk holds the shared machinery that makes every view executable: an executable source-of-truth, the drift and parity gates that fail the build the moment a model and the code disagree, and an agent-first harness. Five branches fan up from it — the Logical, Process, Development, and Physical views, plus the Scenarios view, the +1 that walks a real goal and validates the other four. Kruchten named the five views; what this book adds is the trunk. Each branch is not a diagram a human maintains but a structured model a tool reads on every build, so no view can quietly rot away from the code it depicts.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-1">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-2-fig-3-1-2" class="book-figure" data-label="projection-axes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520"
+</svg><figcaption data-short="One Trunk, Five Views"><span class="fig-label">Figure 3.1-1.</span> <em>One Trunk, Five Views.</em> The trunk holds the shared machinery that makes every view executable: an executable source-of-truth, the drift and parity gates that fail the build the moment a model and the code disagree, and an agent-first harness. Five branches fan up from it — the Logical, Process, Development, and Physical views, plus the Scenarios view, the +1 that walks a real goal and validates the other four. Kruchten named the five views; what this book adds is the trunk. Each branch is not a diagram a human maintains but a structured model a tool reads on every build, so no view can quietly rot away from the code it depicts.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-1">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-2-fig-3-1-2" class="book-figure" data-label="projection-axes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540"
      role="group" aria-labelledby="fig-3-1-2-paTitle fig-3-1-2-paDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-3-1-2-paTitle">One core, two projection axes — framework and lens</title>
-  <desc id="fig-3-1-2-paDesc">One executable core sits at the left. A first fan of arrows, under the axis
-    label “projection: which framework”, reaches four sibling renderings of that one core —
-    Kruchten’s 4+1 views (this book’s spine), C4 (Context and Container), SysML constraint
-    blocks, and a data-flow diagram. From the C4 node a second fan, under the axis label
-    “lens: which slice”, reaches three views of the same derived content — customer, internal,
-    and privacy/storage. Both fans are projections off the one core: choosing a framework, and
-    choosing a lens within it, are rendering decisions, never a second model to maintain.</desc>
+  <title id="fig-3-1-2-paTitle">One executable model substrate, two projection axes — framework and lens</title>
+  <desc id="fig-3-1-2-paDesc">At the left sits one executable model substrate: several authoritative source
+    models, held equal to the code and drift-gated, not one universal metamodel. A first fan of
+    arrows, under the axis label “projection: which framework”, reaches four sibling renderings of
+    that substrate — Kruchten’s 4+1 views (this book’s spine), C4 (Context and Container), SysML
+    constraint blocks, and a data-flow diagram. From the C4 node a second fan, under the axis label
+    “lens: which slice (read-side only)”, reaches three views of the same derived content —
+    customer, internal, and privacy/storage. Both fans are read-side projections off the substrate:
+    choosing a framework, and choosing a slice within one, are rendering decisions, never a second
+    model to maintain. The lens is a reading intuition, not a formal transformation law with an
+    update path.</desc>
 
   <defs>
     <marker id="fig-3-1-2-pa-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -2331,21 +2334,23 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- axis labels, as column headers -->
   <text x="550" y="26" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">projection: which framework</text>
-  <text x="883" y="86" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">lens: which slice</text>
+  <text x="883" y="80" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">lens: which slice</text>
+  <text x="883" y="102" text-anchor="middle" font-size="16" font-style="italic" fill="#9a3f12">read-side only — no update path</text>
 
-  <!-- ===== the one executable core ===== -->
-  <rect x="24" y="185" width="290" height="150" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
-  <text x="169" y="222" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">One executable core</text>
-  <text x="169" y="252" text-anchor="middle" font-size="18" fill="#57534e">typed model</text>
-  <text x="169" y="276" text-anchor="middle" font-size="18" fill="#57534e">held equal to the code</text>
-  <text x="169" y="300" text-anchor="middle" font-size="18" fill="#57534e">drift-gated</text>
+  <!-- ===== the one executable model substrate ===== -->
+  <rect x="20" y="188" width="312" height="164" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="176" y="224" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">One executable</text>
+  <text x="176" y="250" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">model substrate</text>
+  <text x="176" y="280" text-anchor="middle" font-size="17" fill="#57534e">several authoritative models</text>
+  <text x="176" y="304" text-anchor="middle" font-size="17" fill="#57534e">held equal to the code</text>
+  <text x="176" y="328" text-anchor="middle" font-size="17" fill="#57534e">drift-gated</text>
 
-  <!-- ===== first fan: core -> four frameworks ===== -->
+  <!-- ===== first fan: substrate -> four frameworks ===== -->
   <g stroke="#2f5169" stroke-width="2" fill="none">
-    <path d="M318,225 C370,180 385,120 424,86" marker-end="url(#fig-3-1-2-pa-ah)"/>
-    <path d="M318,250 C360,235 380,215 424,202" marker-end="url(#fig-3-1-2-pa-ah)"/>
-    <path d="M318,275 C360,290 380,305 424,318" marker-end="url(#fig-3-1-2-pa-ah)"/>
-    <path d="M318,300 C370,345 385,400 424,434" marker-end="url(#fig-3-1-2-pa-ah)"/>
+    <path d="M336,228 C380,182 392,120 424,86" marker-end="url(#fig-3-1-2-pa-ah)"/>
+    <path d="M336,252 C370,238 388,216 424,202" marker-end="url(#fig-3-1-2-pa-ah)"/>
+    <path d="M336,278 C370,292 388,306 424,318" marker-end="url(#fig-3-1-2-pa-ah)"/>
+    <path d="M336,302 C380,348 392,400 424,434" marker-end="url(#fig-3-1-2-pa-ah)"/>
   </g>
 
   <g>
@@ -2366,7 +2371,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     <text x="550" y="462" text-anchor="middle" font-size="18" fill="#57534e">diagram</text>
   </g>
 
-  <!-- ===== second fan: C4 -> three lenses ===== -->
+  <!-- ===== second fan: C4 -> three lenses (read-side slices) ===== -->
   <g stroke="#2f5169" stroke-width="2" fill="none">
     <path d="M674,190 C720,170 745,150 784,134" marker-end="url(#fig-3-1-2-pa-ah)"/>
     <path d="M674,202 C715,212 745,225 784,238" marker-end="url(#fig-3-1-2-pa-ah)"/>
@@ -2374,29 +2379,33 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   </g>
 
   <g>
-    <rect x="790" y="100" width="186" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="883" y="140" text-anchor="middle" font-size="20" fill="#1c1917">customer</text>
+    <rect x="790" y="118" width="186" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="883" y="158" text-anchor="middle" font-size="20" fill="#1c1917">customer</text>
 
-    <rect x="790" y="210" width="186" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="883" y="250" text-anchor="middle" font-size="20" fill="#1c1917">internal</text>
+    <rect x="790" y="216" width="186" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="883" y="256" text-anchor="middle" font-size="20" fill="#1c1917">internal</text>
 
-    <rect x="790" y="320" width="186" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="883" y="354" text-anchor="middle" font-size="20" fill="#1c1917">privacy /</text>
-    <text x="883" y="380" text-anchor="middle" font-size="20" fill="#1c1917">storage</text>
+    <rect x="790" y="314" width="186" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="883" y="348" text-anchor="middle" font-size="20" fill="#1c1917">privacy /</text>
+    <text x="883" y="374" text-anchor="middle" font-size="20" fill="#1c1917">storage</text>
   </g>
-</svg><figcaption data-short="4+1 is one projection among siblings; a lens is a projection within one"><span class="fig-label">Figure 3.1-2.</span> 4+1 is one projection among siblings; a lens is a projection within one. Choosing a framework, or a slice within it, is a rendering decision over a single core — never a second model to maintain.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-2">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-3-fig-3-1-3" class="book-figure" data-label="coherence-triangle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660"
+
+  <!-- ===== read-side caption spine ===== -->
+  <text x="500" y="516" text-anchor="middle" font-size="17" font-style="italic" fill="#1c1917">Framework and lens are both read-side projections off the substrate — never a second model to maintain.</text>
+</svg><figcaption data-short="4+1 is one framework projection among siblings; a lens is a read-side slice…"><span class="fig-label">Figure 3.1-2.</span> 4+1 is one framework projection among siblings; a lens is a read-side slice within one. Both are renderings off a single executable model <strong>substrate</strong> — several authoritative source models held equal to the code — never a second model to maintain, and never a formal transformation law with an update path.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-2">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-3-fig-3-1-3" class="book-figure" data-label="coherence-triangle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660"
      role="group" aria-labelledby="fig-3-1-3-ctTitle fig-3-1-3-ctDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-3-1-3-ctTitle">The coherence triangle — model, invariants, coherence-gate</title>
+  <title id="fig-3-1-3-ctTitle">The coherence triangle — model, invariants, invariant checker</title>
   <desc id="fig-3-1-3-ctDesc">Three nodes in a triangle. At the apex sit the invariants: predicates that
     must hold, each named by a stable id, with the sample predicate “not(leased and free)”. At the
     bottom left sits the structured model — records, edges, state machines, with the neutral example of a
-    job that is free, leased, or done. At the bottom right sits the coherence-gate — a drift lint or
+    job that is free, leased, or done. At the bottom right sits the invariant checker — a drift lint or
     model check that checks the predicates at build time. An arrow from the model to the invariants is
-    labelled “declares”; an arrow from the invariants to the gate is labelled “checked by”. A third,
-    accent-coloured arrow closes the triangle from the gate back to the model, carrying the failures
-    point: each gap the fleet found was a violated-but-unstated invariant. A model's value is both its
-    schema and its checked invariants — the invariants and gate complete the schema's value, not replace it.</desc>
+    labelled “declares”; an arrow from the invariants to the checker is labelled “checked by”. Inside the
+    triangle, a boundary caption states the operational meaning the metaphor names: an executable model
+    equals its schema plus its checked predicates. A third, dashed accent-coloured arc closes the figure
+    from the checker back to the model as a provenance annotation, not a structural edge: each gap the
+    fleet found was a violated-but-unstated invariant — where the invariants came from, empirically.</desc>
 
   <defs>
     <marker id="fig-3-1-3-tri-muted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -2420,25 +2429,30 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="220" y="528" text-anchor="middle" font-size="18" fill="#57534e">records, edges, states</text>
   <text x="220" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a job: free / leased / done</text>
 
-  <!-- ===== bottom-right: the coherence-gate ===== -->
+  <!-- ===== bottom-right: the invariant checker ===== -->
   <rect x="620" y="450" width="320" height="150" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <text x="780" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Coherence-gate</text>
+  <text x="780" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Invariant checker</text>
   <text x="780" y="528" text-anchor="middle" font-size="18" fill="#57534e">checks them at build time</text>
   <text x="780" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a drift lint or model check</text>
 
   <!-- ===== edge: model -> invariants ===== -->
   <path d="M228,450 C300,370 360,285 452,202" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-3-1-3-tri-muted)"/>
-  <text x="298" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">declares</text>
+  <text x="296" y="332" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">declares</text>
 
-  <!-- ===== edge: invariants -> gate ===== -->
+  <!-- ===== edge: invariants -> checker ===== -->
   <path d="M548,202 C640,285 700,370 772,450" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-3-1-3-tri-muted)"/>
-  <text x="712" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">checked by</text>
+  <text x="714" y="332" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">checked by</text>
 
-  <!-- ===== closing edge: gate -> model, carrying the failures point ===== -->
-  <path d="M616,528 C540,578 460,578 384,528" fill="none" stroke="#9a3f12" stroke-width="2.5" marker-end="url(#fig-3-1-3-tri-accent)"/>
-  <text x="500" y="612" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">each gap the fleet found was</text>
-  <text x="500" y="636" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">a violated-but-unstated invariant</text>
-</svg><figcaption data-short="A model&#x27;s value is both its schema and its checked invariants"><span class="fig-label">Figure 3.1-3.</span> A model's value is both its schema and its checked invariants: the structured model declares predicates with stable ids, and a coherence-gate checks them at build time. The closing edge carries the proof — each invariant was earned from a failure the system never wrote down.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-3">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-2-1-fig-3-2-1" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 170"
+  <!-- ===== interior boundary caption: the operational precision the metaphor names ===== -->
+  <text x="500" y="322" text-anchor="middle" font-size="19" font-style="italic" font-weight="700" fill="#1c1917">an executable model =</text>
+  <text x="500" y="348" text-anchor="middle" font-size="19" font-style="italic" fill="#1c1917">its schema + its checked predicates</text>
+
+  <!-- ===== closing arc: checker -> model, PROVENANCE annotation (dashed, not a structural edge) ===== -->
+  <path d="M616,536 C540,584 460,584 384,536" fill="none" stroke="#9a3f12" stroke-width="2.5"
+        stroke-dasharray="9 6" marker-end="url(#fig-3-1-3-tri-accent)"/>
+  <text x="500" y="616" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">provenance — each gap the fleet found was</text>
+  <text x="500" y="640" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">a violated-but-unstated invariant</text>
+</svg><figcaption data-short="The coherence triangle"><span class="fig-label">Figure 3.1-3.</span> The coherence triangle: a structured model <strong>declares</strong> invariants (predicates with stable ids), which an <strong>invariant checker</strong> — a drift lint or model check — verifies at build time. The interior states the operational meaning the metaphor names: <strong>an executable model = its schema + its checked predicates.</strong> The dashed closing arc is a <strong>provenance</strong> note, not a structural edge — each gap the fleet found was a violated-but-unstated invariant.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-3">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-2-1-fig-3-2-1" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 170"
      role="group" aria-labelledby="fig-3-2-1-dfTitle fig-3-2-1-dfDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-3-2-1-dfTitle">A data-flow diagram: each edge names the data on the wire</title>

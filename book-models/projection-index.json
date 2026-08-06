@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 34,
     "slugs_rendered": 25,
-    "total_sites": 1177,
+    "total_sites": 1176,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 839,
+      "book-web": 838,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -87,7 +87,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 32
+            "occ": 29
           },
           {
             "file": "book/3.2-the-logical-view.html",
@@ -2027,7 +2027,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 169
+            "occ": 154
           },
           {
             "file": "book/3.2-the-logical-view.html",
@@ -2311,7 +2311,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 256
+            "occ": 262
           },
           {
             "file": "book/index.html",
@@ -2319,7 +2319,7 @@
           },
           {
             "file": "book/list-of-figures.html",
-            "occ": 17
+            "occ": 15
           },
           {
             "file": "book/part-1-intro.html",
@@ -3762,10 +3762,6 @@
             "occ": 1
           },
           {
-            "file": "book/3.1-the-executable-zoo.html",
-            "occ": 1
-          },
-          {
             "file": "book/3.7-the-scope-of-modeling.html",
             "occ": 1
           },
@@ -3789,7 +3785,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 10
+            "occ": 9
           }
         ]
       },
@@ -4341,7 +4337,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 17
+            "occ": 15
           },
           {
             "file": "book/3.2-the-logical-view.html",

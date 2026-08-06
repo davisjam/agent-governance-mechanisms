@@ -403,12 +403,6 @@
       "location": "part2",
       "rationale": "lookup summary"
     },
-    "part3/3.1-the-executable-zoo.md::Token savings from working through a model": {
-      "tier": "B",
-      "kind": "data",
-      "location": "part3",
-      "rationale": "model-on-vs-off measurement"
-    },
     "part3/3.2-the-logical-view.md::Invariants of the Logical view": {
       "tier": "C",
       "kind": "reference-lookup",
@@ -564,6 +558,18 @@
       "kind": "reference-colophon",
       "location": "part7",
       "rationale": "per-model lookup"
+    },
+    "part3/3.8-keeping-models-in-sync.md::Token savings from working through a model": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part3",
+      "rationale": "model-on-vs-off measurement"
+    },
+    "part3/3.1-the-executable-zoo.md::The five-field model-page template": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "the per-model template fields + reader questions"
     }
   }
 }

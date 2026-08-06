@@ -681,12 +681,12 @@
     },
     {
       "granularity": "section",
-      "primary_unit": "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine",
+      "primary_unit": "kruchten-s-4-1-views-organize-the-part",
       "verb": "explain",
       "obj": "why Kruchten's 4+1 becomes the spine of the model zoo",
-      "statement": "After this section, the reader can explain how 4+1 is promoted from a closing invocation to the organizing spine of the views.",
+      "statement": "After this section, the reader can explain how 4+1 organizes the whole Part into five views over one core.",
       "provenance": "derived",
-      "anchor": "Heading text + ts: 'The last chapter invoked Kruchten's 4+1 views in a final sentence'."
+      "anchor": "Heading text: 'Kruchten's 4+1 views organize the Part'; ts: 'The last chapter named Kruchten's 4+1 views as the reason one model is never enough.'"
     },
     {
       "granularity": "section",

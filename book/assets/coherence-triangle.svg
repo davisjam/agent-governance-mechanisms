@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Hand-authored SVG (label: coherence-triangle). The shape every model page draws:
-     model -> invariants -> coherence-gate, plus the closing edge that carries the failures
-     point. Node labels are domain-neutral (the book's free/leased/done job example, not an
-     ada-tool artifact). Palette: Umber Monograph tokens — fleet #2f5169 for the structured model,
-     accent #9a3f12 for the invariants apex, governed #1f7a4d for the enforcing gate. -->
+<!-- Hand-authored SVG (label: coherence-triangle). RATIFIED both-and (Part-3 §XII / FIG-3.1-3,
+     ratification-judge item 5a): KEEP the triangle metaphor (do NOT demote to an equation),
+     then follow it with the operational precision "an executable model = schema + checked
+     predicates" as a boundary caption in the interior. Two lexical fixes: the enforcing node is
+     "Invariant checker" (the "coherence-gate" coinage is DROPPED — "drift gate / invariant
+     checker" already name it); the closing edge is relabelled as a PROVENANCE annotation (dashed)
+     — it carries the empirical origin of the invariants, not a structural edge of the geometry.
+     Node labels are domain-neutral (the book's free/leased/done job example). Palette: Umber
+     Monograph tokens — fleet #2f5169 structured model, accent #9a3f12 invariants apex,
+     governed #1f7a4d the checker. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" width="1000" height="660"
      role="group" aria-labelledby="ctTitle ctDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="ctTitle">The coherence triangle — model, invariants, coherence-gate</title>
+  <title id="ctTitle">The coherence triangle — model, invariants, invariant checker</title>
   <desc id="ctDesc">Three nodes in a triangle. At the apex sit the invariants: predicates that
     must hold, each named by a stable id, with the sample predicate “not(leased and free)”. At the
     bottom left sits the structured model — records, edges, state machines, with the neutral example of a
-    job that is free, leased, or done. At the bottom right sits the coherence-gate — a drift lint or
+    job that is free, leased, or done. At the bottom right sits the invariant checker — a drift lint or
     model check that checks the predicates at build time. An arrow from the model to the invariants is
-    labelled “declares”; an arrow from the invariants to the gate is labelled “checked by”. A third,
-    accent-coloured arrow closes the triangle from the gate back to the model, carrying the failures
-    point: each gap the fleet found was a violated-but-unstated invariant. A model's value is both its
-    schema and its checked invariants — the invariants and gate complete the schema's value, not replace it.</desc>
+    labelled “declares”; an arrow from the invariants to the checker is labelled “checked by”. Inside the
+    triangle, a boundary caption states the operational meaning the metaphor names: an executable model
+    equals its schema plus its checked predicates. A third, dashed accent-coloured arc closes the figure
+    from the checker back to the model as a provenance annotation, not a structural edge: each gap the
+    fleet found was a violated-but-unstated invariant — where the invariants came from, empirically.</desc>
 
   <defs>
     <marker id="tri-muted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -40,22 +46,27 @@
   <text x="220" y="528" text-anchor="middle" font-size="18" fill="#57534e">records, edges, states</text>
   <text x="220" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a job: free / leased / done</text>
 
-  <!-- ===== bottom-right: the coherence-gate ===== -->
+  <!-- ===== bottom-right: the invariant checker ===== -->
   <rect x="620" y="450" width="320" height="150" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <text x="780" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Coherence-gate</text>
+  <text x="780" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Invariant checker</text>
   <text x="780" y="528" text-anchor="middle" font-size="18" fill="#57534e">checks them at build time</text>
   <text x="780" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a drift lint or model check</text>
 
   <!-- ===== edge: model -> invariants ===== -->
   <path d="M228,450 C300,370 360,285 452,202" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#tri-muted)"/>
-  <text x="298" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">declares</text>
+  <text x="296" y="332" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">declares</text>
 
-  <!-- ===== edge: invariants -> gate ===== -->
+  <!-- ===== edge: invariants -> checker ===== -->
   <path d="M548,202 C640,285 700,370 772,450" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#tri-muted)"/>
-  <text x="712" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">checked by</text>
+  <text x="714" y="332" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">checked by</text>
 
-  <!-- ===== closing edge: gate -> model, carrying the failures point ===== -->
-  <path d="M616,528 C540,578 460,578 384,528" fill="none" stroke="#9a3f12" stroke-width="2.5" marker-end="url(#tri-accent)"/>
-  <text x="500" y="612" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">each gap the fleet found was</text>
-  <text x="500" y="636" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">a violated-but-unstated invariant</text>
+  <!-- ===== interior boundary caption: the operational precision the metaphor names ===== -->
+  <text x="500" y="322" text-anchor="middle" font-size="19" font-style="italic" font-weight="700" fill="#1c1917">an executable model =</text>
+  <text x="500" y="348" text-anchor="middle" font-size="19" font-style="italic" fill="#1c1917">its schema + its checked predicates</text>
+
+  <!-- ===== closing arc: checker -> model, PROVENANCE annotation (dashed, not a structural edge) ===== -->
+  <path d="M616,536 C540,584 460,584 384,536" fill="none" stroke="#9a3f12" stroke-width="2.5"
+        stroke-dasharray="9 6" marker-end="url(#tri-accent)"/>
+  <text x="500" y="616" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">provenance — each gap the fleet found was</text>
+  <text x="500" y="640" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">a violated-but-unstated invariant</text>
 </svg>

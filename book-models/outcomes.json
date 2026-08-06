@@ -30,7 +30,7 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 263,
+    "sections_total": 262,
     "sections_primary_of_an_outcome": 41,
     "modules": 7,
     "lessons": 33
@@ -260,7 +260,7 @@
               "3.1-the-executable-zoo::explain-why-a-fleet-pays-for-free-the-modeling-e"
             ],
             "section_outcomes": [
-              "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine::explain-why-kruchten-s-4-1-becomes-the-spine-of",
+              "kruchten-s-4-1-views-organize-the-part::explain-why-kruchten-s-4-1-becomes-the-spine-of",
               "two-decisions-that-make-the-graph-resist-rot::analyze-the-two-design-decisions-that-keep-a-gov"
             ]
           },
@@ -1174,16 +1174,16 @@
       "gap_note": null
     },
     {
-      "outcome_id": "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine::explain-why-kruchten-s-4-1-becomes-the-spine-of",
+      "outcome_id": "kruchten-s-4-1-views-organize-the-part::explain-why-kruchten-s-4-1-becomes-the-spine-of",
       "granularity": "section",
-      "primary_unit": "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine",
+      "primary_unit": "kruchten-s-4-1-views-organize-the-part",
       "secondary_units": [],
       "verb": "explain",
       "obj": "why Kruchten's 4+1 becomes the spine of the model zoo",
-      "statement": "After this section, the reader can explain how 4+1 is promoted from a closing invocation to the organizing spine of the views.",
+      "statement": "After this section, the reader can explain how 4+1 organizes the whole Part into five views over one core.",
       "bloom": "understand",
       "provenance": "derived",
-      "anchor": "Heading text + ts: 'The last chapter invoked Kruchten's 4+1 views in a final sentence'.",
+      "anchor": "Heading text: 'Kruchten's 4+1 views organize the Part'; ts: 'The last chapter named Kruchten's 4+1 views as the reason one model is never enough.'",
       "gap_note": null
     },
     {
