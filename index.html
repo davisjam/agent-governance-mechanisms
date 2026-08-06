@@ -22,9 +22,11 @@
   nav.crumb { font-size: var(--fs-meta); color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
   nav.crumb a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   nav.crumb a:hover { text-decoration: underline; }
-  h1 { font-size: var(--fs-thesis-title); margin: 6px 0 4px; letter-spacing:var(--display-tracking); line-height:1.12; }
-  h2 { font-size: var(--fs-section); margin: 30px 0 8px; padding-top: 6px; border-top:var(--border-hairline) solid var(--line); }
-  h3 { font-size: var(--fs-card-title); margin: 22px 0 6px; }
+  /* "Calm authority": the page title (h1) is the one BOLD level; h2/h3 stay semibold (--display-weight)
+     via the shared binding, with more air above each so headings organise rather than compete. */
+  h1 { font-size: var(--fs-thesis-title); font-weight:700; margin: 6px 0 4px; letter-spacing:var(--display-tracking); line-height:1.12; }
+  h2 { font-size: var(--fs-section); margin: 38px 0 8px; padding-top: 6px; border-top:var(--border-hairline) solid var(--line); }
+  h3 { font-size: var(--fs-card-title); margin: 26px 0 6px; }
   h4 { font-size: var(--fs-card-body); margin: 16px 0 4px; color:var(--ink); }
   p, li { font-size: var(--fs-body); }
   a { color: var(--link); }
@@ -100,7 +102,7 @@
      FONT_CSS). Landing-only styles; the census + prose pages use PAGE_CSS. --line aliases --rule. */
 
   /* ---- shared chrome: title, nav pills, lead prose, dividers -------------------------------- */
-  .book-h1 { margin:6px 0 2px; }
+  .book-h1 { font-weight:700; margin:6px 0 2px; }
   .book-sub { color:var(--accent); font-weight:700; font-size:var(--fs-body); letter-spacing:.01em; margin:0 0 12px; }
   .nav-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin:0 0 22px; }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:1px;

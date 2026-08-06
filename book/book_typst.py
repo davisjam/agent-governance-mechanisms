@@ -936,24 +936,31 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #set text(font: dt.font-body, size: 11pt, lang: "en", fill: dt.ink)
 #set par(justify: true, leading: 0.62em, first-line-indent: 0pt, spacing: 0.9em)
 #set heading(numbering: none)
-#show heading: set text(font: dt.font-display, weight: "bold")
+// "Calm authority" hierarchy: SEMIBOLD is the quiet default weight for every heading; only the Part
+// divider steps up to bold. Headings then ORGANISE rather than compete — one bold level, the rest a
+// lighter semibold, subsections quieter still.
+#show heading: set text(font: dt.font-display, weight: "semibold")
 // Heading levels shifted down one so the Part divider owns level-1 (the bookmark parent) — see
 // `_render_heading`/`render_chapter`/`_part_divider_typst`. The sizes below track the shift so the rendered
 // hierarchy still DESCENDS: Part (level-1) > chapter (level-2) > `##` section (level-3) > `###` subsection
 // (level-4). Level-1 (the dividers) gets NO size rule on purpose: each divider inline-sizes its own kicker +
 // title (1.1em / 2em) against the body em, so a level-1 `set text(size: …)` here would COMPOUND with those
-// inline ems and blow the divider titles up past their intended scale.
-#show heading.where(level: 2): set text(size: 1.5em)    // chapter title (the size the old level-1 H1 held)
-#show heading.where(level: 3): set text(size: 1.2em)    // `## ` section (the size the old level-2 held)
-// `### ` (H3) subheadings — now Typst level-4 after the shift — render ITALIC, not bold: a quieter sub-level
-// (D67b). Overrides the general bold above (later same-target show rule wins); keeps the display face at body
-// size. `#### ` (level-5) inherits the general bold display at body size, as it did before the shift.
+// inline ems and blow the divider titles up past their intended scale. It DOES get the bold WEIGHT (a weight
+// rule doesn't compound), so a Part title is the one bold thing in the ladder.
+#show heading.where(level: 1): set text(weight: "bold")     // Part divider — the only bold heading
+#show heading.where(level: 2): set text(size: 1.4em)    // chapter title (semibold via the general rule; nudged down)
+#show heading.where(level: 3): set text(size: 1.15em)   // `## ` section (semibold via the general rule; nudged down)
+// `### ` (H3) subheadings — now Typst level-4 after the shift — render ITALIC regular, not semibold: a quieter
+// sub-level (D67b). Overrides the general semibold above (later same-target show rule wins); keeps the display
+// face at body size. `#### ` (level-5) inherits the general semibold display at body size.
 #show heading.where(level: 4): set text(weight: "regular", style: "italic")
 // Keep-with-next: a heading STICKS to the content after it, so a heading can never be the last meaningful
 // thing on a page (the orphaned-title failure — a chapter/section head alone on a page with its body flowing
 // to the next). `sticky` moves the heading to the following block's page rather than stranding it. The
 // build-time orphaned-heading sensor (in build_book_html.verify_pdf) is the belt to this suspenders.
-#show heading: set block(above: 1.4em, below: 0.7em, sticky: true)
+// More air ABOVE a heading than below (2.0em / 0.75em) — the calmer rhythm sets each section off from the
+// prose above it while keeping the heading tied to its own body.
+#show heading: set block(above: 2.0em, below: 0.75em, sticky: true)
 #set figure(gap: 0.6em)
 // D71(b) — more air between body text and a figure/table than the 0.9em paragraph spacing, so a float
 // reads as set apart from the prose above and below it (systematic, every figure/table).

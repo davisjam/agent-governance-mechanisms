@@ -1589,7 +1589,12 @@ CSS = f"""
 * {{ box-sizing: border-box; }}
 body {{ font-family: var(--font-body); font-size: 17px; line-height: 1.65;
        color: var(--ink); margin: 0; background: var(--paper); }}
+/* "Calm authority" hierarchy: SEMIBOLD (--display-weight, 600) is the quiet default weight for every
+   heading; only a Part-divider page's title steps up to bold (see `main.wrap.part-page header.chap h1`).
+   Headings organise rather than compete — one bold level, the rest a lighter semibold, `###` subheads
+   quieter still (italic regular, below). Mirrors the PDF show-rules in book_typst.py. */
 h1, h2, h3, h4, header.chap h1 {{ font-family: var(--font-display); font-weight: var(--display-weight); }}
+main.wrap.part-page header.chap h1 {{ font-weight: 700; }}
 .wrap {{ max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }}
 nav.toc {{ background: var(--panel); border-bottom: 1px solid var(--rule); padding: 0.9rem 1.4rem; font-size: 14px; }}
 nav.toc .toc-inner {{ max-width: 52rem; margin: 0 auto; }}
@@ -1610,7 +1615,7 @@ header.chap .kicker {{ color: var(--accent); font-weight: 700; font-size: 13px; 
    underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
 header.chap .kicker a {{ color: inherit; text-decoration: none; }}
 header.chap .kicker a:hover, header.chap .kicker a:focus {{ text-decoration: underline; }}
-header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
+header.chap h1 {{ font-size: 1.85rem; line-height: 1.18; margin: 0.5rem 0 0; }}
 /* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
    not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
    carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
@@ -1629,7 +1634,7 @@ header.chap h1 .chap-num {{ color: var(--muted); font-weight: 600; font-variant-
 .apparatus-page {{ background: var(--panel); border: 1px solid var(--rule); border-top: 3px solid var(--accent);
                    border-radius: 8px; padding: 1.4rem 1.9rem 1.9rem; margin: 2.2rem 0; }}
 .apparatus-page header.chap {{ padding: 0.4rem 0 1rem; margin-bottom: 1.3rem; }}
-h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
+h2 {{ font-size: 1.26rem; margin: 2.7rem 0 0.55rem; }}
 /* `part.chapter.section` display number stamped on a body-chapter section heading (build-derived, not
    authored). Muted + tabular so it reads as a reference locator, not part of the title; it is display-only
    and carries no id, so the heading's own anchor, cross-refs, and the index all still resolve. */
@@ -1641,8 +1646,8 @@ h2 .role-kick {{ color: var(--accent); font-weight: 700; font-style: italic; fon
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }}
 /* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
    shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
-h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }}
-h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }}
+h3 {{ font-size: 1.05rem; margin: 1.9rem 0 0.4rem; font-weight: 400; font-style: italic; }}
+h4 {{ font-size: 0.97rem; margin: 1.4rem 0 0.3rem; color: var(--ink); }}
 p {{ margin: 0 0 1rem; }}
 ul {{ margin: 0 0 1rem; padding-left: 1.3rem; }}
 ol {{ margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }}
@@ -2185,7 +2190,7 @@ def _kicker_html(chapters: list[dict], idx: int, num_label: str) -> str:
 
 
 def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str = "",
-         head_meta: str = "", appendix: bool = False) -> str:
+         head_meta: str = "", appendix: bool = False, part_page: bool = False) -> str:
     runtime = MERMAID_CDN if mermaid else ""
     # <main> landmark so the content is a single main region (axe landmark-one-main / region). It carries
     # an aria-label of the page title so it stays a UNIQUELY-NAMED main landmark even when a page embeds the
@@ -2204,6 +2209,10 @@ def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str
     # `<h1>` chapter heading in ALL CAPS — distinct from the book's own chapter titles. Gated on the flag so
     # the legacy (flag-OFF) build stays byte-identical to HEAD; the class does nothing without `_APPENDIX_V2_CSS`.
     main_cls = "wrap appendix" if (appendix and _appendix_v2_enabled()) else "wrap"
+    # A Part-divider (part-intro) page carries `part-page` so the "calm authority" CSS renders ITS title
+    # bold — the one bold heading in the hierarchy — while every other chapter/section title stays semibold.
+    if part_page:
+        main_cls += " part-page"
     return (
         f'<!DOCTYPE html>\n<html lang="en">{provenance}<head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
@@ -6210,7 +6219,8 @@ def build() -> int:
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
             page(f'{num_label} · {c["chapter_title"]}', toc, main, mermaid=c.get("mermaid", False),
-                 head_meta=_chapter_head_meta(c, cited_keys), appendix=c.get("is_appendix", False)),
+                 head_meta=_chapter_head_meta(c, cited_keys), appendix=c.get("is_appendix", False),
+                 part_page=c.get("is_part_page", False)),
             encoding="utf-8",
         )
 
