@@ -148,7 +148,7 @@
     {
       "id": "H3-mechanized-assurance",
       "name": "Mechanized assurance",
-      "statement": "Greater risk-weighted coverage of relevant failure classes by effective deterministic mechanisms lowers defect escape, and its advantage over attention-based control widens as velocity rises — for adequately scoped mechanisms.",
+      "statement": "Greater risk-weighted coverage of relevant failure classes by effective repeatable mechanisms lowers defect escape, and its advantage over attention-based control widens as velocity rises — for adequately scoped mechanisms.",
       "falsifier": "Mechanized coverage adds no protection, or its advantage over review does not widen as human attention saturates.",
       "loops": ["L3-governance-adaptation"]
     },
@@ -201,7 +201,7 @@
     {
       "id": "reasoning-horizon-proposition",
       "name": "Reasoning-Horizon Proposition",
-      "statement": "Software engineering is a long-horizon reasoning task. Productivity degrades once the working reasoning state a task requires exceeds the effective reasoning horizon of the human-agent system. Executable models extend that horizon by replacing implementation-level state with semantically richer abstractions whose properties preserve more information under repeated compaction.",
+      "statement": "Software engineering is a long-horizon reasoning task. Productivity degrades once the working reasoning state a task requires exceeds the effective reasoning horizon of the human-agent system. Executable models extend that horizon by replacing implementation-level state with semantically richer abstractions whose properties preserve a larger fraction of task-relevant information under repeated compaction.",
       "falsifier": "Holding task and recall fixed, reasoning over a task-relevant model yields no reduction in reconstruction cost or churn versus reasoning over the implementation, and no gain that widens as the required reasoning state grows.",
       "frame": "offered-for-replication",
       "bounded_claim": "MAGE moves the scalability wall; it does not remove it. Models raise the level at which reasoning occurs, delaying the point at which working memory becomes the bottleneck; beyond it, further decomposition and modularity become unavoidable. The horizon extends ONLY when the model is task-relevant, adequately complete, synchronized, usable by the agent, and cheaper to interpret than reconstructing the same facts from code; a model that fails those conditions SHORTENS the effective horizon — it confidently routes reasoning toward a stale or wrong picture the agent then pays to detect and undo.",
@@ -242,7 +242,7 @@
       "id": "R2-two-regime-escape",
       "name": "Attention-based versus mechanized control",
       "form": "eps_review ~= p*(1 - r(V)) ;  eps_control ~= p*(1 - kappa)",
-      "substantive_claim": "p = risk-weighted defect-opportunity rate; r(V) = finite-review coverage, which falls as velocity rises so eps_review climbs toward p; kappa = mechanized-coverage fraction, which a mechanism applies every change regardless of throughput. For adequately scoped mechanisms kappa is LESS sensitive to throughput than r(V), so the escape gap widens with velocity.",
+      "substantive_claim": "p = risk-weighted defect-opportunity rate; r(V) = finite-review coverage, which falls as velocity rises so eps_review climbs toward p; kappa = mechanized-coverage fraction, which a mechanism applies every change regardless of throughput. For adequately scoped mechanisms kappa is LESS sensitive to throughput than r(V), so the escape gap widens with velocity. kappa counts effective REPEATABLE mechanisms, of which determinism is one strong class — anomaly detection, metamorphic and differential testing, and model-based semantic review are statistical yet repeatable and count toward kappa when adequately scoped.",
       "ties_to": ["H3-mechanized-assurance"]
     }
   ],
