@@ -7,7 +7,7 @@
     "derived_ids": 226,
     "missing_topic_sentence": 5,
     "sections_drained": 172,
-    "paragraph_points": 549
+    "paragraph_points": 550
   },
   "chapters": [
     {
@@ -3737,7 +3737,7 @@
           "section_id": "the-model-is-biased-toward-what-it-has-seen",
           "level": 2,
           "heading_text": "The model is biased toward what it has seen",
-          "topic_sentence": "Think of the training data as the whole internet and every book ever written, and think of the model as biased toward whatever it saw most.",
+          "topic_sentence": "Treat the training corpus as a vast, uneven sample of public and licensed artifacts.",
           "id_source": "derived",
           "block_index": 4,
           "points": [
@@ -3752,8 +3752,8 @@
               "block_index": 9
             },
             {
-              "slug": "agent-fluency-tracked-the-data-not-the-difficulty",
-              "text": "Agent fluency tracked the data, not the difficulty.",
+              "slug": "agent-fluency-ran-wider-than-difficulty-alone-explains",
+              "text": "Agent fluency ran wider than difficulty alone explains — training-data fit.",
               "block_index": 11
             }
           ]
@@ -3772,9 +3772,14 @@
               "block_index": 18
             },
             {
+              "slug": "novelty-and-consequence-both-raise-required-structure",
+              "text": "Novelty and consequence both raise the structure you owe.",
+              "block_index": 22
+            },
+            {
               "slug": "mbse-imposes-the-prior-the-training-never-gave",
               "text": "MBSE imposes the prior the training never gave.",
-              "block_index": 22
+              "block_index": 24
             }
           ]
         },
@@ -3782,14 +3787,14 @@
           "section_id": "the-diffusion-analogy",
           "level": 3,
           "heading_text": "The diffusion analogy",
-          "topic_sentence": "I hold this through an analogy.",
+          "topic_sentence": "Image generators show the pattern in miniature.",
           "id_source": "derived",
-          "block_index": 24,
+          "block_index": 26,
           "points": [
             {
-              "slug": "a-diffusion-model-cannot-render-what-it-never-saw",
-              "text": "A diffusion model cannot render what it never saw.",
-              "block_index": 26
+              "slug": "image-generators-are-reliable-near-dense-training-regions",
+              "text": "Image generators interpolate reliably near dense data, poorly on novelty.",
+              "block_index": 28
             }
           ]
         },
@@ -3799,25 +3804,25 @@
           "heading_text": "Demoable is not productizable",
           "topic_sentence": "So think of it this way: the agent will hand you a working prototype, but look under the hood of a novel system and you find Rube Goldberg machines in the engine room.",
           "id_source": "derived",
-          "block_index": 29,
+          "block_index": 31,
           "points": [
             {
               "slug": "a-novel-systems-engine-room-is-demoable-not-productizable",
               "text": "A novel system's engine room is demoable, not productizable.",
-              "block_index": 31
+              "block_index": 33
             },
             {
               "slug": "governing-an-untrusted-agent-is-left-for-later",
               "text": "Governing an untrusted agent is left for later.",
-              "block_index": 34
+              "block_index": 36
             }
           ]
         }
       ],
       "preamble_points": [
         {
-          "slug": "training-data-decides-how-much-discipline-you-need",
-          "text": "Training data decides how much discipline you need.",
+          "slug": "modeling-effort-rises-as-prior-knowledge-falls",
+          "text": "Modeling effort should rise as task-specific prior knowledge falls.",
           "block_index": 0
         }
       ]
