@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 31,
     "slugs_rendered": 24,
-    "total_sites": 1155,
+    "total_sites": 1159,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 819,
+      "book-web": 823,
       "website-catalogue": 221,
       "website-concepts": 40,
       "website-landing": 8,
@@ -909,7 +909,7 @@
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
-            "occ": 58
+            "occ": 74
           },
           {
             "file": "book/6.2-implications-for-se.html",
@@ -953,11 +953,11 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 47
+            "occ": 57
           },
           {
             "file": "book/list-of-figures.html",
-            "occ": 4
+            "occ": 6
           }
         ],
         "book-pdf": [
@@ -1085,7 +1085,7 @@
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
-            "occ": 1
+            "occ": 14
           },
           {
             "file": "book/appendix-a-observe-react-stack.html",
@@ -1094,12 +1094,20 @@
           {
             "file": "book/book-index.html",
             "occ": 2
+          },
+          {
+            "file": "book/figures.html",
+            "occ": 10
+          },
+          {
+            "file": "book/list-of-figures.html",
+            "occ": 1
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 5
+            "occ": 7
           }
         ]
       },
@@ -1339,7 +1347,7 @@
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
-            "occ": 24
+            "occ": 32
           },
           {
             "file": "book/6.2-implications-for-se.html",
@@ -1547,7 +1555,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 35
+            "occ": 40
           },
           {
             "file": "book/index.html",
@@ -1674,12 +1682,20 @@
           {
             "file": "book/0.3-the-books-language.html",
             "occ": 2
+          },
+          {
+            "file": "book/6.1-toward-a-theory-of-mage.html",
+            "occ": 8
+          },
+          {
+            "file": "book/figures.html",
+            "occ": 5
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 1
+            "occ": 3
           }
         ]
       },
@@ -2065,7 +2081,7 @@
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
-            "occ": 47
+            "occ": 48
           },
           {
             "file": "book/6.2-implications-for-se.html",
@@ -2273,7 +2289,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 244
+            "occ": 245
           },
           {
             "file": "book/index.html",

@@ -1138,7 +1138,76 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>The second relation contrasts two ways to hold a failure class. Let <em>p</em> be the risk-weighted rate of defect opportunity, <em>r(V)</em> the fraction a finite human review still catches at velocity <em>V</em>, and <em>κ</em> the risk-weighted fraction of relevant opportunities covered by effective mechanisms. Then the two escape rates are:</p>
 <blockquote class="aside-sidenote"><p><strong>ε_review ≈ p · (1 − r(V))</strong>   and   <strong>ε_control ≈ p · (1 − κ)</strong></p></blockquote>
 <p>Human attention is finite, so <em>r(V)</em> falls as velocity rises — review catches a smaller share of a larger stream, and ε_review climbs toward the raw defect rate <em>p</em>. A mechanism applies to every change regardless of throughput, so <em>κ</em> does not fall with velocity in the same way. The claim is not that hard controls never fail. It is conditional and comparative: <strong>for adequately scoped mechanisms, κ is less sensitive to throughput than review coverage r(V)</strong>, so the daylight between "looked obeyed" and "was enforced" widens as the fleet speeds up. That is H3 in one line.</p>
-<h2><span class="sec-num">6.1.8</span> Evolution of this theory</h2>
+<h2><span class="sec-num">6.1.8</span> Does governance eventually become a burden?</h2>
+<p>The churn curve just showed that accumulation is non-monotonic: past the point of fit, more apparatus makes things worse. So name the positive dynamic the curve's left arm rides — and the line that separates it from the tower on the right.</p>
+<p>Churn has a dual. Where churn is the regime in which effort dissipates, <strong>compounding</strong> is the regime in which effort accrues: each governance conversion banks <em>engineering capital</em> that lowers the future cost of change, so later work extends capability instead of re-solving what judgment already settled. <a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-7">Figure&nbsp;6.1-7</a> sets the two side by side — the same environment, opposite signs.</p>
+<figure id="fig-6-1-7" class="book-figure" data-label="churn-vs-compounding"><svg id="mageSign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="img" aria-labelledby="mageSign-t mageSign-d"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="mageSign-t">Churn and Compounding: two feedback regimes with opposite signs</title>
+  <desc id="mageSign-d">Two panels side by side, the same environment under opposite signs. The
+    left panel, Churn, is a negative or balancing regime read downward: more agentic effort leads
+    to work outrunning a weak environment, then to rediscovering context, undoing recent work, and
+    reconciling, then to less durable progress, and a feedback arrow shows the same failure class
+    recurring. Its arms are drawn in red. The right panel, Compounding, is a positive or reinforcing
+    regime read upward: more agentic effort turns failure into judgment into conversion, which banks
+    engineering capital as a durable mechanism, which makes the environment more capable while the
+    capital stays fit, which supports more ambitious work at a falling per-change cost, and a
+    feedback arrow shows the gain reinforcing. Its arms are drawn in green. The contrast is the
+    point: effort dissipates on the left and accrues as engineering capital on the right.</desc>
+
+  <defs>
+    <marker id="mageSign-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
+    </marker>
+    <marker id="mageSign-grn" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
+
+  <text x="500" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Churn and Compounding: two feedback regimes</text>
+  <text x="500" y="70" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The same environment, opposite signs — effort dissipates, or accrues as engineering capital.</text>
+
+  <!-- divider -->
+  <line x1="500" y1="92" x2="500" y2="532" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <!-- ================= LEFT: CHURN (negative, read downward) ================= -->
+  <text x="250" y="118" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">CHURN − effort dissipates</text>
+
+  <text x="250" y="168" text-anchor="middle" font-size="17" fill="#1c1917">more agentic effort</text>
+  <line x1="250" y1="180" x2="250" y2="212" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#mageSign-red)"/>
+  <text x="250" y="238" text-anchor="middle" font-size="17" fill="#1c1917">work outruns a weak environment</text>
+  <line x1="250" y1="250" x2="250" y2="282" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#mageSign-red)"/>
+  <text x="250" y="308" text-anchor="middle" font-size="17" fill="#1c1917">rediscover · undo · reconcile</text>
+  <line x1="250" y1="320" x2="250" y2="352" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#mageSign-red)"/>
+  <text x="250" y="378" text-anchor="middle" font-size="17" font-weight="600" fill="#b23b3b">less durable progress</text>
+
+  <!-- churn feedback: the class recurs -->
+  <path d="M150,376 C104,320 104,220 150,166" fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#mageSign-red)"/>
+  <text x="250" y="430" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the same failure class recurs</text>
+
+  <!-- ================= RIGHT: COMPOUNDING (positive, read upward) ================= -->
+  <text x="750" y="118" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">COMPOUNDING + effort accrues</text>
+
+  <text x="750" y="430" text-anchor="middle" font-size="17" fill="#1c1917">more agentic effort</text>
+  <line x1="750" y1="418" x2="750" y2="392" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#mageSign-grn)"/>
+  <text x="750" y="378" text-anchor="middle" font-size="17" fill="#1c1917">failure → judgment → conversion</text>
+  <line x1="750" y1="366" x2="750" y2="340" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#mageSign-grn)"/>
+  <text x="750" y="326" text-anchor="middle" font-size="17" font-weight="600" fill="#1f7a4d">+ engineering capital (a durable mechanism)</text>
+  <line x1="750" y1="314" x2="750" y2="288" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#mageSign-grn)"/>
+  <text x="750" y="274" text-anchor="middle" font-size="17" fill="#1c1917">environment more capable — while the capital stays fit</text>
+  <line x1="750" y1="262" x2="750" y2="236" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#mageSign-grn)"/>
+  <text x="750" y="222" text-anchor="middle" font-size="17" fill="#1c1917">more ambitious work, at a falling per-change cost</text>
+
+  <!-- compounding feedback: the gain reinforces -->
+  <path d="M858,224 C904,290 904,360 858,424" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#mageSign-grn)"/>
+  <text x="750" y="470" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the gain reinforces — in the well-fit region</text>
+</svg><figcaption data-short="Churn and Compounding"><span class="fig-label">Figure 6.1-7.</span> <em>Churn and Compounding: two feedback regimes.</em> The same governed environment runs in two directions. Read left and downward, churn is a balancing regime: effort outruns a weak environment and dissipates into rediscovery, undo, and reconciliation, and the class recurs. Read right and upward, compounding is a reinforcing regime: failure becomes judgment becomes a conversion that banks engineering capital, the environment grows more capable, and later work is more ambitious at a falling per-change cost. The contrast is the point — the sign, not a new loop; the reinforcing arm is the green-to-purple composition the master model already draws. It holds only in the well-fit region: past fit, accumulation stops compounding and rejoins the churn curve's right band.</figcaption></figure>
+<p>The right arm of the curve forces a distinction between two kinds of accumulation, and the book has been naming its terms all along. <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-6">Table&nbsp;6.1-6</a> pairs each negative dynamic with the positive dual a well-fit environment produces.</p>
+<table id="tbl-6-1-6" class="book-table" data-label="churn-compounding-duality"><caption data-short="Churn and its positive duals"><span class="tbl-label">Table 6.1-6.</span> <em>Churn and its duals.</em> Each negative dynamic the book names has a positive counterpart; the right column is what a well-fit environment produces rather than suffers. Compounding and engineering capital are the new coinages; reuse is incidental; the rest are vocabulary already in the book.</caption><thead><tr><th>Negative dynamic</th><th>Positive dual</th></tr></thead><tbody><tr><td>Churn</td><td>Compounding</td></tr><tr><td>Drift</td><td>Adaptation</td></tr><tr><td>Rediscovery</td><td>Reuse</td></tr><tr><td>Per-change judgment</td><td>Reusable infrastructure</td></tr><tr><td>Context loss</td><td>Models</td></tr><tr><td>Technical debt</td><td>Engineering capital</td></tr><tr><td>Manual process</td><td>Governed mechanism</td></tr></tbody></table>
+<h2><span class="sec-num">6.1.9</span> Evolution of this theory</h2>
 <p>The theory did not arrive whole. Its empirical core came first, induced from a bounded case; the rest is later reflection, and honesty requires keeping the two apart.</p>
 <p>The first version appeared in the case-study paper <em>Cheap Code, Costly Judgment</em> <sup class="cite-ref"><a href="#wc-6-1-toward-a-theory-of-mage-3" aria-label="citation 3">3</a></sup><span class="cite-note"><span class="cn-mark">3.</span> James C. Davis et al., “Cheap Code, Costly Judgment: A Case Study on Governable Agentic Software Engineering,” 2026, <a href="https://arxiv.org/abs/2607.01087">https://arxiv.org/abs/2607.01087</a>.</span>. That paper analyzed the first twelve weeks of the DocAble build and induced a five-step governance-conversion loop:</p>
 <ol><li>velocity exposes failure;</li><li>the engineer classifies the failure as local or structural;</li><li>structural failures are converted into governance;</li><li>later agents inherit a narrower, more explicit action space;</li><li>repeated conversions raise the environment's capacity to absorb future work.</li></ol>
@@ -1148,9 +1217,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>The result is still a governance-conversion theory at its core. It now describes MAGE as an adaptive system for governing the engineering environment itself.</p>
 <h3>Epistemic note</h3>
 <p>The induced kernel and its later extensions are epistemically different, and the chapter should not blur them. The five-step loop was induced from the bounded case and its incident corpus. The four extensions are grounded in continued development, further observation, and integration across the book. Read the kernel as the case's direct yield and the extensions as refinements proposed for later testing — not as independently confirmed, population-level laws.</p>
-<h2><span class="sec-num">6.1.9</span> Research agenda</h2>
-<p>The seven hypotheses suggest a focused program, not a scatter of disconnected tests. Three study designs would cover most of the model, and none needs this repository; <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-6">Table&nbsp;6.1-6</a> maps each design onto the hypotheses it would test.</p>
-<table id="tbl-6-1-6" class="book-table" data-label="mage-agenda"><caption data-short="Three study designs mapped to H1–H7"><span class="tbl-label">Table 6.1-6.</span> <em>The Research Agenda.</em> Three study designs and the principal hypotheses each would test.</caption><thead><tr><th>Study design</th><th>Principal hypotheses</th></tr></thead><tbody><tr><td>Multi-project longitudinal panel with environment-quality variation</td><td>H2, H3, H4, H6</td></tr><tr><td>Subsystem-level panel tracking model gaps, churn, and escapes</td><td>H1, H5</td></tr><tr><td>Organizational comparison of diagnosis and authority pathways</td><td>H7</td></tr></tbody></table>
+<h2><span class="sec-num">6.1.10</span> Research agenda</h2>
+<p>The seven hypotheses suggest a focused program, not a scatter of disconnected tests. Three study designs would cover most of the model, and none needs this repository; <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-7">Table&nbsp;6.1-7</a> maps each design onto the hypotheses it would test.</p>
+<table id="tbl-6-1-7" class="book-table" data-label="mage-agenda"><caption data-short="Three study designs mapped to H1–H7"><span class="tbl-label">Table 6.1-7.</span> <em>The Research Agenda.</em> Three study designs and the principal hypotheses each would test.</caption><thead><tr><th>Study design</th><th>Principal hypotheses</th></tr></thead><tbody><tr><td>Multi-project longitudinal panel with environment-quality variation</td><td>H2, H3, H4, H6</td></tr><tr><td>Subsystem-level panel tracking model gaps, churn, and escapes</td><td>H1, H5</td></tr><tr><td>Organizational comparison of diagnosis and authority pathways</td><td>H7</td></tr></tbody></table>
 <p>A particularly strong design would instrument a failure class from first occurrence through its whole life — recurrence, structural recognition, governance intervention, and later recurrence or escape. Such an instrument would test the discovery and adaptation loops directly, rather than leaning on aggregate repository metrics that cannot separate "the environment matured" from "the operator did."</p>
-<h2><span class="sec-num">6.1.10</span> Closing</h2>
+<h2><span class="sec-num">6.1.11</span> Closing</h2>
 <p>The claim of MAGE is not that more governance produces better software. It is that abundant implementation capacity makes the fit of the engineering environment decisive. Known obligations can be encoded before the work begins. Unknown ones become visible only through churn, failure, and friction. Judgment separates the local defect from the missing structure; authority lets that diagnosis alter the shared environment; models and mechanisms reshape what the next agent can know and do. When the loop works, velocity buys durable progress. When it does not, velocity only reaches the churn wall sooner. That is the theory this book leaves for the next case to test.</p><section class="works-cited" aria-labelledby="wc-6-1-toward-a-theory-of-mage-h"><h2 id="wc-6-1-toward-a-theory-of-mage-h" class="wc-h">Works Cited</h2><ol class="wc-list"><li id="wc-6-1-toward-a-theory-of-mage-1">Meadows, Donella H. <em>Thinking in Systems: A Primer</em>. Chelsea Green Publishing, 2008.</li><li id="wc-6-1-toward-a-theory-of-mage-2">Bollinger, Terry B., and Clement L. McGowan. “A Critical Look at Software Capability Evaluations.” <em>IEEE Software</em> 8, no. 4 (1991): 25–41. <a href="https://doi.org/10.1109/52.300034">https://doi.org/10.1109/52.300034</a>.</li><li id="wc-6-1-toward-a-theory-of-mage-3">Davis, James C., Paschal C. Amusuo, Tanmay Singla, Berk Çakar, and Kirsten A. Davis. “Cheap Code, Costly Judgment: A Case Study on Governable Agentic Software Engineering.” 2026. <a href="https://arxiv.org/abs/2607.01087">https://arxiv.org/abs/2607.01087</a>.</li></ol></section><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="part-6-intro.html" aria-label="Beginning of Part 6 — Reflections">« Beginning of part</a><a href="part-6-intro.html" aria-label="Previous chapter — Reflections">« Previous chapter</a></div><span class="chapnav-here" title="30 · Toward a Theory of MAGE">30 · Toward a Theory of MAGE</span><div class="chapnav-fwd"><a href="6.2-implications-for-se.html" aria-label="Next chapter — 31 · Implications for Software Engineering">Next chapter »</a><a href="7.1-about-the-author.html" aria-label="Next part — Back Matter">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

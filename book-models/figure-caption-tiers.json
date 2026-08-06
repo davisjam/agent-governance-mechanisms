@@ -331,6 +331,18 @@
       "location": "part6",
       "rationale": "churn non-monotonic in governance"
     },
+    "assets/mage-churn-vs-compounding.svg": {
+      "tier": "A",
+      "kind": "conceptual-framework",
+      "location": "part6",
+      "rationale": "the Churn/Compounding sign contrast — pairs two of the book's core dynamics; Part 6 anchor"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::Churn and its positive duals": {
+      "tier": "B",
+      "kind": "conceptual-table",
+      "location": "part6",
+      "rationale": "the churn-vs-compounding duality table — negative dynamics against their positive duals"
+    },
     "assets/soft-hard-spectrum.svg": {
       "tier": "B",
       "kind": "conceptual-spectrum",
