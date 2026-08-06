@@ -10,11 +10,13 @@ fields — `order`, seed provenance, reconciliation links, chapter advancement �
 same rule that earned the claims model its own file (a new field none of the siblings carry) applies here.
 
 RECONCILE, DON'T RESTATE.  The spine is not a second source for the siblings' content. Each spine claim
-carries `reconciles` links: the claim ids (claims_declared.json) and big-idea slugs (landing-big-ideas.json)
-it subsumes into one argument step, plus the author's seed-statement numbers it descends from. The
-structural check holds the reconciliation COMPLETE in both directions: every link resolves (AS3), and every
-sibling claim id and big-idea slug is reconciled by some spine claim (AS4) — so a stance added to a sibling
-model without a place in the argument is a finding, not a silent orphan.
+carries `reconciles` links: the claim ids (claims_declared.json), big-idea slugs (landing-big-ideas.json),
+and What-This-Book-Argues claim slugs (argues_claims_declared.json) it subsumes into one argument step, plus
+the author's seed-statement numbers it descends from. The structural check holds every link RESOLVING (AS3,
+across all three namespaces) and the claim + big-idea reconciliation COMPLETE in reverse (AS4) — so a stance
+added to a sibling model without a place in the argument is a finding, not a silent orphan. AS4 does not
+extend to argues_claims: a WTBA claim with no premise pointing at it is legitimate, so that namespace gets
+the forward integrity gate only.
 
 CHAPTER LABELS LIVE HERE, NOT IN THE OUTLINE.  The outline model is derived from the book on every run —
 it has no hand-authored source a judgment field could live in — and the outcomes model is pedagogical. The
@@ -120,13 +122,15 @@ SEED_MIN, SEED_MAX = 1, 10
 class SpineClaim:
     """One ordered step of the book's argument. `id` is the kebab join key; `order` its 1-based position;
     `seeds` the author seed-statement numbers it descends from; `reconciles_claims` / `reconciles_big_ideas`
-    the sibling-model entries it subsumes. `advanced_by` is DERIVED — the chapters labeled with this step."""
+    / `reconciles_argues_claims` the sibling-model entries it subsumes (discussion claims, landing Big Ideas,
+    and What-This-Book-Argues claims). `advanced_by` is DERIVED — the chapters labeled with this step."""
     id: str
     order: int
     statement: str
     seeds: list[int]
     reconciles_claims: list[str]
     reconciles_big_ideas: list[str]
+    reconciles_argues_claims: list[str]
     exempt: "str | None" = None                      # claim-depth exemption reason (front-loaded-by-design / bridge) or None
     reviewed_hash: str = ""                          # AS8 seed: the statement hash the chapter labels were reviewed against
     quantifiable: bool = False                       # W-LEDGER: is this the kind of claim a metric could bear weight for?
@@ -207,6 +211,7 @@ def derive_model() -> SpineModel:
         seeds=list(d.get("seeds", [])),
         reconciles_claims=list(d.get("reconciles", {}).get("claims", [])),
         reconciles_big_ideas=list(d.get("reconciles", {}).get("big_ideas", [])),
+        reconciles_argues_claims=list(d.get("reconciles", {}).get("argues_claims", [])),
         exempt=claim_exempt.get(d["id"]),
         reviewed_hash=d.get("reviewed_hash", ""),
         quantifiable=bool(d.get("quantifiable", False)),
@@ -256,16 +261,22 @@ def _load_json(path: str) -> "dict | None":
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
 
-def _sibling_sets() -> "tuple[set[str], set[str]]":
-    """(claim_ids, big_idea_slugs) — the resolve targets for `reconciles` (AS3/AS4), read at check time
-    from the sibling declared sources; a single source of truth, no snapshot."""
+def _sibling_sets() -> "tuple[set[str], set[str], set[str]]":
+    """(claim_ids, big_idea_slugs, argues_claim_slugs) — the resolve targets for `reconciles`, read at check
+    time from the sibling declared sources; a single source of truth, no snapshot. AS3 resolves all three;
+    AS4 (reverse completeness) covers only claims + big_ideas — a WTBA claim with no premise pointing at it
+    is legitimate, so `argues_claims` gets the forward integrity gate, not the reverse completeness gate."""
     claims = _load_json(os.path.join(_HERE, "claims_declared.json")) or {}
     claim_ids = {c["id"] for c in claims.get("claims", [])}
     big = _load_json(os.path.join(_HERE, "landing-big-ideas.json")) or {}
     # The argument ideas are the `_order` six; the file also carries non-argument slots (the catalogue
     # gateway), which are not reconciliation targets.
     idea_slugs = set(big.get("_order", [])) or {k for k in big if not k.startswith("_")}
-    return claim_ids, idea_slugs
+    # The What-This-Book-Argues claim slugs are the `_order` six on the WTBA registry (the same set the
+    # part-opener-traceability lint resolves against).
+    argues = _load_json(os.path.join(_HERE, "argues_claims_declared.json")) or {}
+    argues_slugs = set(argues.get("_order", [])) or {k for k in argues if not k.startswith("_")}
+    return claim_ids, idea_slugs, argues_slugs
 
 
 # ---- invariants (AS1–AS7; walked by the drift check in tests/book_models.py) -------------------------
@@ -277,9 +288,11 @@ def structural_findings(model: "SpineModel | None" = None) -> "list[str]":
     AS2 — spine ids unique + kebab; `order` is exactly 1..N contiguous; N within [SPINE_MIN, SPINE_MAX];
           every `seeds` number within the author's 1..10 seed set; statement within WORD_CAP.
     AS3 — every `reconciles` link resolves: claim ids against claims_declared.json, big-idea slugs against
-          landing-big-ideas.json.
+          landing-big-ideas.json, and What-This-Book-Argues claim slugs against argues_claims_declared.json.
     AS4 — the reconciliation is COMPLETE: every sibling claim id and every big-idea slug is reconciled by
-          ≥1 spine claim (a sibling stance with no place in the argument is a finding).
+          ≥1 spine claim (a sibling stance with no place in the argument is a finding). Deliberately NOT
+          applied to argues_claims — a WTBA claim with no premise pointing at it is legitimate, so that
+          namespace gets AS3's forward integrity gate but not AS4's reverse completeness gate.
     AS5 — `chapter_advances` keys are exactly the outline's chapter slugs (exhaustive labeling; a label
           keyed to a chapter the book no longer defines reddens too).
     AS6 — every advanced id names a spine claim; no duplicate ids within one chapter's label.
@@ -293,7 +306,7 @@ def structural_findings(model: "SpineModel | None" = None) -> "list[str]":
     the artifact's `flags` block — editorial signal, deliberately NOT structural findings here.)"""
     if model is None:
         model = derive_model()
-    claim_ids, idea_slugs = _sibling_sets()
+    claim_ids, idea_slugs, argues_slugs = _sibling_sets()
     findings: "list[str]" = []
 
     # AS2 — id + order + seed + word-cap shape.
@@ -323,6 +336,9 @@ def structural_findings(model: "SpineModel | None" = None) -> "list[str]":
         for slug in s.reconciles_big_ideas:
             if slug not in idea_slugs:
                 findings.append(f"AS3 spine claim {s.id!r} reconciles unknown big-idea slug {slug!r}")
+        for slug in s.reconciles_argues_claims:
+            if slug not in argues_slugs:
+                findings.append(f"AS3 spine claim {s.id!r} reconciles unknown argues-claim slug {slug!r}")
 
     # AS4 — reconciliation complete in the reverse direction.
     covered_claims = {cid for s in model.spine for cid in s.reconciles_claims}

@@ -54,6 +54,9 @@
       ],
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [
+        "cheap-code-costly-judgment"
+      ],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "36f4f3b40095",
       "quantifiable": true,
@@ -85,6 +88,7 @@
         "printer-not-coder"
       ],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "36e742ea3f72",
       "quantifiable": false,
@@ -112,6 +116,7 @@
       ],
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "cf81b75e7fd6",
       "quantifiable": true,
@@ -143,6 +148,7 @@
       "reconciles_big_ideas": [
         "churn"
       ],
+      "reconciles_argues_claims": [],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "d1e8982b2cc0",
       "quantifiable": true,
@@ -171,6 +177,7 @@
         "three-not-knowings"
       ],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "0723642b2b10",
       "quantifiable": false,
@@ -201,6 +208,7 @@
       "reconciles_big_ideas": [
         "governance-centric"
       ],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "78b391707b50",
       "quantifiable": true,
@@ -241,6 +249,7 @@
       "reconciles_big_ideas": [
         "modeling-thesis"
       ],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "dc44bf4796ad",
       "quantifiable": true,
@@ -289,6 +298,7 @@
       "reconciles_big_ideas": [
         "alignment-thesis"
       ],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "d4b36f18c7e9",
       "quantifiable": true,
@@ -324,6 +334,7 @@
         "theses-divide-the-not-knowings"
       ],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [],
       "exempt": "bridge",
       "reviewed_hash": "7e245a8d064b",
       "quantifiable": false,
@@ -354,6 +365,7 @@
       "reconciles_big_ideas": [
         "convert-failures"
       ],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "d05da605e04d",
       "quantifiable": true,
@@ -383,6 +395,9 @@
       ],
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [
+        "models-help-reason"
+      ],
       "exempt": null,
       "reviewed_hash": "681d832a8c6d",
       "quantifiable": true,
@@ -412,6 +427,9 @@
         "models-are-universal-language"
       ],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [
+        "models-help-reason"
+      ],
       "exempt": null,
       "reviewed_hash": "09abeb08db9f",
       "quantifiable": false,
@@ -442,6 +460,7 @@
       "reconciles_big_ideas": [
         "seat-moves"
       ],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "6e678662a007",
       "quantifiable": true,
@@ -473,6 +492,7 @@
         "single-case-humility"
       ],
       "reconciles_big_ideas": [],
+      "reconciles_argues_claims": [],
       "exempt": null,
       "reviewed_hash": "d27760687c37",
       "quantifiable": false,
