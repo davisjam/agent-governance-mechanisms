@@ -28,16 +28,14 @@ The linter runs a battery of presence checks over the brief and returns a verdic
 return: pass launches the agent, any failure refuses the dispatch.
 
 ```mermaid
-flowchart LR
+flowchart TD
   Brief[/Task brief/] --> Lint{{Brief lint}}
   Reg[(Marker registry)] --> Lint
-  Lint -->|all markers present| Launch([Dispatch agent])
-  Lint -->|any marker absent| Refuse([Refuse launch, exit 1])
+  Lint -->|markers present| Launch([Dispatch])
+  Lint -->|marker absent| Refuse([Refuse launch])
 ```
 
-*Accessible description: the brief and a registry of required markers both feed a brief-lint gate; when
-every required marker is present the agent is dispatched, and when any is missing the launch is refused
-before the agent starts.*
+*Accessible description: the task brief and a registry of required markers both feed a brief-lint gate; when every required marker is present the agent is dispatched, and when any is missing the launch is refused before the agent starts.*
 
 ### Sample Code
 

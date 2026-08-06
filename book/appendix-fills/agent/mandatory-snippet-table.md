@@ -30,16 +30,15 @@ The table is a registry keyed by snippet, each row carrying an include-when cond
 the brief lint reads the table and asserts every applicable marker is present.
 
 ```mermaid
-flowchart LR
-  Table[(Snippet registry)] --> Lint{{Brief lint}}
-  Brief[/Task brief/] --> Lint
-  Lint -->|every required marker present| Pass([Dispatch])
-  Lint -->|a required snippet absent| Fail([Refuse launch])
+flowchart TD
+  Table[(Required-snippet table)] -->|include-when scope| Req[Required for this brief]
+  Brief[/Task brief/] --> Check{Every marker present?}
+  Req --> Check
+  Check -->|yes| Pass([Dispatch])
+  Check -->|no| Fail([Refuse launch])
 ```
 
-*Accessible description: a snippet registry and the task brief both feed the brief lint, which asserts
-every applicable snippet's marker is present; the dispatch proceeds when all are and is refused when a
-required snippet is absent.*
+*Accessible description: a required-snippet table scoped by each snippet's include-when condition produces the set of snippets required for this brief; that set and the task brief both feed a marker-presence check, which dispatches when every required marker is present and refuses launch when one is absent.*
 
 ### Sample Code
 

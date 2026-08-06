@@ -30,17 +30,15 @@ The gate reads the alert channel and the ack log; an unresolved HIGH alert refus
 outright, and only a terminal ack or a resolving dispatch clears it.
 
 ```mermaid
-flowchart LR
+flowchart TD
   Alerts[(Alert channel)] --> Gate{Unresolved HIGH?}
   Acks[(Ack log)] --> Gate
-  Gate -->|yes| Refuse([Refuse dispatch tools])
-  Gate -->|no| Allow([Dispatch permitted])
+  Gate -->|yes| Refuse([Refuse dispatch])
+  Gate -->|no| Allow([Permit])
   Refuse -->|resolving dispatch acks| Allow
 ```
 
-*Accessible description: the gate reads the alert channel and the ack log; an unresolved HIGH alert
-refuses the dispatch tools, and dispatch is permitted only when no HIGH alert is unresolved — an
-alert-resolving dispatch auto-acks and clears the gate.*
+*Accessible description: the gate reads the alert channel and the ack log; an unresolved HIGH alert refuses the dispatch tools, and dispatch is permitted only when no HIGH alert is unresolved — an alert-resolving dispatch auto-acks and clears the gate.*
 
 ### Sample Code
 
