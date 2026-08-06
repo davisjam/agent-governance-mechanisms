@@ -1981,15 +1981,38 @@ def _load_definitions() -> list[dict]:
     return ordered
 
 
+_CHAPTER_IDENTITY_HREF: "dict[str, str] | None" = None
+
+
+def _chapter_href(book_home: str) -> str:
+    """Resolve a definition/idea `book_home` — now a number-free identity `label` (optionally `label#anchor`)
+    — to its built-HTML href `book/<N.M-slug>.html[#anchor]`. The stored value carries the LABEL, never a
+    URL, so a chapter renumber updates the link automatically (chapter_identity model). Reads the identity
+    table directly (stdlib, no import-path dependency); a value that is not a bare label (legacy URL /
+    unknown) passes through unchanged, so a half-migrated field still renders."""
+    global _CHAPTER_IDENTITY_HREF
+    if _CHAPTER_IDENTITY_HREF is None:
+        p = os.path.join(ROOT, "book-models", "chapter_identity_declared.json")
+        decl = json.load(open(p, encoding="utf-8"))
+        _CHAPTER_IDENTITY_HREF = {c["label"]: "book/" + os.path.basename(c["filename"])[:-3] + ".html"
+                                  for c in decl.get("chapters", [])}
+    label, sep, anchor = book_home.partition("#")
+    href = _CHAPTER_IDENTITY_HREF.get(label)
+    if href is None:
+        return book_home  # legacy URL or unknown — pass through
+    return href + (sep + anchor if sep else "")
+
+
 def _def_strip_link(rec: dict, cls: str) -> str:
     """One anchored definition link — `<a id="def-<slug>">` carries the record's `site_home` (the drift
-    check's join key) and points at the definition's book home (the fuller treatment)."""
+    check's join key) and points at the definition's book home (the fuller treatment). `book_home` stores a
+    chapter LABEL (+ optional `#anchor`), resolved to its built-HTML href at build."""
     slug = rec["_slug"]
     site_home = rec.get("site_home", f"def-{slug}")
     term = _esc(rec.get("term", slug))
     box = _esc(rec.get("box", ""))
     frame = box.split(" — ")[0].split(". ")[0].rstrip(".") if box else ""
-    href = _esc(rec.get("book_home", "book/2.1-the-agent-stack.html"))
+    href = _esc(_chapter_href(rec.get("book_home", "the-agent-stack")))
     return (f'<a class="{cls}" id="{_esc(site_home)}" href="{href}">'
             f'<b>{term}</b><span>{frame}</span></a>')
 

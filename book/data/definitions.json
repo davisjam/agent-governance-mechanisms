@@ -19,9 +19,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Model",
-    "book_home": "book/2.1-the-agent-stack.html#idx-def-model",
+    "book_home": "the-agent-stack#idx-def-model",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -36,9 +36,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Agent",
-    "book_home": "book/2.1-the-agent-stack.html#idx-def-agent",
+    "book_home": "the-agent-stack#idx-def-agent",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -52,9 +52,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Engineering",
-    "book_home": "book/2.1-the-agent-stack.html#idx-def-engineering",
+    "book_home": "the-agent-stack#idx-def-engineering",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -67,9 +67,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Software-engineering",
-    "book_home": "book/2.1-the-agent-stack.html#idx-def-software-engineering",
+    "book_home": "the-agent-stack#idx-def-software-engineering",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -83,9 +83,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Structured",
-    "book_home": "book/2.1-the-agent-stack.html#idx-def-structured",
+    "book_home": "the-agent-stack#idx-def-structured",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the adjective rider on the model definition in §2.1 is tagged with an index-def and renders as the blue def-box in the web book + PDF (the #idx-def-structured anchor). On the landing it reads as the rider on the four definitions, not a fifth peer."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -98,9 +98,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/_design/book-editorial-discipline-directive-260802.md#the-churn-definition",
-    "book_home": "book/0.4-preface.html#idx-def-churn",
+    "book_home": "preface#idx-def-churn",
     "book_home_owed": {"section": "Front Matter — Preface", "status": "landed", "note": "Landed: the churn inset in the preface premise carries the index-def tag and renders as the light def-inset. Book-only by design; the landing realizes churn as the bi-churn Big-Idea slot."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -114,9 +114,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/_design/drafts/compounding-principle-design-260806.md#naming-recommendation",
-    "book_home": "book/0.3-the-books-language.html#idx-def-compounding",
+    "book_home": "the-books-language#idx-def-compounding",
     "book_home_owed": {"section": "Front Matter — The Book's Language (glossary, core-ideas group)", "status": "landed", "note": "Landed: the compounding green-box in the glossary's core-ideas group carries the index-def tag and renders as the light def-inset. Book-only by design; the formal treatment (the Compounding-Governance proposition + the Bureaucracy-vs-Engineering-capital section) is in Part 6. A website concept ENTRY page (concept-compounding.html) renders the site preview, reachable as churn's Counterpart; no landing Big-Idea card (six stays six). The projection-index SITE-HOME gate tracks the real site presence this N/A field cannot express, exactly as it does for churn."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -130,9 +130,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/_design/book-editorial-discipline-directive-260802.md#bound-the-governance-mechanism-definition",
-    "book_home": "book/2.3-the-governed-environment.html#idx-def-governance-mechanism",
+    "book_home": "the-governed-environment#idx-def-governance-mechanism",
     "book_home_owed": {"section": "Part 2 — §2.3 The Governed Environment", "status": "landed", "note": "Landed: the bounded-definition inset in 2.3's 'Four classes, one bounded term' subsection carries the index-def tag. Book-only by design."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -146,9 +146,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/_design/book-editorial-discipline-directive-260802.md#the-engineered-agent-loop",
-    "book_home": "book/1.3-loops-and-models.html#idx-def-engineered-agent-loop",
+    "book_home": "loops-and-models#idx-def-engineered-agent-loop",
     "book_home_owed": {"section": "Part 1 — §1.3 Loops and Models", "status": "landed", "note": "Landed: the engineered-loop inset in 1.3's four-levers section carries the index-def tag and renders as the light def-inset. Book-only by design."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -161,9 +161,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/part1/1.1-the-printer.md#reasoning-horizon",
-    "book_home": "book/1.1-the-printer.html#idx-def-reasoning-horizon",
+    "book_home": "the-printer#idx-def-reasoning-horizon",
     "book_home_owed": {"section": "Part 1 — §1.1 The Printer", "status": "landed", "note": "Landed: the term is introduced in §1.1's 'The two modes' fork and carries the index-def tag there. Book-only by design; the modeling-thesis reframe (§1.4) is where the causal chain it names is worked out."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -176,9 +176,9 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/part1/1.1-the-printer.md#long-horizon-task",
-    "book_home": "book/1.1-the-printer.html#idx-def-long-horizon-task",
+    "book_home": "the-printer#idx-def-long-horizon-task",
     "book_home_owed": {"section": "Part 1 — §1.1 The Printer", "status": "landed", "note": "Landed: the term is introduced in §1.1's 'The two modes' fork alongside reasoning horizon and carries the index-def tag there. Book-only by design."},
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },
 
@@ -201,13 +201,13 @@
     ],
     "site_home": "N/A",
     "derived_from": "book/part3/3.8-keeping-models-in-sync.md#models-bridge",
-    "book_home": "book/3.8-keeping-models-in-sync.html#idx-def-models-bridge",
+    "book_home": "keeping-models-in-sync#idx-def-models-bridge",
     "book_home_owed": {
       "section": "Part 3 — §3.8 Keeping the Models in Sync with the Code",
       "status": "landed",
       "note": "Landed: §3.8 tags the definition with `<!-- index-def: models-bridge -->` and renders the def-box; book-only by design (no landing def-strip). Seeded earlier (no tag) at §2.2's structured-model-layer figure/prose."
     },
-    "lexicon_link": "book/0.3-the-books-language.html",
+    "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   }
 }
