@@ -286,6 +286,69 @@ def check_svg_text_fit():
     return PASS, issues  # AUDIT-ONLY: never FAIL
 
 
+# ---- page-fit sensor: a figure taller than the page (AUDIT-ONLY) -------------------------------------
+# The print build sizes each `<!-- figure: -->` image to IMAGE_WIDTH_FRAC of the text measure and applies
+# no height cap, so a pathologically tall viewBox projects past the page bottom and clips (the folio
+# collision the messy-timeline figure hit at 11.6in). This reads each asset's viewBox aspect and flags any
+# whose projected print height exceeds the text page minus a caption budget. Deterministic — a pure function
+# of the viewBox — unlike the glyph-width heuristics above; detect-and-fail beats silent auto-scale for a
+# print book (auto-scaling to fit shrinks the text quietly instead). Land AUDIT-ONLY; promote to blocking
+# once the tree is drained to 0.
+TEXT_WIDTH_IN = 6.3        # book text-measure width (US-Letter) — the figure's 100% reference
+PAGE_HEIGHT_IN = 9.0       # text-area height on the page
+IMAGE_WIDTH_FRAC = 0.85    # a `<!-- figure: -->` renders at image(width: 85%) of the measure
+CAPTION_BUDGET_IN = 0.5    # vertical room a figure must leave below itself for its caption
+PAGE_FIT_LIMIT_IN = PAGE_HEIGHT_IN - CAPTION_BUDGET_IN
+
+
+def _viewbox_dims(root: ET.Element) -> tuple[float, float] | None:
+    """(width, height) from the viewBox (preferred) or the width/height attributes; None if neither gives both."""
+    vb = root.get("viewBox")
+    if vb:
+        parts = re.split(r"[\s,]+", vb.strip())
+        if len(parts) == 4:
+            return float(parts[2]), float(parts[3])
+    w, h = _num(root.get("width")), _num(root.get("height"))
+    return (w, h) if (w and h) else None
+
+
+def check_svg_page_fit():
+    """Scan every `book/assets/*.svg`; flag any whose projected print height overflows the page.
+
+    projected_height = IMAGE_WIDTH_FRAC * TEXT_WIDTH_IN * (viewBox_h / viewBox_w). A figure clearing
+    PAGE_FIT_LIMIT_IN (page height minus a caption budget) will clip on the page. AUDIT-ONLY: always PASS.
+    """
+    assets_dir = os.path.join(ROOT, "book", "assets")
+    if not os.path.isdir(assets_dir):
+        return PASS, ["no book/assets/ dir — nothing to scan"]
+
+    issues: list[str] = []
+    for fn in sorted(os.listdir(assets_dir)):
+        if not fn.endswith(".svg"):
+            continue
+        try:
+            root = ET.parse(os.path.join(assets_dir, fn)).getroot()
+        except ET.ParseError:
+            continue  # parse errors are already reported by the text-fit pass
+        dims = _viewbox_dims(root)
+        if not dims:
+            continue
+        w, h = dims
+        if w <= 0:
+            continue
+        projected = IMAGE_WIDTH_FRAC * TEXT_WIDTH_IN * (h / w)
+        if projected > PAGE_FIT_LIMIT_IN:
+            issues.append(
+                f"book/assets/{fn}: projected height {projected:.2f}in exceeds page-fit limit "
+                f"{PAGE_FIT_LIMIT_IN:.2f}in (viewBox {w:.0f}x{h:.0f}, aspect {h / w:.2f}) — densify the "
+                f"figure (cut vertical slack, keep the viewBox width so text stays legible) or split it")
+
+    if issues:
+        issues.insert(0, f"{len(issues)} figure(s) taller than the page (limit {PAGE_FIT_LIMIT_IN:.2f}in = "
+                         f"{PAGE_HEIGHT_IN:.1f}in page - {CAPTION_BUDGET_IN:.1f}in caption):")
+    return PASS, issues  # AUDIT-ONLY: never FAIL
+
+
 # ---- drawing hygiene: the native-construct discipline (arrowheads via <marker>, +x geometry, no
 #      stroke-through-glyph). Enforces the self-communicate drawing rule "use the native construct, not
 #      stitched primitives" that a text-width heuristic is blind to. -------------------------------------
