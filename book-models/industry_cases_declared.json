@@ -1,5 +1,5 @@
 {
-  "_provenance": "HAND-AUTHORED declared source for the INDUSTRY-CASES model — the book's external-evidence base as a mechanically-checkable model (not prose accumulated ad hoc). This file IS edited by hand; it is the single source of truth for the industry cases the book reads MAGE against: the reconciled correspondence taxonomy, the declared ordered CONSTRUCT UNIVERSE (the matrix column set), the fixed DocAble row-0 correspondence, the six-site ROSTER (declared intent), and the case RECORDS (Cloudflare authored + five pending-writeup stubs). Sibling in the book-models declared->generated idiom (see theory_of_mage_declared.json / metrics-dashboard.json). WIRED: industry_cases_model.py derives a typed model, projects the DocAble+authored correspondence matrix (render_matrix_md), runs the live queries (constructs / bears-on / only-docable / coverage / roster), and checks the joins IC1-IC6 status-aware. Lands AUDIT-ONLY-first in catalog.py validate (rule-#55 blocking-lint landing discipline); a later follow-up flips IC1-IC6 to BLOCKING after a clean session confirms the drain. Regen discipline: edit HERE; the queries and matrix compute live at CLI time (NO materialized industry-cases.json — page-parity + compute-at-CLI only, per the design's REVISE-2).",
+  "_provenance": "HAND-AUTHORED declared source for the INDUSTRY-CASES model — the book's external-evidence base as a mechanically-checkable model (not prose accumulated ad hoc). This file IS edited by hand; it is the single source of truth for the industry cases the book reads MAGE against: the reconciled correspondence taxonomy, the declared ordered CONSTRUCT UNIVERSE (the matrix column set), the fixed DocAble row-0 correspondence, the six-site ROSTER (declared intent), and the case RECORDS (all six sites authored: Cloudflare + Spotify + Shopify + Docker + Siemens + Zenseact). Sibling in the book-models declared->generated idiom (see theory_of_mage_declared.json / metrics-dashboard.json). WIRED: industry_cases_model.py derives a typed model, projects the DocAble+authored correspondence matrix (render_matrix_md), runs the live queries (constructs / bears-on / only-docable / coverage / roster), and checks the joins IC1-IC6 status-aware. Lands AUDIT-ONLY-first in catalog.py validate (rule-#55 blocking-lint landing discipline); a later follow-up flips IC1-IC6 to BLOCKING after a clean session confirms the drain. Regen discipline: edit HERE; the queries and matrix compute live at CLI time (NO materialized industry-cases.json — page-parity + compute-at-CLI only, per the design's REVISE-2).",
 
   "_intent": "Encode external practitioner reports as a queryable MODEL so the book can ask its evidence base questions — which MAGE constructs have external observation, which cases bear on which hypothesis, where the base is still only DocAble — and project a drift-gated correspondence matrix, dogfooding the Modeling Thesis on the manuscript's own substantiation. One record per case; the matrix is append-a-row per authored case (a new CASE never widens the table; a new CONSTRUCT is the rare deliberate event that does — the declared construct-universe column contract, REVISE-3).",
 
@@ -58,11 +58,11 @@
     "_note": "The declared six-site ROSTER — the purposive sample the book intends (author's §1.3 table verbatim). Counts DERIVE from this block (REVISE-1): IC6 checks the record-set id-set equals the roster id-set (and that shared roster fields agree between roster and record), so a silently added or dropped case reddens — a declared intent the author edits when authoring or adding a case, never a magic integer.",
     "sites": [
       {"id": "cloudflare-codex", "organization": "Cloudflare", "domain": "software / infrastructure", "distinctive_starting_point": "policy-first governance", "status": "authored"},
-      {"id": "spotify", "organization": "Spotify", "domain": "software / large-scale platform", "distinctive_starting_point": "platform + fleet-first autonomous implementation", "status": "pending-writeup"},
-      {"id": "shopify", "organization": "Shopify", "domain": "software / commerce platform", "distinctive_starting_point": "shared agent-ready environment + organizational learning", "status": "pending-writeup"},
-      {"id": "docker", "organization": "Docker", "domain": "software / developer infrastructure", "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops", "status": "pending-writeup"},
-      {"id": "siemens", "organization": "Siemens", "domain": "embedded / CPS / model-based engineering", "distinctive_starting_point": "model-first engineering; models already are the development surface", "status": "pending-writeup"},
-      {"id": "zenseact", "organization": "Zenseact", "domain": "engineering knowledge work / automotive", "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems", "status": "pending-writeup"}
+      {"id": "spotify-honk", "organization": "Spotify", "domain": "software / large-scale platform", "distinctive_starting_point": "platform + fleet-first autonomous implementation", "status": "authored"},
+      {"id": "shopify", "organization": "Shopify", "domain": "software / commerce platform", "distinctive_starting_point": "shared agent-ready environment + organizational learning", "status": "authored"},
+      {"id": "docker", "organization": "Docker", "domain": "software / developer infrastructure", "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops", "status": "authored"},
+      {"id": "siemens", "organization": "Siemens", "domain": "embedded / CPS / model-based engineering", "distinctive_starting_point": "model-first engineering; models already are the development surface", "status": "authored"},
+      {"id": "zenseact", "organization": "Zenseact", "domain": "engineering knowledge work / automotive", "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems", "status": "authored"}
     ]
   },
 
@@ -129,10 +129,323 @@
       "result_sentence": "Cloudflare independently built a governed engineering environment whose strongest mechanisms fall under the Alignment Thesis, at an organizational scale the DocAble case cannot reach."
     },
 
-    {"id": "spotify",  "organization": "Spotify",  "domain": "software / large-scale platform",           "distinctive_starting_point": "platform + fleet-first autonomous implementation",           "status": "pending-writeup"},
-    {"id": "shopify",  "organization": "Shopify",  "domain": "software / commerce platform",              "distinctive_starting_point": "shared agent-ready environment + organizational learning",     "status": "pending-writeup"},
-    {"id": "docker",   "organization": "Docker",   "domain": "software / developer infrastructure",       "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops",    "status": "pending-writeup"},
-    {"id": "siemens",  "organization": "Siemens",  "domain": "embedded / CPS / model-based engineering",  "distinctive_starting_point": "model-first engineering; models already are the development surface", "status": "pending-writeup"},
-    {"id": "zenseact", "organization": "Zenseact", "domain": "engineering knowledge work / automotive",   "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems", "status": "pending-writeup"}
+    {
+      "id": "spotify-honk",
+      "organization": "Spotify",
+      "domain": "software / large-scale platform",
+      "distinctive_starting_point": "platform + fleet-first autonomous implementation",
+      "status": "authored",
+
+      "source": {
+        "citation_key": "spotify2026honk",
+        "source_type": "practitioner-report",
+        "independence": "independent",
+        "author_role": "engineering (internal-practice retrospective: Charas + Bruggmann + platform staff)",
+        "account_type": "retrospective",
+        "evidence_horizon": "years"
+      },
+
+      "setting": {
+        "scale": "org-wide",
+        "brownfield": true,
+        "scale_facts": [
+          ">1,500 merged AI-generated (Honk) PRs; hundreds of internal users (Nov 2025 - Apr 2026)",
+          ">300,000 automated changes merged by 2023 (~75% automerged); 2.5M+ cumulative automated maintenance PRs by 2026",
+          "60-90% estimated time savings for studied migrations (self-reported/observational, not a causal estimate; reported in the Honk Part 1 material, not Part 4)",
+          "Log4j patch reached ~80% of production backend services within 9 hours; framework adoption to 70% of fleet fell from ~200 days to <7 days",
+          "94% of engineers report higher productivity and a 76% increase in PR frequency (self-reported June 2026 survey - adoption/perceived value, not a causal effect)"
+        ]
+      },
+
+      "autonomous_work": "Honk inspects repos, edits code, builds/tests via per-repo verifiers, opens PRs, runs unattended across many repos (one Kubernetes pod per task), and by 2026 accepts work conversationally from Slack. Targeting is templated (Fleetshift selects repos); implementation is open-ended (the agent determines its own path). Admission is automated (automerger); humans own migration intent, standards, and ambiguous field mappings.",
+      "object_territory": ["source-code", "models", "specs"],
+      "representations": ["architecture-model", "structured-policy", "tests"],
+      "traceability": "Partial. Component/dependency/endpoint-lineage models with stable component identities in Backstage; auto-generated architecture diagrams stay synced to metadata (drift-free by construction); Firewatch links each automerged PR to later deploy/pipeline failures. But no generalized deterministic drift gate that maintains model<->implementation parity over the code the agent edits and can block divergence.",
+      "context_strategy": "Explicit reasoning-horizon management: the first home-grown loop overflowed on too-broad file selection and starved on too-narrow, and the agent forgot the task once context filled; the response was outcome-oriented prompts, one-change-at-a-time decomposition, deliberately restricted tools, upfront context condensation, and verifiers that parse large build/test output and return only a compact relevant result (the validator hides irrelevant mechanics as well as judging correctness). No context-reduction metric published.",
+      "agent_authority": "High reasoning autonomy inside a deliberately narrowed action surface: a standardized restricted tool set, Git exposed only through a limited tool, allow-listed Bash, a per-task Kubernetes-pod container, Claude via the Agent SDK. The agent opens PRs but holds no merge authority - admission is a separate automated gate. Git authority, available commands, and whether an invalid change may advance are environmental, not prompt-level.",
+      "mechanisms": ["llm-reviewer", "merge-gate", "deterministic-lint", "constrained-api", "stable-identity", "provenance"],
+      "judgment": {
+        "migration_intent": "human",
+        "target_set_definition": "deterministic",
+        "implementation": "llm",
+        "build_test_format_correctness": "deterministic",
+        "scope_adherence": "llm",
+        "admission_to_main": "deterministic"
+      },
+      "feedback_adaptation": "Two loops. Loop A (concrete): observed agent-loop failures drove environmental changes - a CI fail led to an independent verifier abstraction + automatic pre-PR enforcement; scope creep led to an LLM judge that vetoes and requests correction (~25% veto rate, ~50% self-correct). Loop B (stated intent, not a measured loop): the Scio struggle diagnosed 'the ecosystem lacks standardization/tests', pushing standardized frameworks and a testing prerequisite - a change to the substrate itself, framed by Spotify as forward-looking strategy.",
+      "org_memory": "The pre-agent platform - Fleet Management, Fleetshift, the Backstage catalog, the System Model, Soundcheck standards, the automerger, Firewatch, standardized stacks - was built for human engineers and deterministic bots years before Honk, then became the substrate for autonomous coding; the Chief Architect credits that earlier investment for Spotify's AI-readiness.",
+      "implicit_theory": "The book reads Spotify as treating the software estate as one governable fleet: standardize it enough that changes are predictable, model its components/dependencies/ownership/standards, automate targeting/execution/admission/monitoring, give a probabilistic agent only the transformation problem deterministic automation handles poorly, constrain its tools, verify independently, and automatically admit on strong evidence - the platform, not the model alone, decides whether autonomy scales.",
+
+      "mage_constructs": [
+        {"construct": "thesis-alignment",      "strength": "strong",   "note": "the book reads this as the sample's strongest Alignment instance: verifiers, linters, the pre-PR gate, the automerger, Soundcheck, and Firewatch act on later changes without the author present"},
+        {"construct": "thesis-modeling",       "strength": "strong",   "note": "the book reads the System Model, the Backstage catalog, and dependency/endpoint lineage with metadata-synced diagrams as a deep, agent-facing model of the estate"},
+        {"construct": "bootstrap-governance",  "strength": "strong",   "note": "the book reads years of standards/platform/model infrastructure predating agents as a mature E(0) the agent dropped into"},
+        {"construct": "governance-conversion", "strength": "partial",  "note": "the book reads Loop A (failure -> verifier abstraction + judge) as a completed conversion, while Loop B (standardize frameworks, require tests) is stated as strategy, not a measured failure->control->recurrence-drop"},
+        {"construct": "determinization",       "strength": "strong",   "note": "the book reads decidable obligations (build/test/format, admission) landing on deterministic verifiers/gates while a probabilistic judge covers the residual semantic scope-check"},
+        {"construct": "reasoning-horizon",     "strength": "strong",   "note": "the book reads the explicit context-overflow/starvation account, task decomposition, and compact verifier output as the environment doing reasoning that would otherwise burn model context"},
+        {"construct": "engineers-seat",        "strength": "strong",   "note": "the book reads restricted tools, a limited Git interface, and the sandbox alongside human ownership of intent/standards/ambiguous mappings as authority held outside the agent"},
+        {"construct": "graduated-governance",  "strength": "partial",  "note": "the book reads the conditioned, staged automerger admission (rollout phases, working-hours, opt-out lists) as a partial graduation; no explicit advisory->enforced control-promotion lifecycle is described"}
+      ],
+
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H4-representation-leverage", "H6-oversight-amortization"],
+      "adds_to_mage": ["environment-can-precede-the-workforce", "standardization-as-first-class-environment-quality", "automatic-admission-predates-ai", "verifier-as-abstraction-that-compresses-evidence", "inner-and-outer-feedback-loops"],
+      "mage_explains_implicit": "MAGE connects Spotify's separately-named System Model / Backstage / Soundcheck / verifiers / judge / automerger / Firewatch as representation + obligation + deterministic evidence + semantic residue + admission + escaped-defect sensing inside ONE governed environment, and generalizes why infrastructure built before agents made Spotify unusually ready for them.",
+      "limitations": ["no-generalized-model-territory-drift-gate", "governance-conversion-loop-b-is-intent-not-measured", "capability-amplification-contextual-not-tested", "productivity-numbers-self-reported-not-causal", "commercial-contamination-in-newest-material", "semantic-judge-lacks-robust-evals"],
+      "result_sentence": "Spotify built a standardized, model-backed, automatically-governed engineering substrate for humans and deterministic bots over several years, then swapped the deterministic transformation function for a probabilistic reasoner when autonomous coding agents arrived and left the surrounding targeting, verification, admission, and monitoring machinery essentially unchanged - the sample's cleanest demonstration that the governed environment is conceptually prior to the agent."
+    },
+    {
+      "id": "shopify",
+      "organization": "Shopify",
+      "domain": "software / commerce platform",
+      "distinctive_starting_point": "shared agent-ready environment + organizational learning",
+      "status": "authored",
+
+      "source": {
+        "citation_key": "moreno2026river",
+        "source_type": "practitioner-report",
+        "independence": "independent",
+        "author_role": "engineering (internal-practice account: Moreno + Libbey)",
+        "account_type": "retrospective",
+        "evidence_horizon": "months"
+      },
+
+      "setting": {
+        "scale": "org-wide",
+        "brownfield": true,
+        "scale_facts": [
+          "59,918 River sessions across 5,170 Slack channels touching 7,000+ employees; 3,536 merged River-coauthored PRs in 30 days",
+          "~1 in 8 company-wide merged PRs coauthored by River; median session 19 min / 50 tool calls",
+          "Quick: >50,000 internal sites created by >50% of the company",
+          "Autoresearch applied across 40+ metrics (Shopify-reported deployment gains, not independently measured); Roast analyzed thousands of test files"
+        ]
+      },
+
+      "autonomous_work": "River is summoned from public Slack to do open-ended knowledge + implementation work over a durable session (read code, run tests, query the data warehouse, inspect production traces, open PRs, occasionally challenge a plan); multiplayer (a thread can attract another engineer and a new constraint without losing history); one profile among many planned. Humans merge.",
+      "object_territory": ["source-code", "design-docs"],
+      "representations": ["informal-knowledge", "spec", "tests"],
+      "traceability": "Weak-to-partial. Nix is the executable exception - it makes the dependency graph explicit and reproducible (a real model<->environment join). The broader knowledge surface is not shown as mechanically synchronized with source/system state; no generalized model-node<->implementation drift gate. The durable append-only session gives provenance over agent work, not a representation<->territory join.",
+      "context_strategy": "World centralizes formerly-distributed context; skills load on demand; profiles scope which skills/extensions apply; the durable session survives while harness + sandbox die and are recreated (persistent knowledge != persistent context-window contents); Roast replays from a step without rerunning prior model calls. No quantified context-reduction figure.",
+      "agent_authority": "Reasoning autonomy inside environmentally-bounded execution: sandbox policy carried in profiles, the harness runs outside the sandbox, disposable sandboxes, Roast restricts file-writing/command execution through tool interfaces. Boundaries live outside the agent; merge stays human. [credentials-via-proxy UNVERIFIED in the fetch - re-verify for the prose wave]",
+      "mechanisms": ["merge-gate", "deterministic-lint", "constrained-api", "retrieval-layer", "provenance", "stable-identity"],
+      "judgment": {
+        "task_decomposition": "llm",
+        "correctness_validation": "composite",
+        "conversion_of_lessons_to_mechanisms": "human",
+        "merge_decision": "human",
+        "platform_capability_boundary": "human"
+      },
+      "feedback_adaptation": "Multiple genuine loops, each a structural response rather than a better prompt: private agent learning has an organizational ceiling -> River is public-channel-only, and sessions become searchable artifacts mined into skills/prompts/defaults; free-roaming AI over millions of lines was unreliable -> Roast (declarative hybrid workflows); every team wanting a bespoke agent -> Aquifer profiles (agent = configuration over a shared substrate); Quick data-capability misuse -> rate limiting. Converted artifacts are often soft (skill/prompt/default), not hard validators.",
+      "org_memory": "World accumulates code + knowledge + skills + conventions + intent + agent instructions; public River sessions become harvestable corporate artifacts; Aquifer makes each next agent cheaper - 'add a bundle, not a platform'. The case's signature contribution.",
+      "implicit_theory": "The book reads Shopify as holding that autonomous agents become organizationally useful when the environment is made common, reproducible, observable, and shared: consolidate the work surface, encode institutional knowledge in files/skills loaded at task time, make execution reproducible, separate durable sessions from disposable reasoning/execution, bound work in sandbox policies, make each new agent a profile over a shared platform, keep work public so local experience becomes shared knowledge, and combine probabilistic reasoning with deterministic steps for repeatable processes.",
+
+      "mage_constructs": [
+        {"construct": "thesis-alignment",      "strength": "strong",   "note": "the book reads sandbox policy in profiles, the harness-outside-sandbox split, disposable sandboxes, Nix reproducibility, and Roast's deterministic steps + tool restrictions as reasoning autonomy inside bounded execution"},
+        {"construct": "thesis-modeling",       "strength": "partial",  "note": "the book reads a broad representation surface (skills, conventions, intent, Nix) spanning the ladder, but with no invariant-bearing system/process models - Nix and Roast are the executable exceptions"},
+        {"construct": "bootstrap-governance",  "strength": "strong",   "note": "the book reads the World monorepo + Nix + CI + merge queues stood up in 2024 (predating River, explicitly as an agent substrate) as an E(0) built ex-ante"},
+        {"construct": "governance-conversion", "strength": "strong",   "note": "the book reads private-learning->public-only, free-roaming->Roast, proliferation->Aquifer, and misuse->rate-limit as repeated failure->structure loops (the converted artifact often soft) - a sharp contrast with Cloudflare's not-described cell"},
+        {"construct": "determinization",       "strength": "strong",   "note": "the book reads Roast/Boba as putting deterministic machinery (sed cleanup, Sorbet autocorrect, tests) on the decidable residue and probabilistic judgment only on the rest"},
+        {"construct": "reasoning-horizon",     "strength": "strong",   "note": "the book reads on-demand skills, the durable-session != persistent-context-window split, World's context centralization, and Roast replay as reasoning-horizon management"},
+        {"construct": "engineers-seat",        "strength": "strong",   "note": "the book reads humans supplying constraints/redirects, curating the environment, mining the corpus into skills, and owning merge + the platform boundary ('we've gotten good at saying no') as the engineer's seat"},
+        {"construct": "graduated-governance",  "strength": "partial",  "note": "the book reads no explicit approved->enforced promotion lifecycle (Cloudflare's is stronger); the soft-knowledge accretion (conversation->skill->default) and Roast's structure-on-demand are graduated only in spirit"}
+      ],
+
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H6-oversight-amortization"],
+      "adds_to_mage": ["publicness-precondition-for-compounding", "durable-session-as-model-independent-asset", "environment-first-agent-economics", "soft-governance-compounds", "multiplayer-as-environment-property"],
+      "mage_explains_implicit": "MAGE connects Shopify's separately-named World / Aquifer / River / Profiles / Skills / Roast / Quick as representation + soft-conditioning + constraint + validation + feedback inside ONE governed environment, and names the structural-diagnosis question Shopify performs but never states.",
+      "limitations": ["no-invariant-bearing-system-model-described", "no-generalized-model-territory-drift-gate", "no-before-after-causal-performance-data", "short-evidence-horizon", "no-false-positive-or-drift-rates-reported", "four-load-bearing-details-unverified-in-fetch"],
+      "result_sentence": "Shopify made the engineering environment itself - a shared monorepo, reproducible Nix execution, a public agent corpus, and a common agent runtime - into compounding organizational memory, giving MAGE its strongest external instance of engineering capital and the refinement that experience must become observable before it can compound."
+    },
+    {
+      "id": "docker",
+      "organization": "Docker",
+      "domain": "software / developer infrastructure",
+      "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops",
+      "status": "authored",
+
+      "source": {
+        "citation_key": "delapena2026fleet",
+        "source_type": "practitioner-report",
+        "independence": "independent",
+        "author_role": "engineering (Staff SWE internal-practice account: de la Pena; supporting Docker product posts)",
+        "account_type": "architectural",
+        "evidence_horizon": "weeks"
+      },
+
+      "setting": {
+        "scale": "single-team",
+        "brownfield": true,
+        "scale_facts": [
+          "7 autonomous roles on CI (cli-tester, performance-tester, upgrade-tester, software-engineer, project-manager, product-owner, /build-engineer) over 20 skills (13 foundational + 7 role)",
+          "cli-tester: 52+ scenarios across 14 tiers",
+          "worker/reviewer loop up to 5 iterations by default (worker = Opus; reviewer = Opus with 1M context evaluating the full diff)",
+          "proactive software-engineer: weekly architect-mode scan -> up to 5 findings -> 3 parallel runners -> 3 PRs",
+          "reactive agent-fix: first draft often within ~1 hour",
+          "~2-week build horizon; ~2-week run horizon at report (small-sample; no aggregate dataset)"
+        ]
+      },
+
+      "autonomous_work": "A 7-role CI fleet: exploratory CLI testing (52+ scenarios / 14 tiers), performance and upgrade testing, reactive bug-fix (agent-fix label -> PR ~1h), a proactive weekly quality scan (5 findings -> 3 parallel runners -> 3 PRs), issue triage/dedup, project-board maintenance, and release-note generation. Roles are open-ended (investigate the unexpected, not compare to a fixed output - Docker's stated reason for roles over scripts). Agents open PRs, file issues, and manage the board; agents do NOT merge.",
+      "object_territory": ["source-code", "specs", "incident-reports"],
+      "representations": ["informal-knowledge", "spec", "tests"],
+      "traceability": "Weak. Durable task state lives in the issue/branch/commits/summaries/reviewer-feedback, giving provenance across fresh-context iterations, but there is no representation<->territory join (no model-node<->implementation drift check). Stable identity lives in GitHub artifacts, not in a synced system model.",
+      "context_strategy": "The Ralph loop's answer to long-running reasoning: each iteration spawns a fresh agent with a clean context window; durable state lives outside the model invocation (issue, repo/branch, commits, summaries, tests, reviewer feedback); the next fresh agent reconstructs progress from those artifacts. Skill composition bounds per-role context (cli-tester loads /build-engineer + project-manager, not all knowledge). No quantified context-reduction figure.",
+      "agent_authority": "Two boundaries, both OUTSIDE the agent. Runtime: each agent runs in a dedicated microVM sandbox with its own filesystem/workspace, network boundary (allow/deny lists), and Docker daemon; only the project workspace is mounted, no host reach; inside the box the agent has broad freedom (install/run/modify/execute unattended). Admission: agents create PRs but do not merge; architecture, priority, scope, and merge stay human. The boundary lives in the state space, not in prompts ('~/.ssh is not in the agent's world', not 'don't touch ~/.ssh'); delegation to parallel runners does not widen authority. Docker's stated product philosophy (product posts, corroborated by internal adoption in the Fleet report): guardrails enforced outside the agent, a true bounding box, and inside it move fast - hard boundaries enable MORE autonomy.",
+      "mechanisms": ["constrained-api", "deterministic-lint", "llm-reviewer", "merge-gate", "retrieval-layer", "provenance"],
+      "judgment": {
+        "implementation": "llm",
+        "correctness_validation": "composite",
+        "triage_dedup": "llm",
+        "merge_decision": "human",
+        "architecture_priority_scope": "human",
+        "conversion_of_lessons_to_mechanisms": "human"
+      },
+      "feedback_adaptation": "Genuine loops, each a structural response: a noisy exploratory sensor (every anomaly -> issue; humans stop listening) -> dedup + confirm-before-file via the project-manager, with every discovering skill calling it before filing; building the top role first exposed missing foundations -> encode foundational skills that later roles inherit; CI-only iteration is slow -> develop locally then promote unchanged to CI; self-evaluation is insufficient -> add a separate reviewer invocation (generation != evaluation); host execution is too permissive -> move authority into the microVM. No reconcile/retire (young system).",
+      "org_memory": "The 13 foundational skills (including the /build-engineer foundation everything else stands on) encode project knowledge once, reused by roles; the Ralph loop encodes iteration once; the sandbox encodes execution safety once; the project-manager centralizes triage; local/CI portability lets one skill serve both modes. Compounding structure, but a ~2-week horizon gives no long-term-returns evidence.",
+      "implicit_theory": "The book reads Docker as holding that autonomous agents are useful because they investigate and act without continuous permission, so preserve that autonomy rather than suppress it: put hard execution boundaries outside the reasoner, give each agent a bounded sandbox + explicit role + project knowledge + only role-appropriate tools, compose reusable skills over monolithic prompts, use an iterative worker/reviewer loop instead of expecting first-pass correctness, run roles in CI but keep architecture/priority/scope/merge human, and when the fleet gets noisy improve the reusable substrate rather than patching each output.",
+
+      "mage_constructs": [
+        {"construct": "thesis-alignment",      "strength": "strong",   "note": "the book reads this as the sample's sharpest Alignment instance: microVM sandbox, network allow/deny, role-scoped tools, CI, tests, and human admission place authority outside the reasoner"},
+        {"construct": "thesis-modeling",       "strength": "partial",  "note": "the book reads rich soft knowledge (13 foundational skills carrying architecture/design/security) but no invariant-bearing system/process models - the sample's weakest Modeling site"},
+        {"construct": "bootstrap-governance",  "strength": "strong",   "note": "the book reads the sandbox substrate + foundational skills + build/testing knowledge (the /build-engineer foundation) as seeding E(0) before roles run; the 'foundation first' lesson names it"},
+        {"construct": "governance-conversion", "strength": "strong",   "note": "the book reads noisy-detection->triage/dedup via the project-manager and missing-foundations->reusable-skills as a textbook small-scale conversion"},
+        {"construct": "determinization",       "strength": "tension",  "note": "the book reads Docker as the determinization counter-case: deterministic tests give harder evidence where available, but the admission gate is DELIBERATELY kept probabilistic (an independent reviewer) + human, so the construct fits Docker awkwardly - though Docker does not disconfirm it (it determinizes tests, only declines to determinize admission)"},
+        {"construct": "reasoning-horizon",     "strength": "strong",   "note": "the book reads the Ralph loop's fresh-context iterations + durable external task/artifact state as clean context banking, with skill composition bounding per-role context"},
+        {"construct": "engineers-seat",        "strength": "strong",   "note": "the book reads humans keeping architecture/priority/scope and a human on every merge as the engineer's seat - agents do the work, the team decides what matters"},
+        {"construct": "graduated-governance",  "strength": "partial",  "note": "the book reads skills maturing local->CI before receiving unattended authority as a graduation, but no soft->hard mechanism-strengthening lifecycle is documented (contrast Cloudflare's approved->enforced)"}
+      ],
+
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H7-conversion-conditions", "H6-oversight-amortization"],
+      "adds_to_mage": ["hard-boundaries-enable-more-autonomy", "authority-as-runtime-property-two-boundary-model", "skills-encode-roles-not-procedures", "durable-progress-outside-context-window", "autonomous-sensors-need-triage-economics", "generation-not-equal-evaluation", "bootstrap-follows-dependency-structure"],
+      "mage_explains_implicit": "MAGE connects Docker's separately-named sandbox / roles / skills / testers / project-manager / worker-reviewer loop / CI / tests / merge as constraint + sensor + validator + gate + soft-conditioning + feedback + capital inside ONE governed environment, and names the structural-diagnosis question Docker performs but never states (the fix for false-positive overload was triage/confirmation, a missing mechanism, not a better tester prompt).",
+      "limitations": ["no-invariant-bearing-system-model-described", "no-model-territory-drift-gate", "admission-gate-stays-probabilistic-plus-human", "per-merge-human-oversight-not-amortized-h6-boundary", "no-false-positive-or-reviewer-veto-rates", "short-evidence-horizon-~2-weeks", "no-soft-to-hard-promotion-lifecycle", "no-reconcile-retire-evidence"],
+      "result_sentence": "Docker made authority itself an engineered property of the runtime - a hard microVM boundary placed outside the reasoner rather than asserted in prompts - then built a seven-role autonomous fleet and a worker/reviewer loop on top, giving MAGE its sharpest Alignment-Thesis instance and the lesson that hard boundaries enable more autonomy, not less, while keeping a human on every merge under the shortest evidence horizon in the set."
+    },
+    {
+      "id": "siemens",
+      "organization": "Siemens",
+      "domain": "embedded / CPS / model-based engineering",
+      "distinctive_starting_point": "model-first engineering; models already are the development surface",
+      "status": "authored",
+
+      "source": {
+        "citation_key": "siemens2026a3e",
+        "source_type": "vendor-report",
+        "independence": "vendor-aligned",
+        "author_role": "Siemens Software technical contributors (prototype + product + architecture-vision blogs)",
+        "account_type": "architectural",
+        "evidence_horizon": "months"
+      },
+
+      "setting": {
+        "scale": "org-wide",
+        "brownfield": true,
+        "scale_facts": [
+          "~3-5 million CAE practitioners worldwide and ~30-50 million designers/engineers who need simulation insight (a market-size estimate, not an agent-deployment count)",
+          "autonomous simulation loop from intent to validated FE answer runs in under 60 seconds (prototype embedded in Siemens Designcenter NX)",
+          "A3E coverage target: automating ~80% of standard engineering tasks is stated as already sufficient",
+          "Capital auto-generates production code (C/C++, Java, Ada) from UML models; validation via SIL, virtual ECUs, requirements + code coverage, and generated test vectors"
+        ]
+      },
+
+      "autonomous_work": "On the strongest prototype the user supplies high-level intent ('validate this part under 200 lb in the Y-direction') and the agent autonomously interprets CAD geometry to find load/support faces, selects materials, assigns boundary conditions, chooses discretization, configures the finite-element model, invokes a headless solver, interprets the result, and produces a validated report - a multi-step engineering plan, not a one-shot transformation. Across the dossier: FE setup+solve+report, BOM navigation/impact-analysis/governed-change, and model-driven code generation. Work originates from human intent; the agent chooses how, not whether or what. The BOM agent requires human-in-the-loop confirmation and acts within existing governance.",
+      "object_territory": ["models", "specs", "source-code"],
+      "representations": ["architecture-model", "spec", "tests"],
+      "traceability": "Strong and native. Capital connects software architecture to electrical/network models, links requirements through Polarion + Teamcenter, imports normalized SysML, and creates a traceable digital thread across software/networks/electrical/electronics; the BOM agent adds a product->variant/effectivity->change axis. Agents inherit relationships engineers already formalized rather than reconstructing them. Honest ceiling: the sources describe rich synchronization/propagation but not a generalized deterministic drift gate that blocks an agent's model<->implementation divergence.",
+      "context_strategy": "Reasoning-horizon management by architecture: A3E decomposes into task-scoped specialist agents ('3D Simulation Setup Agent', 'PLM Interface Agent', etc.) intentionally scoped to reduce hallucination. The deeper move is that the model IS the compression - a finite-element model restricts reality to geometry/material/loads/supports/discretization/physics, so the agent reasons over a reduced representation rather than the full artifact. No context-reduction metric reported.",
+      "agent_authority": "High semantic autonomy inside strong domain and workflow authority: the agent plans, reasons over incomplete information, calls tools, and adapts, but operates through specialized engineering tools and workflows, not arbitrary execution. The BOM agent's actions happen within existing governance, access controls, and change processes, with human-in-the-loop confirmation for consequential BOM updates. The action space comes from domain semantics (geometry/materials/loads/solver/result; configure-product/where-used/replace/ECN). Honest ceiling: file/network/credential/sandbox granularity is not documented at Docker's level.",
+      "mechanisms": ["deterministic-lint", "merge-gate", "provenance", "constrained-api", "retrieval-layer", "stable-identity"],
+      "judgment": {
+        "design_intent_and_requirements": "human",
+        "boundary_condition_and_analysis_semantics": "llm",
+        "parameter_selection": "llm",
+        "physical_result": "deterministic",
+        "verification_pass": "deterministic",
+        "bom_change_admission": "human",
+        "final_design_authority": "human"
+      },
+      "feedback_adaptation": "The weakest field. Engineering-loop feedback is rich - model updates propagate downstream, design changes trigger new analysis, the executable digital twin turns operational data into insight, agents adapt under incomplete information. But governance conversion in the MAGE sense (an agent's recurring mistake -> structural diagnosis -> a new persistent mechanism that governs future agents) is not evidenced in the public material: much feedback changes the design, little changes the governance of future agents.",
+      "org_memory": "Decades of formalized, executable engineering structure - model libraries, product models, simulation capability, code-generation pipelines, requirements traceability, verification tooling, PLM semantics, digital-thread links - none of it built for generative agents, all of it inherited from mature non-AI engineering disciplines, becoming agent capital the moment an agent can operate it. The most extreme external instance of inherited engineering capital.",
+      "implicit_theory": "The book reads Siemens as taking model-first engineering as native: the authoritative representation of a physical/functional system is a model (with code as one downstream artifact the model generates), autonomous agents should operate the existing engineering machinery at the abstraction level where engineers make decisions, deterministic analysis (solvers, SIL, virtual ECUs, verification) supplies evidence downstream of the agent's semantic choices, and human judgment retains engineering intent and consequential authority.",
+
+      "mage_constructs": [
+        {"construct": "thesis-alignment",      "strength": "strong",         "note": "the book reads deterministic solvers, SIL, virtual ECUs, coverage, verification, and governed change workflows as the Alignment machinery, with the mechanized side carried by physics"},
+        {"construct": "thesis-modeling",       "strength": "strong",         "note": "the book reads SysML/UML, CAD, simulation, BOM, digital twins, and E/E models - with the model upstream of implementation (code generated from UML) - as the sample's best external Modeling case"},
+        {"construct": "bootstrap-governance",  "strength": "strong",         "note": "the book reads decades of standards, models, and tooling predating agents as an unusually rich inherited E(0)"},
+        {"construct": "governance-conversion", "strength": "not-described",  "note": "the book reads the sources as silent on a failure->new-agent-governance loop (engineering-loop feedback abounds, adaptive governance does not); it reads this gap as an informative tension about slow-feedback regimes, not as a Siemens deficiency (absence != absent)"},
+        {"construct": "determinization",       "strength": "strong",         "note": "the book reads the clean division of labor - probabilistic semantic reasoning upstream, deterministic physics/verification downstream - as decidable engineering obligations landing on deterministic mechanisms"},
+        {"construct": "reasoning-horizon",     "strength": "strong",         "note": "the book reads scoped specialist agents plus reasoning over reduced engineering representations (the model restricts the world the agent must consider) as reasoning-horizon management by architecture"},
+        {"construct": "engineers-seat",        "strength": "strong",         "note": "the book reads humans retaining engineering intent and consequential design authority, with human-in-the-loop confirmation on BOM changes, as the engineer's seat - the engineer directs the process rather than operating the tool"},
+        {"construct": "graduated-governance",  "strength": "not-described",  "note": "the book reads the sources as silent on a soft->hard / advisory->enforced control-promotion lifecycle for agent governance (adjacent to the site's documented adaptive-governance gap)"}
+      ],
+
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H4-representation-leverage"],
+      "adds_to_mage": ["governed-artifact-need-not-be-source-code-mbae-keystone", "constraints-make-the-valid-world-easier-to-express", "engineering-formalisms-become-an-agent-action-language", "determinism-can-sit-downstream-of-semantic-autonomy", "brownfield-can-be-an-asset-not-a-recovery-problem", "a-model-predicts-not-merely-describes"],
+      "mage_explains_implicit": "MAGE expresses Siemens's separately-named MBSE / digital twin / digital thread / PLM / CAE / model-based code generation / verification as one agentic architecture - the model makes intent legible, constraints delimit valid actions, validators generate independent evidence, gates govern consequential transitions, humans retain what cannot be mechanized - though the compression persuades less here because the model-first premise is already native.",
+      "limitations": ["governance-conversion-not-evidenced-adaptive-governance-loop-absent", "prototype-product-and-vision-not-longitudinal-deployment", "no-population-scale-agent-deployment-numbers", "no-generalized-model-territory-drift-gate-over-agent-edits", "capability-amplification-contextual-not-tested", "authority-granularity-under-documented", "reconciliation-retirement-not-described"],
+      "result_sentence": "Siemens is the sample's case where the governed artifact is not source code but decades of executable engineering models, a digital thread, deterministic solvers, and governed change workflows, and MAGE's structural half maps onto it with almost no contortion - the strongest external support for treating software as one instance of Model-Based Agentic Engineering - with one honest soft spot exactly where MAGE is most distinctive: adaptive governance / governance conversion is not evidenced."
+    },
+    {
+      "id": "zenseact",
+      "organization": "Zenseact",
+      "domain": "engineering knowledge work / automotive",
+      "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems",
+      "status": "authored",
+
+      "source": {
+        "citation_key": "dufwa2026zap",
+        "source_type": "build-report",
+        "independence": "independent",
+        "author_role": "engineering (company-authored internal-platform whitepaper: Dufwa + Luvo)",
+        "account_type": "architectural",
+        "evidence_horizon": "months"
+      },
+
+      "setting": {
+        "scale": "org-wide",
+        "brownfield": true,
+        "scale_facts": [
+          "measured context reduction of 67-98% for financial queries and 43-97% for engineering queries via progressive skill disclosure (context cost measured; the reasoning-quality half asserted, not measured)",
+          "skill frontmatter budget ~1.5-2 KB total across all active skills (always in the system prompt); skill bodies injected only when the deterministic TF-IDF router scores them relevant",
+          "integrations span JIRA, Gerrit, Zuul, GoCD, Elasticsearch, SAP (ERP), Confluence, SharePoint, and proprietary internal tools, built on AWS Bedrock",
+          "creating a domain agent requires only a directory under agents/ with two files (config.yaml + SKILL.md); no productivity/defect/before-after outcome data and no stated deployment duration"
+        ]
+      },
+
+      "autonomous_work": "ZAP agents are more than document-retrieval chatbots: they use tools to act over enterprise systems and compose multi-step activity dynamically - deciding what information a task needs, which skill/tool is relevant, which action to perform, and whether to delegate to a specialist agent. Work leans toward engineering + enterprise knowledge work (investigation, synthesis, tool-mediated action across issue-tracking, code review, CI/CD, search, and financial/ERP systems), not autonomous source-code authorship; the autonomy is in reasoning about and orchestrating heterogeneous work.",
+      "object_territory": ["source-code", "design-docs", "incident-reports"],
+      "representations": ["informal-knowledge", "spec", "structured-policy"],
+      "traceability": "Weak-to-absent as a model<->territory join. Skills reference the systems they operate over and tool schemas bind to specific enterprise APIs, but there is no representation<->territory drift check. Stable identity lives in the enterprise systems' own artifacts (JIRA keys, Gerrit changes, SAP records), not in a synchronized model of the system. The one traceable link the platform maintains is the disclosure record - which skills the TF-IDF router selected or missed per query - which is what makes disclosure-misses measurable.",
+      "context_strategy": "The platform treats context as a scarce resource: Level-1 frontmatter (~1.5-2 KB across all active skills) is always in the system prompt; Level-2 skill bodies are injected only when a deterministic TF-IDF cosine-similarity router scores them relevant to the query. Measured context reduction of 67-98% (financial) / 43-97% (engineering) - the set's strongest measured reasoning-horizon instance - though the without-lowering-quality half is asserted, not measured.",
+      "agent_authority": "Authority is explicit, machine-readable, and placed in the environment. Three stacked surfaces: a per-tool, per-role permission table (auto_approve / confirm-via-SSE / deny), so decide-freely != act-freely and the environment sets the line; agent-to-agent delegation that is allow-listed in config and depth-limited (the delegation topology is itself an authority model); and sanctioned tool seams with bidirectional sanitization (arguments validated for injection patterns; tool output scrubbed of prompt-injection markers). Boundaries live outside the reasoner.",
+      "mechanisms": ["retrieval-layer", "constrained-api", "merge-gate", "provenance", "stable-identity", "deterministic-lint"],
+      "judgment": {
+        "task_orchestration_and_synthesis": "llm",
+        "skill_context_selection": "deterministic",
+        "consequential_action_admission": "composite",
+        "inbound_tool_output_safety": "deterministic",
+        "skill_tool_permission_authorship": "human",
+        "disclosure_miss_diagnosis": "composite"
+      },
+      "feedback_adaptation": "One clean loop plus a bootstrap-by-failure origin. The disclosure-miss loop: a task runs, the right skill exists but the TF-IDF router fails to surface it, the miss is detected and recorded as telemetry, an automated improvement pipeline analyzes it, and the skill/disclosure mechanism is updated so future agents get better context - the failure is diagnosed structurally (the environment failed to present the right representation) and the repair targets the environment. Origin: the prior open-source approach 'did not scale' and 'measurable outcomes were lacking', and ZAP is the structural response (same commodity models, a better-engineered environment). Not-described: strengthen / reconcile / retire (the subtractive arm).",
+      "org_memory": "Federated engineering capital: skills make expert knowledge durable outside individual people and sessions. The central platform owns generic capital (runtime, tool/skill loading, permissions, context management, delegation, monitoring); domain teams own domain capital (their agents/tools/skills/knowledge, maintained where the expertise resides - an agent is just a directory + config.yaml + SKILL.md). Shopify centralizes; Zenseact federates. The disclosure-miss loop is capital maintenance - keeping the representation-routing fit between the capital and the reasoner.",
+      "implicit_theory": "The book reads Zenseact as holding that enterprise autonomy scales when the organization separates a common agent platform from domain-specific intelligence: teams encode expertise as reusable skills + deterministic tools; agents receive only task-relevant context rather than the whole enterprise per session; probabilistic models decide what knowledge/operation is needed, but consequential actions execute through structured tools under explicit permission policies; agent-to-agent delegation is bounded like tool access; and the platform is instrumented so context-disclosure and capability-selection failures become evidence for improving the shared environment.",
+
+      "mage_constructs": [
+        {"construct": "thesis-alignment",      "strength": "strong",   "note": "the book reads the per-tool/per-role auto/confirm/deny table, allow-listed + depth-limited delegation, bidirectional sanitization, and deterministic tools behind structured seams as authority placed outside the reasoner - with Docker the set's sharpest Alignment instance, adding a graduated per-action ladder and delegation-topology-as-authority"},
+        {"construct": "thesis-modeling",       "strength": "partial",  "note": "the book reads rich structured knowledge representation (skills) but no invariant-bearing system/process models and no model<->territory join - skills describe how to work in a domain, not what the system is or must remain; a mild Modeling tension held at partial for matrix parity"},
+        {"construct": "bootstrap-governance",  "strength": "strong",   "note": "the book reads the existing engineering + enterprise tool estate, team knowledge, and explicit policies as seeding E(0), with the failed open-source attempt as a bootstrap-by-failure origin"},
+        {"construct": "governance-conversion", "strength": "strong",   "note": "the book reads the disclosure-miss loop (miss -> telemetry -> automated skill-improvement pipeline) as a clean failure->diagnosis->environment-change->better-behavior sequence, narrowed to the routing/representation layer (the subtractive reconcile/retire arm is not-described)"},
+        {"construct": "determinization",       "strength": "strong",   "note": "the book reads three judgments other sites leave probabilistic being hardened into repeatable mechanisms - execution (deterministic tools), authority (the permission table), and context selection (the TF-IDF router) - a clean contrast with Docker"},
+        {"construct": "reasoning-horizon",     "strength": "strong",   "note": "the book reads progressive disclosure with the set's strongest measured context reduction (67-98% / 43-97%) as reasoning-horizon management, noting the reasoning-quality half is asserted, not measured"},
+        {"construct": "engineers-seat",        "strength": "strong",   "note": "the book reads humans retaining skill/tool/permission authorship (distributed to domain teams) plus the confirm gate on consequential actions as the engineer's seat"},
+        {"construct": "graduated-governance",  "strength": "partial",  "note": "the book reads auto/confirm/deny as a strong graduated-authority primitive across actions, but with no soft->hard mechanism-strengthening lifecycle over time (graduation across actions, not across maturity - like Docker)"}
+      ],
+
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H4-representation-leverage", "H4a-representation-efficiency", "H6-oversight-amortization", "H7-conversion-conditions"],
+      "adds_to_mage": ["capability-discovery-itself-must-be-governed", "delegation-topology-is-an-authority-surface", "graduated-per-action-authority-auto-confirm-deny", "distributed-federated-governance-at-org-scale", "environment-improvement-can-target-context-selection", "trust-boundaries-run-in-both-directions", "the-context-router-can-be-deterministic"],
+      "mage_explains_implicit": "MAGE compresses Zenseact's separately-named skills / tools / agents / progressive disclosure / permissions / delegation / sanitization / monitoring into one governed environment - skills as soft conditioning, the TF-IDF router as a sensor + reasoning-horizon mechanism (and a determinization of context selection), tool schemas as sanctioned seams, the permission table as authority allocation + a human gate, the delegation allow-list as a constraint on the agent topology, sanitization as a trust boundary, disclosure-miss telemetry as a sensor, the improvement pipeline as governance conversion, and the platform/domain split as an agent stack over federated engineering capital - and names the structural-diagnosis question Zenseact performs but never states.",
+      "limitations": ["no-invariant-bearing-system-model-described-modeling-tension", "no-model-territory-drift-gate", "churn-defect-outcome-vocabulary-strains-on-knowledge-work", "no-productivity-or-defect-or-before-after-outcome-data", "deployment-duration-unstated", "reasoning-quality-half-of-progressive-disclosure-unmeasured", "single-primary-source", "reconcile-retire-not-described"],
+      "result_sentence": "Zenseact built a federated internal agent platform - deterministic tools behind structured seams, a per-tool/per-role permission table, bounded delegation, and a deterministic TF-IDF disclosure router with measured 67-98% / 43-97% context reduction - over distributed engineering-and-enterprise knowledge work rather than source code, carrying MAGE's Alignment, reasoning-horizon, capital, and conversion machinery cleanly beyond code (the governance half of the MBAE widening, complementary to Siemens's modeling half), with the honest bound that its churn/defect outcome vocabulary strains on non-artifact-production work and no effectiveness outcomes are reported."
+    }
   ]
 }
