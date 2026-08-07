@@ -1,4 +1,4 @@
-*A two-page synthesis of the resource-mediation stack. Four patterns share one machine among dozens of
+*A two-page synthesis of the Mediation stack. Four patterns share one machine among dozens of
 concurrent agent worktrees without letting them trample each other or drown the host: declare what must be
 serialized, hold each declaration with a host-level mediator, and govern the whole with a live pressure
 signal.*
@@ -44,7 +44,7 @@ Typical domains:
 ## Composition
 
 <!-- label: resource-mediation-stack -->
-<!-- figure: assets/resource-mediation-stack.svg | The resource-mediation stack in one picture. Four parts run left to right. DECLARE (violet) is the typed registry of concurrency contracts — what is serialized, what is single-writer. SERIALIZE (blue) is the host-level flock that admits one run of the heaviest tool at a time (N=1). SEMAPHORE (green) is the counting lock that admits up to eight concurrent runs of the adjacent heavy tools (M=8). SHED (accent) governs a saturable resource with a live pressure signal at two layers — an admission gate that refuses heavy work before dispatch and an execution shed that stops running work on a spike. The contract says how many; the mediators hold that many; the pressure gate decides whether they run at all. -->
+<!-- figure: assets/resource-mediation-stack.svg | The Mediation stack in one picture. Four parts run left to right. DECLARE (violet) is the typed registry of concurrency contracts — what is serialized, what is single-writer. SERIALIZE (blue) is the host-level flock that admits one run of the heaviest tool at a time (N=1). SEMAPHORE (green) is the counting lock that admits up to eight concurrent runs of the adjacent heavy tools (M=8). SHED (accent) governs a saturable resource with a live pressure signal at two layers — an admission gate that refuses heavy work before dispatch and an execution shed that stops running work on a spike. The contract says how many; the mediators hold that many; the pressure gate decides whether they run at all. -->
 
 One part declares the contracts; two enforce them at fixed cardinality — a strict monopoly and a bounded
 pool; one adds a live signal over both.
@@ -165,5 +165,5 @@ work already in flight, so a correctly-serialized fleet still cannot drive the h
 Each constituent links to its full pattern — in this appendix for the flagship members, online for the rest.
 The stack pairs with the [observe → react loop](appendix-d-observe-react-stack.html) (the pressure signal
 rides the same observability surface) and the
-[context-management stack](appendix-d-context-management-stack.html) (both share one machine among many
+[Briefing stack](appendix-d-context-management-stack.html) (both share one machine among many
 agents). The full 83-mechanism catalogue is online in the web edition.

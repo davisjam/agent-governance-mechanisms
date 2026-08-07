@@ -1,4 +1,4 @@
-*A two-page synthesis of the specification + verification stack. Six patterns turn a concurrent behavioral
+*A two-page synthesis of the Assurance stack. Six patterns turn a concurrent behavioral
 spec into checked assurance: model the lifecycle as composed state machines, derive every obligation from it,
 discharge each at the rigor its shape demands, then map coverage back onto the model so an unexercised
 invariant is a visible gap, not a guess.*
@@ -47,7 +47,7 @@ Typical domains:
 ## Composition
 
 <!-- label: specification-verification-stack -->
-<!-- figure: assets/specification-verification-stack.svg | The specification + verification stack in one picture. Six parts run left to right. The spec (violet): SPEC models the lifecycle as composed state machines and names the cross-machine invariants; CENSUS derives every obligation owed. The rigor tiers: PROVE (green) discharges the hairy invariants with an exhaustive check routed by each invariant's temporal form; LINT (blue) discharges the linear ones with a blocking semantic check at commit, and LEVEL (blue) aims each check at the granularity where its property first becomes legible. COVER (accent) projects coverage back onto the model's nodes, so a verified-in-principle invariant with no live test is a visible gap. -->
+<!-- figure: assets/specification-verification-stack.svg | The Assurance stack in one picture. Six parts run left to right. The spec (violet): SPEC models the lifecycle as composed state machines and names the cross-machine invariants; CENSUS derives every obligation owed. The rigor tiers: PROVE (green) discharges the hairy invariants with an exhaustive check routed by each invariant's temporal form; LINT (blue) discharges the linear ones with a blocking semantic check at commit, and LEVEL (blue) aims each check at the granularity where its property first becomes legible. COVER (accent) projects coverage back onto the model's nodes, so a verified-in-principle invariant with no live test is a visible gap. -->
 
 Two parts build and read the spec; three discharge the obligations at graded rigor; one maps coverage back.
 The spec is the single source every later part reads.

@@ -1,4 +1,4 @@
-*A two-page synthesis of the context-management stack. Five patterns get the right policy and context to an
+*A two-page synthesis of the Briefing stack. Five patterns get the right policy and context to an
 agent at the moment a decision is due — so it acts on the relevant slice, not the whole corpus and not its
 memory. This is the book's explicit durable-versus-2026-transient exemplar: each part is marked for whether
 it is infrastructure that endures or a crutch a stronger model eases.*
@@ -47,7 +47,7 @@ Typical domains:
 ## Composition
 
 <!-- label: context-management-stack -->
-<!-- figure: assets/context-management-stack.svg | The context-management stack in one picture. Five parts run left to right, coloured by durability. INJECT (accent, 2026-transient) maps files-about-to-be-touched to their governing constraints and injects the slice into the brief. SNIPPET (blue, mixed) is the registry of mandatory brief snippets asserted at dispatch — transient delivery, durable enforcement. INDEX (green, durable) loads the numbered rule index into every boot context. HOOK (green, durable) binds a script to the runtime lifecycle so an omitted step fires deterministically. NUDGE (accent, 2026-transient) emits at most one tempo-gated reflection per window. The durable parts are infrastructure regardless of model; the transient parts ease as context windows grow. -->
+<!-- figure: assets/context-management-stack.svg | The Briefing stack in one picture. Five parts run left to right, coloured by durability. INJECT (accent, 2026-transient) maps files-about-to-be-touched to their governing constraints and injects the slice into the brief. SNIPPET (blue, mixed) is the registry of mandatory brief snippets asserted at dispatch — transient delivery, durable enforcement. INDEX (green, durable) loads the numbered rule index into every boot context. HOOK (green, durable) binds a script to the runtime lifecycle so an omitted step fires deterministically. NUDGE (accent, 2026-transient) emits at most one tempo-gated reflection per window. The durable parts are infrastructure regardless of model; the transient parts ease as context windows grow. -->
 
 Four parts deliver *policy* at four grains — task-specific, per-brief mandatory, always-on standing, soft
 reminder; one delivers an *action* at a runtime moment. Each seam names what the part before it hands over.
@@ -195,5 +195,5 @@ This stack is where the book makes the durable-versus-transient call explicit, p
 Each constituent links to its full pattern — in this appendix for the flagship members, online for the rest.
 INDEX's govern-itself facet lives in the
 [governance-of-governance stack](appendix-d-governance-of-governance-stack.html); the stack shares one
-machine among many agents with the [resource-mediation stack](appendix-d-resource-mediation-stack.html). The
+machine among many agents with the [Mediation stack](appendix-d-resource-mediation-stack.html). The
 full 83-mechanism catalogue is online in the web edition.

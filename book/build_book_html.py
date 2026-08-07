@@ -3007,13 +3007,13 @@ _STACKS: list[tuple[str, str]] = [
     # failure classes covered · composition diagram (the overview_figure SVG) · constituent patterns
     # (role:<slug> tokens) · one worked example · tradeoffs + adoption order · web links. Grounded in
     # book-models/flagship_stack_declared.json; the earlier part-by-part six-field deep-dive was folded in.
-    ("provenance-fidelity-stack", "The provenance + fidelity stack"),
+    ("provenance-fidelity-stack", "The Provenance stack"),
     ("model-coherence-stack", "The model-coherence stack"),
-    ("specification-verification-stack", "The specification + verification stack"),
+    ("specification-verification-stack", "The Assurance stack"),
     ("observe-react-stack", "The observe → react loop"),
-    ("resource-mediation-stack", "The resource-mediation stack"),
+    ("resource-mediation-stack", "The Mediation stack"),
     ("governance-of-governance-stack", "The governance-of-governance stack"),
-    ("context-management-stack", "The context-management stack"),
+    ("context-management-stack", "The Briefing stack"),
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\
@@ -3093,19 +3093,19 @@ concept is the portable part, and it is what you are meant to take with you."""
 # the _STACKS rename.
 _APPENDIX_A_DEPGRAPH_FIGURE_MD = """\
 The seven stacks are not a menu of independent parts; they rest on one another. Model coherence is the \
-floor — a trustworthy typed map — and provenance and specification are the first two things built on it. \
+floor — a trustworthy typed map — and Provenance and Assurance are the first two things built on it. \
 Read the figure once before the stacks that follow: it says which stack you must have before another can \
 stand.
 
 <!-- label: stack-dependency-graph -->
 <!-- figure: assets/stack-dependency-graph.svg | How the seven stacks depend on one another. Model \
-coherence is the substrate at the top: it hands the provenance + fidelity stack the sealed door it stamps, \
-and the specification + verification stack the executable data its state machines are. Specification \
-signals a broken invariant down to the observe → react loop; that loop feeds recurring alerts to the \
-governance-of-governance stack and carries the resource-mediation stack's live pressure signal. Context \
-management sits at the bottom, sharing the rule index with governance and one host with resource. A solid \
-arrow points from the stack that provides a guarantee to the one that consumes it; a dashed line marks two \
-stacks that share a member or a machine. -->"""
+coherence is the substrate at the top: it hands the Provenance stack the sealed door it stamps, and the \
+Assurance stack the executable data its state machines are. Assurance signals a broken invariant down to \
+the observe → react loop; that loop feeds recurring alerts to the governance-of-governance stack and \
+carries the Mediation stack's live pressure signal. The Briefing stack sits at the bottom, sharing the \
+rule index with governance and one host with the Mediation stack. A solid arrow points from the stack \
+that provides a guarantee to the one that consumes it; a dashed line marks two stacks that share a member \
+or a machine. -->"""
 
 _STACK_MEMBER_RE = re.compile(r"\brole:([a-z0-9-]+)\b")
 

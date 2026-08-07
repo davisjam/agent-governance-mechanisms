@@ -178,7 +178,7 @@ it drives from a model of the fleet rather than from memory.
 ## The full treatment
 
 Each constituent links to its full pattern — in this appendix for the flagship members, online for the rest.
-The loop consumes the [specification + verification stack](appendix-d-specification-verification-stack.html)
+The loop consumes the [Assurance stack](appendix-d-specification-verification-stack.html)
 (a proven invariant still needs a live signal when it breaks) and feeds the
 [governance-of-governance stack](appendix-d-governance-of-governance-stack.html) (the estate that governs the
 controls themselves). The full 83-mechanism catalogue is online in the web edition.

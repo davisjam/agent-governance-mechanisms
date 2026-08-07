@@ -247,7 +247,7 @@ the whole drift class closes.
 
 Each constituent links to its full pattern — in this appendix for the flagship members, online for the rest.
 The stack is the substrate under the
-[provenance + fidelity stack](appendix-d-provenance-fidelity-stack.html) (its sanctioned door is this
+[Provenance stack](appendix-d-provenance-fidelity-stack.html) (its sanctioned door is this
 stack's sealed seam) and the
-[specification + verification stack](appendix-d-specification-verification-stack.html) (whose state machines
+[Assurance stack](appendix-d-specification-verification-stack.html) (whose state machines
 are DATA this stack keeps honest). The full 83-mechanism catalogue is online in the web edition.

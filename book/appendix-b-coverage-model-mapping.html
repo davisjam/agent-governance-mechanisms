@@ -574,13 +574,13 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendices-front-door.html">Appendices</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
-<li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
+<li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The Provenance stack</a></li>
 <li><a class="" href="appendix-a-model-coherence-stack.html">Appendix A - 2. The model-coherence stack</a></li>
-<li><a class="" href="appendix-a-specification-verification-stack.html">Appendix A - 3. The specification + verification stack</a></li>
+<li><a class="" href="appendix-a-specification-verification-stack.html">Appendix A - 3. The Assurance stack</a></li>
 <li><a class="" href="appendix-a-observe-react-stack.html">Appendix A - 4. The observe → react loop</a></li>
-<li><a class="" href="appendix-a-resource-mediation-stack.html">Appendix A - 5. The resource-mediation stack</a></li>
+<li><a class="" href="appendix-a-resource-mediation-stack.html">Appendix A - 5. The Mediation stack</a></li>
 <li><a class="" href="appendix-a-governance-of-governance-stack.html">Appendix A - 6. The governance-of-governance stack</a></li>
-<li><a class="" href="appendix-a-context-management-stack.html">Appendix A - 7. The context-management stack</a></li>
+<li><a class="" href="appendix-a-context-management-stack.html">Appendix A - 7. The Briefing stack</a></li>
 <li class="part">Appendix B — Flagship Mechanisms</li>
 <li><a class="" href="appendix-b-flagship-mechanisms.html">Appendix B — Flagship Mechanisms</a></li>
 <li><a class="" href="appendix-b-brief-linting.html">Appendix B - 1. Brief-linting</a></li>
@@ -632,7 +632,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-theory.html">Appendix E - 1. Theory</a></li>
 <li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 15. Coverage → model-node mapping (which invariants are actually tested)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 15. Coverage → model-node mapping (which invariants are actually tested)</h1></header><p><strong>The judgment</strong> — Measure coverage against invariants, not lines; the aggregate hides the gap.</p>
-<table class="book-table meta-card"><tbody><tr><td><strong>Role</strong></td><td>Models-bridge</td></tr><tr><td><strong>Family</strong></td><td>System models</td></tr><tr><td><strong>Used in stacks</strong></td><td>The specification + verification stack</td></tr><tr><td><strong>Enforcement</strong></td><td>Soft·Hard</td></tr><tr><td><strong>Related mechanisms</strong></td><td><em>Counterpart:</em> <a href="../models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model checking)</a>; <em>Enabler:</em> <a href="../models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth models</a>; <em>See also:</em> <a href="../models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates</a></td></tr></tbody></table>
+<table class="book-table meta-card"><tbody><tr><td><strong>Role</strong></td><td>Models-bridge</td></tr><tr><td><strong>Family</strong></td><td>System models</td></tr><tr><td><strong>Used in stacks</strong></td><td>The Assurance stack</td></tr><tr><td><strong>Enforcement</strong></td><td>Soft·Hard</td></tr><tr><td><strong>Related mechanisms</strong></td><td><em>Counterpart:</em> <a href="../models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model checking)</a>; <em>Enabler:</em> <a href="../models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth models</a>; <em>See also:</em> <a href="../models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates</a></td></tr></tbody></table>
 <p><em>Full description → <a href="../models-bridge/system-models/coverage-model-mapping.html">Coverage → model-node mapping (which invariants are actually tested)</a>.</em></p>
 <p><strong>Intent</strong> — Project test coverage onto the <em>model's nodes</em> — its states, seams, and invariants — so "is this invariant tested?" becomes a queried fact instead of a guess from a line-coverage percentage. The map turns the model into a test work-list: an invariant node with no covering test is a visible gap that drives the next test.</p>
 <h2>Problem</h2>

@@ -14,13 +14,13 @@
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="sdgTitle">How the seven stacks depend on one another</title>
   <desc id="sdgDesc">A dependency map of the seven MAGE engineering stacks. The model-coherence stack is
-    the substrate at the top: it provides the sealed typed door that the provenance and fidelity stack
-    stamps, and the executable data that the specification and verification stack's state machines are.
-    The specification and verification stack signals a broken invariant to the observe-and-react loop; the
+    the substrate at the top: it provides the sealed typed door that the Provenance stack
+    stamps, and the executable data that the Assurance stack's state machines are.
+    The Assurance stack signals a broken invariant to the observe-and-react loop; the
     observe-and-react loop feeds recurring alerts to the governance-of-governance stack for conversion into
-    new controls, and its observability bus carries the resource-mediation stack's live pressure signal. Two
-    stacks share surfaces rather than depend: the governance-of-governance stack and the context-management
-    stack both carry the same boot-context rule index, and the resource-mediation and context-management
+    new controls, and its observability bus carries the Mediation stack's live pressure signal. Two
+    stacks share surfaces rather than depend: the governance-of-governance stack and the Briefing
+    stack both carry the same boot-context rule index, and the Mediation and Briefing
     stacks share one host machine among many agents. A solid arrow means one stack provides a guarantee the
     other consumes; a dashed line means two stacks share a member or a host.</desc>
 
@@ -77,12 +77,12 @@
 
   <!-- provenance-fidelity -->
   <rect x="110" y="203" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="260" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Provenance + fidelity</text>
+  <text x="260" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Provenance</text>
   <text x="260" y="261" text-anchor="middle" font-size="14" fill="#2f5169">history you can reconstruct</text>
 
   <!-- specification-verification -->
   <rect x="760" y="203" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="910" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Specification + verification</text>
+  <text x="910" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Assurance</text>
   <text x="910" y="261" text-anchor="middle" font-size="14" fill="#2f5169">assurance at graded rigor</text>
 
   <!-- observe-react -->
@@ -92,7 +92,7 @@
 
   <!-- resource-mediation -->
   <rect x="440" y="347" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="590" y="381" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Resource mediation</text>
+  <text x="590" y="381" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Mediation</text>
   <text x="590" y="405" text-anchor="middle" font-size="14" fill="#2f5169">one host, right parallelism</text>
 
   <!-- governance-of-governance -->
@@ -102,7 +102,7 @@
 
   <!-- context-management -->
   <rect x="440" y="485" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="590" y="519" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Context management</text>
+  <text x="590" y="519" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Briefing</text>
   <text x="590" y="543" text-anchor="middle" font-size="14" fill="#2f5169">the right policy, at the moment</text>
 
   <!-- ================= legend ================= -->

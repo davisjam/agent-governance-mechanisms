@@ -1,4 +1,4 @@
-*A two-page synthesis of the provenance + fidelity stack. Five patterns make one guarantee: reconstruct a
+*A two-page synthesis of the Provenance stack. Five patterns make one guarantee: reconstruct a
 remediated document's mutation history from the artifact itself, and catch any damage done through the
 sanctioned door. Who and why for every change, and nothing silently lost.*
 
@@ -45,7 +45,7 @@ Typical domains:
 ## Composition
 
 <!-- label: provenance-fidelity-stack -->
-<!-- figure: assets/provenance-fidelity-stack.svg | The provenance + fidelity stack in one picture. A document flows left to right through two lanes. The sanctioned door (fleet blue): MARK names every insertion so it is registry-covered; EMIT writes an attribution stamp for every mutation into the artifact. The guarantee (governed green): COVER's wiring lint holds the closed verb set at zero gaps; READ reconstructs the history from the embedded stamps; GATE asserts the input's content survives the output and names the pass that dropped it otherwise. Below the row, the artifact strip carries the stamps EMIT drops and READ and GATE read back. Mark it, cover the marking, read it back, and gate what leaves — provenance you can reconstruct from the artifact itself. -->
+<!-- figure: assets/provenance-fidelity-stack.svg | The Provenance stack in one picture. A document flows left to right through two lanes. The sanctioned door (fleet blue): MARK names every insertion so it is registry-covered; EMIT writes an attribution stamp for every mutation into the artifact. The guarantee (governed green): COVER's wiring lint holds the closed verb set at zero gaps; READ reconstructs the history from the embedded stamps; GATE asserts the input's content survives the output and names the pass that dropped it otherwise. Below the row, the artifact strip carries the stamps EMIT drops and READ and GATE read back. Mark it, cover the marking, read it back, and gate what leaves — provenance you can reconstruct from the artifact itself. -->
 
 The five parts run as a chain: mark every insertion, stamp every mutation, prove the stamping complete, read
 the history back, gate what leaves against what came in. Each part hands the next a stronger guarantee.
@@ -185,6 +185,6 @@ Every constituent above links to its full Gang-of-Four pattern — in this appen
 online for the rest. The stack composes with the
 [model-coherence stack](appendix-d-model-coherence-stack.html) — the sanctioned door it stamps is that
 stack's typed seam — and the
-[specification + verification stack](appendix-d-specification-verification-stack.html). The complete
+[Assurance stack](appendix-d-specification-verification-stack.html). The complete
 83-mechanism catalogue, each pattern with its Motivation, Applicability, and Known uses, is online in the
 web edition.

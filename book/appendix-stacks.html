@@ -574,13 +574,13 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendices-front-door.html">Appendices</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="current" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
-<li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
+<li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The Provenance stack</a></li>
 <li><a class="" href="appendix-a-model-coherence-stack.html">Appendix A - 2. The model-coherence stack</a></li>
-<li><a class="" href="appendix-a-specification-verification-stack.html">Appendix A - 3. The specification + verification stack</a></li>
+<li><a class="" href="appendix-a-specification-verification-stack.html">Appendix A - 3. The Assurance stack</a></li>
 <li><a class="" href="appendix-a-observe-react-stack.html">Appendix A - 4. The observe → react loop</a></li>
-<li><a class="" href="appendix-a-resource-mediation-stack.html">Appendix A - 5. The resource-mediation stack</a></li>
+<li><a class="" href="appendix-a-resource-mediation-stack.html">Appendix A - 5. The Mediation stack</a></li>
 <li><a class="" href="appendix-a-governance-of-governance-stack.html">Appendix A - 6. The governance-of-governance stack</a></li>
-<li><a class="" href="appendix-a-context-management-stack.html">Appendix A - 7. The context-management stack</a></li>
+<li><a class="" href="appendix-a-context-management-stack.html">Appendix A - 7. The Briefing stack</a></li>
 <li class="part">Appendix B — Flagship Mechanisms</li>
 <li><a class="" href="appendix-b-flagship-mechanisms.html">Appendix B — Flagship Mechanisms</a></li>
 <li><a class="" href="appendix-b-brief-linting.html">Appendix B - 1. Brief-linting</a></li>
@@ -658,19 +658,19 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <h2>A note on vendor features</h2>
 <p>The mechanisms in this book are described against one concrete substrate — a coding agent and its harness — because a real system is what makes them legible. The mechanism is never the vendor feature, though; the vendor feature is one <em>instance</em> of it. A harness's lifecycle hooks, for example, realize a general idea: <strong>enforcement points</strong> on the agent's runtime lifecycle, where a deterministic step fires whether or not the agent cooperates. Your framework may expose that idea differently — a middleware layer, a git hook, a CI stage, a wrapper process — and the concept carries across intact.</p>
 <p>Read every "the agent does X" in these appendices as <em>here is one way to realize the MAGE concept X</em>. The concept is the portable part, and it is what you are meant to take with you.</p>
-<p>The seven stacks are not a menu of independent parts; they rest on one another. Model coherence is the floor — a trustworthy typed map — and provenance and specification are the first two things built on it. Read the figure once before the stacks that follow: it says which stack you must have before another can stand.</p>
+<p>The seven stacks are not a menu of independent parts; they rest on one another. Model coherence is the floor — a trustworthy typed map — and Provenance and Assurance are the first two things built on it. Read the figure once before the stacks that follow: it says which stack you must have before another can stand.</p>
 <figure id="fig-A-1" class="book-figure" data-label="stack-dependency-graph"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 700"
      role="group" aria-labelledby="sdgTitle sdgDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="sdgTitle">How the seven stacks depend on one another</title>
   <desc id="sdgDesc">A dependency map of the seven MAGE engineering stacks. The model-coherence stack is
-    the substrate at the top: it provides the sealed typed door that the provenance and fidelity stack
-    stamps, and the executable data that the specification and verification stack's state machines are.
-    The specification and verification stack signals a broken invariant to the observe-and-react loop; the
+    the substrate at the top: it provides the sealed typed door that the Provenance stack
+    stamps, and the executable data that the Assurance stack's state machines are.
+    The Assurance stack signals a broken invariant to the observe-and-react loop; the
     observe-and-react loop feeds recurring alerts to the governance-of-governance stack for conversion into
-    new controls, and its observability bus carries the resource-mediation stack's live pressure signal. Two
-    stacks share surfaces rather than depend: the governance-of-governance stack and the context-management
-    stack both carry the same boot-context rule index, and the resource-mediation and context-management
+    new controls, and its observability bus carries the Mediation stack's live pressure signal. Two
+    stacks share surfaces rather than depend: the governance-of-governance stack and the Briefing
+    stack both carry the same boot-context rule index, and the Mediation and Briefing
     stacks share one host machine among many agents. A solid arrow means one stack provides a guarantee the
     other consumes; a dashed line means two stacks share a member or a host.</desc>
 
@@ -727,12 +727,12 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- provenance-fidelity -->
   <rect x="110" y="203" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="260" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Provenance + fidelity</text>
+  <text x="260" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Provenance</text>
   <text x="260" y="261" text-anchor="middle" font-size="14" fill="#2f5169">history you can reconstruct</text>
 
   <!-- specification-verification -->
   <rect x="760" y="203" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="910" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Specification + verification</text>
+  <text x="910" y="237" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Assurance</text>
   <text x="910" y="261" text-anchor="middle" font-size="14" fill="#2f5169">assurance at graded rigor</text>
 
   <!-- observe-react -->
@@ -742,7 +742,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- resource-mediation -->
   <rect x="440" y="347" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="590" y="381" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Resource mediation</text>
+  <text x="590" y="381" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Mediation</text>
   <text x="590" y="405" text-anchor="middle" font-size="14" fill="#2f5169">one host, right parallelism</text>
 
   <!-- governance-of-governance -->
@@ -752,7 +752,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- context-management -->
   <rect x="440" y="485" width="300" height="82" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="590" y="519" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Context management</text>
+  <text x="590" y="519" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Briefing</text>
   <text x="590" y="543" text-anchor="middle" font-size="14" fill="#2f5169">the right policy, at the moment</text>
 
   <!-- ================= legend ================= -->
@@ -766,4 +766,4 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     <rect x="690" y="650" width="15" height="15" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
     <text x="712" y="663" fill="#57534e">a stack built on it</text>
   </g>
-</svg><figcaption data-short="How the seven stacks depend on one another"><span class="fig-label">Figure A-1.</span> How the seven stacks depend on one another. Model coherence is the substrate at the top: it hands the provenance + fidelity stack the sealed door it stamps, and the specification + verification stack the executable data its state machines are. Specification signals a broken invariant down to the observe → react loop; that loop feeds recurring alerts to the governance-of-governance stack and carries the resource-mediation stack's live pressure signal. Context management sits at the bottom, sharing the rule index with governance and one host with resource. A solid arrow points from the stack that provides a guarantee to the one that consumes it; a dashed line marks two stacks that share a member or a machine.</figcaption></figure><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendices-front-door.html" aria-label="Previous chapter — Appendices">« Previous chapter</a></div><span class="chapnav-here" title="Appendix A — MAGE Engineering Stacks">Appendix A — MAGE Engineering Stacks</span><div class="chapnav-fwd"><a href="appendix-a-provenance-fidelity-stack.html" aria-label="Next chapter — Appendix A - 1. The provenance + fidelity stack">Next chapter »</a><a href="appendix-b-flagship-mechanisms.html" aria-label="Next part — Appendix B — Flagship Mechanisms">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+</svg><figcaption data-short="How the seven stacks depend on one another"><span class="fig-label">Figure A-1.</span> How the seven stacks depend on one another. Model coherence is the substrate at the top: it hands the Provenance stack the sealed door it stamps, and the Assurance stack the executable data its state machines are. Assurance signals a broken invariant down to the observe → react loop; that loop feeds recurring alerts to the governance-of-governance stack and carries the Mediation stack's live pressure signal. The Briefing stack sits at the bottom, sharing the rule index with governance and one host with the Mediation stack. A solid arrow points from the stack that provides a guarantee to the one that consumes it; a dashed line marks two stacks that share a member or a machine.</figcaption></figure><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendices-front-door.html" aria-label="Previous chapter — Appendices">« Previous chapter</a></div><span class="chapnav-here" title="Appendix A — MAGE Engineering Stacks">Appendix A — MAGE Engineering Stacks</span><div class="chapnav-fwd"><a href="appendix-a-provenance-fidelity-stack.html" aria-label="Next chapter — Appendix A - 1. The Provenance stack">Next chapter »</a><a href="appendix-b-flagship-mechanisms.html" aria-label="Next part — Appendix B — Flagship Mechanisms">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
