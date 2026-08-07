@@ -1336,7 +1336,7 @@
           "section_id": "a-model-is-a-convenience-not-a-second-copy-of-the-truth",
           "level": 3,
           "heading_text": "A model is a convenience, not a second copy of the truth",
-          "topic_sentence": "There is an over-reach on the other side of the mirror, and it is worth naming before the enthusiasm for models runs away.",
+          "topic_sentence": "The other side of the mirror carries an over-reach.",
           "id_source": "derived",
           "block_index": 63,
           "points": []
@@ -1653,7 +1653,7 @@
             {
               "slug": "name-the-sin-and-the-way-out-not-the-prohibition-alone",
               "text": "Pair each prohibition with its sanctioned way out.",
-              "block_index": 10
+              "block_index": 11
             }
           ]
         },
@@ -1663,22 +1663,22 @@
           "heading_text": "Runbooks: split the deterministic from the judgment",
           "topic_sentence": "Once the healthy path and the failure map are written, the thing you hand the agent is a **runbook** (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket.",
           "id_source": "derived",
-          "block_index": 12,
+          "block_index": 13,
           "points": [
             {
               "slug": "a-runbook-splits-into-deterministic-and-judgment-steps-governed-differently",
               "text": "A runbook splits into deterministic and judgment steps.",
-              "block_index": 14
+              "block_index": 15
             },
             {
               "slug": "deterministic-parts-get-tools-not-improvisation",
               "text": "Deterministic steps get executable tools, not improvisation.",
-              "block_index": 19
+              "block_index": 20
             },
             {
               "slug": "determinizing-a-step-buys-a-trace-with-two-consumers",
               "text": "Determinizing buys a trace with two consumers.",
-              "block_index": 22
+              "block_index": 23
             }
           ]
         },
@@ -1688,32 +1688,32 @@
           "heading_text": "The judgment parts: the roughest algorithm that still fits",
           "topic_sentence": "**The judgment parts get the roughest algorithm that still fits.** For a well-constrained decision, write the algorithm down and let the agent do the glue.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 27,
           "points": [
             {
               "slug": "judgment-parts-get-the-roughest-algorithm-that-still-fits",
               "text": "Judgment steps get the roughest algorithm that fits.",
-              "block_index": 28
+              "block_index": 29
             },
             {
               "slug": "a-judgment-that-is-a-measurement-gets-a-rubric",
               "text": "A judgment that is a measurement gets a rubric.",
-              "block_index": 30
+              "block_index": 31
             },
             {
               "slug": "the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself",
               "text": "The pre-canned brief templates delegation itself.",
-              "block_index": 33
+              "block_index": 34
             },
             {
               "slug": "typing-each-runbook-step-makes-the-deterministic-judgment-split-mechanical",
               "text": "Typing each step makes the deterministic-judgment split mechanical.",
-              "block_index": 37
+              "block_index": 38
             },
             {
               "slug": "operating-judgment-becomes-something-the-environment-holds",
               "text": "Written down, operating judgment becomes something the environment holds.",
-              "block_index": 40
+              "block_index": 41
             }
           ]
         }

@@ -75,7 +75,7 @@
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
-            "occ": 25
+            "occ": 26
           },
           {
             "file": "book/2.5-metrics.html",
@@ -1329,7 +1329,7 @@
           },
           {
             "file": "book/2.2-models-and-the-semantic-gap.html",
-            "occ": 14
+            "occ": 18
           },
           {
             "file": "book/2.3-the-governed-environment.html",
@@ -1669,7 +1669,7 @@
           },
           {
             "file": "book/bibliography.html",
-            "occ": 54
+            "occ": 56
           },
           {
             "file": "book/book-index.html",
@@ -2521,7 +2521,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 28
+            "occ": 29
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
@@ -4545,7 +4545,7 @@
           },
           {
             "file": "book/2.2-models-and-the-semantic-gap.html",
-            "occ": 6
+            "occ": 10
           },
           {
             "file": "book/2.3-the-governed-environment.html",
@@ -4885,7 +4885,7 @@
           },
           {
             "file": "book/bibliography.html",
-            "occ": 33
+            "occ": 35
           },
           {
             "file": "book/book-index.html",
