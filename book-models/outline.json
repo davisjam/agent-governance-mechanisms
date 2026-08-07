@@ -4612,7 +4612,7 @@
             },
             {
               "slug": "apparatus-outweighs-and-is-the-review",
-              "text": "The support apparatus dwarfs the product and is the review.",
+              "text": "The support apparatus dwarfs the product and carries the repeatable review.",
               "block_index": 13
             },
             {
@@ -4646,7 +4646,7 @@
           "section_id": "llm-as-function-call",
           "level": 2,
           "heading_text": "Designing with a probabilistic component: the LLM as a function call",
-          "topic_sentence": "A model is a **probabilistic component**.",
+          "topic_sentence": "A **foundation model** is a probabilistic component.",
           "id_source": "explicit",
           "block_index": 24,
           "points": [
@@ -4668,12 +4668,12 @@
             {
               "slug": "defensible-claim-on-an-unreliable-model",
               "text": "The function-call shape defends a claim on an unreliable model.",
-              "block_index": 35
+              "block_index": 36
             },
             {
               "slug": "discipline-earned-the-hard-way",
               "text": "Skip the wrapper and the model finds the unguarded exception.",
-              "block_index": 37
+              "block_index": 38
             }
           ]
         },
@@ -4683,12 +4683,12 @@
           "heading_text": "Three views of the same system",
           "topic_sentence": "A model shows a view.",
           "id_source": "derived",
-          "block_index": 39,
+          "block_index": 40,
           "points": [
             {
               "slug": "three-views-from-real-models",
               "text": "Three architectural views, each from a real system model.",
-              "block_index": 41
+              "block_index": 42
             }
           ]
         },
@@ -4698,32 +4698,32 @@
           "heading_text": "View 1 — a reactive service seam, and how it made serverless natural",
           "topic_sentence": "The back end is a set of small services wired to react to events.",
           "id_source": "derived",
-          "block_index": 43,
+          "block_index": 45,
           "points": [
             {
               "slug": "reactive-stateless-service-seam",
               "text": "Small services react to events over a communication-truth split.",
-              "block_index": 45
+              "block_index": 47
             },
             {
               "slug": "reactive-shape-made-serverless-migration-easy",
               "text": "The reactive shape turned a hard serverless migration easy.",
-              "block_index": 49
+              "block_index": 51
             },
             {
               "slug": "the-seam-is-the-serverless-model",
               "text": "A reactive, stateless, modeled seam is already the serverless model.",
-              "block_index": 51
+              "block_index": 53
             },
             {
               "slug": "convergence-not-aim-is-the-lesson",
               "text": "Built reactive and stateless for other reasons, it ran serverless.",
-              "block_index": 53
+              "block_index": 55
             },
             {
               "slug": "the-operating-loop-in-one-migration",
               "text": "The agent phases a design, surfaces judgment calls, then executes.",
-              "block_index": 55
+              "block_index": 57
             }
           ]
         },
@@ -4733,22 +4733,22 @@
           "heading_text": "View 2 — the front end as model-view-controller over a shared edit language",
           "topic_sentence": "The front end is a small single-page application plus a set of supporting surfaces — an account view, a job history, an operator dashboard, and the editor.",
           "id_source": "derived",
-          "block_index": 57,
+          "block_index": 59,
           "points": [
             {
               "slug": "the-editor-is-an-mvc-loop",
               "text": "The editor is an MVC loop over one document.",
-              "block_index": 59
+              "block_index": 61
             },
             {
               "slug": "a-closed-edit-vocabulary",
               "text": "A closed edit vocabulary is the one way to change.",
-              "block_index": 63
+              "block_index": 65
             },
             {
               "slug": "one-language-many-formats-is-modeling-thesis",
               "text": "One edit language across formats is the Modeling Thesis miniature.",
-              "block_index": 66
+              "block_index": 68
             }
           ]
         },
@@ -4758,22 +4758,22 @@
           "heading_text": "View 3 — the edit language as the target of automated remediation",
           "topic_sentence": "Here the two halves of the system join, and the join is the function-call pattern from earlier in the chapter, seen once more.",
           "id_source": "derived",
-          "block_index": 68,
+          "block_index": 70,
           "points": [
             {
               "slug": "the-two-halves-join-here",
               "text": "The two halves join here through the function-call pattern.",
-              "block_index": 70
+              "block_index": 72
             },
             {
               "slug": "two-producers-of-one-language",
               "text": "Human and automated paths produce one edit language.",
-              "block_index": 72
+              "block_index": 74
             },
             {
               "slug": "task-to-operation-is-a-function-call",
               "text": "The task-to-edit mapping is an LLM-as-function-call instance.",
-              "block_index": 74
+              "block_index": 76
             }
           ]
         },
@@ -4783,22 +4783,22 @@
           "heading_text": "Why route through the language at all",
           "topic_sentence": "The frontier models can already skip all of this.",
           "id_source": "derived",
-          "block_index": 78,
+          "block_index": 80,
           "points": [
             {
               "slug": "route-through-the-language-buys-audit-and-trust",
               "text": "Routing through one validated language buys audit and trust.",
-              "block_index": 80
+              "block_index": 82
             },
             {
               "slug": "scoping-the-call-scopes-the-reasoning",
               "text": "Scoping each call to one task scopes reasoning and cost.",
-              "block_index": 82
+              "block_index": 84
             },
             {
               "slug": "views-rendered-from-models-kept-honest",
               "text": "The views render from real models kept honest by traceability.",
-              "block_index": 84
+              "block_index": 87
             }
           ]
         },
@@ -4808,17 +4808,17 @@
           "heading_text": "Same song, second verse",
           "topic_sentence": "Notice the shape of the argument, because the book made it again at a larger scale.",
           "id_source": "derived",
-          "block_index": 86,
+          "block_index": 89,
           "points": [
             {
               "slug": "wrap-the-unreliable-part",
               "text": "Wrap the unreliable part: bound, type, validate.",
-              "block_index": 88
+              "block_index": 91
             },
             {
               "slug": "agents-are-the-same-component",
               "text": "The agents are the same component, wrapped the same way.",
-              "block_index": 90
+              "block_index": 93
             }
           ]
         }
