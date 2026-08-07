@@ -3,8 +3,9 @@
 THE R7 INVARIANT.  The appendix earns its keep by teaching a *repertoire of engineering judgments*, not a
 repertoire of mechanisms — so each flagship note must carry exactly one transferable judgment, and no two
 notes may teach the same one. This lint holds that invariant over the hand-authored model
-`book-models/note-judgments.json` (one record per note: `judgment`, `one_line`, `foundational`, and an
-optional curated `distinct_from` map of confusable-sibling → differentiator phrase).
+`book-models/note-judgments.json` (one record per note: `judgment`, `one_line`, `applicability` (one of a
+closed Universal/Common/Specialized slate), `foundational`, and an optional curated `distinct_from` map of
+confusable-sibling → differentiator phrase).
 
 WHAT IS MECHANICAL, WHAT IS CURATED.  Near-duplicate detection over free prose is not deterministic — two
 judgments can share most words yet mean different things, or share few and mean the same. So the lint does
@@ -38,6 +39,9 @@ _NOTES_DIR = _HERE.parent / "book" / "appendix-notes"
 
 #: A one-liner over this many characters is not the crisp memorable form R7 asks for. BLOCKING (A4).
 ONE_LINE_MAX = 90
+#: The closed applicability slate — how broadly a mechanism applies. Every note declares exactly one.
+#: BLOCKING (A5): a missing or off-slate value would render a "—" box row or an unknown tier.
+APPLICABILITY_TIERS = frozenset({"Universal", "Common", "Specialized"})
 #: Beyond ~a third of the notes, "foundational" stops discriminating and R4's "approximately equal editorial
 #: importance" collapses back into uniformity. AUDIT-ONLY (C) — an editorial call, not a mechanical fact.
 FOUNDATIONAL_CEILING = 10
@@ -102,6 +106,11 @@ def blocking_findings() -> "list[str]":
             out.append(f"EMPTY-ONE-LINE {slug!r} has an empty 'one_line'")
         if not isinstance(rec.get("foundational"), bool):
             out.append(f"BAD-FOUNDATIONAL {slug!r} 'foundational' is not a boolean")
+        # A5 — a closed applicability tier (drives the note metadata box's Applicability row).
+        applic = (rec.get("applicability") or "").strip()
+        if applic not in APPLICABILITY_TIERS:
+            out.append(f"BAD-APPLICABILITY {slug!r} applicability {applic!r} not in "
+                       f"{sorted(APPLICABILITY_TIERS)}")
         # A4 — crisp one-liner.
         if len(one_line) > ONE_LINE_MAX:
             out.append(f"ONE-LINE-TOO-LONG {slug!r} one_line is {len(one_line)} chars "

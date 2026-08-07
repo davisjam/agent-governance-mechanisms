@@ -4130,6 +4130,10 @@ def _note_metadata_box_md(rec: dict) -> list[str]:
     stacks = _slug_to_stacks().get(slug, [])
     used_in = "; ".join(stacks) if stacks else "—"
     related = _note_related_box(rec)
+    # Applicability (Universal | Common | Specialized) — how broadly the mechanism applies. Read from the
+    # hand-authored note-judgments model (completeness held by lint_note_judgments); the completeness lint
+    # guarantees every note carries it, so the "—" fallback is never reached on a well-formed model.
+    applicability = (_note_judgments().get(slug, {}) or {}).get("applicability", "—")
     return [
         "| | |",
         "|---|---|",
@@ -4137,6 +4141,7 @@ def _note_metadata_box_md(rec: dict) -> list[str]:
         f"| **Family** | {family} |",
         f"| **Used in stacks** | {used_in} |",
         f"| **Enforcement** | {enforcement} |",
+        f"| **Applicability** | {applicability} |",
         f"| **Related mechanisms** | {related} |",
     ]
 
