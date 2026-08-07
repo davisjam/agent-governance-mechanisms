@@ -415,6 +415,28 @@ def check_industry_cases():
     return (FAIL if issues else PASS), issues
 
 
+def check_supporting_sources():
+    """The supporting-sources model's schema + join check (audit-only first landing, rule-#55 discipline). The
+    book's Tier-2 corroboration corpus (`supporting_sources_declared.json`) is a queryable SIBLING of the Tier-1
+    industry-cases model: 19 records (18 engineering reports; Stripe split into two sharing one citation_key),
+    each naming the single claim it reinforces, the exact manuscript anchor it sits beside, its render channel,
+    and a caution. Re-derives the model and reports the joins — SS1 destination resolves (chapter label or
+    appendix stem; a non-null anchor resolves inside the chapter), SS2 closed-vocab membership + SS2b citation
+    join (citation_key resolves in references.bib AND citations.json), SS3 id shape/uniqueness, SS4 render-gate
+    coherence (a body-known-use must be confirmed/adjusted), SS5 caution presence for vendor sources, SS6
+    construct pointer resolves against the Tier-1 construct universe, SS7 encoded channel == the deterministic
+    render_channel projection. On first landing every citation_key is TO-ADD (the bib batch is a separate
+    single-writer pass), so SS2b reports one finding per record — expected, non-gating. Keyed off
+    `book-models/supporting_sources_declared.json` + references.bib + citations.json + industry_cases_declared.json."""
+    import supporting_sources_model as ssm  # noqa: E402 — path set above; the book-model package
+
+    issues = list(ssm.all_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded from
+    # the fail tally. A follow-up flips SS1-SS4 to blocking once a clean session confirms the drain.
+    return (FAIL if issues else PASS), issues
+
+
 def check_metaphor_spans():
     """The metaphor + slogan registry's structural + overlap check (audit-only first landing, rule-#55
     discipline). The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span —

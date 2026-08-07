@@ -1205,6 +1205,23 @@ def cmd_validate(_args) -> int:
               f"run `python3 book-models/industry_cases_model.py verify` (does not gate):")
         for f in ic_findings:
             print(f"             {f}")
+    # SUPPORTING-SOURCES MODEL — AUDIT-ONLY (rule #55 first landing). The book's Tier-2 corroboration corpus
+    # (book-models/supporting_sources_declared.json) is a queryable, drift-gated SIBLING of the Tier-1
+    # industry-cases model: 19 records (18 engineering reports; Stripe split into two) each naming the single
+    # claim it reinforces + the exact manuscript anchor it sits beside + a caution. This band reports the joins
+    # SS1 destination-resolves / SS2 closed-vocab + citation / SS3 id / SS4 render-gate / SS5 caution / SS6
+    # construct-pointer / SS7 channel-parity, plus the coverage note — but does NOT increment n_issues on first
+    # landing. On first landing every citation_key is TO-ADD (the bib batch is a separate single-writer pass),
+    # so SS2b prints one finding per record — EXPECTED. A follow-up flips SS1-SS4 to BLOCKING once a clean
+    # session confirms the drain. See book-models/supporting_sources_model.py.
+    import supporting_sources_model as ssm  # noqa: E402 — audit-only Tier-2 corroboration model
+    ss_findings = ssm.all_findings()
+    print(f"  [supporting] AUDIT-ONLY: {ssm.coverage_note()}")
+    if ss_findings:
+        print(f"  [supporting] AUDIT-ONLY: {len(ss_findings)} supporting-sources finding(s) — "
+              f"run `python3 book-models/supporting_sources_model.py verify` (does not gate):")
+        for f in ss_findings:
+            print(f"               {f}")
     # SOAPBOX GATE — BLOCKING. The substantiation aggregator (book-models/substantiation.py) nests the three
     # evidence legs (data / literature / field-note) under the claim universe (spine + theory + discussion).
     # SOAPBOX is its sharp report: a reality-claim asserted with NO backing of any kind AND no honest

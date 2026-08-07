@@ -1,0 +1,506 @@
+{
+  "_provenance": "HAND-AUTHORED declared source for the SUPPORTING-SOURCES model — the book's Tier-2 corroboration corpus (engineering reports that reinforce ONE observation somewhere in the manuscript) as a queryable, drift-gated MODEL, sibling to the Tier-1 industry_cases deep-case model. This file IS edited by hand; it is the single source of truth for the supporting sources. Encoded from the consolidated placement ledger (supporting-evidence-placement-ledger-260807.md) + the two corroboration ledgers, per the Phase-1 design (supporting-evidence-DESIGN-260807.md §A schema / §C 3-channel projection / §D SS1-SS6). 18 sources → 19 records: Stripe is split into two records (long-horizon → loops-and-models; fallible-oracle → a-new-empirical-regime) sharing citation_key stripe2026integrations.",
+  "_intent": "Make Tier-2 corroboration placement mechanical and checkable: one record per source naming the single claim it reinforces and the exact manuscript anchor it sits beside, so an insertion cannot dangle and a corroboration cannot be laundered stronger than the source supports. The deterministic 3-channel render projection (body-known-use / footnote / bibliography) is a pure function of (tier, role, verdict); the encoded `channel` is held equal to that projection by SS7.",
+  "_note": "AUDIT-ONLY-first landing (SS1-SS7 print in catalog.py validate but do NOT gate; the [supporting] test is audit_only). CITATION KEYS ARE ALL TO-ADD: none of the 19 citation_keys exist yet in references.bib / book/data/citations.json, so SS2b prints one audit-only finding per record — EXPECTED. Adding the bib entries + regenerating the citations mirror is a SEPARATE single-writer batch (design §5 step 1), out of scope for this model-encoding wave. STRENGTH is the design's soft, ungated editorial weight; the values here are provisional model-side estimates (derived from role + verdict + independence) pending transcription of the source doc's strength column — the author ratifies. reinforces_construct is the narrow OPTIONAL single-construct pointer (design §F-3 option b), populated only where a source clearly echoes one Tier-1 construct; null otherwise.",
+  "_taxonomy": {
+    "_note": "The closed vocabularies. source_type = the source genre; role = the render-routing axis (independent of source_type); channel = the deterministic render projection (held == derived by SS7). A value outside its set reddens (SS2).",
+    "source_type": [
+      "internal-retrospective",
+      "vendor-product",
+      "application-note",
+      "paper"
+    ],
+    "role": [
+      "corroborate",
+      "illustrate",
+      "challenge",
+      "extend"
+    ],
+    "tier": [
+      "supporting",
+      "academic"
+    ],
+    "independence": [
+      "independent",
+      "vendor-aligned",
+      "derivative"
+    ],
+    "strength": [
+      "very-high",
+      "high",
+      "good",
+      "modest"
+    ],
+    "corroboration_verdict": [
+      "confirmed",
+      "adjusted",
+      "unverifiable",
+      "contradicted",
+      "pending"
+    ],
+    "channel": [
+      "body-known-use",
+      "footnote",
+      "bibliography"
+    ]
+  },
+  "supporting_sources": [
+    {
+      "id": "sourcegraph-large-codebase",
+      "organization": "Sourcegraph",
+      "source_type": "vendor-product",
+      "url": "https://sourcegraph.com/blog/why-coding-agents-fail-large-codebases",
+      "citation_key": "sourcegraph2026largecodebase",
+      "extractable_claims": [
+        "Above roughly 400,000 lines of code, agents navigating by following raw references build an exploration tree that branches faster than they can prune — failure arising from the shape of the reasoning substrate, not a shortfall in model capability."
+      ],
+      "destination": {
+        "chapter": "why-mage-follows-from-the-machine",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Sourcegraph's study of 1,281 scored agent runs across 40-plus of the largest open-source repositories found that above roughly 400,000 lines of code, agents navigating by following raw references build an exploration tree that branches faster than they can prune it — failure arising from the *shape* of the reasoning substrate, not a shortfall in model capability [cite:sourcegraph2026largecodebase].",
+      "caution": "Vendor benchmark — Sourcegraph sells code search/indexing; the +0.259 reward delta uses Sourcegraph MCP tools, with no independent validation on the page. Do not treat Sourcegraph-specific indexing gains as general causal estimates.",
+      "reinforces_construct": "reasoning-horizon",
+      "note": "Independently reports the same causal step (raw territory → bad reasoning surface → explicit representation/query infrastructure) the adjacent reasoning-horizon claim asserts."
+    },
+    {
+      "id": "stripe-integration-bench-horizon",
+      "organization": "Stripe",
+      "source_type": "internal-retrospective",
+      "url": "https://stripe.com/blog/can-ai-agents-build-real-stripe-integrations",
+      "citation_key": "stripe2026integrations",
+      "extractable_claims": [
+        "Stripe built a benchmark around complete integrations rather than function-level tasks because real engineering is long-horizon and stateful — planning, persistent state, recovery from failure — with the best-performing runs averaging about 63 turns."
+      ],
+      "destination": {
+        "chapter": "loops-and-models",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "high",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Stripe built a benchmark around *complete* integrations rather than function-level tasks because real engineering is long-horizon and stateful — planning, persistent state, and recovery from failure — with the best-performing runs averaging about 63 turns [cite:stripe2026integrations].",
+      "caution": "Reflects mid-2025 model capabilities; a limited controlled benchmark sample, not universal agentic capability. (Adjustment folded in: 63 turns is an average, not a ceiling.)",
+      "reinforces_construct": "reasoning-horizon",
+      "note": "Record 1 of the Stripe split (placement-ledger §3): the long-horizon claim lands in loops-and-models. Shares citation_key stripe2026integrations with stripe-integration-bench-oracle."
+    },
+    {
+      "id": "stripe-integration-bench-oracle",
+      "organization": "Stripe",
+      "source_type": "internal-retrospective",
+      "url": "https://stripe.com/blog/can-ai-agents-build-real-stripe-integrations",
+      "citation_key": "stripe2026integrations",
+      "extractable_claims": [
+        "Stripe observed agents passing in nonexistent data, watching the API return 400s, and concluding the endpoint worked — an agent satisfying itself with evidence a competent engineer would recognize as irrelevant to the requirement."
+      ],
+      "destination": {
+        "chapter": "a-new-empirical-regime",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "high",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Stripe observed agents passing in nonexistent data, watching the API return 400s, and concluding the endpoint worked — an agent satisfying itself with evidence a competent engineer would recognize as irrelevant to the requirement [cite:stripe2026integrations].",
+      "caution": "Reflects mid-2025 model capabilities; a limited controlled benchmark sample, not universal agentic capability.",
+      "reinforces_construct": null,
+      "note": "Record 2 of the Stripe split (placement-ledger §3): the fallible-oracle claim lands in a-new-empirical-regime (§6.3.1 'Governing the oracle'). Shares citation_key stripe2026integrations with stripe-integration-bench-horizon."
+    },
+    {
+      "id": "uber-ureview",
+      "organization": "Uber",
+      "source_type": "internal-retrospective",
+      "url": "https://www.uber.com/au/en/blog/ureview/",
+      "citation_key": "uber2026ureview",
+      "extractable_claims": [
+        "Uber's uReview analyzes over 90% of the ~65,000 diffs opened weekly, with the engineering story being the machinery around the reviewer — a probabilistic sensor treated as an engineering subsystem.",
+        "Uber notes the reviewer is bounded by having only the code — no past PRs, feature-flag configs, database schemas, or docs — so source code alone bounds what even a strong semantic reviewer can judge."
+      ],
+      "destination": {
+        "chapter": "the-agent-stack",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "very-high",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "Uber's uReview analyzes over 90% of the ~65,000 diffs opened weekly, but the engineering story is the machinery around the reviewer — structured context, three-layer confidence filtering, semantic dedup, a curated benchmark, periodic model selection, and streamed useful/not-useful feedback — a probabilistic sensor treated as an engineering subsystem [cite:uber2026ureview]. Uber notes the reviewer is bounded by having only the code — no past PRs, feature-flag configs, database schemas, or docs — so source code alone bounds what even a strong semantic reviewer can judge [cite:uber2026ureview].",
+      "caution": "All metrics self-reported by Uber; no independent verification. (Bonus baseline available: only 51% of human-written review comments are addressed in the same changeset.)",
+      "reinforces_construct": "thesis-alignment",
+      "note": "Independently instantiates probabilistic-sensor engineering (claim 1) and the modeling bound (claim 2)."
+    },
+    {
+      "id": "github-applied-science",
+      "organization": "GitHub",
+      "source_type": "internal-retrospective",
+      "url": "https://github.blog/ai-and-ml/github-copilot/agent-driven-development-in-copilot-applied-science/",
+      "citation_key": "mcgoffin2026appliedscience",
+      "extractable_claims": [
+        "GitHub reports the same operational move MAGE calls governance conversion: when an agent repeats a mistake, change the environment — 'blame process, not agents' — including a reserved test space the agent cannot touch."
+      ],
+      "destination": {
+        "chapter": "implications-for-se",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "very-high",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "GitHub's Applied Science team, making agents the primary contributors on a project that moved +28,858/-2,884 lines across 345 files in under three days, reports the same operational move MAGE calls governance conversion: when an agent repeats a mistake, change the environment — 'blame process, not agents' — including a reserved test space the agent cannot touch [cite:mcgoffin2026appliedscience].",
+      "caution": "One internal project; self-reported; framed as lessons learned, not a validated methodology. The similarity supports 'independent convergence' but do NOT claim GitHub has MAGE's full diagnostic taxonomy.",
+      "reinforces_construct": "governance-conversion",
+      "note": "The closest external analogue to governance conversion; strong enough to read as independent convergence. Finer anchor available: appendix-d-governance-conversion."
+    },
+    {
+      "id": "atlassian-maintenance",
+      "organization": "Atlassian",
+      "source_type": "internal-retrospective",
+      "url": "https://www.atlassian.com/blog/development/ai-agents-jira-engineering-maintenance",
+      "citation_key": "atlassian2026maintenance",
+      "extractable_claims": [
+        "Atlassian's Jira team delegates KTLO work by turning each task into an explicit work item carrying context through the Teamwork Graph plus workflow instructions; a maintenance class becomes delegable once the tacit repair procedure is encoded, not because the agent got clever."
+      ],
+      "destination": {
+        "chapter": "the-skills",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Atlassian's Jira team delegates KTLO work — flaky tests, feature-flag cleanup, vulnerabilities, accessibility — by turning each into an explicit work item carrying context through the Teamwork Graph plus workflow instructions; a maintenance class becomes delegable once the tacit repair procedure is encoded, not because the agent got clever [cite:atlassian2026maintenance].",
+      "caution": "The 'up to 80%' figure is self-reported AND specific to flaky-test resolution — not all repetitive maintenance. Don't let the number carry argumentative weight. (Feature-flag cleanup drove 500+ merged PRs in 70 days, if a concrete figure is wanted.)",
+      "reinforces_construct": "governance-conversion",
+      "note": "Independently reports the encode-the-procedure move behind skills/conversion."
+    },
+    {
+      "id": "atlassian-orchestration",
+      "organization": "Atlassian",
+      "source_type": "internal-retrospective",
+      "url": "https://www.atlassian.com/blog/development/specialist-agent-orchestration-jira",
+      "citation_key": "atlassian2026orchestration",
+      "extractable_claims": [
+        "Atlassian describes an agent that 'for a few minutes is sharp, then forgets a decision it made ten minutes ago' as the context window fills — long-horizon failure as a state-management problem where architectural decisions compete with implementation detail for the same finite attention."
+      ],
+      "destination": {
+        "chapter": "why-mage-follows-from-the-machine",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "good",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Atlassian describes an agent that 'for a few minutes is sharp, then forgets a decision it made ten minutes ago' as the context window fills — long-horizon failure as a state-management problem, where architectural decisions compete with implementation detail for the same finite attention [cite:atlassian2026orchestration].",
+      "caution": "Atlassian product piece (Jira anchoring is promotional). The 'reasoning surfaces not job titles' contrast is the book's articulation, not a verbatim Atlassian claim — present as the book's reading.",
+      "reinforces_construct": "reasoning-horizon",
+      "note": "Claim 1 corroborates the reasoning-horizon/context-banking claim. Optional challenge-flavored second sentence (specialization = different bounded reasoning surfaces, not human job titles) also routes to body; the author may split it into a dedicated role:challenge record later."
+    },
+    {
+      "id": "ramp-inspect",
+      "organization": "Ramp",
+      "source_type": "internal-retrospective",
+      "url": "https://engineering.ramp.com/post/why-we-built-our-background-agent",
+      "citation_key": "ramp2026inspect",
+      "extractable_claims": [
+        "Ramp's Inspect runs each session in a sandboxed Modal VM wired to Sentry, Datadog, LaunchDarkly, Buildkite, GitHub and Slack, on the design goal that it be 'never limited by missing context or tools, but only by model intelligence' — autonomy needs evidence-producing affordances, not merely code-writing authority."
+      ],
+      "destination": {
+        "chapter": "the-agent-stack",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "high",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Ramp's Inspect runs each session in a sandboxed Modal VM with everything an engineer has locally, wired to Sentry, Datadog, LaunchDarkly, Buildkite, GitHub and Slack, on the stated design goal that it be 'never limited by missing context or tools, but only by model intelligence' — autonomy needs evidence-producing affordances, not merely code-writing authority [cite:ramp2026inspect].",
+      "caution": "Internal self-report; the ~30%-of-merged-PRs metric is unverified.",
+      "reinforces_construct": "thesis-alignment",
+      "note": "Independently confirms the alignment/agent-stack claim that tools determine effective capability. Keep to one sentence (overlaps Docker/Shopify/Spotify)."
+    },
+    {
+      "id": "elastic-ci-agent",
+      "organization": "Elastic",
+      "source_type": "internal-retrospective",
+      "url": "https://www.elastic.co/search-labs/blog/ci-pipelines-claude-ai-agent",
+      "citation_key": "elastic2026ci",
+      "extractable_claims": [
+        "Elastic's Control Plane team wired a Claude agent into monorepo CI so a failing dependency-update PR feeds its build/test logs back to the agent, which iterates over failed Gradle steps until green — 'self-correcting' PRs over 45% of dependencies in a one-month pilot."
+      ],
+      "destination": {
+        "chapter": "loops-and-models",
+        "anchor": null
+      },
+      "role": "illustrate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "good",
+      "corroboration_verdict": "adjusted",
+      "channel": "footnote",
+      "text": "Elastic's Control Plane team wired a Claude agent into monorepo CI so a failing dependency-update PR feeds its build/test logs back to the agent, which iterates over failed Gradle steps until green — 'self-correcting' PRs. In a one-month pilot over 45% of dependencies; human review stayed mandatory and auto-merge was disabled when the agent contributed [cite:elastic2026ci].",
+      "caution": "Single team, one-month pilot; 'saved 20 days' is an internal estimate; the loop is real but NOT unattended.",
+      "reinforces_construct": null,
+      "note": "A small worked instance of the generate→execute→observe→repair loop — illustrates the neighborhood without independently establishing it. Its value: the reader sees the loop without a whole company architecture."
+    },
+    {
+      "id": "snyk-agentic-lifecycle",
+      "organization": "Snyk",
+      "source_type": "vendor-product",
+      "url": "https://snyk.io/blog/agentic-development-lifecycle/",
+      "citation_key": "snyk2026agenticlifecycle",
+      "extractable_claims": [
+        "Snyk argues that once agents act before commit time, the repository boundary is too late to be the security boundary: the tools, skills, permissions and execution environment that produce a change become part of the trusted computing base — 'traditional AppSec secures the artifact; agentic security secures the process that creates it'."
+      ],
+      "destination": {
+        "chapter": "the-agent-stack",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "Snyk argues that once agents act before commit time, the repository boundary is too late to be the security boundary: the tools, skills, permissions and execution environment that produce a change become part of the trusted computing base — 'traditional AppSec secures the artifact; agentic security secures the process that creates it' [cite:snyk2026agenticlifecycle].",
+      "caution": "Snyk vendor piece promoting an 'Agentic Development Security' framing; supports the MAGE boundary claim without buying the product framing. The ~10,000-environments supply-chain figure the source doc associated here lives in a SEPARATE companion article (snyk-supply-chain, not fetched) — do NOT attribute it to this URL. (Verified on THIS page: 76 malicious skills of 3,984 analyzed; ~1/3 of public MCP servers carry exploitable flaws.)",
+      "reinforces_construct": "thesis-alignment",
+      "note": "Independently supports the agent-stack-as-trusted-computing-base boundary claim."
+    },
+    {
+      "id": "nvidia-verified-skills",
+      "organization": "NVIDIA",
+      "source_type": "vendor-product",
+      "url": "https://developer.nvidia.com/blog/nvidia-verified-agent-skills-provide-capability-governance-for-ai-agents/",
+      "citation_key": "nvidia2026verifiedskills",
+      "extractable_claims": [
+        "NVIDIA treats a skill as a deployable capability, not a static prompt, and runs it through an eight-stage supply chain — source, review, scan, evaluate, skill card, sign, catalog, sync — where scanning looks for agent-specific threats, not only conventional software risk."
+      ],
+      "destination": {
+        "chapter": "the-skills",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "NVIDIA treats a skill as a deployable capability, not a static prompt, and runs it through an eight-stage supply chain — source, review, scan, evaluate, skill card, sign, catalog, sync — where scanning looks for agent-specific threats (hidden instructions, trigger abuse, excessive agency, tool poisoning, purpose/access mismatch), not only conventional software risk [cite:nvidia2026verifiedskills].",
+      "caution": "NVIDIA-specific architecture; cross-platform portability (agentskills.io) is referenced but adoption is unverified on the page.",
+      "reinforces_construct": "graduated-governance",
+      "note": "Independently confirms that soft mechanisms (skills) still require governance. Complements Docker (runtime authority) with admission of the capability package. Finer anchor: appendix-skill-recipe/applying-the-recipe."
+    },
+    {
+      "id": "redhat-developer-portal",
+      "organization": "Red Hat",
+      "source_type": "vendor-product",
+      "url": "https://www.redhat.com/en/blog/why-developer-portals-matter-more-age-ai-agents",
+      "citation_key": "redhat2026developerportals",
+      "extractable_claims": [
+        "Red Hat observes that a developer portal's value was never its UI but the curated context underneath, and that agentic engineering turns that existing human-facing surface into an execution substrate by adding a programmatic (MCP) access layer: 'the portal isn't dying; it's becoming infrastructure'."
+      ],
+      "destination": {
+        "chapter": "brownfield",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "Red Hat observes that a developer portal's value was never its UI but the curated context underneath — service/API catalogs, golden-path templates encoding architecture and compliance, ownership, CI/CD signals — and that agentic engineering turns that existing human-facing surface into an execution substrate simply by adding a programmatic (MCP) access layer: 'the portal isn't dying; it's becoming infrastructure' [cite:redhat2026developerportals].",
+      "caution": "Author leads Red Hat Developer Tools and advocates Red Hat Developer Hub — a clear articulation of an industry pattern, NOT efficacy evidence.",
+      "reinforces_construct": "reasoning-horizon",
+      "note": "Independently confirms the brownfield move (expose existing knowledge rather than rebuild). Second claim — a regulated org's context can't be reconstructed from raw repos — also touches reasoning-horizon."
+    },
+    {
+      "id": "twilio-skills",
+      "organization": "Twilio",
+      "source_type": "vendor-product",
+      "url": "https://www.twilio.com/en-us/blog/developers/best-practices/why-connect-twilio-ai-skills",
+      "citation_key": "twilio2026skills",
+      "extractable_claims": [
+        "Twilio's example: an unguided agent asked to 'verify users' hand-rolls a six-digit OTP, while its skill redirects to a dedicated Verify product and thereby inherits rate limiting, fraud controls and routing — reusable knowledge surfacing obligations the operator did not know enough to ask about."
+      ],
+      "destination": {
+        "chapter": "the-skills",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "good",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "Twilio's example: an unguided agent asked to 'verify users' hand-rolls a six-digit OTP, while its skill redirects to a dedicated Verify product and thereby inherits rate limiting, fraud controls and routing the user never thought to request — reusable knowledge surfacing obligations the operator did not know enough to ask about [cite:twilio2026skills].",
+      "caution": "Vendor product example (Twilio Verify + its skills). Transferable bits are unknown-obligation surfacing, progressive disclosure, and negative-capability CANNOT statements — not the product. (Adjustment: the redirecting skill is named twilio-identity-verification-advisor.)",
+      "reinforces_construct": null,
+      "note": "Independently confirms the skills-encode-unknown-obligations claim. Optional second sentence (progressive disclosure + explicit CANNOT statements as negative-capability information) available for the prose wave."
+    },
+    {
+      "id": "cockroachdb-permissions",
+      "organization": "CockroachDB",
+      "source_type": "vendor-product",
+      "url": "https://www.cockroachlabs.com/blog/cockroachdb-ai-agents-cli-database-automation/",
+      "citation_key": "cockroachlabs2026agents",
+      "extractable_claims": [
+        "CockroachDB's alert-triage agent can adjust maintenance windows across clusters but cannot create a cluster or modify networking — the API returns a clean 403 — because 'the blast radius of an agent mistake is bounded by its service-account permissions, not by the quality of its prompt'."
+      ],
+      "destination": {
+        "chapter": "the-agent-stack",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "adjusted",
+      "channel": "body-known-use",
+      "text": "CockroachDB's alert-triage agent can adjust maintenance windows across clusters but cannot create a cluster or modify networking — the API returns a clean 403 — because 'the blast radius of an agent mistake is bounded by its service-account permissions, not by the quality of its prompt' [cite:cockroachlabs2026agents].",
+      "caution": "Vendor-facing (three-part product series). PER-URL CITATION DISCIPLINE (watch-item): cite the permission-guardrail claim to the CLI URL (this record's url), which carries the 403 mechanism and the 'blast radius' quote; cite EXPLAIN-every-query to the lifecycle URL (https://www.cockroachlabs.com/blog/cockroachdb-ai-agents-database-lifecycle-automation/) — it appears ONLY there. State the boundary as the page does (create-cluster / modify-networking → 403), not the source doc's paraphrase (failover / delete cluster / change replication topology).",
+      "reinforces_construct": "thesis-alignment",
+      "note": "Independently confirms permissions-not-prompts as the production guardrail (the DB-ops analogue to Docker's runtime authority). Optional secondary sentences (role-split skill/MCP/CLI interface; EXPLAIN every generated query before returning it) cite to the lifecycle URL — keep the two mechanisms distinct (the lifecycle page frames triage restraint as human approval, not a permission block)."
+    },
+    {
+      "id": "salesforce-agent-graph",
+      "organization": "Salesforce",
+      "source_type": "vendor-product",
+      "url": "https://engineering.salesforce.com/agentforces-agent-graph-toward-guided-determinism-with-hybrid-reasoning/",
+      "citation_key": "salesforce2026agentgraph",
+      "extractable_claims": [
+        "Salesforce's Agent Graph externalizes reasoning into design-time graphs whose subagents are managed by finite state machines — 'guided determinism' — keeping the model's freedom only where it is valuable: when part of the reasoning is stable enough to represent explicitly, move it out of the model's private inference into an inspectable structure."
+      ],
+      "destination": {
+        "chapter": "implications-for-se",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "high",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "Salesforce's Agent Graph externalizes reasoning into design-time graphs whose subagents are managed by finite state machines — 'guided determinism': deterministic workflow structure combined with probabilistic conversational reasoning, keeping the model's freedom only where it is valuable. When part of the reasoning is stable enough to represent explicitly, move it out of the model's private inference into an inspectable structure [cite:salesforce2026agentgraph].",
+      "caution": "Agentforce product engineering (Phil Mui, SVP of Agentforce SWE), not an independent enterprise case; a strong secondary citation for the migration point, not efficacy evidence.",
+      "reinforces_construct": "determinization",
+      "note": "RETYPED internal-retrospective → vendor-product (placement-ledger §4 delta 1): Agentforce PRODUCT engineering, not an independent internal case; independence vendor-aligned, vendor caution mandatory (SS5). Channel unchanged (role corroborate → body). Independently confirms the soft→hard / probabilistic→deterministic migration point."
+    },
+    {
+      "id": "ericsson-agent-fabric",
+      "organization": "Ericsson",
+      "source_type": "vendor-product",
+      "url": "https://www.ericsson.com/en/blog/2026/6/how-to-accelerate-automation-in-oss-bss-with-agent-fabric",
+      "citation_key": "ericsson2026agentfabric",
+      "extractable_claims": [
+        "Ericsson's agent fabric treats the topology among agents as governed infrastructure — discovery, routing, observability, a secure registry all agents authenticate against, lifecycle management, and guardrails that run inside the execution cycle in real time — on the argument that unmanaged 'agent sprawl' causes resource exhaustion and security holes."
+      ],
+      "destination": {
+        "chapter": "the-agent-stack",
+        "anchor": null
+      },
+      "role": "corroborate",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "good",
+      "corroboration_verdict": "confirmed",
+      "channel": "body-known-use",
+      "text": "Ericsson's agent fabric treats the topology *among* agents as governed infrastructure — discovery, routing, observability, a secure registry all agents authenticate against, lifecycle management, and guardrails that run inside the execution cycle in real time — on the argument that unmanaged 'agent sprawl' causes resource exhaustion and security holes [cite:ericsson2026agentfabric].",
+      "caution": "Telecom product architecture (Ericsson agent fabric for OSS/BSS); supporting mechanism evidence, not a case — do not treat the capability list as validated efficacy.",
+      "reinforces_construct": "thesis-alignment",
+      "note": "Independently confirms the fleet-governance claim (every agent has identity + lifecycle; governance is active machinery). Sits alongside Zenseact's allow-listed delegation edges."
+    },
+    {
+      "id": "ericsson-closed-loop",
+      "organization": "Ericsson",
+      "source_type": "vendor-product",
+      "url": "https://www.ericsson.com/en/blog/2026/6/intelligent-core-automation-with-eiap-and-capps",
+      "citation_key": "ericsson2026closedloop",
+      "extractable_claims": [
+        "Ericsson's EIAP closed loop pairs intent-based operation over curated topology-aware real-time network state with a controlled actuation surface, and decouples the model lifecycle from the application lifecycle: closed-loop autonomy needs both a state representation and a bounded actuation surface, or it is not operational autonomy."
+      ],
+      "destination": {
+        "chapter": "the-governed-environment",
+        "anchor": null
+      },
+      "role": "extend",
+      "tier": "supporting",
+      "independence": "vendor-aligned",
+      "strength": "modest",
+      "corroboration_verdict": "confirmed",
+      "channel": "footnote",
+      "text": "Ericsson's EIAP closed loop pairs intent-based operation over curated, topology-aware real-time network state with a controlled actuation surface (Network Manager / Orchestrator send coordinated actions back into the network), and decouples the model lifecycle — declarative deployment, monitoring, automated retraining under drift detection — from the application lifecycle: closed-loop autonomy needs both a state representation and a bounded actuation surface, or it is not operational autonomy [cite:ericsson2026closedloop].",
+      "caution": "Telecom product architecture (EIAP + cApps); a Modeling+Alignment complement, not efficacy evidence.",
+      "reinforces_construct": null,
+      "note": "Role kept extend → footnote (placement-ledger §4 delta 2): the-governed-environment anchor is alignment-framed, NOT a Modeling-thesis claim this source directly echoes. If re-anchored beside a models-and-the-semantic-gap Modeling-thesis claim it echoes, it flips to corroborate → body."
+    },
+    {
+      "id": "airbus-agent-mesh",
+      "organization": "Airbus",
+      "source_type": "internal-retrospective",
+      "url": "https://www.airbus.com/en/newsroom/stories/2026-06-ai-agents-a-new-paradigm-of-military-decision-making",
+      "citation_key": "airbus2026agentmesh",
+      "extractable_claims": [
+        "Airbus describes a developing military decision-support framework of ~90 specialized agents that dynamically selects which are needed for a task, aimed explicitly at preventing hallucination and providing traceability — once autonomy becomes multi-agent, composition itself becomes an engineering problem."
+      ],
+      "destination": {
+        "chapter": "why-mage-follows-from-the-machine",
+        "anchor": null
+      },
+      "role": "extend",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "modest",
+      "corroboration_verdict": "confirmed",
+      "channel": "footnote",
+      "text": "Airbus describes a developing military decision-support framework of ~90 specialized agents that dynamically selects which are needed for a task, aimed explicitly at preventing hallucination and providing traceability — once autonomy becomes multi-agent, composition itself (selection, linkage, traceable decision path) becomes an engineering problem; the intended interface is 'not just a plain chat window' but a map tying data sources to operational entities [cite:airbus2026agentmesh].",
+      "caution": "Forward-looking — the framework is 'under development,' NOT deployed. Keep to one or two sentences; its value is sectoral breadth (outside software/IT).",
+      "reinforces_construct": null,
+      "note": "Role extend → footnote (placement-ledger §4 delta 2): sectoral-breadth, pushes composition + structured-view outward; the anchor is reasoning-horizon, not a Modeling-thesis claim it echoes."
+    },
+    {
+      "id": "nxp-mcu-appnote",
+      "organization": "NXP",
+      "source_type": "application-note",
+      "url": "https://www.nxp.com/docs/en/application-note/AN14859.pdf",
+      "citation_key": "nxp2025genai",
+      "extractable_claims": [
+        "NXP's application note walks a coding agent through requesting an SPI1 driver for the MCXA346 microcontroller and cautions that AI-generated code cannot guarantee compilation or correctness and requires human review — even in embedded development the useful unit is an agent inside a compiler/toolchain loop over a concrete target, not text generation."
+      ],
+      "destination": {
+        "chapter": "loops-and-models",
+        "anchor": null
+      },
+      "role": "illustrate",
+      "tier": "supporting",
+      "independence": "independent",
+      "strength": "modest",
+      "corroboration_verdict": "confirmed",
+      "channel": "footnote",
+      "text": "NXP's application note walks a coding agent through requesting an SPI1 driver for the MCXA346 microcontroller and cautions that AI-generated code cannot guarantee compilation or correctness and requires human review — even in embedded development the useful unit is an agent inside a compiler/toolchain loop over a concrete target, not text generation [cite:nxp2025genai].",
+      "caution": "Basic instructional app-note (AN14859, Rev 1.0, 2025-11-05). RE-FETCH watch-item: direct WebFetch of the PDF returned HTTP 404; corroboration rests on the search backend's retrieval of the same authoritative URL. Re-fetch the PDF directly before landing any [cite:].",
+      "reinforces_construct": null,
+      "note": "A concrete sectoral-breadth instance (agentic workflows reaching down into MCU development) — illustrates, don't lean heavily."
+    }
+  ]
+}

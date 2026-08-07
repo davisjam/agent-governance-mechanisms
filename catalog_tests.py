@@ -52,6 +52,7 @@ from tests.book_models import (
     check_flagship_stack,
     check_industry_cases,
     check_lit_positioning,
+    check_supporting_sources,
     check_metaphor_slogan_index,
     check_metaphor_spans,
     check_outcomes_model,
@@ -368,6 +369,16 @@ CHECKS = [
     # flips IC1-IC6 to blocking once a clean session confirms the drain. See tests/book_models.py.
     Check("book-models: industry-cases schema + joins (industry_cases_declared.json)", 1,
           lambda strict: check_industry_cases(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the SUPPORTING-SOURCES model — the book's Tier-2 corroboration corpus
+    # as a queryable, drift-gated SIBLING of the industry-cases model. 19 records (18 engineering reports; Stripe
+    # split into two sharing one citation_key), each naming the single claim it reinforces + the manuscript
+    # anchor it sits beside + its render channel + a caution. Reports the joins SS1 (destination resolves) / SS2
+    # (closed-vocab + citation) / SS3 (id) / SS4 (render-gate) / SS5 (caution) / SS6 (construct pointer) / SS7
+    # (channel parity). On first landing every citation_key is TO-ADD (bib batch is a separate single-writer
+    # pass), so SS2b reports one finding per record — expected, non-gating. A follow-up flips SS1-SS4 to
+    # blocking once a clean session confirms the drain. See tests/book_models.py.
+    Check("book-models: supporting-sources schema + joins (supporting_sources_declared.json)", 1,
+          lambda strict: check_supporting_sources(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
