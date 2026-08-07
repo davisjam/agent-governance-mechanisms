@@ -1,4 +1,4 @@
-# Blocking semantic lints
+# The Audit-to-Lint mechanism (blocking semantic lints)
 
 **Intent** — A fleet of blocking semantic lints over the tool's *own source* (banned APIs, silent-catch
 bans, `Console.WriteLine`-in-prod, typed-seam violations) that fail the build on domain-invariant

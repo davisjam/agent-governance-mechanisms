@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blocking semantic lints</title>
+<title>The Audit-to-Lint mechanism (blocking semantic lints)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* Legacy var aliases → design tokens: --line/--link predate the token model and are referenced across
@@ -165,9 +165,9 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../product/README.html">Product</a> &nbsp;/&nbsp; Validation &amp; conformance &nbsp;/&nbsp; Blocking semantic lints</nav>
+<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../product/README.html">Product</a> &nbsp;/&nbsp; Validation &amp; conformance &nbsp;/&nbsp; The Audit-to-Lint mechanism (blocking semantic lints)</nav>
 <p class="subtitle">The blocking semantic-lint fleet over the tool's own source.</p>
-<h1>Blocking semantic lints</h1>
+<h1>The Audit-to-Lint mechanism (blocking semantic lints)</h1>
 <p><strong>Intent</strong> — A fleet of blocking semantic lints over the tool's <em>own source</em> (banned APIs, silent-catch bans, <code>Console.WriteLine</code>-in-prod, typed-seam violations) that fail the build on domain-invariant violations the compiler and review can't catch.</p>
 <table><tbody><tr><td>Summary</td><td>The blocking semantic-lint fleet over the tool's own source.</td></tr><tr><td>Target</td><td>Product · <strong>Validation &amp; conformance</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>sensor</code> — detects the error after the fact</td></tr><tr><td>Model</td><td>—</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — each BLOCKING lint fails the build; escape is a scoped <code>noqa</code> with a reason</td></tr></tbody></table>
 <p>&gt; <strong>This entry represents the fleet, not each lint.</strong> Per the README scope note, the ~500+ individual &gt; custom lints are a <em>magnitude reported in prose</em>; this is the one entry for the pattern.</p>

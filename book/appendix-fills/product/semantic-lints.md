@@ -1,13 +1,13 @@
-# Blocking semantic lints — GoF appendix rendering
+# The Audit-to-Lint mechanism (blocking semantic lints) — GoF appendix rendering
 
 > **Fill draft.** Structure + Sample Code slots for the catalogue entry
 > `product/validation-and-conformance/semantic-lints.md`, in the book's Gang-of-Four appendix layout. The
 > follow-up pass injects the two filled slots at the placeholders keyed by the entry name
-> `Blocking semantic lints`. Intent / Motivation / Applicability / Consequences / Known Uses / Related
+> `The Audit-to-Lint mechanism (blocking semantic lints)`. Intent / Motivation / Applicability / Consequences / Known Uses / Related
 > Patterns are projected from the catalogue `.md` — reproduced in brief so the entry reads as a complete
 > GoF page.
 
-## Blocking semantic lints
+## The Audit-to-Lint mechanism (blocking semantic lints)
 
 **Intent** — A fleet of blocking semantic lints over the tool's *own source* (banned APIs, silent-catch
 bans, diagnostic-print bans, typed-seam violations) that fail the build on domain-invariant violations the

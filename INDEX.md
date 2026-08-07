@@ -154,7 +154,7 @@ of soft/hard.
 | ✓ | Mechanism | Form | Move | Model | Enf. | Entry |
 |---|---|---|---|---|---|---|
 | ✅ | ContentValidator (input ⊆ output fidelity) | `validation` | `sensor` | — | Hard | [content-validator.md](product/validation-and-conformance/content-validator.md) |
-| ✅ | Blocking semantic lints | `validation` | `sensor` | — | Hard | [semantic-lints.md](product/validation-and-conformance/semantic-lints.md) |
+| ✅ | The Audit-to-Lint mechanism (blocking semantic lints) | `validation` | `sensor` | — | Hard | [semantic-lints.md](product/validation-and-conformance/semantic-lints.md) |
 | ✅ | Standards / WCAG rule engine | `validation` | `sensor` | — | Hard | [standards-rule-engine.md](product/validation-and-conformance/standards-rule-engine.md) |
 | ✅ | Cross-source coherence lints | `validation` | `sensor` | — | Hard | [coherence-lints.md](product/validation-and-conformance/coherence-lints.md) |
 
