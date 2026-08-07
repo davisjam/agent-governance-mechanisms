@@ -7,7 +7,7 @@
     "derived_ids": 235,
     "missing_topic_sentence": 7,
     "sections_drained": 174,
-    "paragraph_points": 550
+    "paragraph_points": 551
   },
   "chapters": [
     {
@@ -4732,9 +4732,14 @@
               "block_index": 55
             },
             {
+              "slug": "architectural-optionality-names-the-recurring-pattern",
+              "text": "A local decision quietly banks a future option.",
+              "block_index": 57
+            },
+            {
               "slug": "the-operating-loop-in-one-migration",
               "text": "The agent phases a design, surfaces judgment calls, then executes.",
-              "block_index": 57
+              "block_index": 59
             }
           ]
         },
@@ -4744,22 +4749,22 @@
           "heading_text": "View 2 — the front end as model-view-controller over a shared edit language",
           "topic_sentence": "The front end is a small single-page application plus a set of supporting surfaces — an account view, a job history, an operator dashboard, and the editor.",
           "id_source": "derived",
-          "block_index": 59,
+          "block_index": 61,
           "points": [
             {
               "slug": "the-editor-is-an-mvc-loop",
               "text": "The editor is an MVC loop over one document.",
-              "block_index": 61
+              "block_index": 63
             },
             {
               "slug": "a-closed-edit-vocabulary",
               "text": "A closed edit vocabulary is the one way to change.",
-              "block_index": 65
+              "block_index": 67
             },
             {
               "slug": "one-language-many-formats-is-modeling-thesis",
               "text": "One edit language across formats is the Modeling Thesis miniature.",
-              "block_index": 68
+              "block_index": 71
             }
           ]
         },
@@ -4769,22 +4774,22 @@
           "heading_text": "View 3 — the edit language as the target of automated remediation",
           "topic_sentence": "Here the two halves of the system join, and the join is the function-call pattern from earlier in the chapter, seen once more.",
           "id_source": "derived",
-          "block_index": 70,
+          "block_index": 73,
           "points": [
             {
               "slug": "the-two-halves-join-here",
               "text": "The two halves join here through the function-call pattern.",
-              "block_index": 72
+              "block_index": 75
             },
             {
               "slug": "two-producers-of-one-language",
               "text": "Human and automated paths produce one edit language.",
-              "block_index": 74
+              "block_index": 77
             },
             {
               "slug": "task-to-operation-is-a-function-call",
               "text": "The task-to-edit mapping is an LLM-as-function-call instance.",
-              "block_index": 76
+              "block_index": 79
             }
           ]
         },
@@ -4794,22 +4799,22 @@
           "heading_text": "Why route through the language at all",
           "topic_sentence": "The frontier models can already skip all of this.",
           "id_source": "derived",
-          "block_index": 80,
+          "block_index": 83,
           "points": [
             {
               "slug": "route-through-the-language-buys-audit-and-trust",
               "text": "Routing through one validated language buys audit and trust.",
-              "block_index": 82
+              "block_index": 85
             },
             {
               "slug": "scoping-the-call-scopes-the-reasoning",
               "text": "Scoping each call to one task scopes reasoning and cost.",
-              "block_index": 84
+              "block_index": 87
             },
             {
               "slug": "views-rendered-from-models-kept-honest",
               "text": "The views render from real models kept honest by traceability.",
-              "block_index": 87
+              "block_index": 90
             }
           ]
         },
@@ -4819,17 +4824,17 @@
           "heading_text": "Same song, second verse",
           "topic_sentence": "Notice the shape of the argument, because the book made it again at a larger scale.",
           "id_source": "derived",
-          "block_index": 89,
+          "block_index": 92,
           "points": [
             {
               "slug": "wrap-the-unreliable-part",
               "text": "Wrap the unreliable part: bound, type, validate.",
-              "block_index": 91
+              "block_index": 94
             },
             {
               "slug": "agents-are-the-same-component",
               "text": "The agents are the same component, wrapped the same way.",
-              "block_index": 93
+              "block_index": 96
             }
           ]
         }
