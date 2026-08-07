@@ -535,6 +535,24 @@
       "location": "part6",
       "rationale": "evidence-form comparison"
     },
+    "where-mage-fits::The Modeling Ceiling": {
+      "tier": "B",
+      "kind": "comparison-summary",
+      "location": "part6",
+      "rationale": "modeling-ceiling matrix across six sites + MAGE"
+    },
+    "where-mage-fits::What Everyone Does": {
+      "tier": "B",
+      "kind": "comparison-summary",
+      "location": "part6",
+      "rationale": "universal-convergence bucket"
+    },
+    "where-mage-fits::What Industry Discovered": {
+      "tier": "B",
+      "kind": "comparison-summary",
+      "location": "part6",
+      "rationale": "generalizes-convergence bucket"
+    },
     "colophon::The manuscript's governing models and the failures they prevent": {
       "tier": "C",
       "kind": "reference-colophon",

@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1405,
+    "total_sites": 1408,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1074,
+      "book-web": 1077,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -175,7 +175,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 7
+            "occ": 21
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -889,7 +889,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 1
+            "occ": 3
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -1204,6 +1204,10 @@
             "occ": 1
           },
           {
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 2
+          },
+          {
             "file": "book/6.6-conclusion.html",
             "occ": 1
           },
@@ -1231,7 +1235,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 10
+            "occ": 11
           }
         ]
       },
@@ -1489,7 +1493,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 27
+            "occ": 44
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -2019,7 +2023,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 1
+            "occ": 6
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -2701,7 +2705,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 16
+            "occ": 38
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -3607,7 +3611,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 2
+            "occ": 4
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -4562,6 +4566,10 @@
             "occ": 1
           },
           {
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
             "file": "book/book-index.html",
             "occ": 1
           },
@@ -4577,7 +4585,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 11
+            "occ": 12
           }
         ]
       },
@@ -5269,7 +5277,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 3
+            "occ": 6
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -5854,6 +5862,10 @@
             "occ": 1
           },
           {
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 3
+          },
+          {
             "file": "book/6.6-conclusion.html",
             "occ": 2
           },
@@ -5905,7 +5917,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 29
+            "occ": 30
           }
         ]
       },

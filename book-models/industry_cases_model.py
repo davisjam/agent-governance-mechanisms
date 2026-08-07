@@ -40,6 +40,9 @@ import re
 import sys
 from dataclasses import dataclass, field
 
+import chapter_identity_model as chapter_identity  # sibling in book-models/; the chapter surrogate-key model
+from _projection_parity import page_block_parity  # shared authored-page table-parity check (extract-on-3rd-site)
+
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/ is one level down)
 _BOOK = os.path.join(_ROOT, "book")
@@ -47,6 +50,11 @@ _DECLARED = os.path.join(_HERE, "industry_cases_declared.json")
 _REFERENCES_BIB = os.path.join(_BOOK, "references.bib")
 _CITATIONS_JSON = os.path.join(_BOOK, "data", "citations.json")
 _THEORY_DECLARED = os.path.join(_HERE, "theory_of_mage_declared.json")
+
+#: The chapter the modeling-ceiling matrix + the two convergence tables are authored into — the MCL5/CCP4
+#: parity target. Resolved through the chapter-identity model, so a renumber of 6.5 updates the target
+#: automatically (the label is frozen; the filename is the one field a reorg edits).
+_PAGE_REL = chapter_identity.filename("where-mage-fits")
 
 #: The status enum. A `pending-writeup` stub carries only the roster fields; `authored` records are checked
 #: fully (the status-aware schema split, IC1).
@@ -732,20 +740,40 @@ def cross_case_pattern_findings(model: "IndustryCasesModel | None" = None) -> "l
 
 
 def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
-    """The page-parity checks — VACUOUS this wave. Three matrices, none yet authored into a chapter page (the
-    prose wave places them), so there is nothing to hold byte-equal:
-      - IC5  — the correspondence matrix: wire `page_block_parity(page, header, render_matrix_md().splitlines())`.
-      - MCL5 — the modeling-ceiling matrix: wire against `render_modeling_ceiling_md()`.
-      - CCP4 — the convergence tables: two wires, `render_convergence_md('universal')` +
+    """The page-parity checks. The prose wave has placed the modeling-ceiling matrix + the two convergence
+    tables onto the `where-mage-fits` chapter, so MCL5 and CCP4 are now ACTIVE — each placed block must equal
+    the model's projection byte-for-byte, or the page drifted from the evidence and must be regenerated:
+      - MCL5 — the modeling-ceiling matrix vs `render_modeling_ceiling_md()`.
+      - CCP4 — the convergence tables, two wires: `render_convergence_md('universal')` +
         `render_convergence_md('generalizes')`.
-    All three land VACUOUS exactly as the design specs — the prose wave places the tables later."""
-    return []
+    IC5 — the DocAble correspondence matrix — is NOT yet authored into any page, so it stays VACUOUS."""
+    if model is None:
+        model = derive_model()
+    page = os.path.join(_BOOK, _PAGE_REL)
+    findings: "list[str]" = []
+    # MCL5 — the modeling-ceiling matrix (header line is the projection's first line).
+    ceiling = render_modeling_ceiling_md(model).splitlines()
+    findings += page_block_parity(
+        page, ceiling[0], ceiling, display=_PAGE_REL, label="modeling-ceiling matrix",
+        regen_hint="python3 book-models/industry_cases_model.py ceiling")
+    # CCP4 — the two projected convergence tables (universal + generalizes). Both render an identical
+    # header line, so disambiguate by page order: universal is placed first (occurrence 0), generalizes
+    # second (occurrence 1).
+    for occurrence, bucket in enumerate(("universal", "generalizes")):
+        conv = render_convergence_md(bucket, model).splitlines()
+        findings += page_block_parity(
+            page, conv[0], conv, display=_PAGE_REL, label=f"{bucket} convergence table",
+            regen_hint=f"python3 book-models/industry_cases_model.py convergence {bucket}",
+            occurrence=occurrence)
+    # IC5 — the correspondence matrix stays vacuous until it too is placed on a page.
+    return findings
 
 
 def all_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
     """Structural (IC1-IC4 + IC6 + audit-only IC7) + modeling-ceiling (MCL1-MCL4) + cross-case-pattern
-    (CCP1-CCP3) + parity (IC5/MCL5/CCP4, vacuous this wave). This whole band is wired AUDIT-ONLY-first
-    (rule-#55): a follow-up promotes it to BLOCKING once a clean session confirms the drain."""
+    (CCP1-CCP3) + parity (MCL5 + CCP4 now ACTIVE — the tables are placed on the where-mage-fits chapter;
+    IC5 still vacuous). This whole band is wired AUDIT-ONLY-first (rule-#55): a follow-up promotes it to
+    BLOCKING once a clean session confirms the drain."""
     if model is None:
         model = derive_model()
     return (structural_findings(model) + modeling_ceiling_findings(model)
@@ -904,7 +932,7 @@ def _cmd_verify() -> int:
             print(f"  {f}")
         return 1
     print("industry-cases: schema + joins clean (IC1-IC4 + IC6 + MCL1-MCL4 + CCP1-CCP3; "
-          "IC5/MCL5/CCP4 parity vacuous — matrices not yet on a page)")
+          "MCL5 + CCP4 parity ACTIVE — placed tables byte-equal to the model; IC5 parity still vacuous)")
     return 0
 
 

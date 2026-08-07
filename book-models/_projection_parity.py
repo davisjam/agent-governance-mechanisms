@@ -57,15 +57,18 @@ def _ident(rec: object) -> str:
 
 # ---- page-table parity ------------------------------------------------------------------------------
 
-def _contiguous_pipe_run(page_md: str, header_line: str) -> "list[str]":
+def _contiguous_pipe_run(page_md: str, header_line: str, occurrence: int = 0) -> "list[str]":
     """The contiguous run of `|`-rows starting at the model's exact `header_line` — the table (header +
     rule + body, incl. band-label divider rows, which also begin with `|`). Comments/captions sit above
-    the header, so they are not swept in. Returns [] if the header line is not present."""
+    the header, so they are not swept in. `occurrence` selects WHICH match to anchor on when two placed
+    tables share an identical header line (e.g. two convergence tables on one page, distinguished only by
+    their rows) — `occurrence=0` (the default) preserves the single-table behaviour. Returns [] if the
+    header line's `occurrence`-th match is not present."""
     lines = [ln.rstrip() for ln in page_md.splitlines()]
-    try:
-        start = lines.index(header_line)
-    except ValueError:
+    matches = [i for i, ln in enumerate(lines) if ln == header_line]
+    if occurrence >= len(matches):
         return []
+    start = matches[occurrence]
     out: "list[str]" = []
     for ln in lines[start:]:
         if ln.startswith("|"):
@@ -77,16 +80,18 @@ def _contiguous_pipe_run(page_md: str, header_line: str) -> "list[str]":
 
 def page_block_parity(page_path: str, header_line: str, want_lines: "list[str]", *,
                       display: "str | None" = None, label: str = "table",
-                      regen_hint: str = "") -> "list[str]":
+                      regen_hint: str = "", occurrence: int = 0) -> "list[str]":
     """The authored page's `label` block must equal the model's projection. Extract the contiguous
     `|`-row run beginning at `header_line`; compare it to `want_lines` row for row. A mismatch means the
-    page drifted from the model — regenerate the block. Returns [] when the page carries exactly the
-    projection (or is absent — a caller that treats a missing page as a hard finding checks first)."""
+    page drifted from the model — regenerate the block. `occurrence` disambiguates two placed tables that
+    share an identical header line (default 0 = the first/only match). Returns [] when the page carries
+    exactly the projection (or is absent — a caller that treats a missing page as a hard finding checks
+    first)."""
     name = display or os.path.basename(page_path)
     if not os.path.isfile(page_path):
         return [f"parity: {label} page {name} does not exist"]
     page_md = open(page_path, encoding="utf-8").read()
-    got = _contiguous_pipe_run(page_md, header_line)
+    got = _contiguous_pipe_run(page_md, header_line, occurrence)
     if not got:
         return [f"parity: no {label} found in {name} (expected the model's header line)"]
     if got != want_lines:
