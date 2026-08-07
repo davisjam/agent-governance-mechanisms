@@ -66,7 +66,7 @@
   "mage_ceiling_row": {
     "_note": "Fixed row-0 of the modeling-ceiling matrix — the reference column of the guidance's table. Labelled MAGE (the method); DocAble is the built instance that dogfoods it (note carried in the caption). MAGE proposes the whole ladder: rungs 6-12 are its distinctive tier, and the drift gate (rung 12) is the single rung no external case in the corpus reaches. The all-yes column is the union of moves the corpus severally exhibits (Siemens supplies rungs 6-11; nobody external supplies rung 12), NOT a scoreboard.",
     "organization": "MAGE",
-    "caption": "MAGE (realized in DocAble). The all-yes column is the union of modeling moves the corpus severally exhibits — Siemens supplies rungs 6-11; nobody external supplies rung 12 — not a scoreboard.",
+    "caption": "MAGE (realized in DocAble) — this column is the method's self-assessment, not an external rating. The all-yes column is the union of modeling moves the corpus severally exhibits — Siemens supplies rungs 6-11; drift-gate (rung 12) is a claim about DocAble's own product that no external site reaches — not a scoreboard.",
     "cells": {
       "topology": "yes", "ownership-deps": "yes", "infra-as-code": "yes", "structured-policy": "yes",
       "data-lineage": "yes", "behavioral-state": "yes", "process-concurrency": "yes", "scenario": "yes",
@@ -662,8 +662,8 @@
         "statement": "Change the surrounding system as limitations appear rather than re-prompt the agent.",
         "bucket": "universal",
         "maps_to_construct": "governance-conversion",
-        "support": {"cloudflare-codex": "yes", "spotify-honk": "yes", "shopify": "yes", "docker": "yes", "siemens": "partial", "zenseact": "yes"},
-        "mage_generalization_note": "MAGE names the structural-diagnosis reflex; Siemens shows less evidence of changing the governance of future agents (the guidance's own qualification, the card §10 gap).",
+        "support": {"cloudflare-codex": "partial", "spotify-honk": "yes", "shopify": "yes", "docker": "yes", "siemens": "partial", "zenseact": "yes"},
+        "mage_generalization_note": "MAGE names the structural-diagnosis reflex; Siemens shows less evidence of changing the governance of future agents (the guidance's own qualification, the card §10 gap). Cloudflare downgraded yes->partial: it makes obligations machine-checkable and re-extracts on RFC change (a real environmental response), but the source shows no recurrence-closing conversion loop — matching the Cloudflare record's governance-conversion=not-described. FLAG: conservative interim per adversarial-review H1; author fork open (downgrade[applied]/upgrade-card/split) — see RATIFICATION-BATCH §E.1.",
         "nearest_external": null
       },
 
@@ -672,8 +672,8 @@
         "statement": "Failure becomes environmental improvement — governance conversion as a recurring loop.",
         "bucket": "generalizes",
         "maps_to_construct": "governance-conversion",
-        "support": {"cloudflare-codex": "yes", "spotify-honk": "partial", "shopify": "yes", "docker": "yes", "siemens": "no", "zenseact": "yes"},
-        "mage_generalization_note": "MAGE generalizes failure->diagnosis->durable mechanism; Spotify's Loop B is intent not measured (partial); Siemens's governance-conversion is not evidenced (the honest — cell).",
+        "support": {"cloudflare-codex": "partial", "spotify-honk": "partial", "shopify": "yes", "docker": "yes", "siemens": "no", "zenseact": "yes"},
+        "mage_generalization_note": "MAGE generalizes failure->diagnosis->durable mechanism; Spotify's Loop B is intent not measured (partial); Siemens's governance-conversion is not evidenced (the honest — cell). Cloudflare downgraded yes->partial: it makes obligations machine-checkable and re-extracts on RFC change, but the source shows no recurrence-closing conversion loop — matching the Cloudflare record's governance-conversion=not-described. FLAG: conservative interim per adversarial-review H1; author fork open (downgrade[applied]/upgrade-card/split) — see RATIFICATION-BATCH §E.1.",
         "nearest_external": null
       },
       {
@@ -755,7 +755,7 @@
         "bucket": "distinctive",
         "maps_to_construct": "governance-conversion",
         "support": {"cloudflare-codex": "no", "spotify-honk": "no", "shopify": "no", "docker": "no", "siemens": "no", "zenseact": "no"},
-        "mage_generalization_note": "MAGE names the abstraction, not the instance. Cloudflare (incident->RFC->Codex-rule->enforcement) performs it cleanly; the generalized operation is MAGE-only.",
+        "mage_generalization_note": "MAGE names the abstraction, not the instance. Cloudflare (incident->RFC->Codex-rule->enforcement) is one instance of an environmental response — it makes institutional policy machine-checkable and enforces it at review time — but not a demonstrated recurrence-closing conversion loop; the generalized operation is MAGE-only. FLAG: conservative interim per adversarial-review H1 — Cloudflare softened from 'performs it cleanly' / cleanest exemplar to an instance; author fork open (downgrade[applied]/upgrade-card/split) — see RATIFICATION-BATCH §E.1.",
         "nearest_external": "cloudflare-codex"
       },
       {
