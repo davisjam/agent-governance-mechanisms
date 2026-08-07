@@ -2062,17 +2062,17 @@
           "heading_text": "Why models are newly central",
           "topic_sentence": "Part 1 derived the Modeling Thesis from the machine; Part 2 built the executable-model architecture that earns it.",
           "id_source": "derived",
-          "block_index": 8,
+          "block_index": 9,
           "points": [
             {
               "slug": "the-economic-argument-for-models-runs-three-ways",
               "text": "Agents need, maintain, and enforce models; one plays four roles.",
-              "block_index": 10
+              "block_index": 11
             },
             {
               "slug": "the-executable-source-of-truth-delivers-the-four-roles",
               "text": "The executable source-of-truth architecture delivers the four roles.",
-              "block_index": 14
+              "block_index": 15
             }
           ]
         },
@@ -2082,37 +2082,37 @@
           "heading_text": "The upkeep that constrained MBSE, a fleet now pays cheaply",
           "topic_sentence": "Model-based systems engineering did not fail on its ideas.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 18,
           "points": [
             {
               "slug": "mbse-failed-on-upkeep-not-ideas",
               "text": "MBSE failed on upkeep, not on its ideas.",
-              "block_index": 19
+              "block_index": 20
             },
             {
               "slug": "the-fleet-supplies-cheaply-the-one-expense-that-buried-mbse",
               "text": "A fleet supplies MBSE's one fatal expense cheaply.",
-              "block_index": 21
+              "block_index": 22
             },
             {
               "slug": "the-zoo-is-large-enough-that-one-model-is-never-the-whole-picture",
               "text": "One model is never the whole picture.",
-              "block_index": 23
+              "block_index": 24
             },
             {
               "slug": "the-formal-definition-is-the-zoos-admission-test",
               "text": "The formal model definition is the zoo's admission test.",
-              "block_index": 26
+              "block_index": 27
             },
             {
               "slug": "mbse-here-is-derived-software-modeling-of-discrete-systems",
               "text": "MBSE here means derived software models of discrete systems.",
-              "block_index": 28
+              "block_index": 29
             },
             {
               "slug": "the-model-level-buys-fewer-tokens-velocity-and-quality-together",
               "text": "The model level buys fewer tokens, velocity, and quality together.",
-              "block_index": 30
+              "block_index": 31
             }
           ]
         },
@@ -2122,12 +2122,12 @@
           "heading_text": "Kruchten's 4+1 views organize the Part",
           "topic_sentence": "The last chapter named Kruchten's **4+1 views** as the reason one model is never enough.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 33,
           "points": [
             {
               "slug": "this-part-promotes-4-plus-1-to-its-organizing-structure",
               "text": "This Part organizes itself by Kruchten's 4+1 views.",
-              "block_index": 34
+              "block_index": 35
             }
           ]
         },
@@ -2137,12 +2137,12 @@
           "heading_text": "What this book adds to 4+1: the drift gate",
           "topic_sentence": "Kruchten, of course, described the views; he did not have a drift gate.",
           "id_source": "derived",
-          "block_index": 39,
+          "block_index": 40,
           "points": [
             {
               "slug": "the-books-addition-to-4-plus-1-is-the-drift-gate",
               "text": "The book adds to 4+1 a drift gate per view.",
-              "block_index": 41
+              "block_index": 42
             }
           ]
         },
@@ -2152,27 +2152,27 @@
           "heading_text": "The framework is a choice; the core is not",
           "topic_sentence": "Making the model executable is why this Part is not really *about* 4+1.",
           "id_source": "derived",
-          "block_index": 43,
+          "block_index": 44,
           "points": [
             {
               "slug": "once-the-core-is-executable-a-framework-is-a-projection-not-a-second-model",
               "text": "An executable core makes a framework a projection.",
-              "block_index": 45
+              "block_index": 46
             },
             {
               "slug": "rival-frameworks-are-renderings-of-one-executable-core",
               "text": "Rival frameworks are renderings of one executable core.",
-              "block_index": 47
+              "block_index": 48
             },
             {
               "slug": "a-lens-is-a-second-projection-that-hides-content-but-cannot-invent-it",
               "text": "A lens hides content but cannot invent it.",
-              "block_index": 49
+              "block_index": 50
             },
             {
               "slug": "hit-the-executable-core-and-the-framework-wars-dissolve-into-projection-choices",
               "text": "Hit the executable core; framework wars become projection choices.",
-              "block_index": 53
+              "block_index": 54
             }
           ]
         },
@@ -2182,12 +2182,12 @@
           "heading_text": "The trunk: machinery that holds any view true",
           "topic_sentence": "Before the views, one chapter of framing.",
           "id_source": "derived",
-          "block_index": 55,
+          "block_index": 56,
           "points": [
             {
               "slug": "the-trunk-is-the-shared-machinery-that-makes-every-view-executable",
               "text": "Shared trunk machinery makes every view executable and drift-proof.",
-              "block_index": 57
+              "block_index": 58
             }
           ]
         },
@@ -2197,17 +2197,17 @@
           "heading_text": "Derive and join; do not repeat",
           "topic_sentence": "The last chapter warned against repetition: two models that say the same thing must now be kept in sync.",
           "id_source": "derived",
-          "block_index": 69,
+          "block_index": 70,
           "points": [
             {
               "slug": "a-model-is-derived-and-joined-never-repeated",
               "text": "A model is derived and joined, never repeated.",
-              "block_index": 72
+              "block_index": 73
             },
             {
               "slug": "derivation-and-join-are-the-cure-for-repetition",
               "text": "Derivation and join are the cure for repetition.",
-              "block_index": 74
+              "block_index": 75
             }
           ]
         },
@@ -2217,17 +2217,17 @@
           "heading_text": "State the derivation direction",
           "topic_sentence": "A model and the code it concerns stay equal by derivation, and derivation runs in one of two directions.",
           "id_source": "derived",
-          "block_index": 76,
+          "block_index": 77,
           "points": [
             {
               "slug": "name-the-direction-of-derivation-up-front",
               "text": "Name the direction of derivation up front.",
-              "block_index": 79
+              "block_index": 80
             },
             {
               "slug": "most-of-the-zoo-is-model-from-code-because-the-codebase-came-first",
               "text": "Most of the zoo is model-from-code; the codebase came first.",
-              "block_index": 84
+              "block_index": 85
             }
           ]
         },
@@ -2237,22 +2237,22 @@
           "heading_text": "Extracted Code Graphs and Intent-Bearing Models",
           "topic_sentence": "The purest model-from-code artifact is not one of the zoo's own views.",
           "id_source": "derived",
-          "block_index": 86,
+          "block_index": 87,
           "points": [
             {
               "slug": "a-code-graph-recovers-structure-an-authored-model-declares-intent",
               "text": "A code graph recovers structure; an authored model declares intent.",
-              "block_index": 88
+              "block_index": 89
             },
             {
               "slug": "a-code-graph-and-an-authored-model-compose-through-a-gate",
               "text": "Code graph and authored model compose through a gate.",
-              "block_index": 95
+              "block_index": 96
             },
             {
               "slug": "spec-driven-development-authors-intent-as-prose-not-a-typed-model",
               "text": "Spec-driven development authors intent as prose, not a structured model.",
-              "block_index": 99
+              "block_index": 100
             }
           ]
         },
@@ -2262,32 +2262,32 @@
           "heading_text": "Trace every model element to code",
           "topic_sentence": "A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it.",
           "id_source": "derived",
-          "block_index": 103,
+          "block_index": 104,
           "points": [
             {
               "slug": "every-model-traces-to-the-code-in-both-directions",
               "text": "Every model traces to the code in both directions.",
-              "block_index": 106
+              "block_index": 107
             },
             {
               "slug": "the-template-folds-a-traceability-note-into-every-page",
               "text": "The template folds a traceability note into every page.",
-              "block_index": 108
+              "block_index": 109
             },
             {
               "slug": "a-zoo-of-drifted-views-is-worse-than-none",
               "text": "A zoo of drifted views is worse than none.",
-              "block_index": 110
+              "block_index": 111
             },
             {
               "slug": "the-round-trip-must-be-derived-not-snapshotted",
               "text": "The round-trip must be derived, not snapshotted.",
-              "block_index": 112
+              "block_index": 113
             },
             {
               "slug": "a-resolving-edge-is-both-drift-detection-and-navigation",
               "text": "A resolving edge is both drift-detection and navigation.",
-              "block_index": 114
+              "block_index": 115
             }
           ]
         },
@@ -2297,22 +2297,22 @@
           "heading_text": "Keeping the models honest — the traceability substrate",
           "topic_sentence": "DocAble did not design this up front.",
           "id_source": "derived",
-          "block_index": 117,
+          "block_index": 118,
           "points": [
             {
               "slug": "the-substrate-was-built-from-what-broke-not-designed-up-front",
               "text": "The substrate was built from what broke, not designed.",
-              "block_index": 119
+              "block_index": 120
             },
             {
               "slug": "a-stale-model-makes-agents-plan-against-a-system-that-no-longer-exists",
               "text": "A stale model makes agents plan against a dead system.",
-              "block_index": 121
+              "block_index": 122
             },
             {
               "slug": "the-checklist-approach-fails-because-a-hand-maintained-list-rots",
               "text": "A hand-maintained checklist rots the moment the code moves.",
-              "block_index": 123
+              "block_index": 124
             }
           ]
         },
@@ -2322,17 +2322,17 @@
           "heading_text": "Reading the fix off real drift",
           "topic_sentence": "The right sensor was read off real drift rather than guessed.",
           "id_source": "derived",
-          "block_index": 125,
+          "block_index": 126,
           "points": [
             {
               "slug": "the-fix-was-read-off-real-drift-not-guessed",
               "text": "The fix was read off real drift, not guessed.",
-              "block_index": 127
+              "block_index": 128
             },
             {
               "slug": "the-graph-is-nodes-the-system-already-has-joined-by-re-proved-edges",
               "text": "The graph joins existing nodes by re-proved edges.",
-              "block_index": 129
+              "block_index": 130
             }
           ]
         },
@@ -2342,17 +2342,17 @@
           "heading_text": "Two decisions that make the graph resist rot",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 131,
+          "block_index": 132,
           "points": [
             {
               "slug": "the-symbol-walk-fires-at-a-slower-cadence-because-the-cadence-follows-the-cost",
               "text": "The symbol walk fires slowly because cadence follows cost.",
-              "block_index": 134
+              "block_index": 135
             },
             {
               "slug": "derived-sensors-defend-snapshotted-ones-drift",
               "text": "Derived sensors defend; snapshotted ones drift.",
-              "block_index": 136
+              "block_index": 137
             }
           ]
         },
@@ -2362,17 +2362,17 @@
           "heading_text": "How to read a model page",
           "topic_sentence": "Every model in this Part is rendered by filling the same five-field template.",
           "id_source": "derived",
-          "block_index": 138,
+          "block_index": 139,
           "points": [
             {
               "slug": "every-model-page-fills-the-same-five-field-template",
               "text": "Every model page fills the same five-field template.",
-              "block_index": 142
+              "block_index": 143
             },
             {
               "slug": "the-five-fields-answer-the-five-questions-a-reader-brings-to-a-model",
               "text": "The five fields answer the reader's five questions.",
-              "block_index": 146
+              "block_index": 147
             }
           ]
         },
@@ -2382,27 +2382,27 @@
           "heading_text": "A model is its schema plus its checked predicates",
           "topic_sentence": "Every model page in this Part draws the same **coherence triangle**.",
           "id_source": "derived",
-          "block_index": 148,
+          "block_index": 149,
           "points": [
             {
               "slug": "a-model-page-draws-one-shape-three-times",
               "text": "Every model page draws the coherence triangle: schema, invariants, checker.",
-              "block_index": 149
+              "block_index": 150
             },
             {
               "slug": "the-invariants-and-gate-complete-the-models-value",
               "text": "A model's value is both its schema and checked invariants.",
-              "block_index": 151
+              "block_index": 152
             },
             {
               "slug": "each-invariant-was-earned-from-a-failure",
               "text": "Each invariant was earned from a failure.",
-              "block_index": 153
+              "block_index": 154
             },
             {
               "slug": "the-trunk-is-built-so-the-branches-can-be-walked",
               "text": "The trunk is built; the five views are the branches.",
-              "block_index": 163
+              "block_index": 164
             }
           ]
         }
@@ -2416,12 +2416,12 @@
         {
           "slug": "a-real-drift-checked-codebase-sits-under-every-model",
           "text": "One real codebase carries dozens of drift-checked models.",
-          "block_index": 3
+          "block_index": 4
         },
         {
           "slug": "every-model-in-part-3-is-one-executable-schema",
           "text": "Every Part-3 model is one executable schema, worn five ways.",
-          "block_index": 5
+          "block_index": 6
         }
       ]
     },
@@ -2458,7 +2458,7 @@
           "section_id": "domain-registries",
           "level": 2,
           "heading_text": "The domain registries",
-          "topic_sentence": "The domain registries are the frozen tables the service-flow model rests on — the file types the system handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces.",
+          "topic_sentence": "**Freeze engineering facts that change slowly but are consulted everywhere.** A fact read in many places and revised rarely is exactly the fact that drifts when each reader keeps its own copy; make it a registry every consumer joins to by key, and disagreement becomes a build failure instead of a latent inconsistency.",
           "id_source": "explicit",
           "block_index": 31,
           "points": [
@@ -2759,12 +2759,12 @@
             {
               "slug": "it-assesses-graph-portability-and-rationing-correctness",
               "text": "It assesses graph portability and rationing correctness.",
-              "block_index": 48
+              "block_index": 47
             },
             {
               "slug": "the-execution-plan-derives-from-the-host-profile",
               "text": "The execution plan derives from the host profile.",
-              "block_index": 61
+              "block_index": 60
             }
           ]
         },
@@ -2774,12 +2774,12 @@
           "heading_text": "The control↔substrate dependency model",
           "topic_sentence": "The substrate-dependency model makes each governance mechanism declare, as typed metadata, the substrate assumption it bakes in — bound to one substrate, substrate-aware, or substrate-agnostic.",
           "id_source": "explicit",
-          "block_index": 64,
+          "block_index": 63,
           "points": [
             {
               "slug": "declared-substrate-stances-turn-a-migration-grep-into-a-blast-radius",
               "text": "Declared substrate stances make a migration blast radius computable.",
-              "block_index": 66
+              "block_index": 65
             }
           ]
         }
@@ -2807,12 +2807,12 @@
           "heading_text": "The user-journey model",
           "topic_sentence": "The user-journey model makes the product's journeys first-class typed entities — each an actor pursuing a goal through ordered steps, every boundary-crossing step joined to the endpoint it calls.",
           "id_source": "explicit",
-          "block_index": 6,
+          "block_index": 7,
           "points": [
             {
               "slug": "the-user-journey-model-copies-nothing-and-the-zoo-joins-to-it",
               "text": "The user-journey model copies nothing; the zoo joins to it.",
-              "block_index": 8
+              "block_index": 9
             }
           ]
         },
@@ -2822,12 +2822,12 @@
           "heading_text": "The agent-orchestration model",
           "topic_sentence": "The agent-orchestration model is the developer-journey counterpart — the scenarios view pointed at the fleet rather than the user.",
           "id_source": "explicit",
-          "block_index": 12,
+          "block_index": 13,
           "points": [
             {
               "slug": "method-parity-governs-the-fleet-like-the-product-it-ships",
               "text": "Method parity governs the fleet like the product it ships.",
-              "block_index": 14
+              "block_index": 15
             }
           ]
         },
@@ -2837,12 +2837,12 @@
           "heading_text": "Journey-criticality → test-placement",
           "topic_sentence": "This model — the **Selector** in the join below — derives which environment tier a journey's tests run in from the journey's criticality: a `MAJOR` part runs the fast local tier and the full staging matrix, a `MINOR` part runs staging only.",
           "id_source": "explicit",
-          "block_index": 18,
+          "block_index": 19,
           "points": [
             {
               "slug": "a-journeys-criticality-derives-its-test-tier-never-stored",
               "text": "A journey's criticality derives its test tier, never stored.",
-              "block_index": 20
+              "block_index": 21
             }
           ]
         },
@@ -2852,12 +2852,12 @@
           "heading_text": "Coverage → model-node mapping",
           "topic_sentence": "Coverage-to-node mapping projects the test suite's coverage onto the model's *nodes* — states, seams, invariants, journey endpoints — instead of its lines (node coverage over line coverage, as [Metrics](2.5-metrics.html) laid out).",
           "id_source": "explicit",
-          "block_index": 24,
+          "block_index": 25,
           "points": [
             {
               "slug": "projecting-coverage-onto-nodes-makes-an-untested-invariant-visible",
               "text": "Projecting coverage onto nodes makes an untested invariant visible.",
-              "block_index": 26
+              "block_index": 27
             }
           ]
         },
@@ -2867,17 +2867,17 @@
           "heading_text": "Journey task-closure — asserting the goal completed",
           "topic_sentence": "The three models above ask whether a journey's test *exists*, *runs*, and runs *in which tier*.",
           "id_source": "explicit",
-          "block_index": 31,
+          "block_index": 32,
           "points": [
             {
               "slug": "task-closure-types-what-the-terminal-assertion-must-mean",
               "text": "Task-closure types what the terminal assertion must mean.",
-              "block_index": 33
+              "block_index": 34
             },
             {
               "slug": "a-flow-only-closure-on-a-major-journey-is-a-finding",
               "text": "A flow-only closure on a major journey is a finding.",
-              "block_index": 36
+              "block_index": 37
             }
           ]
         },
@@ -2887,12 +2887,12 @@
           "heading_text": "Worked join — the journey↔coverage↔deploy-policy composition",
           "topic_sentence": "**The compositional question:** *watch one fact — a journey is* major — *travel through four models with nothing said twice, until a product goal reaches all the way to how the deploy rations its tests.* The other model pages each show a single model; this one shows them **joining, not repeating.** Four models compose on one shared key — the journey and its endpoints:",
           "id_source": "explicit",
-          "block_index": 41,
+          "block_index": 42,
           "points": [
             {
               "slug": "four-models-join-on-one-fact-with-nothing-said-twice",
               "text": "Four models join on one fact, nothing said twice.",
-              "block_index": 43
+              "block_index": 44
             }
           ]
         },
@@ -2902,16 +2902,16 @@
           "heading_text": "The three questions the join answers",
           "topic_sentence": "Three questions the raw deploy scripts and test config cannot answer on their own.",
           "id_source": "derived",
-          "block_index": 48,
+          "block_index": 49,
           "points": []
         },
         {
           "section_id": "the-composite-picture",
           "level": 3,
           "heading_text": "The composite picture",
-          "topic_sentence": "The join has no single appendix diagram, so this composite is built from the four real panels, adding only the join edges between them; read it left to right, in [ref:join-composite].",
+          "topic_sentence": "Everything so far has examined models individually.",
           "id_source": "derived",
-          "block_index": 51,
+          "block_index": 52,
           "points": []
         },
         {
@@ -2920,7 +2920,7 @@
           "heading_text": "The invariants the join spans",
           "topic_sentence": "The join's invariants span all four models, collected in [ref:scenarios-invariants].",
           "id_source": "derived",
-          "block_index": 54,
+          "block_index": 55,
           "points": []
         },
         {
@@ -2929,7 +2929,7 @@
           "heading_text": "The Selector and Scheduler in code",
           "topic_sentence": "Two pieces of real policy code make the join concrete — the **Selector** derives a host's test roster from the journey model, and the **Scheduler** rations that roster per host.",
           "id_source": "derived",
-          "block_index": 57,
+          "block_index": 58,
           "points": []
         },
         {
@@ -2938,12 +2938,12 @@
           "heading_text": "Tracing one fact through four models",
           "topic_sentence": "The join keys chain, and a reader can walk them against the figure: the **endpoint** ties M13 to M5, the **criticality** ties M13 to M6, the **derived tier** ties M6 to M7's roster, and the **host profile** ties the roster to the plan.",
           "id_source": "derived",
-          "block_index": 64,
+          "block_index": 65,
           "points": [
             {
               "slug": "four-chained-join-keys-round-trip-major-to-serialized",
               "text": "Four chained join keys round-trip major to serialized.",
-              "block_index": 66
+              "block_index": 67
             }
           ]
         }
@@ -2957,7 +2957,7 @@
         {
           "slug": "a-user-journey-anchors-the-view-with-five-real-models",
           "text": "A user journey anchors the view; models enter where used.",
-          "block_index": 3
+          "block_index": 4
         }
       ]
     },

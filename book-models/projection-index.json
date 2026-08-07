@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1387,
+    "total_sites": 1386,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1056,
+      "book-web": 1055,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -87,11 +87,11 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 29
+            "occ": 30
           },
           {
             "file": "book/3.2-the-logical-view.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/3.3-the-process-view.html",
@@ -1365,7 +1365,7 @@
           },
           {
             "file": "book/3.2-the-logical-view.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/3.3-the-process-view.html",
@@ -1381,7 +1381,7 @@
           },
           {
             "file": "book/3.6-the-scenarios-view.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/3.7-the-scope-of-modeling.html",
@@ -2569,7 +2569,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 155
+            "occ": 156
           },
           {
             "file": "book/3.2-the-logical-view.html",
@@ -3353,7 +3353,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 102
+            "occ": 103
           },
           {
             "file": "catalogue-figure.html",
@@ -3903,14 +3903,10 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 4
+            "occ": 3
           },
           {
             "file": "book/3.2-the-logical-view.html",
-            "occ": 1
-          },
-          {
-            "file": "book/3.5-the-physical-view.html",
             "occ": 1
           },
           {
@@ -3965,7 +3961,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 24
+            "occ": 23
           }
         ]
       },
