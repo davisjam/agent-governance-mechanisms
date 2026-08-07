@@ -36,5 +36,5 @@ remediation verb stamps, so a new verb cannot land unattributed.
 
 Completeness rides on that wiring lint: a verb the lint does not cover can mutate silently. The debug/preserved
 split is an authoring decision, so a pass that picks the wrong tier either leaks scaffolding into delivery or
-loses attribution the operator wanted. And the stamp is only as trustworthy as the strip step that runs before
-the document leaves the pipeline.
+loses attribution the operator wanted. Ultimately, the stamp is only as trustworthy as the strip step that
+runs before the document leaves the pipeline — that step is the guarantee's floor.

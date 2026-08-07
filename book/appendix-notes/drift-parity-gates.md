@@ -38,4 +38,4 @@ generation over a hand-copied assertion.
 
 Every model carries the cost of a gate to author and maintain, a real breadth of enforcement surface. A wrong
 parity predicate is its own hazard — it produces phantom drift that erodes trust, or false confidence that
-hides the real thing. And a model with no machine-readable reality to check against cannot be gated at all.
+hides the real thing. A model with no machine-readable reality to check against cannot be gated at all.

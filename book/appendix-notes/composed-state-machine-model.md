@@ -45,5 +45,5 @@ checker each form demands — this entry specifies, that one proves, neither use
 
 A form no checker reads only looks verified, so the field must stay required and consumed. The check proves
 invariants across the modeled interleavings only; a bug the model abstracts away is out of scope, so the
-proof is only as strong as the model's fidelity. And it needs a real lifecycle enacted through addressable
-state to reconcile against — without that, this is a hand-drawn diagram, not a checked model.
+proof is only as strong as the model's fidelity. Without a real lifecycle enacted through addressable state to reconcile against, though, this is a
+hand-drawn diagram, not a checked model.

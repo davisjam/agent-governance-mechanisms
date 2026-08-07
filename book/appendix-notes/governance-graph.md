@@ -53,6 +53,5 @@ mechanism, and the drift lint that anchors each node to its wired hook or mediat
 
 The graph must not drift — a stale interaction model claims conflicts are covered when a mechanism changed
 underneath it, so the drift lint is not optional. Resource granularity is a tuning surface: too coarse and
-every pair sharing a broad token looks like a conflict; too fine and the graph is noise. And the model
-describes, it does not mandate — it checks proposed mechanisms on request and hardens an edge into a lint
-only where a collision recurs, lest the governance become a tower nobody wants.
+every pair sharing a broad token looks like a conflict; too fine and the graph is noise. The model describes; it does not mandate — it checks proposed mechanisms on request and hardens an edge
+into a lint only where a collision recurs, lest the governance itself become a tower nobody wants.

@@ -67,5 +67,4 @@ edges [appendix: meta-model-consumption].
 It pays off only at a substrate change; in a stable system the declarations sit inert, over-built if added
 speculatively to a substrate you will never change. A stance the closed enum cannot express forces an enum
 change — the honest signal that the substrate model itself grew a dimension — while an open string field would
-reintroduce the drift and typo class the enum exists to remove. And the existing controls must be back-filled
-before the lint can promote from audit-only to blocking.
+reintroduce the drift and typo class the enum exists to remove. Existing controls must all be back-filled before the lint can promote from audit-only to blocking.

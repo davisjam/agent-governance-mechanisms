@@ -35,7 +35,6 @@ validate wiring each verb carries, and the lints that hold no change happening o
 
 ## Known limitations
 
-The guarantee holds only while every mutation truly routes through the set; a raw edit that escapes the
-layer is unbounded again, so the closure is exactly as strong as the discipline and lints that enforce
-it. And the set must grow to cover each new remediation capability, making completeness an ongoing
-obligation rather than a one-time closure.
+The set must grow to cover each new remediation capability, making completeness an ongoing obligation rather
+than a one-time closure. Ultimately, though, the guarantee holds only while every mutation truly routes
+through the set — the closure is exactly as strong as the discipline and lints that enforce it.

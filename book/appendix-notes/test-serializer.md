@@ -43,5 +43,4 @@ of hanging forever. An audited environment-variable escape exists for humans.
 
 Serialization is wall-clock cost: N=1 means tests queue, and a long run blocks every other worktree behind it.
 A stuck lock stalls everyone — the fail-loud cap bounds the damage but does not eliminate it. The human bypass
-is a hole; misused, it reintroduces the contention the serializer exists to kill. And the lock coordinates one
-machine only — it does nothing across hosts.
+is a hole; misused, it reintroduces the contention the serializer exists to kill. The lock coordinates one machine only; it does nothing across hosts.

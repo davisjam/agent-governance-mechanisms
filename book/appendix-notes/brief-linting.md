@@ -54,5 +54,5 @@ written.
 Each new marker is a maintenance edge: a new mandatory snippet means both a new check and threading the marker
 into the brief template, and drift between the two produces false rejections. The whole gate is bypassable by
 design, through a human-only, audit-logged escape hatch, so its floor is the discipline of not misusing that
-hatch. And because it validates form rather than intent, it can wave through a perfectly-structured brief that
-points the agent at the wrong work.
+hatch. Its ceiling is intent, not form: a perfectly-structured brief that points the agent at the wrong work
+sails straight through.

@@ -40,5 +40,5 @@ same read-don't-copy discipline.
 ## Known limitations
 
 The ban-lint's accuracy bounds the whole discipline: it must recognise a queryable value to flag its
-snapshot, so it has to be built before it can be relied on as a live gate. And querying only helps where a
-read path exists — a value with no queryable model behind it has nothing to derive from.
+snapshot, so it has to be built before it can be relied on as a live gate. Querying only helps where a read path exists: a value with no queryable model behind it has nothing to
+derive from.

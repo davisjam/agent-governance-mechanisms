@@ -101,7 +101,7 @@ two controls collide but how many guard each target.
 **Delivers** — a re-derived map of the estate's own blind spots. A control portfolio grows toward the last
 painful failure, so effort piles onto the target that just hurt while another accretes nothing, and the
 imbalance stays invisible because no artifact ever asks whether coverage is balanced. Here a target with
-zero controls, or with only soft aims and no hard hold, is a first-class finding. A fail-loud classifier
+zero controls, or with only soft aims and no hard hold, earns its own line on the census. A fail-loud classifier
 refuses any control it cannot place, so the map can never silently mis-credit a control to the wrong target.
 
 **Hands to INTERPRET** — a named gap to fill. Where the census surfaces an under-watched target, the

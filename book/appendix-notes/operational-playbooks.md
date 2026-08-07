@@ -41,6 +41,6 @@ index and from the signal that triggers it. Add one entry per signal the substra
 
 The mechanism is soft: a playbook informs, nothing forces the agent to open or follow it. Playbooks rot —
 when the substrate changes, a playbook whose steps aren't updated actively mis-directs the response, worse
-than no playbook at all. One written for a retired failure mode is dead weight. And a playbook is not
+than no playbook at all. One written for a retired failure mode is dead weight. Ultimately, a playbook is not
 prevention: a situation that recurs often enough should be designed out or gated by a hard sensor, not
 merely documented.

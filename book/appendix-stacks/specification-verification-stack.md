@@ -153,10 +153,10 @@ becomes observable, not at the cheapest or earliest point. (LEVEL.)
 
 **Receives** — the checks LINT defines, each needing a scope at which its invariant is actually observable.
 
-**Guarantees** — a check that fires where its property lives. Aim a lint one level too low and it passes on a
-spec-legal variation it should catch and fires on a legal one it should allow — present but wrong. Aim it
-right — check model-to-code drift when an agent returns from a multi-commit task, never at a per-commit hook
-where the model is legitimately mid-flight — and the check earns trust.
+**Guarantees** — a check that fires where its property lives. Aim a lint one level too low and it passes a
+spec-legal variation it should catch, while firing on a legal one it should allow: present, but wrong. Aim it
+right instead — check model-to-code drift when an agent returns from a multi-commit task, never at a
+per-commit hook where the model is legitimately mid-flight — and the check earns trust.
 
 **Hands to COVER** — checks placed where they can be believed. Only once each fires at its invariant's level
 is the deterministic tier worth mapping. A check placed a level off fails silently, reading as a false pass

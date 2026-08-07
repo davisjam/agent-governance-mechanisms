@@ -37,5 +37,5 @@ that tolerates legitimate reformatting and reordering without firing.
 
 The extractor defines what "content" means, so the guarantee is exactly as complete as the extraction —
 anything it doesn't extract, it can't protect. The subset predicate must tolerate legitimate reordering
-without false positives, or it blocks correct output. And the production gate detects a loss without
-localizing it; only the staging per-pass variant names the pass that caused it.
+without false positives, or it blocks correct output. The production gate detects a loss without localizing it; only the staging per-pass variant names the
+pass that caused it.

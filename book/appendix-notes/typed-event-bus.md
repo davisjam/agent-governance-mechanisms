@@ -44,5 +44,5 @@ plus post-cherry-pick monitoring cadence.
 
 A topic without a playbook entry is emitted but not interpretable — the observability-block rule exists
 because that gap is the common failure. Consumption is discipline, not machinery: the bus can carry a
-perfect signal and still be ignored if the orchestrator skips the cadence. And every new topic adds
-registry, emit-point, and playbook maintenance that must stay synchronized or the surface goes stale.
+perfect signal and still be ignored if the orchestrator skips the cadence. Every new topic adds registry, emit-point, and playbook maintenance that must stay synchronized, or the
+surface goes stale.

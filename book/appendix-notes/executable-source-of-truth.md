@@ -45,4 +45,4 @@ true [appendix: drift-parity-gates].
 Upkeep is real: the models must be maintained and the drift gates satisfied on every change, exactly the
 tedium that stops humans and the reason it needs agents. A wrong model is worse than none — an
 authoritative-looking model that has drifted misleads everything downstream, which is why the drift gates are
-not optional. And deciding what to model, and in what dialect, is design work up front.
+not optional. Deciding what to model, and in what dialect, is design work paid up front.

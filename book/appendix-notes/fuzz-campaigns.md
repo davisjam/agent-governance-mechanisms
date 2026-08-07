@@ -69,6 +69,5 @@ predicate, or a state-transition table — for the wild input to be judged again
 
 Campaigns cost real compute; coverage is tracked to know when they have saturated, and the baseline must
 be re-based only on intentional coverage-shape changes. Seed-fixing is the anti-pattern the RCA
-discipline exists to prevent — patching only the failing input leaves the spec-class open. And the
-model-as-oracle form is only as good as the declared outcome set: an outcome the model never named as
+discipline exists to prevent — patching only the failing input leaves the spec-class open. The model-as-oracle form is only as good as its declared outcome set: an outcome the model never named as
 legal or illegal escapes judgment entirely.

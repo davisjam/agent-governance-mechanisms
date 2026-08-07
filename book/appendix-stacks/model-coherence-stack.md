@@ -182,9 +182,9 @@ stack's stamp-writer needs to cover, so the two stacks meet at exactly this seam
 DocAble's PDF remediation is where SEAL earns its place. Every tag-tree read and write routes through one
 typed PDF model; a ban-lint forbids raw calls to the underlying library, so the format's invariants live in
 exactly one place and a fix holds across every call site at once. The surrounding lanes govern the wider
-system. The component-and-zone model, the job-lifecycle machines, the domain registries are all **DATA** —
-executable, not prose. Tools **CONSUME** them live: a check resolves "which service owns this seam" by
-querying the model, never by a copied constant. **PARITY** gates fail the build if a model row names a
+system. The component-and-zone model, the job-lifecycle machines, the domain registries are all **DATA**. Tools
+**CONSUME** them live: a check resolves "which service owns this seam" by querying the model, never a copied
+constant — the data is a source of truth because it is read, not paraphrased. **PARITY** gates fail the build if a model row names a
 service that no longer exists, or a service ships with no row. **DERIVE** anchors each model-to-code edge on
 a symbol, so a refactor that moves the code reddens the scan instead of silently breaking the link. And
 **EMIT** regenerates catalogs and wiring from the models with provenance headers, so the generated files

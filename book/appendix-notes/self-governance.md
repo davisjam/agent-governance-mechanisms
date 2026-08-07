@@ -22,9 +22,9 @@ forgets: on a long autonomous run the trigger lives only in fallible memory.
 Two halves, one soft and one hard, packaged together.
 
 - **The conversion loop.** On a recurrence, name the failure class, not the instance. Then pick the durable
-  control from a small ordered vocabulary: prefer a *constraint* — a structured seam, a closed enum, an
-  architecture that makes the wrong move unrepresentable — and fall back to a *sensor* — a lint, gate, test,
-  or runtime hook — when no constraint can be built. The loop scaffolds the control; it proposes, it does not
+  control from a small ordered vocabulary. Prefer a *constraint* — a structured seam, a closed enum, an
+  architecture that makes the wrong move unrepresentable. Fall back to a *sensor* (a lint, gate, test, or
+  runtime hook) only when no constraint can be built. The loop scaffolds the control; it proposes, it does not
   install.
 - **The time-aware trigger.** A reflection hook bound to a runtime lifecycle event fires the loop on a
   cadence, at most once per window, asking one question: did a failure recur that should become a control? The

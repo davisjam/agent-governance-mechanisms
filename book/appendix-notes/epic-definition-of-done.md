@@ -38,6 +38,5 @@ the contract the gate verifies against.
 
 The re-run is expensive — reviewer time plus a full pass of owned pins and lints at close, deliberately
 heavyweight because a false close is worse. The override is a hole: it exists for legitimately
-unreachable commits and is logged, but it is a way past the reachability check. And "owned" must be
-accurate — an Epic that under-declares what it owns re-runs too little and can still close on a rotted but
-unlisted defense.
+unreachable commits and is logged, but it is a way past the reachability check. The whole re-derivation rests on "owned" being accurate: an Epic that under-declares what it owns re-runs
+too little and can still close on a rotted but unlisted defense.

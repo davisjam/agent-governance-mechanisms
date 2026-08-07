@@ -63,6 +63,5 @@ audit cadence, a fast keyword companion catching the cheap cases inline.
 Resolution catches deletion, not demotion: a symbol that still exists but no longer plays the role the edge
 claims resolves green, so the keyword companion for present-tense role-currency is the complement. A
 weak-prover fallback is a standing warning — a code anchor that resolves only by textual presence re-admits,
-if left un-burned-down, the drift the strong prover exists to remove. And the edge vocabulary must fit the
-domain: a relationship the closed kind set can't express forces an enum change, the honest signal that the
-join web grew a dimension, not a licence for a free-form string edge.
+if left un-burned-down, the drift the strong prover exists to remove. The edge vocabulary has to fit the domain: a relationship the closed kind set can't express forces an enum
+change — the honest signal that the join web grew a dimension, not a licence for a free-form string edge.

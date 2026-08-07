@@ -41,6 +41,5 @@ build finding — a derived list nobody checks is just another report.
 ## Known limitations
 
 The join must stay accurate: a test the census fails to match to its obligation reports a false gap, and a
-stale match reports false safety, so the matching rule tracks how tests are named and tagged. And it
-measures obligation coverage, not test quality — a matched obligation counts as covered even if its test is
-weak, so it closes the "no test at all" gap and leans on other mechanisms to judge test strength.
+stale match reports false safety, so the matching rule tracks how tests are named and tagged. The line it draws is obligation coverage, not test quality: a matched obligation counts as covered even if
+its test is weak, so it closes the "no test at all" gap and leans on other mechanisms to judge test strength.

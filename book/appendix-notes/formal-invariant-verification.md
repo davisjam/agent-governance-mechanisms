@@ -44,6 +44,5 @@ state space; and the match lint that makes a mis-routed invariant a build error 
 ## Known limitations
 
 The proof is exhaustive only within bounds — the model is an abstraction, and a bug outside it is out of
-scope, so the guarantee is only as strong as the model's fidelity to the real system. And the form must
-stay honest: a decorative temporal string no checker reads is worse than none, because it looks verified and
-isn't.
+scope, so the guarantee is only as strong as the model's fidelity to the real system. The form has to stay honest: a decorative temporal string no checker reads is worse than none, because it
+looks verified and isn't.
