@@ -1,4 +1,4 @@
-"""The THEORY-OF-MAGE projection model — the chapter's Seven-Hypotheses table PROJECTED from the declared
+"""The THEORY-OF-MAGE projection model — the chapter's Eight-Hypotheses table PROJECTED from the declared
 theory source, so the page and the model cannot drift. A sibling of the other declared -> generated book
 models (metrics-dashboard / claims / spine): the hand-authored source of truth is
 `book-models/theory_of_mage_declared.json`; this module derives a typed model over it, projects the
@@ -49,7 +49,7 @@ _PAGE_REL = chapter_identity.filename("toward-a-theory-of-mage")
 
 #: The ratified counts — encode the author's set so a silent add/drop/reclassify reddens (the dashboard
 #: model's C5-analogue: the count guard is the backstop against silent H-table drift).
-EXPECT_HYPOTHESES = 7
+EXPECT_HYPOTHESES = 8
 EXPECT_SUBHYP = 2
 
 #: The hypotheses-table columns (the header the projection emits and the page carries; parity is exact).

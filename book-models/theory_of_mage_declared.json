@@ -1,5 +1,5 @@
 {
-  "_provenance": "HAND-AUTHORED declared source for the 'Toward a Theory of MAGE' back-matter chapter (book/part6/6.1-toward-a-theory-of-mage.md). This file IS edited by hand; it is the single source of truth for the chapter's dynamic model — the latent CONSTRUCTS, the four FEEDBACK LOOPS (with system-dynamics R/B typing), the path-specific MODERATORS, the three OUTCOMES, the seven falsifiable HYPOTHESES (H1-H7, replacing the legacy P1-P15), the corollaries, and the two directional relations. The chapter was relocated out of the appendices (legacy Appendix E) to a numbered main-text chapter this wave; the model was rewritten from the fifteen-prediction inventory to the seven-hypothesis dynamic model to match. Sibling in the book-models declared->generated idiom (see argument_spine_declared.json / claims_declared.json). WIRED: theory_of_mage_model.py projects the seven-hypotheses table into the chapter and drift-checks it against the authored prose (parity + structural TM1-TM7 + the ratified count guard), exactly as metrics_dashboard_model.py does for the Operator's Dashboard; the check lands AUDIT-ONLY in catalog.py validate. Regen discipline: edit HERE, then regenerate the projected table with `python3 book-models/theory_of_mage_model.py hypotheses-table`; never hand-edit the projection.",
+  "_provenance": "HAND-AUTHORED declared source for the 'Toward a Theory of MAGE' back-matter chapter (book/part6/6.1-toward-a-theory-of-mage.md). This file IS edited by hand; it is the single source of truth for the chapter's dynamic model — the latent CONSTRUCTS, the four FEEDBACK LOOPS (with system-dynamics R/B typing), the path-specific MODERATORS, the three OUTCOMES, the eight falsifiable HYPOTHESES (H1-H8, replacing the legacy P1-P15), the corollaries, and the two directional relations. The chapter was relocated out of the appendices (legacy Appendix E) to a numbered main-text chapter this wave; the model was rewritten from the fifteen-prediction inventory to the eight-hypothesis dynamic model to match. Sibling in the book-models declared->generated idiom (see argument_spine_declared.json / claims_declared.json). WIRED: theory_of_mage_model.py projects the eight-hypotheses table into the chapter and drift-checks it against the authored prose (parity + structural TM1-TM7 + the ratified count guard), exactly as metrics_dashboard_model.py does for the Operator's Dashboard; the check lands AUDIT-ONLY in catalog.py validate. Regen discipline: edit HERE, then regenerate the projected table with `python3 book-models/theory_of_mage_model.py hypotheses-table`; never hand-edit the projection.",
 
   "_intent": "Encode the book's argument as a middle-range DYNAMIC model in the causal-loop convention of system dynamics: latent CONSTRUCTS connected by four numbered feedback loops over one shared spine, path-specific MODERATORS attached to single transitions, three OUTCOMES, and seven falsifiable HYPOTHESES that follow from the loops. Single-case (DocAble); directional, not proven; no path coefficients are claimed.",
 
@@ -194,6 +194,16 @@
       "falsifier": "Split-authority or low-fit settings convert at the same rate and durability as high-fit, effective-authority ones.",
       "moderated_by": ["diagnostic-capability-fit", "authority"],
       "loops": ["L3-governance-adaptation"]
+    },
+    {
+      "id": "H8-learning-propagation",
+      "name": "Learning propagation",
+      "statement": "Greater externalization of engineering knowledge into shared, machine-actionable environment structures reduces the latency, and raises the consistency, with which locally acquired engineering insight reaches subsequent relevant work.",
+      "falsifier": "Increasing environment explicitness or machine-actionability does not reduce propagation latency or increase adoption consistency once communication opportunity is controlled.",
+      "loops": [
+        "L3-governance-adaptation",
+        "L1-bootstrap"
+      ]
     }
   ],
 
@@ -250,7 +260,7 @@
   "research_agenda": [
     {"study_design": "Multi-project longitudinal panel with environment-quality variation", "hypotheses": ["H2", "H3", "H4", "H6"]},
     {"study_design": "Subsystem-level panel tracking model gaps, churn, and escapes", "hypotheses": ["H1", "H5"]},
-    {"study_design": "Organizational comparison of diagnosis and authority pathways", "hypotheses": ["H7"]},
+    {"study_design": "Organizational comparison of diagnosis and authority pathways", "hypotheses": ["H7", "H8"]},
     {"study_design": "Instrument one failure class from first occurrence through recurrence -> structural recognition -> governance intervention -> later recurrence or escape (tests the discovery and adaptation loops directly)", "hypotheses": ["H1", "H2", "H3", "H6"]}
   ],
 

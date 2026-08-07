@@ -172,7 +172,7 @@
         {"rung": "drift-gate",                 "level": "not-seen", "note": "no drift gate over agent edits"}
       ],
 
-      "hypotheses": ["H3-mechanized-assurance", "H6-oversight-amortization"],
+      "hypotheses": ["H3-mechanized-assurance", "H6-oversight-amortization", "H8-learning-propagation"],
       "adds_to_mage": ["organizational-scale-view", "stable-claim-identities", "policy-promotion-lifecycle"],
       "mage_explains_implicit": "MAGE connects Cloudflare's separately-described retrieval + linters + reviewer + human approval as representation + determinization + validation + authority-allocation inside ONE governed environment.",
       "limitations": ["no-general-system-model-described", "no-failure-to-control-loop-established", "no-before-after-performance-data"],
@@ -330,7 +330,7 @@
         {"rung": "drift-gate",                 "level": "not-seen", "note": "no generalized model-node<->implementation drift gate"}
       ],
 
-      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H6-oversight-amortization"],
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H6-oversight-amortization", "H8-learning-propagation"],
       "adds_to_mage": ["publicness-precondition-for-compounding", "durable-session-as-model-independent-asset", "environment-first-agent-economics", "soft-governance-compounds", "multiplayer-as-environment-property"],
       "mage_explains_implicit": "MAGE connects Shopify's separately-named World / Aquifer / River / Profiles / Skills / Roast / Quick as representation + soft-conditioning + constraint + validation + feedback inside ONE governed environment, and names the structural-diagnosis question Shopify performs but never states.",
       "limitations": ["no-invariant-bearing-system-model-described", "no-generalized-model-territory-drift-gate", "no-before-after-causal-performance-data", "short-evidence-horizon", "no-false-positive-or-drift-rates-reported", "four-load-bearing-details-unverified-in-fetch"],
@@ -410,7 +410,7 @@
         {"rung": "drift-gate",                 "level": "not-seen", "note": "no representation<->territory drift check"}
       ],
 
-      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H7-conversion-conditions", "H6-oversight-amortization"],
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H7-conversion-conditions", "H6-oversight-amortization", "H8-learning-propagation"],
       "adds_to_mage": ["hard-boundaries-enable-more-autonomy", "authority-as-runtime-property-two-boundary-model", "skills-encode-roles-not-procedures", "durable-progress-outside-context-window", "autonomous-sensors-need-triage-economics", "generation-not-equal-evaluation", "bootstrap-follows-dependency-structure"],
       "mage_explains_implicit": "MAGE connects Docker's separately-named sandbox / roles / skills / testers / project-manager / worker-reviewer loop / CI / tests / merge as constraint + sensor + validator + gate + soft-conditioning + feedback + capital inside ONE governed environment, and names the structural-diagnosis question Docker performs but never states (the fix for false-positive overload was triage/confirmation, a missing mechanism, not a better tester prompt).",
       "limitations": ["no-invariant-bearing-system-model-described", "no-model-territory-drift-gate", "admission-gate-stays-probabilistic-plus-human", "per-merge-human-oversight-not-amortized-h6-boundary", "no-false-positive-or-reviewer-veto-rates", "short-evidence-horizon-~2-weeks", "no-soft-to-hard-promotion-lifecycle", "no-reconcile-retire-evidence"],
@@ -490,6 +490,7 @@
       ],
 
       "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H4-representation-leverage"],
+      "hypotheses_flag": "FLAG: H8-learning-propagation author-ratified: off. The digital-thread propagation reading is defensible — model updates propagate downstream, design changes trigger new analysis — but the card frames Siemens under H4 / the modeling half of MBAE and flags adaptive-governance / governance-conversion as its weakest field. The propagation here is of design artifacts, not of agent-governing learning, so H8 is deliberately not assigned pending stronger evidence.",
       "adds_to_mage": ["governed-artifact-need-not-be-source-code-mbae-keystone", "constraints-make-the-valid-world-easier-to-express", "engineering-formalisms-become-an-agent-action-language", "determinism-can-sit-downstream-of-semantic-autonomy", "brownfield-can-be-an-asset-not-a-recovery-problem", "a-model-predicts-not-merely-describes"],
       "mage_explains_implicit": "MAGE expresses Siemens's separately-named MBSE / digital twin / digital thread / PLM / CAE / model-based code generation / verification as one agentic architecture - the model makes intent legible, constraints delimit valid actions, validators generate independent evidence, gates govern consequential transitions, humans retain what cannot be mechanized - though the compression persuades less here because the model-first premise is already native.",
       "limitations": ["governance-conversion-not-evidenced-adaptive-governance-loop-absent", "prototype-product-and-vision-not-longitudinal-deployment", "no-population-scale-agent-deployment-numbers", "no-generalized-model-territory-drift-gate-over-agent-edits", "capability-amplification-contextual-not-tested", "authority-granularity-under-documented", "reconciliation-retirement-not-described"],
@@ -567,7 +568,7 @@
         {"rung": "drift-gate",                 "level": "not-seen", "note": "no representation<->territory drift check"}
       ],
 
-      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H4-representation-leverage", "H4a-representation-efficiency", "H6-oversight-amortization", "H7-conversion-conditions"],
+      "hypotheses": ["H2-governance-moderation", "H3-mechanized-assurance", "H4-representation-leverage", "H4a-representation-efficiency", "H6-oversight-amortization", "H7-conversion-conditions", "H8-learning-propagation"],
       "adds_to_mage": ["capability-discovery-itself-must-be-governed", "delegation-topology-is-an-authority-surface", "graduated-per-action-authority-auto-confirm-deny", "distributed-federated-governance-at-org-scale", "environment-improvement-can-target-context-selection", "trust-boundaries-run-in-both-directions", "the-context-router-can-be-deterministic"],
       "mage_explains_implicit": "MAGE compresses Zenseact's separately-named skills / tools / agents / progressive disclosure / permissions / delegation / sanitization / monitoring into one governed environment - skills as soft conditioning, the TF-IDF router as a sensor + reasoning-horizon mechanism (and a determinization of context selection), tool schemas as sanctioned seams, the permission table as authority allocation + a human gate, the delegation allow-list as a constraint on the agent topology, sanitization as a trust boundary, disclosure-miss telemetry as a sensor, the improvement pipeline as governance conversion, and the platform/domain split as an agent stack over federated engineering capital - and names the structural-diagnosis question Zenseact performs but never states.",
       "limitations": ["no-invariant-bearing-system-model-described-modeling-tension", "no-model-territory-drift-gate", "churn-defect-outcome-vocabulary-strains-on-knowledge-work", "no-productivity-or-defect-or-before-after-outcome-data", "deployment-duration-unstated", "reasoning-quality-half-of-progressive-disclosure-unmeasured", "single-primary-source", "reconcile-retire-not-described"],

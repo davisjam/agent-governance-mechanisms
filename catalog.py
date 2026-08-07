@@ -1212,7 +1212,7 @@ def cmd_validate(_args) -> int:
         for f in md_findings:
             print(f"              {f}")
         n_issues += len(md_findings)
-    # THEORY-OF-MAGE DRIFT GATE — BLOCKING. The 'Toward a Theory of MAGE' chapter's Seven-Hypotheses
+    # THEORY-OF-MAGE DRIFT GATE — BLOCKING. The 'Toward a Theory of MAGE' chapter's Eight-Hypotheses
     # table is a projection of a declared model (book-models/theory_of_mage_declared.json): the model
     # projects the 3-column table (H4 folds its H4a/H4b sub-hypotheses), theory_of_mage_model.py holds the
     # chapter's table byte-equal to that projection, delegates internal well-formedness to
@@ -1229,8 +1229,8 @@ def cmd_validate(_args) -> int:
             print(f"           {f}")
         n_issues += len(tm_findings)
     else:
-        print("  [theory] chapter Seven-Hypotheses table matches the declared model "
-              "(7 hypotheses, 2 sub-hypotheses; structural clean)")
+        print("  [theory] chapter Eight-Hypotheses table matches the declared model "
+              "(8 hypotheses, 2 sub-hypotheses; structural clean)")
     # NAMED-PROPOSITION check — AUDIT-ONLY. The theory model also declares named PROPOSITIONS (the quotable
     # theory statement a hypothesis encodes; the Reasoning-Horizon Proposition is H4's). Kept OUT of the
     # gating tmm.all_findings() and surfaced here non-gating (repo blocking-lint discipline: a new node type
@@ -3722,7 +3722,7 @@ def cmd_substantiation(args) -> int:
 
 
 def cmd_theory(args) -> int:
-    """The THEORY-OF-MAGE drift gate — the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is a
+    """The THEORY-OF-MAGE drift gate — the 'Toward a Theory of MAGE' chapter's Eight-Hypotheses table is a
     projection of the declared model (book-models/theory_of_mage_declared.json). No arg (or `verify`) drift-
     checks the chapter table against the projection (structural TM1-TM7 via theory_model_check + parity +
     the ratified count guard); `hypotheses-table` prints the markdown table for the page; `show` lists every
@@ -4114,7 +4114,7 @@ def main() -> int:
     lp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
     su = sub.add_parser("substantiation", help="the unified substantiation query: data-claims + lit-positioning citations nested under each argument-spine claim; flags UNDERQUANTIFIED (quantifiable, no data) + UNDER-SUBSTANTIATED-OR-SITUATED (reality-claim, no data AND no literature)")
     su.add_argument("--json", action="store_true", help="dump the machine form")
-    th = sub.add_parser("theory", help="the theory-of-mage drift gate: hold the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table equal to the declared model (book-models/theory_of_mage_declared.json). No arg drift-checks (structural + parity + count); hypotheses-table prints the table; show lists the hypotheses")
+    th = sub.add_parser("theory", help="the theory-of-mage drift gate: hold the 'Toward a Theory of MAGE' chapter's Eight-Hypotheses table equal to the declared model (book-models/theory_of_mage_declared.json). No arg drift-checks (structural + parity + count); hypotheses-table prints the table; show lists the hypotheses")
     th.add_argument("sub", nargs="?", choices=["verify", "hypotheses-table", "show"], help="verify (default) | hypotheses-table | show")
     dv = sub.add_parser("delivers", help="the per-chapter deliverable coverage map (concept OR artifact): one row per chapter (concepts DERIVED from index-def tags · authored artifact types · verdict), then DELIVERS-NEITHER (derived gap alarm) + ALL-PROSE-WOULD-BENEFIT (authored flag)")
     dv.add_argument("--json", action="store_true", help="dump the machine map (the chapter-shape model)")

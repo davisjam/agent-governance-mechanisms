@@ -511,13 +511,13 @@
       "location": "part6",
       "rationale": "the three predicted outcomes"
     },
-    "toward-a-theory-of-mage::MAGE's seven falsifiable hypotheses H1–H7": {
+    "toward-a-theory-of-mage::MAGE's eight falsifiable hypotheses H1–H8": {
       "tier": "A",
       "kind": "design-decision-table",
       "location": "part6",
       "rationale": "the theory's core claims + falsifiers; caption interprets"
     },
-    "toward-a-theory-of-mage::Three study designs mapped to H1–H7": {
+    "toward-a-theory-of-mage::Three study designs mapped to H1–H8": {
       "tier": "B",
       "kind": "summary-of-points",
       "location": "part6",
