@@ -5460,7 +5460,7 @@
           "section_id": "the-beautiful-garden-why-per-task-ablation-cannot-price-a-governed-environment",
           "level": 2,
           "heading_text": "The beautiful garden: why per-task ablation cannot price a governed environment",
-          "topic_sentence": "The most instructive negative result in this case study is one where the measurement *failed to find an effect* — and the failure is the finding.",
+          "topic_sentence": "One negative result in this case study is one where the measurement *failed to find an effect*, and the failure is what it found.",
           "id_source": "derived",
           "block_index": 11,
           "points": []
