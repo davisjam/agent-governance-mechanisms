@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1363,
+    "total_sites": 1368,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1032,
+      "book-web": 1037,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -375,7 +375,7 @@
           },
           {
             "file": "book/appendix-d-operating-doctrine.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/appendix-d-operators-dashboard.html",
@@ -383,7 +383,7 @@
           },
           {
             "file": "book/appendix-d-release-readiness.html",
-            "occ": 5
+            "occ": 3
           },
           {
             "file": "book/appendix-d-system-health.html",
@@ -884,6 +884,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendix-d-operating-doctrine.html",
+            "occ": 1
+          },
+          {
             "file": "book/book-index.html",
             "occ": 1
           },
@@ -895,7 +899,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 21
+            "occ": 22
           }
         ]
       },
@@ -1000,12 +1004,16 @@
             "occ": 1
           },
           {
+            "file": "book/appendix-d-daily-review.html",
+            "occ": 1
+          },
+          {
             "file": "book/appendix-d-operators-dashboard.html",
             "occ": 2
           },
           {
             "file": "book/appendix-d-system-health.html",
-            "occ": 2
+            "occ": 8
           },
           {
             "file": "book/book-index.html",
@@ -1023,7 +1031,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 27
+            "occ": 28
           }
         ]
       },
@@ -1605,7 +1613,7 @@
           },
           {
             "file": "book/appendix-d-engineering-capital.html",
-            "occ": 13
+            "occ": 15
           },
           {
             "file": "book/appendix-d-evidence-quality.html",
@@ -1617,7 +1625,7 @@
           },
           {
             "file": "book/appendix-d-governance-conversion.html",
-            "occ": 8
+            "occ": 9
           },
           {
             "file": "book/appendix-d-human-judgment.html",
@@ -1629,7 +1637,7 @@
           },
           {
             "file": "book/appendix-d-operating-doctrine.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/appendix-d-operators-dashboard.html",
@@ -2127,7 +2135,7 @@
           },
           {
             "file": "book/appendix-d-engineering-capital.html",
-            "occ": 7
+            "occ": 9
           },
           {
             "file": "book/appendix-d-evidence-quality.html",
@@ -2139,7 +2147,7 @@
           },
           {
             "file": "book/appendix-d-governance-conversion.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/appendix-d-human-judgment.html",
@@ -2785,11 +2793,11 @@
           },
           {
             "file": "book/appendix-d-brownfield-progress.html",
-            "occ": 8
+            "occ": 10
           },
           {
             "file": "book/appendix-d-daily-review.html",
-            "occ": 8
+            "occ": 12
           },
           {
             "file": "book/appendix-d-engineering-capital.html",
@@ -2809,11 +2817,11 @@
           },
           {
             "file": "book/appendix-d-human-judgment.html",
-            "occ": 9
+            "occ": 10
           },
           {
             "file": "book/appendix-d-model-health.html",
-            "occ": 14
+            "occ": 22
           },
           {
             "file": "book/appendix-d-operating-doctrine.html",
@@ -3890,6 +3898,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendix-d-operating-doctrine.html",
+            "occ": 1
+          },
+          {
             "file": "book/book-index.html",
             "occ": 1
           },
@@ -3901,7 +3913,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 22
+            "occ": 23
           }
         ]
       },
@@ -5730,6 +5742,14 @@
             "occ": 6
           },
           {
+            "file": "book/appendix-d-daily-review.html",
+            "occ": 1
+          },
+          {
+            "file": "book/appendix-d-governance-conversion.html",
+            "occ": 2
+          },
+          {
             "file": "book/figures.html",
             "occ": 15
           }
@@ -5737,7 +5757,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 26
+            "occ": 28
           }
         ]
       },
