@@ -349,6 +349,12 @@
       "location": "part6",
       "rationale": "the Churn/Compounding sign contrast — pairs two of the book's core dynamics; Part 6 anchor"
     },
+    "assets/mage-synthesis-spine.svg": {
+      "tier": "A",
+      "kind": "conceptual-framework",
+      "location": "part6",
+      "rationale": "the whole-book argument as one linear causal spine, each node tied to its home Part; the talk-reproduction synthesis figure at the 6.1 close — Part 6 anchor"
+    },
     "toward-a-theory-of-mage::Churn and its positive duals": {
       "tier": "B",
       "kind": "conceptual-table",
