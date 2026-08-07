@@ -553,6 +553,18 @@
       "location": "part6",
       "rationale": "generalizes-convergence bucket"
     },
+    "where-mage-fits::Universal patterns — key": {
+      "tier": "C",
+      "kind": "reference-key",
+      "location": "part6",
+      "rationale": "companion key-list to the universal glyph grid — construct + full statement per U-key"
+    },
+    "where-mage-fits::Discovered patterns — key": {
+      "tier": "C",
+      "kind": "reference-key",
+      "location": "part6",
+      "rationale": "companion key-list to the generalizes glyph grid — construct + full statement per G-key"
+    },
     "colophon::The manuscript's governing models and the failures they prevent": {
       "tier": "C",
       "kind": "reference-colophon",

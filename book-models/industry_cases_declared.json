@@ -588,6 +588,7 @@
     "patterns": [
       {
         "id": "externalize-knowledge",
+        "short_label": "Externalize knowledge",
         "statement": "Externalize knowledge/context rather than bet on foundation-model + repository + a giant prompt.",
         "bucket": "universal",
         "maps_to_construct": "reasoning-horizon",
@@ -597,6 +598,7 @@
       },
       {
         "id": "act-through-tools",
+        "short_label": "Act through tools",
         "statement": "Let agents act through tools/interfaces rather than through unbounded execution.",
         "bucket": "universal",
         "maps_to_construct": "thesis-alignment",
@@ -606,6 +608,7 @@
       },
       {
         "id": "bound-authority",
+        "short_label": "Bound authority",
         "statement": "Bound authority outside pure model judgment — the environment, not the reasoner, sets the line.",
         "bucket": "universal",
         "maps_to_construct": "thesis-alignment",
@@ -615,6 +618,7 @@
       },
       {
         "id": "combine-probabilistic-deterministic",
+        "short_label": "Probabilistic + deterministic",
         "statement": "Combine probabilistic reasoning with deterministic machinery on the decidable residue.",
         "bucket": "universal",
         "maps_to_construct": "determinization",
@@ -624,6 +628,7 @@
       },
       {
         "id": "preserve-human-authority",
+        "short_label": "Preserve human authority",
         "statement": "Preserve important human normative authority over consequential decisions.",
         "bucket": "universal",
         "maps_to_construct": "engineers-seat",
@@ -633,6 +638,7 @@
       },
       {
         "id": "engineer-context",
+        "short_label": "Engineer context",
         "statement": "Engineer context rather than dump everything into the prompt.",
         "bucket": "universal",
         "maps_to_construct": "reasoning-horizon",
@@ -642,6 +648,7 @@
       },
       {
         "id": "reusable-infrastructure",
+        "short_label": "Reusable infrastructure",
         "statement": "Build reusable shared infrastructure, not bespoke per-task prompts.",
         "bucket": "universal",
         "maps_to_construct": "bootstrap-governance",
@@ -651,6 +658,7 @@
       },
       {
         "id": "independent-evidence",
+        "short_label": "Independent evidence",
         "statement": "Generate independent evidence about agent work rather than trust the agent's own account.",
         "bucket": "universal",
         "maps_to_construct": "thesis-alignment",
@@ -660,6 +668,7 @@
       },
       {
         "id": "change-surrounding-system",
+        "short_label": "Change the system",
         "statement": "Change the surrounding system as limitations appear rather than re-prompt the agent.",
         "bucket": "universal",
         "maps_to_construct": "governance-conversion",
@@ -670,6 +679,7 @@
 
       {
         "id": "failure-to-improvement",
+        "short_label": "Failure to improvement",
         "statement": "Failure becomes environmental improvement — governance conversion as a recurring loop.",
         "bucket": "generalizes",
         "maps_to_construct": "governance-conversion",
@@ -679,6 +689,7 @@
       },
       {
         "id": "institutional-knowledge-capital",
+        "short_label": "Knowledge as capital",
         "statement": "Accumulated institutional knowledge treated as engineering capital.",
         "bucket": "generalizes",
         "maps_to_construct": "bootstrap-governance",
@@ -688,6 +699,7 @@
       },
       {
         "id": "context-routing-disclosure",
+        "short_label": "Context routing",
         "statement": "Context routing / dynamic disclosure — present only task-relevant knowledge.",
         "bucket": "generalizes",
         "maps_to_construct": "reasoning-horizon",
@@ -697,6 +709,7 @@
       },
       {
         "id": "automatic-admission",
+        "short_label": "Automatic admission",
         "statement": "Automatic admission — evidence-gated, review amortized rather than per-change human sign-off.",
         "bucket": "generalizes",
         "maps_to_construct": "graduated-governance",
@@ -706,6 +719,7 @@
       },
       {
         "id": "compositional-roles",
+        "short_label": "Compositional roles",
         "statement": "Compositional / specialist agent roles rather than one monolithic agent.",
         "bucket": "generalizes",
         "maps_to_construct": "thesis-alignment",
@@ -715,6 +729,7 @@
       },
       {
         "id": "model-derived-targeting",
+        "short_label": "Model-derived targeting",
         "statement": "Model-derived targeting — act through a model, not raw code.",
         "bucket": "generalizes",
         "maps_to_construct": "thesis-modeling",

@@ -123,6 +123,7 @@ class Pattern:
     support: "dict[str, str]"
     mage_generalization_note: str
     nearest_external: "str | None"
+    short_label: str = ""   # the ~3-word reader-facing grid/key label (authored; CCP1-checked for table buckets)
 
 
 @dataclass
@@ -263,7 +264,7 @@ def derive_model(raw: "dict | None" = None) -> IndustryCasesModel:
             id=p.get("id", ""), statement=p.get("statement", ""), bucket=p.get("bucket", ""),
             maps_to_construct=p.get("maps_to_construct"), support=dict(p.get("support", {}) or {}),
             mage_generalization_note=p.get("mage_generalization_note", ""),
-            nearest_external=p.get("nearest_external"),
+            nearest_external=p.get("nearest_external"), short_label=p.get("short_label", ""),
         )
         for p in ccp.get("patterns", [])
     ]
@@ -390,35 +391,73 @@ def render_modeling_ceiling_md(model: "IndustryCasesModel | None" = None) -> str
 
 # ---- projection: the cross-case convergence tables --------------------------------------------------
 
-#: The support glyphs — the guidance's own set. yes -> tick, partial -> the word, no -> em-dash.
-_SUPPORT_GLYPH = {"yes": "✓", "partial": "partial", "no": "—"}
+#: The support glyphs — the 3-level support vocabulary rendered as marks the reader scans. yes -> ✓,
+#: partial -> ◐, no -> —. Shares its shapes with the modeling-ceiling's `_CEILING_GLYPH` (✓ full presence,
+#: ◐ present in part, — absent/silent) so one visual language spans all three of 6.5's tables; the ceiling's
+#: extra ○ (`implicit`) never appears here (support has no "implicit" level). The `partial -> ◐` swap is also
+#: part of the readability fix — the literal word "partial" was itself a wide cell that forced a downscale.
+_SUPPORT_GLYPH = {"yes": "✓", "partial": "◐", "no": "—"}
 
 #: The projected buckets (universal + generalizes render as tables; distinctive is prose, not a table).
 _TABLE_BUCKETS = ("universal", "generalizes")
+
+#: The short-key PREFIX per table bucket (U1..U9 for universal, G1..G6 for generalizes). Distinct prefixes
+#: so the prose and the per-case one-pagers can cite a grid row unambiguously across the two tables, and so a
+#: grid row joins its key-list row by an exact token. Computed from position in patterns_in(bucket) order.
+_BUCKET_KEY_PREFIX = {"universal": "U", "generalizes": "G"}
 
 
 def _support_glyph(value: str) -> str:
     return _SUPPORT_GLYPH.get(value, value or "—")
 
 
+def _pattern_key(bucket: str, index: int) -> str:
+    """The short stable key for a pattern at `index` (0-based) in its bucket — `U1`..`U9` / `G1`..`G6`.
+    Derived from position, like the row order already is (not stored)."""
+    return f"{_BUCKET_KEY_PREFIX.get(bucket, '?')}{index + 1}"
+
+
 def render_convergence_md(bucket: str, model: "IndustryCasesModel | None" = None) -> str:
-    """The convergence table for a bucket (one row per pattern; columns = maps_to_construct + the roster sites
-    in declared order, support projected ✓ / partial / —). Renders `universal` and `generalizes` ONLY — a
-    `distinctive` pattern's row is all-`—` externally and reads as advocacy, so the model owns that data but the
-    prose wave writes the sentences (F1). Returns "" for the distinctive bucket."""
+    """The convergence GLYPH GRID for a bucket — the narrow, scannable table the reader compares across sites.
+    Columns = a short key (`U1`../`G1`..) + the 3-word `short_label` + the roster sites in declared order,
+    support projected ✓ / ◐ / —. The long `statement` and the `Construct` column move OUT to the companion
+    key-list (render_convergence_key_md) so the grid stays narrow and legible instead of downscaled to fit a
+    sentence column. Renders `universal` and `generalizes` ONLY — a `distinctive` pattern's row is all-`—`
+    externally and reads as advocacy, so the model owns that data but the prose wave writes the sentences (F1).
+    Returns "" for the distinctive bucket."""
     if model is None:
         model = derive_model()
     if bucket not in _TABLE_BUCKETS:
         return ""  # distinctive (and any unknown bucket) is not projected as a table
     site_ids = [r.id for r in model.roster]
     site_labels = [r.organization for r in model.roster]
-    header = "| " + " | ".join(["Pattern", "Construct", *site_labels]) + " |"
+    header = "| " + " | ".join(["#", "Pattern", *site_labels]) + " |"
     rule = "|" + "---|" * (len(site_ids) + 2)
     rows = []
-    for p in model.patterns_in(bucket):
-        construct = p.maps_to_construct or "—"
+    for i, p in enumerate(model.patterns_in(bucket)):
         cells = [_support_glyph(p.support.get(sid, "")) for sid in site_ids]
-        rows.append("| " + " | ".join([p.statement, construct, *cells]) + " |")
+        rows.append("| " + " | ".join([_pattern_key(bucket, i), p.short_label, *cells]) + " |")
+    return "\n".join([header, rule, *rows])
+
+
+def render_convergence_key_md(bucket: str, model: "IndustryCasesModel | None" = None) -> str:
+    """The convergence KEY-LIST for a bucket — the companion reference table the reader consults, keyed by the
+    SAME `#` (`U1`../`G1`..) as the glyph grid. Columns = key + `short_label` + `Construct` + the full
+    `statement` ("What the source establishes"). The statement column is free to wrap here because this table
+    has no glyph columns to squeeze, so the sentence lives where wrapping is free and the glyphs live where
+    width is scarce. Rendered as pipe rows so CCP5 gates it byte-equal via the SAME page_block_parity the grid
+    uses (F-KEYLIST-FORM: table over prose list — reuses the primitive with zero new machinery). Renders
+    `universal` and `generalizes` ONLY; returns "" for the distinctive bucket."""
+    if model is None:
+        model = derive_model()
+    if bucket not in _TABLE_BUCKETS:
+        return ""
+    header = "| " + " | ".join(["#", "Pattern", "Construct", "What the source establishes"]) + " |"
+    rule = "|" + "---|" * 4
+    rows = []
+    for i, p in enumerate(model.patterns_in(bucket)):
+        construct = p.maps_to_construct or "—"
+        rows.append("| " + " | ".join([_pattern_key(bucket, i), p.short_label, construct, p.statement]) + " |")
     return "\n".join([header, rule, *rows])
 
 
@@ -736,6 +775,14 @@ def cross_case_pattern_findings(model: "IndustryCasesModel | None" = None) -> "l
             findings.append(f"CCP1 pattern {pid!r} bucket {p.bucket!r} not in {_BUCKETS}")
         if not p.mage_generalization_note.strip():
             findings.append(f"CCP1 pattern {pid!r} has empty mage_generalization_note")
+        # CCP1 short_label — the ~3-word grid/key label a table-bucket pattern renders in both the glyph grid
+        # and the key-list. Required + bounded ONLY for the projected buckets; a `distinctive` pattern renders
+        # as prose and carries no grid label.
+        if p.bucket in _TABLE_BUCKETS:
+            if not p.short_label.strip():
+                findings.append(f"CCP1 pattern {pid!r} (bucket {p.bucket!r}) has empty short_label")
+            elif len(p.short_label) > 30:
+                findings.append(f"CCP1 pattern {pid!r} short_label {p.short_label!r} exceeds 30 chars ({len(p.short_label)})")
         if p.maps_to_construct is not None and p.maps_to_construct not in col_ids:
             findings.append(f"CCP2 pattern {pid!r} maps_to_construct {p.maps_to_construct!r} resolves against no construct-universe column")
         support_ids = set(p.support)
@@ -751,11 +798,15 @@ def cross_case_pattern_findings(model: "IndustryCasesModel | None" = None) -> "l
 
 def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
     """The page-parity checks. The prose wave has placed the modeling-ceiling matrix + the two convergence
-    tables onto the `where-mage-fits` chapter, so MCL5 and CCP4 are now ACTIVE — each placed block must equal
-    the model's projection byte-for-byte, or the page drifted from the evidence and must be regenerated:
+    tables (each now a glyph GRID + a companion KEY-LIST) onto the `where-mage-fits` chapter, so MCL5, CCP4,
+    and CCP5 are ACTIVE — each placed block must equal the model's projection byte-for-byte, or the page
+    drifted from the evidence and must be regenerated:
       - MCL5 — the modeling-ceiling matrix vs `render_modeling_ceiling_md()`.
-      - CCP4 — the convergence tables, two wires: `render_convergence_md('universal')` +
+      - CCP4 — the convergence glyph grids, two wires: `render_convergence_md('universal')` +
         `render_convergence_md('generalizes')`.
+      - CCP5 — the convergence key-lists, two wires: `render_convergence_key_md('universal')` +
+        `render_convergence_key_md('generalizes')` (reuses page_block_parity verbatim with `occurrence`,
+        exactly as CCP4 disambiguates the two grids — zero new machinery).
     IC5 — the DocAble correspondence matrix — is NOT yet authored into any page, so it stays VACUOUS."""
     if model is None:
         model = derive_model()
@@ -766,14 +817,22 @@ def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
     findings += page_block_parity(
         page, ceiling[0], ceiling, display=_PAGE_REL, label="modeling-ceiling matrix",
         regen_hint="python3 book-models/industry_cases_model.py ceiling")
-    # CCP4 — the two projected convergence tables (universal + generalizes). Both render an identical
-    # header line, so disambiguate by page order: universal is placed first (occurrence 0), generalizes
-    # second (occurrence 1).
+    # CCP4 — the two projected convergence GRIDS (universal + generalizes). Both render an identical header
+    # line, so disambiguate by page order: universal is placed first (occurrence 0), generalizes second (1).
     for occurrence, bucket in enumerate(("universal", "generalizes")):
         conv = render_convergence_md(bucket, model).splitlines()
         findings += page_block_parity(
-            page, conv[0], conv, display=_PAGE_REL, label=f"{bucket} convergence table",
+            page, conv[0], conv, display=_PAGE_REL, label=f"{bucket} convergence grid",
             regen_hint=f"python3 book-models/industry_cases_model.py convergence {bucket}",
+            occurrence=occurrence)
+    # CCP5 — the two projected convergence KEY-LISTS. The two key-lists share an identical header line, the
+    # same situation CCP4 solves for the grids: universal key-list placed first (occurrence 0), generalizes
+    # second (occurrence 1).
+    for occurrence, bucket in enumerate(("universal", "generalizes")):
+        key = render_convergence_key_md(bucket, model).splitlines()
+        findings += page_block_parity(
+            page, key[0], key, display=_PAGE_REL, label=f"{bucket} convergence key-list",
+            regen_hint=f"python3 book-models/industry_cases_model.py convergence-key {bucket}",
             occurrence=occurrence)
     # IC5 — the correspondence matrix stays vacuous until it too is placed on a page.
     return findings
@@ -781,9 +840,9 @@ def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
 
 def all_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
     """Structural (IC1-IC4 + IC6 + audit-only IC7) + modeling-ceiling (MCL1-MCL4) + cross-case-pattern
-    (CCP1-CCP3) + parity (MCL5 + CCP4 now ACTIVE — the tables are placed on the where-mage-fits chapter;
-    IC5 still vacuous). This whole band is wired AUDIT-ONLY-first (rule-#55): a follow-up promotes it to
-    BLOCKING once a clean session confirms the drain."""
+    (CCP1-CCP3) + parity (MCL5 + CCP4 + CCP5 now ACTIVE — the grids + key-lists are placed on the
+    where-mage-fits chapter; IC5 still vacuous). This whole band is wired AUDIT-ONLY-first (rule-#55): a
+    follow-up promotes it to BLOCKING once a clean session confirms the drain."""
     if model is None:
         model = derive_model()
     return (structural_findings(model) + modeling_ceiling_findings(model)
@@ -902,6 +961,16 @@ def _cmd_convergence(bucket: str) -> int:
     return 0
 
 
+def _cmd_convergence_key(bucket: str) -> int:
+    model = derive_model()
+    table = render_convergence_key_md(bucket, model)
+    if not table:
+        print(f"usage: industry_cases_model.py convergence-key <universal|generalizes>")
+        return 2
+    print(table)
+    return 0
+
+
 def _cmd_ceiling_gaps() -> int:
     model = derive_model()
     labels = {r.id: r.label for r in model.ceiling_rungs}
@@ -942,7 +1011,7 @@ def _cmd_verify() -> int:
             print(f"  {f}")
         return 1
     print("industry-cases: schema + joins clean (IC1-IC4 + IC6 + MCL1-MCL4 + CCP1-CCP3; "
-          "MCL5 + CCP4 parity ACTIVE — placed tables byte-equal to the model; IC5 parity still vacuous)")
+          "MCL5 + CCP4 + CCP5 parity ACTIVE — placed tables byte-equal to the model; IC5 parity still vacuous)")
     return 0
 
 
@@ -974,12 +1043,17 @@ def main(argv: "list[str]") -> int:
             print("usage: industry_cases_model.py convergence <universal|generalizes|distinctive>")
             return 2
         return _cmd_convergence(argv[2])
+    if cmd == "convergence-key":
+        if len(argv) < 3:
+            print("usage: industry_cases_model.py convergence-key <universal|generalizes>")
+            return 2
+        return _cmd_convergence_key(argv[2])
     if cmd == "ceiling-gaps":
         return _cmd_ceiling_gaps()
     if cmd == "pattern-constructs":
         return _cmd_pattern_constructs()
     print(f"usage: {argv[0]} [verify|matrix|constructs|bears-on <H>|only-docable|coverage|roster|show|"
-          f"ceiling|convergence <bucket>|ceiling-gaps|pattern-constructs]")
+          f"ceiling|convergence <bucket>|convergence-key <bucket>|ceiling-gaps|pattern-constructs]")
     return 2
 
 
