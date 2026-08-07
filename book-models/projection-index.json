@@ -35,7 +35,7 @@
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
-            "occ": 5
+            "occ": 4
           },
           {
             "file": "book/0.6-acknowledgments.html",
@@ -1349,7 +1349,7 @@
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
-            "occ": 14
+            "occ": 9
           },
           {
             "file": "book/0.6-acknowledgments.html",
@@ -1505,7 +1505,7 @@
           },
           {
             "file": "book/appendices-front-door.html",
-            "occ": 12
+            "occ": 14
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -4641,7 +4641,7 @@
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/0.6-acknowledgments.html",
