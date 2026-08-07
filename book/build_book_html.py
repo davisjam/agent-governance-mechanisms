@@ -3074,13 +3074,13 @@ The appendix is built in three rungs, and it helps to name them before the stack
 - A **stack** assembles patterns into one reusable engineering capability.
 - The **stacks together** form the governed engineering environment.
 
-The earlier appendices are the first rung, one pattern per page. This appendix is the second: each stack \
+The appendices that follow are the first rung, one pattern per page. This appendix is the second: each stack \
 is the capability a cluster of those patterns makes when they travel together. The nine capabilities and \
 the dependency figure below are the third — the shape of the whole environment they compose.
 
 **Stacks: mechanisms that travel together**
 
-A single pattern in the preceding appendices kills one failure class. In practice, though, mechanisms \
+A single pattern in the appendices that follow kills one failure class. In practice, though, mechanisms \
 arrive in *clusters* — a concept you want to adopt (model-based engineering, a self-operating \
 orchestrator, an auditable format seam) is not one mechanism but several that reinforce each other. \
 This appendix names those clusters. Each **stack** attaches to a concept, lists the mechanisms that make \
@@ -3107,7 +3107,7 @@ but the stack stands without them.
 Complementary members improve cost, ergonomics, or robustness, but they are not part of the minimal \
 architecture.**
 
-Each member links to its own pattern page in the earlier appendices. Read a stack to see which \
+Each member links to its own pattern page in the appendices that follow. Read a stack to see which \
 mechanisms you must adopt as a set, and which you can add later."""
 
 # The vendor-agnostic note (§2.4). Rendered on the value-ordered Appendix A opening (via `opening_extras_md`),
