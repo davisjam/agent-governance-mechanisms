@@ -5449,7 +5449,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-69",
+          "element": "4.2-the-skills::block-68",
           "role": "paragraph-point"
         }
       ]
@@ -16409,7 +16409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-69",
+          "element": "4.2-the-skills::block-68",
           "role": "paragraph-term[tier-2]"
         }
       ]

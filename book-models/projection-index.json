@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1368,
+    "total_sites": 1375,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1037,
+      "book-web": 1044,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -390,8 +390,12 @@
             "occ": 3
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
-            "occ": 37
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 6
+          },
+          {
+            "file": "book/appendix-e-theory.html",
+            "occ": 15
           },
           {
             "file": "book/appendix-operators-reference.html",
@@ -419,7 +423,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 86
+            "occ": 85
           },
           {
             "file": "book/index.html",
@@ -457,7 +461,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -1210,16 +1214,12 @@
           {
             "file": "book/3.8-keeping-models-in-sync.html",
             "occ": 1
-          },
-          {
-            "file": "book/appendix-e-the-recipe.html",
-            "occ": 1
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 2
+            "occ": 1
           }
         ]
       }
@@ -1652,8 +1652,12 @@
             "occ": 7
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
-            "occ": 9
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 13
+          },
+          {
+            "file": "book/appendix-e-theory.html",
+            "occ": 7
           },
           {
             "file": "book/appendix-operators-reference.html",
@@ -1719,7 +1723,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -2174,7 +2178,11 @@
             "occ": 1
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 1
+          },
+          {
+            "file": "book/appendix-e-theory.html",
             "occ": 1
           },
           {
@@ -2237,7 +2245,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 108
+            "occ": 109
           }
         ]
       },
@@ -2840,8 +2848,12 @@
             "occ": 10
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
-            "occ": 42
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 21
+          },
+          {
+            "file": "book/appendix-e-theory.html",
+            "occ": 22
           },
           {
             "file": "book/appendix-operators-reference.html",
@@ -2869,7 +2881,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 255
+            "occ": 248
           },
           {
             "file": "book/index.html",
@@ -2907,7 +2919,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -3738,7 +3750,11 @@
             "occ": 2
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 2
+          },
+          {
+            "file": "book/appendix-e-theory.html",
             "occ": 2
           },
           {
@@ -3801,7 +3817,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 108
+            "occ": 109
           }
         ]
       },
@@ -4312,7 +4328,11 @@
             "occ": 1
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 1
+          },
+          {
+            "file": "book/appendix-e-theory.html",
             "occ": 1
           },
           {
@@ -4375,7 +4395,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 108
+            "occ": 109
           }
         ]
       },
@@ -4868,7 +4888,11 @@
             "occ": 2
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 2
+          },
+          {
+            "file": "book/appendix-e-theory.html",
             "occ": 2
           },
           {
@@ -4931,7 +4955,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 108
+            "occ": 109
           }
         ]
       },
@@ -5348,7 +5372,11 @@
             "occ": 1
           },
           {
-            "file": "book/appendix-e-the-recipe.html",
+            "file": "book/appendix-e-applying-the-recipe.html",
+            "occ": 1
+          },
+          {
+            "file": "book/appendix-e-theory.html",
             "occ": 1
           },
           {
@@ -5411,7 +5439,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 108
+            "occ": 109
           }
         ]
       },

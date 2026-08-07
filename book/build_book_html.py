@@ -3216,10 +3216,12 @@ _SKILL_RECIPE_DIR = HERE / "appendix-skill-recipe"
 # The slug that heads Appendix E — the recipe front-door page.
 _APPENDIX_SKILL_RECIPE_OPENING_SLUG = "appendix-skill-recipe"
 
-# The single authored content page under the front-door → (page-slug stem, display title). Absent-on-disk
-# files are skipped, so the front-door alone still renders if the content file is missing.
+# The authored content pages under the front-door → (page-slug stem, display title). Chapter 1 (Theory)
+# states the recipe; Chapter 2 (Applying the Recipe) runs it three times. Absent-on-disk files are skipped,
+# so the front-door alone still renders if a content file is missing.
 _SKILL_RECIPE_PAGES: list[tuple[str, str]] = [
-    ("the-recipe", "The recipe — three steps"),
+    ("theory", "Theory"),
+    ("applying-the-recipe", "Applying the Recipe"),
 ]
 
 _APPENDIX_SKILL_RECIPE_OPENING_PROSE = """\
@@ -3236,8 +3238,9 @@ with a governing principle. That construction is itself a reusable pattern: name
 next skill deliberately instead of by feel.
 
 This appendix names that pattern as a three-step recipe and grounds each step in the three self-* skills \
-you already met. Read the [Skills chapter](4.2-the-skills.html) for what those skills *do*; read on here \
-for how they were *built*."""
+you already met. Chapter 1 states the recipe; Chapter 2 applies it three times. Read the \
+[Skills chapter](4.2-the-skills.html) for what those skills *do*; read on here for how they were \
+*built*."""
 
 
 def _recipe_web_url(letter: str = "e") -> str:
