@@ -3314,6 +3314,19 @@ _APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG = "appendix-operators-reference"
 _OPERATORS_REFERENCE_PAGES: list[tuple[str, str]] = [
     ("operators-dashboard", "The Operator's Dashboard"),
     ("from-drifted-wiki-to-trusted-model", "From Drifted Wiki to Trusted Model"),
+    # The operator-card deck (Appendix-D). One card = one page; the deck is declared in
+    # book-models/operator-cards.json and its evidence-resolution gate is BLOCKING in `catalog.py validate`.
+    # Order follows the deck spine: Steering, then Compounding, then Shipping, then Doctrine.
+    ("system-health", "System Health"),
+    ("model-health", "Model Health"),
+    ("human-judgment", "Human Judgment"),
+    ("engineering-capital", "Engineering Capital"),
+    ("governance-conversion", "Governance Conversion"),
+    ("release-readiness", "Release Readiness"),
+    ("evidence-quality", "Evidence Quality"),
+    ("brownfield-progress", "Brownfield Progress"),
+    ("daily-review", "Daily Operator Review"),
+    ("operating-doctrine", "Operating Doctrine"),
 ]
 
 _APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE = """\

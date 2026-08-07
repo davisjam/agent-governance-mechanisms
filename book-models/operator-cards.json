@@ -1,0 +1,210 @@
+{
+  "_provenance": "AUTHORED single source of truth for the Appendix-D operator-card deck (10 cards). Hand-edited; NOT generated. Follows the metrics-dashboard.json single-file precedent (NOT the *_declared.json split) — its projection is card pages, not a second JSON. Read by operator_cards_model.py (projector + evidence-resolution gate + page-fit wiring) and by lint_operator_card_page_span / lint_operator_card_shape. Every evidence_ref MUST resolve against its namespace's _resolution_targets entry, else the card cites a dangling source and the gate reddens; soft-gap sub-signals live in assessment_signals[] and are explicitly NO-registry (never silently resolved, never invented as a metric).",
+
+  "_resolution_targets": {
+    "DASH":   { "file": "book-models/metrics-dashboard.json",              "id_space": "metrics[].slug" },
+    "THEORY": { "file": "book-models/theory_of_mage_declared.json",        "id_space": "declared id under loops|hypotheses|relations|outcomes|propositions|constructs|moderators, OR a top-level key (e.g. apparatus_measures_caveat)" },
+    "CAT":    { "file": "book-models/catalogue-cards.json",                "id_space": "entries key = <role>/<family>/<mechanism>" },
+    "CONC":   { "file": "book/data/concepts.json",                         "id_space": "top-level concept key" },
+    "EVID":   { "file": "book-models/claims.json + book/data/data-claims.json + book-models/substantiation.py",
+                "id_space": "claims.json claim-id | data-claims.json anchor | substantiation apparatus-concept (tagged, no keyed registry)" },
+    "CH":     { "file": "book-models/outline.json",                        "id_space": "chapters[].slug (numeric-prefixed, e.g. 2.5-metrics)" },
+    "LIFE":   { "file": "plugin/mage/skills/self-operations/examples/",    "id_space": "lifecycle-L<N>-<name> file slug; canonical id = L<N> (L1 manage-agents · L2 manage-context · L3 manage-git-repo · L4 manage-deploy · L5 manage-dev-env · L6 govern-your-own-loop). The self-operate PRINCIPLE resolves against self-operations/principles.md (tagged apparatus-concept)." }
+  },
+  "_life_note": "LIFE is canonicalized on the in-repo plugin/mage/skills/self-operations/ enumeration (six numbered lifecycles L1..L6), NOT the-recipe.md's five unnumbered ones (the stale source in the model draft). This is the Phase-1b REVISE-HIGH resolution: the plugin set is id-bearing, richer, and the one the cards already cite (L1/L2/L6). It ships under plugin/ (in-repo, git-tracked) — do NOT 'fix' a LIFE ref back to the-recipe.md and re-open the mismatch.",
+
+  "_families": {
+    "steering":    { "spine": "Am I healthy? / Where should I spend judgment?", "token": "box-def-rule",    "hex": "#1f6fae", "label": "Steering the system (blue)" },
+    "compounding": { "spine": "Am I getting better?",                            "token": "box-thesis-rule", "hex": "#15803d", "label": "Is engineering compounding? (green)" },
+    "shipping":    { "spine": "Can I trust this release?",                        "token": "box-inset-rule",  "hex": "#7c6bb0", "label": "Shipping (purple)" },
+    "doctrine":    { "spine": "Running the method",                              "token": "diagram-fleet",   "hex": "#2f5169", "label": "Running the method (slate)" }
+  },
+  "_color_note": "Family colors are NAMES here; the projector maps family -> token -> hex by reading book-models/design-tokens.json at build time (guarded by lint_design_token_drift). Do NOT inline hex in prose. The four tokens are verified present in design-tokens.json at HEAD.",
+
+  "cards": [
+    {
+      "card-id": "system-health",
+      "title": "System Health",
+      "family": "steering",
+      "operator_question": "Is the environment operating correctly right now?",
+      "evidence_refs": [
+        "DASH:churn",
+        "DASH:grammar-coverage",
+        "DASH:model-claim-coverage",
+        "DASH:model-sync-efficacy",
+        "CONC:churn",
+        "THEORY:R1-churn"
+      ],
+      "assessment_signals": ["recurring-failure-count"],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive"
+    },
+    {
+      "card-id": "model-health",
+      "title": "Model Health",
+      "family": "steering",
+      "operator_question": "Are my models still equal to the code?",
+      "evidence_refs": [
+        "DASH:model-sync-efficacy",
+        "DASH:missing-model-metric",
+        "CAT:models-bridge/system-models/symbol-anchored-traceability-graph",
+        "CAT:models-bridge/system-models/drift-parity-gates",
+        "CAT:models-bridge/system-models/executable-source-of-truth",
+        "CH:3.8-keeping-models-in-sync"
+      ],
+      "assessment_signals": ["model-freshness"],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-scorecard"
+    },
+    {
+      "card-id": "human-judgment",
+      "title": "Human Judgment",
+      "family": "steering",
+      "operator_question": "Where is human attention going, and what do we decide repeatedly?",
+      "evidence_refs": [
+        "THEORY:human-attention-burden",
+        "THEORY:H6-oversight-amortization",
+        "CONC:governance-conversion",
+        "LIFE:L1-manage-agents"
+      ],
+      "assessment_signals": ["attention-by-activity-partition"],
+      "pending_refs": ["CH:conclusion-operationalization-thesis"],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-assessment",
+      "_note": "pending_refs: the Conclusions operationalization-thesis is the author-flagged 2nd concept source (part6-revision draft, not yet on main). Resolve it to the conclusion chapter's outline slug once Part 6 lands; until then it is pending (not gate-blocking). Do NOT invent a THEORY id for it."
+    },
+    {
+      "card-id": "engineering-capital",
+      "title": "Engineering Capital",
+      "family": "compounding",
+      "operator_question": "Is the environment becoming more valuable, or are we just moving faster?",
+      "evidence_refs": [
+        "THEORY:compounding-governance-proposition",
+        "CONC:compounding",
+        "THEORY:L3-governance-adaptation",
+        "THEORY:L4-capability-amplification",
+        "THEORY:apparatus_measures_caveat",
+        "DASH:support-ratio",
+        "DASH:control-growth",
+        "DASH:model-sync-efficacy",
+        "THEORY:H6-oversight-amortization"
+      ],
+      "assessment_signals": ["mechanism-reuse", "recurring-failures"],
+      "page_geometry": "landscape",
+      "one_page": true,
+      "status": "derive-assessment",
+      "_note": "CENTERPIECE. THEORY:compounding-governance-proposition is the CORRECTED id (was 'increasing-returns' in the drafts — renamed at HEAD; D-1). mechanism-reuse assessment rides the CAT known_uses count as its declared proxy (per-entry field, verified present). Numbers via ledger literals matching the Operator's Dashboard page (support ratio ~3x; control growth 0->747 lints / 0->102 gates)."
+    },
+    {
+      "card-id": "governance-conversion",
+      "title": "Governance Conversion",
+      "family": "compounding",
+      "operator_question": "How many recurring failures became infrastructure, and how fast?",
+      "evidence_refs": [
+        "CONC:governance-conversion",
+        "THEORY:L3-governance-adaptation",
+        "THEORY:H1-failure-class-exposure",
+        "THEORY:H7-conversion-conditions",
+        "DASH:control-growth",
+        "CH:2.3-the-governed-environment"
+      ],
+      "assessment_signals": ["governance-conversion-rate"],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-assessment",
+      "_note": "The draft's CAT 'self-governance conversion loop' ref is DROPPED — no such catalogue slug at HEAD (D-3). Sourced instead via CONC:governance-conversion + CH:2.3 + THEORY L3/H1/H7. conversion-rate rides the control-growth count as its declared proxy."
+    },
+    {
+      "card-id": "release-readiness",
+      "title": "Release Readiness",
+      "family": "shipping",
+      "operator_question": "Can I trust this release?",
+      "evidence_refs": [
+        "CAT:agent/gates-and-merge-train/staged-deploy-gates",
+        "CAT:product/validation-and-conformance/content-validator",
+        "CONC:fidelity-validator",
+        "CAT:models-bridge/system-models/drift-parity-gates",
+        "DASH:grammar-coverage",
+        "DASH:model-claim-coverage",
+        "DASH:missing-model-metric",
+        "CAT:agent/lifecycle-and-observability/caused-by-provenance"
+      ],
+      "assessment_signals": [],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-checklist",
+      "_note": "The draft's 'audit-trail (overrides ledger)' checklist box is RE-MAPPED to CAT:agent/lifecycle-and-observability/caused-by-provenance — the nearest real audit-trail mechanism at HEAD (no dedicated overrides-ledger entry; D-3)."
+    },
+    {
+      "card-id": "evidence-quality",
+      "title": "Evidence Quality",
+      "family": "shipping",
+      "operator_question": "How much confidence do we actually have?",
+      "evidence_refs": [
+        "EVID:claims.json",
+        "EVID:data-claims.json",
+        "DASH:grammar-coverage",
+        "DASH:model-claim-coverage",
+        "CH:4.6-generative-validation",
+        "EVID:substantiation:soapbox-band"
+      ],
+      "assessment_signals": [],
+      "page_geometry": "landscape",
+      "one_page": true,
+      "status": "derive-pyramid",
+      "_note": "EVID:claims.json = the claim universe (population). EVID:data-claims.json = the metric->claim ledger (middle tier). EVID:substantiation:soapbox-band is an apparatus-concept (code in substantiation.py, NOT a keyed registry) — the gate treats a `substantiation:` EVID ref as explicitly-no-registry. page_geometry landscape (pyramid is a wide visual)."
+    },
+    {
+      "card-id": "brownfield-progress",
+      "title": "Brownfield Progress",
+      "family": "doctrine",
+      "operator_question": "Where is governance weakest, and where should the next conversion happen?",
+      "evidence_refs": [
+        "CH:4.1-brownfield",
+        "DASH:missing-model-metric",
+        "PAGE:from-drifted-wiki-to-trusted-model"
+      ],
+      "assessment_signals": ["tribal-knowledge-remaining"],
+      "page_geometry": "landscape",
+      "one_page": true,
+      "status": "derive",
+      "_note": "PAGE:from-drifted-wiki-to-trusted-model is a sibling operator-reference page (in _OPERATORS_REFERENCE_PAGES) — resolves against the operators-reference card list, NOT catalogue-cards. The Sizing Matrix + four stages both live in CH:4.1-brownfield. page_geometry landscape (before/after bars)."
+    },
+    {
+      "card-id": "daily-review",
+      "title": "Daily Operator Review",
+      "family": "doctrine",
+      "operator_question": "The morning five questions.",
+      "evidence_refs": [
+        "LIFE:L6-govern-your-own-loop",
+        "CONC:governance-conversion"
+      ],
+      "assessment_signals": ["recurring-failure-count", "governance-conversion-rate"],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-meta",
+      "_note": "Meta-card: the five questions cross-link Cards model-health/governance-conversion/system-health/human-judgment (internal deck NAV, not evidence_refs — nav links are not gate-resolved). LIFE:L6 backs the ~30-min windowed hook."
+    },
+    {
+      "card-id": "operating-doctrine",
+      "title": "Operating Doctrine",
+      "family": "doctrine",
+      "operator_question": "How do I run the method — and what is it all for?",
+      "evidence_refs": [
+        "LIFE:principle:orient-positive-route-to-class",
+        "LIFE:L1-manage-agents",
+        "LIFE:L2-manage-context",
+        "CH:4.1-brownfield",
+        "CONC:governed-environment"
+      ],
+      "assessment_signals": [],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-synthesis",
+      "_note": "LIFE:principle:... resolves against self-operations/principles.md (apparatus-concept, no numbered lifecycle). Absorbs the Trustworthiness synthesis (governed-environment -> trustworthy software) as the closing frame — NO standalone Trustworthiness card. Synthesis card: THEORY 'governed-environment -> trustworthy software' rides CONC:governed-environment (present)."
+    }
+  ]
+}

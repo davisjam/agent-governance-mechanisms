@@ -1293,6 +1293,24 @@ def cmd_validate(_args) -> int:
         for f in dbu:
             print(f"                 {f.slug} — used in {f.use_page} but defined later in {f.def_page}")
         n_issues += len(dbu)
+    # OPERATOR-CARD MODEL — BLOCKING. The Appendix-D operator-card deck (book-models/operator-cards.json) is
+    # an authored model whose projection is card pages. operator_cards_model.py holds the EVIDENCE-RESOLUTION
+    # gate (every card's evidence_ref resolves to a live source in its namespace — the "derive, never
+    # hallucinate" rule made mechanical), plus schema shape, the ratified deck counts, and the card<->page
+    # existence parity. Green from birth (all refs verified live), so it lands BLOCKING: a dangling source, a
+    # schema break, a reclassified card, or a missing card page reddens validate. The two page-fit SENSORS
+    # (shape + post-render one-page-span) land AUDIT-ONLY below. See book-models/operator_cards_model.py.
+    import operator_cards_model as ocm  # noqa: E402 — blocking operator-card evidence-resolution model
+    card_findings = ocm.all_findings()
+    if card_findings:
+        print(f"  [opcard] {len(card_findings)} operator-card finding(s) — "
+              f"run `python3 book-models/operator_cards_model.py verify`:")
+        for f in card_findings:
+            print(f"           {f}")
+        n_issues += len(card_findings)
+    else:
+        print("  [opcard] operator-card deck matches the model "
+              "(10 cards; every evidence_ref resolves; schema clean; every card has a page)")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

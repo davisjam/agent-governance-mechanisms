@@ -594,6 +594,16 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-operators-reference.html">Appendix D — Operator's Reference</a></li>
 <li><a class="" href="appendix-d-operators-dashboard.html">Appendix D - 1. The Operator's Dashboard</a></li>
 <li><a class="" href="appendix-d-from-drifted-wiki-to-trusted-model.html">Appendix D - 2. From Drifted Wiki to Trusted Model</a></li>
+<li><a class="" href="appendix-d-system-health.html">Appendix D - 3. System Health</a></li>
+<li><a class="" href="appendix-d-model-health.html">Appendix D - 4. Model Health</a></li>
+<li><a class="" href="appendix-d-human-judgment.html">Appendix D - 5. Human Judgment</a></li>
+<li><a class="" href="appendix-d-engineering-capital.html">Appendix D - 6. Engineering Capital</a></li>
+<li><a class="" href="appendix-d-governance-conversion.html">Appendix D - 7. Governance Conversion</a></li>
+<li><a class="" href="appendix-d-release-readiness.html">Appendix D - 8. Release Readiness</a></li>
+<li><a class="" href="appendix-d-evidence-quality.html">Appendix D - 9. Evidence Quality</a></li>
+<li><a class="" href="appendix-d-brownfield-progress.html">Appendix D - 10. Brownfield Progress</a></li>
+<li><a class="" href="appendix-d-daily-review.html">Appendix D - 11. Daily Operator Review</a></li>
+<li><a class="" href="appendix-d-operating-doctrine.html">Appendix D - 12. Operating Doctrine</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 25 · Validation with Agents"><header class="chap"><div class="kicker"><a href="part-4-intro.html" aria-label="Beginning of Part 4 — Putting It to Work">Part 4 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 25</a></div><h1><span class="chap-num">4.6</span> Validation with Agents</h1></header><p id="idx-def-generative-validation">Most tests reproduce a dot. You pick an input, you write down the output you expect, and the test asserts the two match. That is honest work, of course, and it catches a great deal; but it says nothing about the input sitting right next to the one you chose. There is a different move, and it names a whole family of techniques: <strong>generate inputs and search for a counterexample to a specification.</strong> Property-based testing, fuzzing, and the synthesis of fuzzing with a structured system model belong to that family. They share one common loop — <strong>generate, execute, judge, and shrink or diagnose</strong> — but they differ materially in three places: the <em>generator</em> that makes the inputs, the <em>oracle</em> that judges them, and the <em>search</em> that steers toward failure. Drawing those three axes sharply is what keeps the family from collapsing into a vague "testing with randomness" — and what keeps it from flattening the other way, into a claim that the three techniques are identical.</p>
