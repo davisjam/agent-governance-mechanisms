@@ -709,7 +709,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-76",
+          "element": "4.1-brownfield::block-77",
           "role": "paragraph-point"
         }
       ]
@@ -769,7 +769,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-55",
+          "element": "4.2-the-skills::block-57",
           "role": "paragraph-point"
         }
       ]
@@ -849,7 +849,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-34",
+          "element": "1.3-loops-and-models::block-36",
           "role": "paragraph-point"
         }
       ]
@@ -879,7 +879,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-76",
+          "element": "2.3-the-governed-environment::block-77",
           "role": "paragraph-point"
         }
       ]
@@ -919,7 +919,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-42",
+          "element": "4.2-the-skills::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -969,7 +969,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-62",
+          "element": "2.3-the-governed-environment::block-63",
           "role": "paragraph-point"
         }
       ]
@@ -989,7 +989,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-116",
+          "element": "4.1-brownfield::block-117",
           "role": "paragraph-point"
         }
       ]
@@ -1009,7 +1009,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-21",
+          "element": "4.1-brownfield::block-22",
           "role": "paragraph-point"
         }
       ]
@@ -1139,7 +1139,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-29",
+          "element": "1.3-loops-and-models::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -1179,7 +1179,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-6",
+          "element": "2.1-the-agent-stack::block-7",
           "role": "paragraph-point"
         }
       ]
@@ -1299,7 +1299,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-137",
+          "element": "4.1-brownfield::block-138",
           "role": "paragraph-point"
         }
       ]
@@ -1339,7 +1339,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-102",
+          "element": "4.1-brownfield::block-103",
           "role": "paragraph-point"
         }
       ]
@@ -1379,7 +1379,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-84",
+          "element": "2.1-the-agent-stack::block-87",
           "role": "paragraph-point"
         }
       ]
@@ -1419,7 +1419,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-36",
+          "element": "4.1-brownfield::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -1469,7 +1469,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -1479,7 +1479,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-31",
+          "element": "2.1-the-agent-stack::block-32",
           "role": "paragraph-point"
         }
       ]
@@ -1509,7 +1509,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-70",
+          "element": "4.1-brownfield::block-71",
           "role": "paragraph-point"
         }
       ]
@@ -1619,7 +1619,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-80",
+          "element": "4.1-brownfield::block-81",
           "role": "paragraph-point"
         }
       ]
@@ -1719,7 +1719,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-22",
+          "element": "2.1-the-agent-stack::block-23",
           "role": "paragraph-point"
         }
       ]
@@ -1789,7 +1789,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-51",
+          "element": "2.1-the-agent-stack::block-52",
           "role": "paragraph-point"
         }
       ]
@@ -1799,7 +1799,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-12",
+          "element": "2.1-the-agent-stack::block-13",
           "role": "paragraph-point"
         }
       ]
@@ -1829,7 +1829,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-57",
+          "element": "1.4-why-mage-follows-from-the-machine::block-60",
           "role": "paragraph-point"
         }
       ]
@@ -1939,7 +1939,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-19",
+          "element": "4.2-the-skills::block-20",
           "role": "paragraph-point"
         }
       ]
@@ -1999,7 +1999,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-25",
+          "element": "1.4-why-mage-follows-from-the-machine::block-27",
           "role": "paragraph-point"
         }
       ]
@@ -2049,7 +2049,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-80",
+          "element": "2.1-the-agent-stack::block-83",
           "role": "paragraph-point"
         }
       ]
@@ -2099,7 +2099,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-92",
+          "element": "2.1-the-agent-stack::block-95",
           "role": "paragraph-point"
         }
       ]
@@ -2109,7 +2109,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-64",
+          "element": "4.1-brownfield::block-65",
           "role": "paragraph-point"
         }
       ]
@@ -2159,7 +2159,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-63",
+          "element": "4.2-the-skills::block-65",
           "role": "paragraph-point"
         }
       ]
@@ -2289,7 +2289,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-42",
+          "element": "4.1-brownfield::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -2329,7 +2329,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-49",
+          "element": "2.1-the-agent-stack::block-50",
           "role": "paragraph-point"
         }
       ]
@@ -2369,7 +2369,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-52",
+          "element": "2.3-the-governed-environment::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -2379,7 +2379,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-45",
+          "element": "2.1-the-agent-stack::block-46",
           "role": "paragraph-point"
         }
       ]
@@ -2389,7 +2389,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-55",
+          "element": "2.1-the-agent-stack::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -2409,7 +2409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-72",
+          "element": "2.3-the-governed-environment::block-73",
           "role": "paragraph-point"
         }
       ]
@@ -2429,7 +2429,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-45",
+          "element": "1.3-loops-and-models::block-47",
           "role": "paragraph-point"
         }
       ]
@@ -2449,7 +2449,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-27",
+          "element": "4.1-brownfield::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -2569,7 +2569,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-126",
+          "element": "4.1-brownfield::block-127",
           "role": "paragraph-point"
         }
       ]
@@ -2579,7 +2579,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-40",
+          "element": "4.1-brownfield::block-41",
           "role": "paragraph-point"
         }
       ]
@@ -2589,7 +2589,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-82",
+          "element": "2.3-the-governed-environment::block-83",
           "role": "paragraph-point"
         }
       ]
@@ -2619,7 +2619,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-68",
+          "element": "2.3-the-governed-environment::block-69",
           "role": "paragraph-point"
         }
       ]
@@ -2669,7 +2669,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-69",
+          "element": "2.1-the-agent-stack::block-71",
           "role": "paragraph-point"
         }
       ]
@@ -2679,7 +2679,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-19",
+          "element": "1.4-why-mage-follows-from-the-machine::block-20",
           "role": "paragraph-point"
         }
       ]
@@ -2779,7 +2779,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-143",
+          "element": "4.1-brownfield::block-144",
           "role": "paragraph-point"
         }
       ]
@@ -2789,7 +2789,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-20",
+          "element": "2.1-the-agent-stack::block-21",
           "role": "paragraph-point"
         }
       ]
@@ -2799,7 +2799,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-22",
+          "element": "1.3-loops-and-models::block-24",
           "role": "paragraph-point"
         }
       ]
@@ -2899,7 +2899,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-49",
+          "element": "1.3-loops-and-models::block-51",
           "role": "paragraph-point"
         }
       ]
@@ -2909,7 +2909,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-51",
+          "element": "1.3-loops-and-models::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -2939,7 +2939,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-83",
+          "element": "4.1-brownfield::block-84",
           "role": "paragraph-point"
         }
       ]
@@ -2949,7 +2949,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-41",
+          "element": "1.3-loops-and-models::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -2959,7 +2959,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-9",
+          "element": "1.3-loops-and-models::block-11",
           "role": "paragraph-point"
         }
       ]
@@ -2989,7 +2989,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-8",
+          "element": "4.1-brownfield::block-9",
           "role": "paragraph-point"
         }
       ]
@@ -3069,7 +3069,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-94",
+          "element": "2.1-the-agent-stack::block-98",
           "role": "paragraph-point"
         }
       ]
@@ -3109,7 +3109,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-31",
+          "element": "4.2-the-skills::block-32",
           "role": "paragraph-point"
         }
       ]
@@ -3169,7 +3169,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-60",
+          "element": "2.1-the-agent-stack::block-61",
           "role": "paragraph-point"
         }
       ]
@@ -3179,7 +3179,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-35",
+          "element": "2.1-the-agent-stack::block-36",
           "role": "paragraph-point"
         }
       ]
@@ -3199,7 +3199,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-29",
+          "element": "2.1-the-agent-stack::block-30",
           "role": "paragraph-point"
         }
       ]
@@ -3219,7 +3219,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-26",
+          "element": "1.3-loops-and-models::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -3229,7 +3229,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-33",
+          "element": "2.1-the-agent-stack::block-34",
           "role": "paragraph-point"
         }
       ]
@@ -3249,7 +3249,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-24",
+          "element": "1.3-loops-and-models::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -3309,7 +3309,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-41",
+          "element": "1.4-why-mage-follows-from-the-machine::block-44",
           "role": "paragraph-point"
         }
       ]
@@ -3319,7 +3319,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-24",
+          "element": "2.1-the-agent-stack::block-25",
           "role": "paragraph-point"
         }
       ]
@@ -3349,7 +3349,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-63",
+          "element": "2.1-the-agent-stack::block-64",
           "role": "paragraph-point"
         }
       ]
@@ -3379,7 +3379,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-60",
+          "element": "2.3-the-governed-environment::block-61",
           "role": "paragraph-point"
         }
       ]
@@ -3409,7 +3409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-46",
+          "element": "4.1-brownfield::block-47",
           "role": "paragraph-point"
         }
       ]
@@ -3429,7 +3429,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-94",
+          "element": "2.3-the-governed-environment::block-95",
           "role": "paragraph-point"
         }
       ]
@@ -3439,7 +3439,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-30",
+          "element": "4.1-brownfield::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -3599,7 +3599,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-12",
+          "element": "1.3-loops-and-models::block-14",
           "role": "paragraph-point"
         }
       ]
@@ -3709,7 +3709,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-26",
+          "element": "2.1-the-agent-stack::block-27",
           "role": "paragraph-point"
         }
       ]
@@ -3719,7 +3719,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-14",
+          "element": "4.2-the-skills::block-15",
           "role": "paragraph-point"
         }
       ]
@@ -3729,7 +3729,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-131",
+          "element": "4.1-brownfield::block-132",
           "role": "paragraph-point"
         }
       ]
@@ -3759,7 +3759,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-51",
+          "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-point"
         }
       ]
@@ -3809,7 +3809,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-92",
+          "element": "4.1-brownfield::block-93",
           "role": "paragraph-point"
         }
       ]
@@ -3879,7 +3879,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-89",
+          "element": "2.1-the-agent-stack::block-92",
           "role": "paragraph-point"
         }
       ]
@@ -3919,7 +3919,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-25",
+          "element": "4.2-the-skills::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -4019,7 +4019,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-114",
+          "element": "4.1-brownfield::block-115",
           "role": "paragraph-point"
         }
       ]
@@ -4089,7 +4089,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-50",
+          "element": "4.2-the-skills::block-52",
           "role": "paragraph-point"
         }
       ]
@@ -4099,7 +4099,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-10",
+          "element": "4.2-the-skills::block-11",
           "role": "paragraph-point"
         }
       ]
@@ -4119,7 +4119,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-128",
+          "element": "4.1-brownfield::block-129",
           "role": "paragraph-point"
         }
       ]
@@ -4139,7 +4139,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-75",
+          "element": "2.1-the-agent-stack::block-77",
           "role": "paragraph-point"
         }
       ]
@@ -4179,7 +4179,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-87",
+          "element": "2.3-the-governed-environment::block-88",
           "role": "paragraph-point"
         }
       ]
@@ -4279,7 +4279,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-139",
+          "element": "4.1-brownfield::block-140",
           "role": "paragraph-point"
         }
       ]
@@ -4299,7 +4299,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-37",
+          "element": "2.1-the-agent-stack::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -4309,7 +4309,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-42",
+          "element": "2.1-the-agent-stack::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -4319,7 +4319,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-32",
+          "element": "1.3-loops-and-models::block-34",
           "role": "paragraph-point"
         }
       ]
@@ -4339,7 +4339,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-38",
+          "element": "4.1-brownfield::block-39",
           "role": "paragraph-point"
         }
       ]
@@ -4399,7 +4399,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-73",
+          "element": "4.1-brownfield::block-74",
           "role": "paragraph-point"
         }
       ]
@@ -4409,7 +4409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-43",
+          "element": "1.4-why-mage-follows-from-the-machine::block-46",
           "role": "paragraph-point"
         }
       ]
@@ -4479,7 +4479,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-35",
+          "element": "1.4-why-mage-follows-from-the-machine::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -4529,7 +4529,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-38",
+          "element": "1.4-why-mage-follows-from-the-machine::block-40",
           "role": "paragraph-point"
         }
       ]
@@ -4559,7 +4559,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-54",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-point"
         }
       ]
@@ -4599,7 +4599,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-64",
+          "element": "2.3-the-governed-environment::block-65",
           "role": "paragraph-point"
         }
       ]
@@ -4679,7 +4679,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-27",
+          "element": "1.4-why-mage-follows-from-the-machine::block-29",
           "role": "paragraph-point"
         }
       ]
@@ -4739,7 +4739,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-51",
+          "element": "4.1-brownfield::block-52",
           "role": "paragraph-point"
         }
       ]
@@ -4749,7 +4749,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-18",
+          "element": "4.1-brownfield::block-19",
           "role": "paragraph-point"
         }
       ]
@@ -4759,7 +4759,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-49",
+          "element": "4.1-brownfield::block-50",
           "role": "paragraph-point"
         }
       ]
@@ -4869,7 +4869,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-79",
+          "element": "2.3-the-governed-environment::block-80",
           "role": "paragraph-point"
         }
       ]
@@ -4939,7 +4939,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-73",
+          "element": "2.1-the-agent-stack::block-75",
           "role": "paragraph-point"
         }
       ]
@@ -4949,7 +4949,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-16",
+          "element": "1.4-why-mage-follows-from-the-machine::block-17",
           "role": "paragraph-point"
         }
       ]
@@ -5029,7 +5029,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-112",
+          "element": "4.1-brownfield::block-113",
           "role": "paragraph-point"
         }
       ]
@@ -5039,7 +5039,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-34",
+          "element": "4.1-brownfield::block-35",
           "role": "paragraph-point"
         }
       ]
@@ -5049,7 +5049,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-98",
+          "element": "4.1-brownfield::block-99",
           "role": "paragraph-point"
         }
       ]
@@ -5099,7 +5099,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-67",
+          "element": "2.1-the-agent-stack::block-68",
           "role": "paragraph-point"
         }
       ]
@@ -5149,7 +5149,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-110",
+          "element": "4.1-brownfield::block-111",
           "role": "paragraph-point"
         }
       ]
@@ -5169,7 +5169,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-36",
+          "element": "1.3-loops-and-models::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -5229,7 +5229,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-90",
+          "element": "2.3-the-governed-environment::block-91",
           "role": "paragraph-point"
         }
       ]
@@ -5239,7 +5239,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-96",
+          "element": "2.3-the-governed-environment::block-97",
           "role": "paragraph-point"
         }
       ]
@@ -5249,7 +5249,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-92",
+          "element": "2.3-the-governed-environment::block-93",
           "role": "paragraph-point"
         }
       ]
@@ -5269,7 +5269,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-145",
+          "element": "4.1-brownfield::block-146",
           "role": "paragraph-point"
         }
       ]
@@ -5359,7 +5359,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-28",
+          "element": "4.2-the-skills::block-29",
           "role": "paragraph-point"
         }
       ]
@@ -5389,7 +5389,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-96",
+          "element": "2.1-the-agent-stack::block-101",
           "role": "paragraph-point"
         }
       ]
@@ -5409,7 +5409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-21",
+          "element": "1.4-why-mage-follows-from-the-machine::block-23",
           "role": "paragraph-point"
         }
       ]
@@ -5469,7 +5469,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-29",
+          "element": "1.4-why-mage-follows-from-the-machine::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -5489,7 +5489,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-68",
+          "element": "4.2-the-skills::block-70",
           "role": "paragraph-point"
         }
       ]
@@ -5519,7 +5519,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-5",
+          "element": "4.2-the-skills::block-6",
           "role": "paragraph-point"
         }
       ]
@@ -5609,7 +5609,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-55",
+          "element": "4.1-brownfield::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -5639,7 +5639,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-122",
+          "element": "4.1-brownfield::block-123",
           "role": "paragraph-point"
         }
       ]
@@ -5669,7 +5669,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-49",
+          "element": "1.4-why-mage-follows-from-the-machine::block-52",
           "role": "paragraph-point"
         }
       ]
@@ -5719,7 +5719,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-61",
+          "element": "4.1-brownfield::block-62",
           "role": "paragraph-point"
         }
       ]
@@ -5739,7 +5739,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-13",
+          "element": "4.1-brownfield::block-14",
           "role": "paragraph-point"
         }
       ]
@@ -5789,7 +5789,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-141",
+          "element": "4.1-brownfield::block-142",
           "role": "paragraph-point"
         }
       ]
@@ -5909,7 +5909,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-20",
+          "element": "1.3-loops-and-models::block-22",
           "role": "paragraph-point"
         }
       ]
@@ -5959,7 +5959,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-16",
+          "element": "4.1-brownfield::block-17",
           "role": "paragraph-point"
         }
       ]
@@ -5979,7 +5979,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-65",
+          "element": "2.1-the-agent-stack::block-66",
           "role": "paragraph-point"
         }
       ]
@@ -6029,7 +6029,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-104",
+          "element": "4.1-brownfield::block-105",
           "role": "paragraph-point"
         }
       ]
@@ -9149,42 +9149,42 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "2.1-the-agent-stack::block-13",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-21",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-23",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-25",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-27",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-34",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-52",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "2.1-the-agent-stack::block-12",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-20",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-22",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-24",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-26",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-33",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-51",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-11",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9194,7 +9194,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-12",
+          "element": "1.3-loops-and-models::block-14",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9204,7 +9204,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-14",
+          "element": "4.2-the-skills::block-15",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9219,12 +9219,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-6",
+          "element": "2.1-the-agent-stack::block-7",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-73",
+          "element": "2.1-the-agent-stack::block-75",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9239,7 +9239,7 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-88",
+          "element": "2.1-the-agent-stack::block-91",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9249,12 +9249,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-16",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-19",
+          "element": "1.4-why-mage-follows-from-the-machine::block-17",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9264,7 +9259,12 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-21",
+          "element": "1.4-why-mage-follows-from-the-machine::block-20",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.4-why-mage-follows-from-the-machine::block-23",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9274,22 +9274,22 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-69",
+          "element": "2.1-the-agent-stack::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-73",
+          "element": "2.1-the-agent-stack::block-75",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-15",
+          "element": "1.4-why-mage-follows-from-the-machine::block-16",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-54",
+          "element": "2.1-the-agent-stack::block-55",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9364,12 +9364,12 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-84",
+          "element": "2.1-the-agent-stack::block-87",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-76",
+          "element": "4.1-brownfield::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9424,27 +9424,27 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-116",
+          "element": "4.1-brownfield::block-117",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-143",
+          "element": "4.1-brownfield::block-144",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-55",
+          "element": "4.1-brownfield::block-56",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.1-brownfield::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "4.1-brownfield::block-70",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.1-brownfield::block-69",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9489,7 +9489,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-126",
+          "element": "4.1-brownfield::block-127",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9514,7 +9514,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-139",
+          "element": "4.1-brownfield::block-140",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9524,7 +9524,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-46",
+          "element": "4.1-brownfield::block-47",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9539,17 +9539,17 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-12",
+          "element": "4.1-brownfield::block-13",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-136",
+          "element": "4.1-brownfield::block-137",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-45",
+          "element": "4.1-brownfield::block-46",
           "role": "section-term[tier-1]"
         },
         {
@@ -9614,17 +9614,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-51",
+          "element": "1.3-loops-and-models::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-38",
+          "element": "1.4-why-mage-follows-from-the-machine::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-33",
+          "element": "1.4-why-mage-follows-from-the-machine::block-35",
           "role": "section-term[tier-1]"
         },
         {
@@ -9689,17 +9689,17 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "4.1-brownfield::block-81",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.1-brownfield::block-84",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.1-brownfield::block-80",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.1-brownfield::block-83",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.1-brownfield::block-79",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9814,7 +9814,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-55",
+          "element": "2.1-the-agent-stack::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9879,17 +9879,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-32",
+          "element": "1.3-loops-and-models::block-34",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-36",
+          "element": "1.3-loops-and-models::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-92",
+          "element": "2.1-the-agent-stack::block-95",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9899,7 +9899,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-10",
+          "element": "4.2-the-skills::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9914,7 +9914,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-24",
+          "element": "1.4-why-mage-follows-from-the-machine::block-26",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9944,12 +9944,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-62",
+          "element": "2.3-the-governed-environment::block-63",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-64",
+          "element": "2.3-the-governed-environment::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9964,12 +9964,12 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-25",
+          "element": "4.2-the-skills::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9999,22 +9999,22 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-52",
+          "element": "2.3-the-governed-environment::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-60",
+          "element": "2.3-the-governed-environment::block-61",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-72",
+          "element": "2.3-the-governed-environment::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-79",
+          "element": "2.3-the-governed-environment::block-80",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10034,12 +10034,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-67",
+          "element": "2.3-the-governed-environment::block-68",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-86",
+          "element": "2.3-the-governed-environment::block-87",
           "role": "section-term[tier-1]"
         },
         {
@@ -10059,42 +10059,42 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-34",
+          "element": "1.3-loops-and-models::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-35",
+          "element": "1.4-why-mage-follows-from-the-machine::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-60",
+          "element": "2.1-the-agent-stack::block-61",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-63",
+          "element": "2.1-the-agent-stack::block-64",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-65",
+          "element": "2.1-the-agent-stack::block-66",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-69",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-89",
+          "element": "2.1-the-agent-stack::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "2.1-the-agent-stack::block-92",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-95",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10184,7 +10184,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-73",
+          "element": "4.1-brownfield::block-74",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10219,12 +10219,12 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-92",
+          "element": "4.1-brownfield::block-93",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-98",
+          "element": "4.1-brownfield::block-99",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10249,7 +10249,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-96",
+          "element": "4.1-brownfield::block-97",
           "role": "section-term[tier-1]"
         },
         {
@@ -10334,7 +10334,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-143",
+          "element": "4.1-brownfield::block-144",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10664,7 +10664,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-50",
+          "element": "4.2-the-skills::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10679,7 +10679,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-114",
+          "element": "4.1-brownfield::block-115",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10734,7 +10734,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-19",
+          "element": "4.2-the-skills::block-20",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10769,7 +10769,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-49",
+          "element": "2.1-the-agent-stack::block-50",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10869,7 +10869,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-19",
+          "element": "4.2-the-skills::block-20",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10969,17 +10969,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-41",
+          "element": "1.3-loops-and-models::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-45",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.3-loops-and-models::block-49",
+          "element": "1.3-loops-and-models::block-47",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10989,12 +10984,17 @@
         },
         {
           "view": "outline",
+          "element": "1.3-loops-and-models::block-53",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "1.5-the-engineers-seat::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-40",
+          "element": "1.3-loops-and-models::block-42",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11004,17 +11004,17 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "2.1-the-agent-stack::block-13",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-52",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "2.1-the-agent-stack::block-12",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-51",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.1-the-agent-stack::block-11",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11024,17 +11024,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-24",
+          "element": "1.3-loops-and-models::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-80",
+          "element": "2.1-the-agent-stack::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-54",
+          "element": "2.1-the-agent-stack::block-55",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11059,12 +11059,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-21",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-25",
+          "element": "1.4-why-mage-follows-from-the-machine::block-23",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11079,12 +11074,12 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-43",
+          "element": "1.4-why-mage-follows-from-the-machine::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-49",
+          "element": "1.4-why-mage-follows-from-the-machine::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11094,17 +11089,22 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-51",
+          "element": "1.4-why-mage-follows-from-the-machine::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-57",
+          "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-24",
+          "element": "1.4-why-mage-follows-from-the-machine::block-60",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.4-why-mage-follows-from-the-machine::block-26",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11174,12 +11174,12 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-28",
+          "element": "4.2-the-skills::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-31",
+          "element": "4.2-the-skills::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11279,7 +11279,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-42",
+          "element": "4.1-brownfield::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11409,7 +11409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-122",
+          "element": "4.1-brownfield::block-123",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11424,17 +11424,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-73",
+          "element": "4.1-brownfield::block-74",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-76",
+          "element": "4.1-brownfield::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-69",
+          "element": "4.1-brownfield::block-70",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11489,7 +11489,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-26",
+          "element": "1.3-loops-and-models::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11509,22 +11509,22 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-35",
+          "element": "2.1-the-agent-stack::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-55",
+          "element": "2.1-the-agent-stack::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-60",
+          "element": "2.1-the-agent-stack::block-61",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-67",
+          "element": "2.1-the-agent-stack::block-68",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11539,7 +11539,7 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-54",
+          "element": "2.1-the-agent-stack::block-55",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11659,7 +11659,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-64",
+          "element": "4.1-brownfield::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11729,7 +11729,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-28",
+          "element": "4.2-the-skills::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11739,7 +11739,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-24",
+          "element": "4.2-the-skills::block-25",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11784,27 +11784,27 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-145",
+          "element": "4.1-brownfield::block-146",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-34",
+          "element": "4.1-brownfield::block-35",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-36",
+          "element": "4.1-brownfield::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-38",
+          "element": "4.1-brownfield::block-39",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-28",
+          "element": "4.2-the-skills::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11869,7 +11869,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-33",
+          "element": "4.1-brownfield::block-34",
           "role": "section-term[tier-1]"
         },
         {
@@ -12019,22 +12019,22 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "2.3-the-governed-environment::block-69",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-73",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-77",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "2.3-the-governed-environment::block-68",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-72",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-76",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-67",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12044,22 +12044,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-60",
+          "element": "2.3-the-governed-environment::block-61",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-72",
+          "element": "2.3-the-governed-environment::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-30",
+          "element": "4.1-brownfield::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-26",
+          "element": "4.1-brownfield::block-27",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12174,12 +12174,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-54",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-57",
+          "element": "1.4-why-mage-follows-from-the-machine::block-60",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12194,22 +12194,22 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-79",
+          "element": "2.3-the-governed-environment::block-80",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-82",
+          "element": "2.3-the-governed-environment::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-27",
+          "element": "4.1-brownfield::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-42",
+          "element": "4.1-brownfield::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12219,27 +12219,27 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-8",
+          "element": "4.1-brownfield::block-9",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-31",
+          "element": "4.2-the-skills::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-48",
+          "element": "1.4-why-mage-follows-from-the-machine::block-51",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-12",
+          "element": "4.1-brownfield::block-13",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-26",
+          "element": "4.1-brownfield::block-27",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12269,7 +12269,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-110",
+          "element": "4.1-brownfield::block-111",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12324,22 +12324,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-19",
+          "element": "1.4-why-mage-follows-from-the-machine::block-20",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-69",
+          "element": "2.1-the-agent-stack::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-75",
+          "element": "2.1-the-agent-stack::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-80",
+          "element": "2.1-the-agent-stack::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12354,12 +12354,12 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-42",
+          "element": "4.2-the-skills::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-15",
+          "element": "1.4-why-mage-follows-from-the-machine::block-16",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12404,32 +12404,32 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-16",
+          "element": "1.4-why-mage-follows-from-the-machine::block-17",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-19",
+          "element": "1.4-why-mage-follows-from-the-machine::block-20",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-6",
+          "element": "2.1-the-agent-stack::block-7",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-80",
+          "element": "2.1-the-agent-stack::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-89",
+          "element": "2.1-the-agent-stack::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-94",
+          "element": "2.1-the-agent-stack::block-98",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12449,7 +12449,7 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-88",
+          "element": "2.1-the-agent-stack::block-91",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12469,7 +12469,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-22",
+          "element": "1.3-loops-and-models::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12699,12 +12699,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-27",
+          "element": "1.4-why-mage-follows-from-the-machine::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-90",
+          "element": "2.3-the-governed-environment::block-91",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12724,7 +12724,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-24",
+          "element": "1.4-why-mage-follows-from-the-machine::block-26",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12779,17 +12779,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-55",
+          "element": "4.2-the-skills::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-49",
+          "element": "4.2-the-skills::block-51",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-54",
+          "element": "4.2-the-skills::block-56",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12799,7 +12799,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-12",
+          "element": "1.3-loops-and-models::block-14",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12819,7 +12819,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-10",
+          "element": "4.2-the-skills::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12829,7 +12829,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-9",
+          "element": "4.2-the-skills::block-10",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12889,7 +12889,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-83",
+          "element": "4.1-brownfield::block-84",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12904,12 +12904,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-141",
+          "element": "4.1-brownfield::block-142",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-83",
+          "element": "4.1-brownfield::block-84",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -12919,22 +12919,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-116",
+          "element": "4.1-brownfield::block-117",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-55",
+          "element": "4.1-brownfield::block-56",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.1-brownfield::block-81",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "4.1-brownfield::block-80",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.1-brownfield::block-79",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13094,7 +13094,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-35",
+          "element": "1.4-why-mage-follows-from-the-machine::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13104,7 +13104,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-33",
+          "element": "1.4-why-mage-follows-from-the-machine::block-35",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13129,7 +13129,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-12",
+          "element": "1.3-loops-and-models::block-14",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13139,7 +13139,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-41",
+          "element": "1.3-loops-and-models::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13149,7 +13149,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-80",
+          "element": "4.1-brownfield::block-81",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13159,7 +13159,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-40",
+          "element": "1.3-loops-and-models::block-42",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13169,22 +13169,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-141",
+          "element": "4.1-brownfield::block-142",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-40",
+          "element": "4.1-brownfield::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-92",
+          "element": "4.1-brownfield::block-93",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-88",
+          "element": "4.1-brownfield::block-89",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13194,7 +13194,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-41",
+          "element": "1.4-why-mage-follows-from-the-machine::block-44",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13244,17 +13244,17 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-16",
+          "element": "4.1-brownfield::block-17",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-49",
+          "element": "4.1-brownfield::block-50",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-51",
+          "element": "4.1-brownfield::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13454,7 +13454,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-96",
+          "element": "2.3-the-governed-environment::block-97",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13469,42 +13469,42 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-102",
+          "element": "4.1-brownfield::block-103",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-104",
+          "element": "4.1-brownfield::block-105",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-110",
+          "element": "4.1-brownfield::block-111",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-112",
+          "element": "4.1-brownfield::block-113",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-114",
+          "element": "4.1-brownfield::block-115",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-21",
+          "element": "4.1-brownfield::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-36",
+          "element": "4.1-brownfield::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-98",
+          "element": "4.1-brownfield::block-99",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13519,17 +13519,17 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-101",
+          "element": "4.1-brownfield::block-102",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-109",
+          "element": "4.1-brownfield::block-110",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-96",
+          "element": "4.1-brownfield::block-97",
           "role": "section-term[tier-1]"
         },
         {
@@ -13554,57 +13554,57 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-12",
+          "element": "2.1-the-agent-stack::block-13",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-24",
+          "element": "2.1-the-agent-stack::block-25",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-29",
+          "element": "2.1-the-agent-stack::block-30",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-31",
+          "element": "2.1-the-agent-stack::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-33",
+          "element": "2.1-the-agent-stack::block-34",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-35",
+          "element": "2.1-the-agent-stack::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-37",
+          "element": "2.1-the-agent-stack::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-42",
+          "element": "2.1-the-agent-stack::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-45",
+          "element": "2.1-the-agent-stack::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-49",
+          "element": "2.1-the-agent-stack::block-50",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-51",
+          "element": "2.1-the-agent-stack::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13614,7 +13614,7 @@
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-11",
+          "element": "2.1-the-agent-stack::block-12",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13629,17 +13629,17 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-24",
+          "element": "1.3-loops-and-models::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-45",
+          "element": "1.3-loops-and-models::block-47",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-25",
+          "element": "1.4-why-mage-follows-from-the-machine::block-27",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13669,27 +13669,27 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-76",
+          "element": "2.3-the-governed-environment::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-13",
+          "element": "4.1-brownfield::block-14",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-61",
+          "element": "4.1-brownfield::block-62",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-70",
+          "element": "4.1-brownfield::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-19",
+          "element": "1.3-loops-and-models::block-21",
           "role": "section-term[tier-1]"
         },
         {
@@ -13784,7 +13784,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-64",
+          "element": "4.1-brownfield::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13819,7 +13819,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-60",
+          "element": "4.1-brownfield::block-61",
           "role": "section-term[tier-1]"
         },
         {
@@ -14004,7 +14004,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-63",
+          "element": "4.2-the-skills::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14024,7 +14024,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-62",
+          "element": "4.2-the-skills::block-64",
           "role": "section-term[tier-1]"
         },
         {
@@ -14084,7 +14084,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-102",
+          "element": "4.1-brownfield::block-103",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14094,7 +14094,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-101",
+          "element": "4.1-brownfield::block-102",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14254,22 +14254,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-102",
+          "element": "4.1-brownfield::block-103",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-104",
+          "element": "4.1-brownfield::block-105",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-110",
+          "element": "4.1-brownfield::block-111",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-112",
+          "element": "4.1-brownfield::block-113",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14294,7 +14294,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-63",
+          "element": "4.2-the-skills::block-65",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14359,7 +14359,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-63",
+          "element": "4.2-the-skills::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14374,7 +14374,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-62",
+          "element": "4.2-the-skills::block-64",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14534,7 +14534,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-36",
+          "element": "1.3-loops-and-models::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14574,7 +14574,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-26",
+          "element": "1.3-loops-and-models::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14584,7 +14584,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-19",
+          "element": "1.3-loops-and-models::block-21",
           "role": "section-term[tier-1]"
         },
         {
@@ -14744,7 +14744,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-51",
+          "element": "4.1-brownfield::block-52",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14754,12 +14754,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-51",
+          "element": "4.1-brownfield::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-45",
+          "element": "4.1-brownfield::block-46",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14849,22 +14849,22 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-35",
+          "element": "1.4-why-mage-follows-from-the-machine::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-38",
+          "element": "1.4-why-mage-follows-from-the-machine::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-43",
+          "element": "1.4-why-mage-follows-from-the-machine::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-82",
+          "element": "2.3-the-governed-environment::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14884,7 +14884,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-33",
+          "element": "1.4-why-mage-follows-from-the-machine::block-35",
           "role": "section-term[tier-1]"
         },
         {
@@ -14974,7 +14974,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-42",
+          "element": "4.2-the-skills::block-43",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15049,27 +15049,27 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-87",
+          "element": "2.3-the-governed-environment::block-88",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-90",
+          "element": "2.3-the-governed-environment::block-91",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-92",
+          "element": "2.3-the-governed-environment::block-93",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-94",
+          "element": "2.3-the-governed-environment::block-95",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-96",
+          "element": "2.3-the-governed-environment::block-97",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15079,7 +15079,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-86",
+          "element": "2.3-the-governed-environment::block-87",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15134,22 +15134,22 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-126",
+          "element": "4.1-brownfield::block-127",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-128",
+          "element": "4.1-brownfield::block-129",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-131",
+          "element": "4.1-brownfield::block-132",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15169,12 +15169,12 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-125",
+          "element": "4.1-brownfield::block-126",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-36",
+          "element": "4.2-the-skills::block-37",
           "role": "section-term[tier-1]"
         },
         {
@@ -15214,7 +15214,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-9",
+          "element": "1.3-loops-and-models::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15289,7 +15289,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-14",
+          "element": "4.2-the-skills::block-15",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15434,17 +15434,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-29",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.3-loops-and-models::block-32",
+          "element": "1.3-loops-and-models::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "1.3-loops-and-models::block-34",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.3-loops-and-models::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15534,17 +15534,17 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-5",
+          "element": "4.2-the-skills::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-50",
+          "element": "4.2-the-skills::block-6",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-49",
+          "element": "4.2-the-skills::block-51",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15559,17 +15559,17 @@
         },
         {
           "view": "outline",
+          "element": "4.2-the-skills::block-26",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.2-the-skills::block-6",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.2-the-skills::block-25",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.2-the-skills::block-5",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.2-the-skills::block-24",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15584,17 +15584,17 @@
         },
         {
           "view": "outline",
+          "element": "4.2-the-skills::block-11",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.2-the-skills::block-6",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.2-the-skills::block-10",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.2-the-skills::block-5",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.2-the-skills::block-9",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15719,12 +15719,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-62",
+          "element": "2.3-the-governed-environment::block-63",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-64",
+          "element": "2.3-the-governed-environment::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15759,7 +15759,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-25",
+          "element": "4.2-the-skills::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15949,17 +15949,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-67",
+          "element": "2.1-the-agent-stack::block-68",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-69",
+          "element": "2.1-the-agent-stack::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-75",
+          "element": "2.1-the-agent-stack::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15969,7 +15969,7 @@
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-42",
+          "element": "4.2-the-skills::block-43",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -16044,12 +16044,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-52",
+          "element": "2.3-the-governed-environment::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-92",
+          "element": "2.3-the-governed-environment::block-93",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16104,7 +16104,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-11",
+          "element": "2.1-the-agent-stack::block-12",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16209,12 +16209,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-84",
+          "element": "2.1-the-agent-stack::block-87",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-141",
+          "element": "4.1-brownfield::block-142",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16239,7 +16239,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-137",
+          "element": "4.1-brownfield::block-138",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -16249,17 +16249,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-37",
+          "element": "2.1-the-agent-stack::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-45",
+          "element": "2.1-the-agent-stack::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-11",
+          "element": "2.1-the-agent-stack::block-12",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16269,12 +16269,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-45",
+          "element": "1.3-loops-and-models::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-9",
+          "element": "1.3-loops-and-models::block-47",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16284,7 +16284,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-40",
+          "element": "1.3-loops-and-models::block-42",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16414,7 +16414,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-112",
+          "element": "4.1-brownfield::block-113",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16484,7 +16484,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-68",
+          "element": "4.2-the-skills::block-70",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -16504,12 +16504,12 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-131",
+          "element": "4.1-brownfield::block-132",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-37",
+          "element": "4.2-the-skills::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16524,12 +16524,12 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-125",
+          "element": "4.1-brownfield::block-126",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.2-the-skills::block-36",
+          "element": "4.2-the-skills::block-37",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16599,7 +16599,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-49",
+          "element": "1.3-loops-and-models::block-51",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16609,37 +16609,37 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-51",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-96",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-82",
+          "element": "2.1-the-agent-stack::block-101",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-40",
+          "element": "2.3-the-governed-environment::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-8",
+          "element": "4.1-brownfield::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-92",
+          "element": "4.1-brownfield::block-9",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.1-brownfield::block-93",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16674,17 +16674,17 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-48",
+          "element": "1.4-why-mage-follows-from-the-machine::block-51",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-33",
+          "element": "4.1-brownfield::block-34",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-88",
+          "element": "4.1-brownfield::block-89",
           "role": "section-term[tier-1]"
         },
         {
@@ -16704,22 +16704,17 @@
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-49",
+          "element": "1.3-loops-and-models::block-51",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-38",
+          "element": "1.4-why-mage-follows-from-the-machine::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-41",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-49",
+          "element": "1.4-why-mage-follows-from-the-machine::block-44",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16729,27 +16724,32 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-54",
+          "element": "1.4-why-mage-follows-from-the-machine::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-42",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-63",
+          "element": "2.1-the-agent-stack::block-101",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-65",
+          "element": "2.1-the-agent-stack::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-96",
+          "element": "2.1-the-agent-stack::block-64",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.1-the-agent-stack::block-66",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16759,7 +16759,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-82",
+          "element": "2.3-the-governed-environment::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16814,7 +16814,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-48",
+          "element": "1.4-why-mage-follows-from-the-machine::block-51",
           "role": "section-term[tier-1]"
         },
         {
@@ -16869,12 +16869,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-75",
+          "element": "2.1-the-agent-stack::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-15",
+          "element": "1.4-why-mage-follows-from-the-machine::block-16",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16884,22 +16884,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-116",
+          "element": "4.1-brownfield::block-117",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-55",
+          "element": "4.1-brownfield::block-56",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.1-brownfield::block-62",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "4.1-brownfield::block-61",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.1-brownfield::block-60",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16959,22 +16959,22 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-16",
+          "element": "4.1-brownfield::block-17",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-18",
+          "element": "4.1-brownfield::block-19",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-21",
+          "element": "4.1-brownfield::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-49",
+          "element": "4.1-brownfield::block-50",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17199,7 +17199,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-137",
+          "element": "4.1-brownfield::block-138",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -17319,12 +17319,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-20",
+          "element": "1.3-loops-and-models::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-loops-and-models::block-22",
+          "element": "1.3-loops-and-models::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17449,7 +17449,7 @@
         },
         {
           "view": "outline",
-          "element": "4.1-brownfield::block-76",
+          "element": "4.1-brownfield::block-77",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -17459,7 +17459,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.1-the-agent-stack::block-67",
+          "element": "2.1-the-agent-stack::block-68",
           "role": "paragraph-term[tier-2]"
         }
       ]
