@@ -15,7 +15,7 @@
     Part 4, Putting It to Work, the method in daily practice, which leads to Part 5, a MAGE
     case study of DocAble that the book's claims rest on, and then to Part 6, Reflections —
     the theory, implications for software engineering, and conclusion. Below it sits the back
-    matter (Part 7: about the author and colophon) and the patterns appendix used as a reference.</desc>
+    matter (Part 7: about the author, the colophon, and the reference appendices).</desc>
 
   <defs>
     <marker id="bm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -82,5 +82,5 @@
   <!-- Part 7: back matter (apparatus — muted, not a numbered Part) -->
   <rect x="270" y="780" width="420" height="88" rx="8" fill="#fdfcf9" stroke="#57534e" stroke-width="2"/>
   <text x="480" y="816" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 7 · Back matter</text>
-  <text x="480" y="846" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">about the author, colophon, appendix</text>
+  <text x="480" y="846" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">about the author, colophon, appendices</text>
 </svg>
