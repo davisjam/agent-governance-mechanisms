@@ -3874,9 +3874,11 @@ judgment it embodies. It is deliberately selective and interpretive, not a secon
 documentation: it treats the mechanisms that carry the most weight, one at a time, and points you to the \
 [online catalogue]({cat}) for the exhaustive per-mechanism detail.
 
-The stacks in Appendix A adopt whole capabilities; this appendix goes the other way, taking one mechanism \
-at a time — the problem it kills, the shape that kills it, the engineering consequences, and the seam where \
-you wire it in. Read a stack to compose; read a Flagship Mechanism to understand one piece in depth.
+Three appendices divide the labor. **Appendix A teaches architectures** — whole capabilities you adopt as \
+a stack. **This appendix teaches judgments** — one mechanism at a time: the problem it kills, the shape \
+that kills it, and the seam where you wire it in. **Appendix C is the vocabulary** — the compact catalogue \
+you browse to find a mechanism fast. Read a stack to compose; read a Flagship Mechanism to understand one \
+piece in depth.
 
 The notes are grouped by target zone — Agent, Models-bridge, Product — and numbered straight through, so \
 a cross-reference names a stable locator (§B.1 … §B.29) regardless of which zone it falls in. Every \
@@ -4817,12 +4819,12 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     #    pointer to the stacks in Appendix A.
     b_part = next_part + 1
     b_part_title = "Appendix B — Flagship Mechanisms"
+    # The 'Adopt by capability: the stacks' summary block belongs to Appendix A, so B's opening does not
+    # repeat it (removing the lone `## Adopt by capability` H2 also makes B's H1 a leaf — the only-child
+    # front-door shape A and C already have). The nine-capability map + lifted L1 principle likewise front
+    # the stacks in Appendix A.
     b_opening_body = [
         _appendix_v2_b_opening_prose(),
-        "",
-        # The nine-capability map + lifted L1 principle moved to the Appendix A opening (§13, the capability
-        # lens fronts the stacks). B keeps the 'adopt by capability' summary that links into those stacks.
-        _appendix_stacks_summary_md(stem_letter="a"),   # 'adopt by capability' → links into Appendix A
     ]
     chapters.append({
         "slug": _APPENDIX_V2_B_OPENING_SLUG,
