@@ -7,13 +7,17 @@ This is a scorecard, not four cards. Engineers do not track drift, coverage, fre
 independent gauges. They ask one question — can I trust the model? — and want the four rows that answer it on
 one face.
 
+Healthy direction: the Missing-Model surface drains toward an explicitly chosen floor as subsystems get
+modeled.
+*DocAble reference:* 56% → 7.89% over nine passes — one observed run.
+
 ### The four rows
 
 - **Drift.** Model-sync efficacy: the drift and parity gates report the models equal to the code. Green = no
   divergence.
 - **Coverage.** The Missing-Model surface — the fraction of tests whose exercised code traces to no model
-  claim. It drains from 56% toward its 10%-or-under floor as the model loop covers each biggest orphan
-  cluster in turn. The drain curve is the coverage reading.
+  claim. It drains toward an explicitly chosen floor as the model loop covers each biggest orphan cluster in
+  turn. The drain curve is the coverage reading.
 - **Traceability.** The symbol-anchored traceability graph and its reverse index resolve every model claim to
   code and back. Green = no dangling anchors.
 - **Freshness.** How recently each model was regenerated against its source (the model-sync discipline).
@@ -24,9 +28,9 @@ one face.
   Drift          gates green
   Coverage       Missing-Model draining toward its floor  ▁▂▃▅█
   Traceability   0 dangling anchors
-  Freshness      2 models past their last-regen window
+  Freshness      models past their last-regen window
   ──────────────────────────────────────────────────────────
-  Trust the model?  mostly — refresh the 2 stale before steering by it
+  example reading — trust the model? mostly; refresh any stale first
 ```
 
 ### The soft-gap read

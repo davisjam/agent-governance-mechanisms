@@ -25,7 +25,11 @@ The two status pips confirm the sparkline; they are not co-headlines.
              healthy: down over time · watch: daily
   ─────────────────────────────────────────────────────
   Drift gates   green        Validation   rising
+  example reading — the sparkline shows churn's shape, not your numbers
 ```
+
+One reading rule governs every card in this deck: a bar whose length carries no declared measure is a status,
+not a quantity — size it from experience, never fabricate a number for it.
 
 ### The soft-gap read
 

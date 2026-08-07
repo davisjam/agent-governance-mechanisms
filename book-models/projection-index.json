@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1405,
+    "total_sites": 1404,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1074,
+      "book-web": 1073,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -1065,7 +1065,7 @@
           },
           {
             "file": "book/appendix-d-system-health.html",
-            "occ": 8
+            "occ": 9
           },
           {
             "file": "book/book-index.html",
@@ -1212,10 +1212,6 @@
             "occ": 2
           },
           {
-            "file": "book/appendix-d-engineering-capital.html",
-            "occ": 1
-          },
-          {
             "file": "book/book-index.html",
             "occ": 2
           },
@@ -1231,7 +1227,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 10
+            "occ": 9
           }
         ]
       },
@@ -1669,7 +1665,7 @@
           },
           {
             "file": "book/appendix-d-engineering-capital.html",
-            "occ": 15
+            "occ": 14
           },
           {
             "file": "book/appendix-d-evidence-quality.html",
@@ -2199,7 +2195,7 @@
           },
           {
             "file": "book/appendix-d-engineering-capital.html",
-            "occ": 9
+            "occ": 8
           },
           {
             "file": "book/appendix-d-evidence-quality.html",
@@ -2913,7 +2909,7 @@
           },
           {
             "file": "book/appendix-d-release-readiness.html",
-            "occ": 8
+            "occ": 10
           },
           {
             "file": "book/appendix-d-system-health.html",
@@ -5895,7 +5891,7 @@
           },
           {
             "file": "book/appendix-d-governance-conversion.html",
-            "occ": 2
+            "occ": 1
           },
           {
             "file": "book/figures.html",

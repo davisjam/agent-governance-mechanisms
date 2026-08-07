@@ -7,33 +7,33 @@ to become infrastructure.
 
 ### What to read
 
-- **Attention by activity.** The split of human attention across architecture, validation, reading code, and
+- **Attention by activity.** Where human attention lands across architecture, validation, reading code, and
   emergencies. It reads the human-attention-burden outcome — whose observables are interventions per landed
-  change, review time, and conversion effort. The four-way partition itself has no declared measure, so the
-  operator sizes the bars from experience.
+  change, review time, and conversion effort. The four-way partition has no declared measure, so each row is a
+  status the operator sizes from experience, never a proportion.
 - **Repeated decisions.** The count of decisions still made by hand that recur — the queue of conversion
   candidates. Oversight amortization predicts this shrinks per unit of durable output as classes convert.
 
 ```
-  HUMAN JUDGMENT              "Where should I spend judgment next?"
+  HUMAN JUDGMENT             "Where should I spend judgment next?"
   ───────────────────────────────────────────────────────────────
-  Architecture   ██████     the scarce work; healthy home
-  Validation     ███
-  Reading code   █          rising here = a model gap to close
-  Emergencies    ██         rising here = a class to convert
+  Architecture   ● healthy home         the scarce, intended work
+  Validation     ● healthy home
+  Reading code   ◐ WATCH if rising      rising = a model gap to close
+  Emergencies    ○ CONVERT if recurring rising = a class to convert
   ───────────────────────────────────────────────────────────────
-  Deciding repeatedly  ████  →  should become infrastructure
+  Deciding repeatedly  → should become infrastructure
 ```
 
 As implementation gets cheap, attention re-centers on judgment, modeling, validation, architecture, and
-governance. High bars on architecture and validation are that re-centering, made observable. This is where
+governance. Healthy status on architecture and validation is that re-centering, made observable. This is where
 you watch it happen.
 
 ### The soft-gap read
 
 The **attention-by-activity partition** is a ratified soft-gap: no declared measure splits attention into the
-four activities. It stays a green / yellow / red operator self-assessment — the operator sizes the bars from
-experience, never from fabricated telemetry.
+four activities. Each row stays a green / yellow / red operator self-assessment — a status, never a fabricated
+proportion.
 
 ### What this projects
 

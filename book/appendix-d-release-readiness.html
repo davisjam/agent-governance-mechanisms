@@ -643,15 +643,15 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>Run the checklist before you ship — six items, each backed by a gate or a mechanism, not by an operator's memory. A pilot does not certify a plane from feel; a MAGE operator does not certify a release from feel. Every box is green, or the release waits.</p>
 <p>This card is a checklist, deliberately. Each box reads a mechanism the earlier chapters built; the checklist adds no policy, it gathers the gates that already exist onto one face.</p>
 <h3>The six boxes</h3>
-<ul><li><strong>Models current.</strong> The models regenerated against source at HEAD; the Missing-Model surface within its floor.</li><li><strong>Drift green.</strong> The drift and parity gates report the models equal to the code.</li><li><strong>Validators pass.</strong> The correctness and conformance validators, and the generative-validation coverage oracles, are exercised and green.</li><li><strong>Fidelity acceptable.</strong> The content survived its transformation — the output still means what the input meant. This catches the artifact that became more conformant and less true to the original.</li><li><strong>Gates passing.</strong> The staged-deploy gate staircase is green end to end; the release is not shipped past a red stage.</li><li><strong>Overrides reviewed.</strong> Every recorded escape-hatch since the last release has been read and understood, traced through the change-provenance record, not silently inherited.</li></ul>
+<ul><li><strong>Model coverage/current.</strong> The models regenerated against source at HEAD; the Missing-Model surface within its floor.</li><li><strong>Model-code parity.</strong> The drift and parity gates report the models equal to the code.</li><li><strong>Validators pass.</strong> The correctness and conformance validators, and the generative-validation coverage oracles, are exercised and green.</li><li><strong>Fidelity acceptable.</strong> The content survived its transformation — the output still means what the input meant. This catches the artifact that became more conformant and less true to the original.</li><li><strong>Gates passing.</strong> The staged-deploy gate staircase is green end to end; the release is not shipped past a red stage.</li><li><strong>Overrides reviewed.</strong> Every recorded escape-hatch since the last release has been read and understood, traced through the change-provenance record, not silently inherited.</li></ul>
 <pre><code>  RELEASE READINESS  ·  PREFLIGHT              "Can I trust this release?"
   ═══════════════════════════════════════════════════════════════════════
-  [ ]  Models current       Missing-Model within floor     (model-sync)
-  [ ]  Drift green          parity gates report equal       (drift gates)
-  [ ]  Validators pass      coverage oracles exercised      (gen-validation)
-  [ ]  Fidelity acceptable  meaning survived transformation (fidelity validator)
-  [ ]  Gates passing        staged staircase green          (deploy gates)
-  [ ]  Overrides reviewed   every escape since last release (provenance record)
+  [ ]  Model coverage/current  Missing-Model within floor      (model-sync)
+  [ ]  Model-code parity       parity gates report equal       (drift gates)
+  [ ]  Validators pass         coverage oracles exercised      (gen-validation)
+  [ ]  Fidelity acceptable     meaning survived transformation (fidelity validator)
+  [ ]  Gates passing           staged staircase green          (deploy gates)
+  [ ]  Overrides reviewed      every escape since last release (provenance record)
   ═══════════════════════════════════════════════════════════════════════
   All six green → cleared to ship.   Any red → the release waits.</code></pre>
 <p>Two of the six carry a number: the Missing-Model surface against its floor, and the overrides count since the last green release. The other four are pass-or-fail gate readings.</p>

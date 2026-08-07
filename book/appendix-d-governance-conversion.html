@@ -639,23 +639,20 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-theory.html">Appendix E - 1. Theory</a></li>
-<li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix D - 7. Governance Conversion"><header class="chap"><div class="kicker"><a href="appendix-operators-reference.html" aria-label="Beginning of Appendix D — Operator&#x27;s Reference">Appendix D — Operator&#x27;s Reference</a></div><h1>Appendix D - 7. Governance Conversion</h1></header><p><em>How many recurring failures became infrastructure, and how fast?</em></p>
-<p>Every recurring failure recognized as a class, converted into a mechanism, then retired from human attention for good. The reading is the count of conversions and the elapsed time from failure-class to mechanism — the loop that builds the capital the previous card assesses.</p>
+<li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix D - 7. Governance Conversion"><header class="chap"><div class="kicker"><a href="appendix-operators-reference.html" aria-label="Beginning of Appendix D — Operator&#x27;s Reference">Appendix D — Operator&#x27;s Reference</a></div><h1>Appendix D - 7. Governance Conversion</h1></header><p><em>Which recurring failures are still waiting to become infrastructure?</em></p>
+<p>Every recurring failure recognized as a class, converted into a mechanism, then retired from human attention for good. Read the pipeline, not a rate: the state that matters is not how fast conversions happen but which classes are still waiting — a failure that has recurred three times and nobody has converted it.</p>
 <p>Where engineering capital asks whether the stock is growing, this card shows the engine that grows it: the failure-to-mechanism-to-retired-forever pipeline.</p>
+<p>Healthy direction: the Observed and Classified queues stay short — failures convert into infrastructure faster than new classes appear. <em>DocAble reference:</em> controls accreted 0 → 747 lints, 0 → 102 gates — one observed run; each control is one class that stopped recurring.</p>
 <h3>What to read</h3>
-<ul><li><strong>Conversions.</strong> How many recurring failure classes became durable mechanisms. Soft-gap — a rich loop-and-hypothesis construct with no declared rate metric. The nearest declared proxy is control growth (lints 0 to 747, gates 0 to 102): each accreted control is one failure class that stopped recurring.</li><li><strong>Speed.</strong> The elapsed time from a failure recurring to its class being recognized and converted. Higher agentic velocity shortens the time to recognize a class.</li></ul>
-<pre><code>  GOVERNANCE CONVERSION      "Failures → infrastructure — how many, how fast?"
-  ──────────────────────────────────────────────────────────────────────────
-        Recurring failures
-              |  recognized as one structural class
-              v
-          Mechanisms           a lint / gate / typed seam / test
-              |  converted, then removed from human attention
-              v
-        Retired forever
-  ──────────────────────────────────────────────────────────────────────────
-  Proxy for "how many": controls accreted  0 to 747 lints · 0 to 102 gates</code></pre>
+<ul><li><strong>The three queues.</strong> Where each recurring failure sits: seen but unnamed, named but not yet built, or converted into a durable control.</li><li><strong>Oldest unresolved class.</strong> The failure that has recurred longest without a mechanism — the next conversion owed.</li></ul>
+<pre><code>  GOVERNANCE CONVERSION   "Which failures are still waiting to become infrastructure?"
+  ──────────────────────────────────────────────────────────────────────────────────
+  Observed    ▸ failures seen recurring, not yet named as a class
+  Classified  ▸ recognized as one structural class, mechanism not yet built
+  Converted   ▸ lint / gate / typed seam / test — retired from human attention
+  ──────────────────────────────────────────────────────────────────────────────────
+  Oldest unresolved class → the failure that has recurred longest un-converted</code></pre>
 <h3>The soft-gap read</h3>
-<p>The <strong>conversion count and rate</strong> is the ratified soft-gap — a rich construct, no declared rate metric. Read "how many, how fast" green / yellow / red: green when classes convert steadily and recognition time shrinks; red when the same failures recur un-converted. Anchor it on the control-growth proxy, never a fabricated rate.</p>
+<p>The <strong>conversion queues</strong> are a ratified soft-gap — a rich loop-and-hypothesis construct with no declared rate metric. Read green / yellow / red: green when classes convert steadily and the Observed queue stays short; red when the same failures recur un-converted. Anchor it on the control-growth proxy, never a fabricated rate.</p>
 <h3>What this projects</h3>
 <p>The <em>governance-conversion</em> concept — the loop by which the environment evolves, each recurring failure converted into a durable mechanism (see <a href="2.3-the-governed-environment.html">Chapter 2.3</a>) — plus the governance-adaptation loop, the failure-class-exposure hypothesis (how fast a class is recognized), and the conversion-conditions hypothesis (conversions stick when diagnosis capability and change authority sit together).</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-operators-reference.html" aria-label="Beginning of Appendix D — Operator&#x27;s Reference">« Beginning of part</a><a href="appendix-d-engineering-capital.html" aria-label="Previous chapter — Appendix D - 6. Engineering Capital">« Previous chapter</a></div><span class="chapnav-here" title="Appendix D - 7. Governance Conversion">Appendix D - 7. Governance Conversion</span><div class="chapnav-fwd"><a href="appendix-d-release-readiness.html" aria-label="Next chapter — Appendix D - 8. Release Readiness">Next chapter »</a><a href="appendix-skill-recipe.html" aria-label="Next part — Appendix E — How to Write a Skill">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

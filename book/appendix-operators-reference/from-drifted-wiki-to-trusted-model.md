@@ -4,9 +4,9 @@ few people's memory. They just call it the wiki.
 
 A wiki is a lightweight human-facing knowledge graph: its pages are nodes, its links and backlinks are
 edges, its tags carry loose metadata. The graph is already there; what it lacks is a disciplined join to
-the code. This card is the operating drill that supplies the join, then walks the wiki from drifted
-documentation to a trusted — and eventually executable — model. Chapter 4.1 is the full treatment; this is
-the one-page projection you keep at the bench.
+the code. This is the operating drill that supplies the join, then walks the wiki from drifted documentation
+to a trusted — and eventually executable — model. It is the drill you run at the bench; Chapter 4.1 is the
+full treatment.
 
 ### The minimum package
 

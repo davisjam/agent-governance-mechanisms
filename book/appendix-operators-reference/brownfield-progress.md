@@ -8,11 +8,15 @@ Most readers do not start clean — they start with a legacy codebase and a drif
 migration as a trajectory: ungoverned today, governed over adoption, with the four stages as the track and
 one number reading the drain.
 
+Healthy direction: the ungoverned surface drains as subsystems get modeled, and the next stage aims at the
+biggest remaining cluster.
+*DocAble reference:* 56% → 7.89% over nine passes — one observed run.
+
 ### What to read
 
 - **Ungoverned vs governed.** The Missing-Model surface — the fraction of tests whose exercised code traces
-  to no model claim — drains as subsystems get modeled. It falls from 56% toward its 10%-or-under floor as
-  the model loop covers each biggest orphan cluster in turn. The before-and-after bar is this drain.
+  to no model claim — drains as subsystems get modeled. It falls toward an explicitly chosen floor as the
+  model loop covers each biggest orphan cluster in turn. The before-and-after bar is this drain.
 - **Stage position.** Which of the four stages the migration has reached — Audit, Synchronize, Govern,
   Extend — each a useful stopping point that already pays.
 - **Tribal knowledge.** What still lives only in one person's head — the invariants known by reputation. No
@@ -27,6 +31,7 @@ one number reading the drain.
   Audit ──▶ Synchronize ──▶ [ Govern ] ──▶ Extend        stage track
   Next conversion → biggest remaining ungoverned cluster
   Still tribal: invariants living in one head            convert these
+  example reading — the before/after bars show the drain's shape, not your counts
 ```
 
 ### The soft-gap read

@@ -80,7 +80,7 @@
       "card-id": "engineering-capital",
       "title": "Engineering Capital",
       "family": "compounding",
-      "operator_question": "Is the environment becoming more valuable, or are we just moving faster?",
+      "operator_question": "Is accumulated governance reducing future reasoning cost?",
       "evidence_refs": [
         "THEORY:compounding-governance-proposition",
         "CONC:compounding",
@@ -102,7 +102,7 @@
       "card-id": "governance-conversion",
       "title": "Governance Conversion",
       "family": "compounding",
-      "operator_question": "How many recurring failures became infrastructure, and how fast?",
+      "operator_question": "Which recurring failures are still waiting to become infrastructure?",
       "evidence_refs": [
         "CONC:governance-conversion",
         "THEORY:L3-governance-adaptation",

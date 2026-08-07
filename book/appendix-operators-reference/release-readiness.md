@@ -9,9 +9,9 @@ adds no policy, it gathers the gates that already exist onto one face.
 
 ### The six boxes
 
-- **Models current.** The models regenerated against source at HEAD; the Missing-Model surface within its
-  floor.
-- **Drift green.** The drift and parity gates report the models equal to the code.
+- **Model coverage/current.** The models regenerated against source at HEAD; the Missing-Model surface within
+  its floor.
+- **Model-code parity.** The drift and parity gates report the models equal to the code.
 - **Validators pass.** The correctness and conformance validators, and the generative-validation coverage
   oracles, are exercised and green.
 - **Fidelity acceptable.** The content survived its transformation — the output still means what the input
@@ -24,12 +24,12 @@ adds no policy, it gathers the gates that already exist onto one face.
 ```
   RELEASE READINESS  ·  PREFLIGHT              "Can I trust this release?"
   ═══════════════════════════════════════════════════════════════════════
-  [ ]  Models current       Missing-Model within floor     (model-sync)
-  [ ]  Drift green          parity gates report equal       (drift gates)
-  [ ]  Validators pass      coverage oracles exercised      (gen-validation)
-  [ ]  Fidelity acceptable  meaning survived transformation (fidelity validator)
-  [ ]  Gates passing        staged staircase green          (deploy gates)
-  [ ]  Overrides reviewed   every escape since last release (provenance record)
+  [ ]  Model coverage/current  Missing-Model within floor      (model-sync)
+  [ ]  Model-code parity       parity gates report equal       (drift gates)
+  [ ]  Validators pass         coverage oracles exercised      (gen-validation)
+  [ ]  Fidelity acceptable     meaning survived transformation (fidelity validator)
+  [ ]  Gates passing           staged staircase green          (deploy gates)
+  [ ]  Overrides reviewed      every escape since last release (provenance record)
   ═══════════════════════════════════════════════════════════════════════
   All six green → cleared to ship.   Any red → the release waits.
 ```
