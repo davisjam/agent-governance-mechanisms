@@ -36,11 +36,12 @@ _DEFAULT_PDF = os.path.join(ROOT, "book", "mage-book.pdf")
 BLOCKING = False
 
 
-def _declared_cards() -> "list[tuple[str, str]]":
-    """(card-id, title) in declared deck order."""
+def _declared_cards() -> "list[tuple[str, str, str]]":
+    """(card-id, title, operator_question) in declared deck order."""
     with open(_SOURCE, encoding="utf-8") as fh:
         data = json.load(fh)
-    return [(c["card-id"], c.get("title", c["card-id"])) for c in data["cards"]]
+    return [(c["card-id"], c.get("title", c["card-id"]), c.get("operator_question", ""))
+            for c in data["cards"]]
 
 
 def _norm(s: str) -> str:
@@ -55,28 +56,23 @@ def _per_page_text(pdf_path: str) -> "list[str]":
     return [_norm(page) for page in out.split("\x0c")]
 
 
-#: A card page opens with its title heading, so the title sits at the very top of the page's text. Anchor
-#: the match to that heading position (first N chars) so a title phrase recurring in body prose elsewhere
-#: does not false-match. Falls back to an anywhere-match only if no heading-anchored page is found.
+#: A card page opens with its title heading (title within the first N chars) AND carries the card's unique
+#: operator question in its opening line. Requiring BOTH pins each card to exactly its page — a title phrase
+#: that recurs as a body-chapter heading elsewhere lacks the operator question, so it never false-matches.
 _HEADING_WINDOW = 80
 
 
-def _title_page(pages: "list[str]", title: str) -> "int | None":
-    """1-indexed page whose HEADING is the card title (title within the first _HEADING_WINDOW chars), or
-    None. Prefers the heading-anchored page; if none, falls back to the first anywhere-occurrence."""
-    needle = _norm(title)
-    if not needle:
+def _card_page(pages: "list[str]", title: str, question: str) -> "int | None":
+    """1-indexed page that is this card's page: the title is heading-anchored (within the first
+    _HEADING_WINDOW chars) AND the card's operator question appears on the same page. None if not found."""
+    t, q = _norm(title), _norm(question)
+    if not t:
         return None
-    fallback: "int | None" = None
     for i, txt in enumerate(pages, 1):
-        pos = txt.find(needle)
-        if pos == -1:
-            continue
-        if pos < _HEADING_WINDOW:
+        pos = txt.find(t)
+        if pos != -1 and pos < _HEADING_WINDOW and (not q or q in txt):
             return i
-        if fallback is None:
-            fallback = i
-    return fallback
+    return None
 
 
 def findings(pdf_path: "str | None" = None) -> "list[tuple[str, int, int]]":
@@ -88,7 +84,7 @@ def findings(pdf_path: "str | None" = None) -> "list[tuple[str, int, int]]":
         return []
     pages = _per_page_text(pdf)
     cards = _declared_cards()
-    located = [(cid, _title_page(pages, title)) for cid, title in cards]
+    located = [(cid, _card_page(pages, title, q)) for cid, title, q in cards]
     out: "list[tuple[str, int, int]]" = []
     for idx, (cid, start) in enumerate(located):
         if start is None:
@@ -109,8 +105,8 @@ def orphan_rows() -> "list[str]":
     if not os.path.isfile(_DEFAULT_PDF):
         return []
     pages = _per_page_text(_DEFAULT_PDF)
-    return [f"card {cid!r} title not found in the rendered PDF"
-            for cid, title in _declared_cards() if _title_page(pages, title) is None]
+    return [f"card {cid!r} page not found in the rendered PDF"
+            for cid, title, q in _declared_cards() if _card_page(pages, title, q) is None]
 
 
 def summary_line(fs: "list[tuple[str, int, int]]") -> str:
