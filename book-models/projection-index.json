@@ -63,19 +63,19 @@
           },
           {
             "file": "book/2.1-the-agent-stack.html",
-            "occ": 32
+            "occ": 33
           },
           {
             "file": "book/2.2-models-and-the-semantic-gap.html",
-            "occ": 24
-          },
-          {
-            "file": "book/2.3-the-governed-environment.html",
             "occ": 25
           },
           {
-            "file": "book/2.4-lifecycles-and-runbooks.html",
+            "file": "book/2.3-the-governed-environment.html",
             "occ": 26
+          },
+          {
+            "file": "book/2.4-lifecycles-and-runbooks.html",
+            "occ": 27
           },
           {
             "file": "book/2.5-metrics.html",
@@ -1717,7 +1717,7 @@
           },
           {
             "file": "book/part-2-intro.html",
-            "occ": 15
+            "occ": 16
           },
           {
             "file": "book/part-3-intro.html",
@@ -2545,11 +2545,11 @@
           },
           {
             "file": "book/2.1-the-agent-stack.html",
-            "occ": 82
+            "occ": 83
           },
           {
             "file": "book/2.2-models-and-the-semantic-gap.html",
-            "occ": 100
+            "occ": 103
           },
           {
             "file": "book/2.3-the-governed-environment.html",
@@ -2561,7 +2561,7 @@
           },
           {
             "file": "book/2.5-metrics.html",
-            "occ": 57
+            "occ": 59
           },
           {
             "file": "book/2.6-when-guardrails-collide.html",

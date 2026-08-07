@@ -1459,7 +1459,7 @@
           "section_id": "control-growth",
           "level": 2,
           "heading_text": "The controls accumulate",
-          "topic_sentence": "Run the promotion rule for a season and the environment fills with controls.",
+          "topic_sentence": "Run the promotion rule for a season and the environment fills with controls — nearly all of them discovered ex-post, the obligations no up-front specification would have named.",
           "id_source": "explicit",
           "block_index": 23,
           "points": [
@@ -1840,7 +1840,7 @@
           "section_id": "mmm-drain",
           "level": 2,
           "heading_text": "The dual: draining unmodelled code",
-          "topic_sentence": "The flagship walks from a model claim *to* the code and asks whether a test exercises it.",
+          "topic_sentence": "The flagship metric had a blind spot: it measured model→code, so code with no model at all stayed invisible to it — and this dual is what finds it.",
           "id_source": "explicit",
           "block_index": 56,
           "points": []
@@ -1929,27 +1929,27 @@
           "heading_text": "Drawing what lies between the controls",
           "topic_sentence": "The Governance Graph draws it.",
           "id_source": "derived",
-          "block_index": 6,
+          "block_index": 7,
           "points": [
             {
               "slug": "the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource",
               "text": "Nodes are mechanisms; edges are conflicts over a shared resource.",
-              "block_index": 8
+              "block_index": 9
             },
             {
               "slug": "the-shared-resource-is-the-only-cross-lifecycle-coupling-surface-and-keeps-the-graph-sparse",
               "text": "The shared resource is the only cross-lifecycle coupling surface.",
-              "block_index": 10
+              "block_index": 11
             },
             {
               "slug": "the-graph-is-the-catalogues-dynamic-dual-splitting-decidable-edges-from-judgment-ones",
               "text": "The graph is the catalogue's dynamic dual.",
-              "block_index": 13
+              "block_index": 14
             },
             {
               "slug": "the-graph-makes-the-implicit-claim-that-mechanisms-compose-explicit-and-checkable",
               "text": "The graph makes \"mechanisms compose\" explicit and checkable.",
-              "block_index": 15
+              "block_index": 16
             }
           ]
         },
@@ -1959,22 +1959,22 @@
           "heading_text": "The other question a list can't answer",
           "topic_sentence": "The graph settled one question a flat list could not: which two controls collide.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 18,
           "points": [
             {
               "slug": "a-list-shows-what-exists-the-graph-what-collides-neither-shows-the-un-watched",
               "text": "A list shows what exists; neither shows what is un-watched.",
-              "block_index": 19
+              "block_index": 20
             },
             {
               "slug": "the-census-is-a-third-view-of-one-graph-coverage-per-target",
               "text": "The census is a third view: coverage per target.",
-              "block_index": 21
+              "block_index": 22
             },
             {
               "slug": "the-census-is-a-model-whose-instances-are-the-controls",
               "text": "The census is a model whose instances are the controls.",
-              "block_index": 24
+              "block_index": 25
             }
           ]
         },
@@ -1984,22 +1984,22 @@
           "heading_text": "Growing controls, and auditing the growth",
           "topic_sentence": "The census has a counterpart, and the two are true opposites over one graph.",
           "id_source": "derived",
-          "block_index": 27,
+          "block_index": 28,
           "points": [
             {
               "slug": "the-fleet-grows-controls-reactively-and-that-growth-is-biased",
               "text": "The fleet grows controls reactively, and that growth is biased.",
-              "block_index": 29
+              "block_index": 30
             },
             {
               "slug": "the-census-is-the-proactive-audit-that-corrects-the-bias",
               "text": "The census is the proactive audit that corrects the bias.",
-              "block_index": 31
+              "block_index": 32
             },
             {
               "slug": "static-analyses-keep-the-census-equal-to-the-territory",
               "text": "Static analyses keep the census equal to the territory.",
-              "block_index": 33
+              "block_index": 34
             }
           ]
         },
@@ -2009,12 +2009,12 @@
           "heading_text": "When the hooks aren't yours",
           "topic_sentence": "**An implication, looking ahead.** Every mechanism so far was one you wrote — but some hooks arrive from outside: a plugin registers one, a teammate adds a personal one, and, plausibly soon, a regulator or model vendor mandates one.",
           "id_source": "derived",
-          "block_index": 35,
+          "block_index": 36,
           "points": [
             {
               "slug": "outside-governance-extends-the-graph-without-changing-shape",
               "text": "Outside-authored hooks extend the graph without changing its shape.",
-              "block_index": 37
+              "block_index": 38
             }
           ]
         },
@@ -2024,17 +2024,17 @@
           "heading_text": "Keeping the model honest",
           "topic_sentence": "Two disciplines keep the model honest, and both are the book's.",
           "id_source": "derived",
-          "block_index": 39,
+          "block_index": 40,
           "points": [
             {
               "slug": "keep-the-graph-honest-by-symbol-anchoring-and-a-descriptive-not-aspirational-model",
               "text": "Keep the graph symbol-anchored and descriptive, not aspirational.",
-              "block_index": 41
+              "block_index": 42
             },
             {
               "slug": "part-2-built-the-environment-part-3-opens-the-models",
               "text": "The environment enforces; the next Part opens the models.",
-              "block_index": 44
+              "block_index": 45
             }
           ]
         }

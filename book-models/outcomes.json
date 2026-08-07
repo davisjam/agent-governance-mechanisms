@@ -984,11 +984,11 @@
       "primary_unit": "control-growth",
       "secondary_units": [],
       "verb": "run",
-      "obj": "the promotion rule for a season and the environment fills with controls",
-      "statement": "After this section, the reader can run the promotion rule for a season and the environment fills with controls.",
+      "obj": "the promotion rule for a season and the environment fills with …",
+      "statement": "After this section, the reader can run the promotion rule for a season and the environment fills with ….",
       "bloom": "apply",
       "provenance": "derived",
-      "anchor": "ts: Run the promotion rule for a season and the environment fills with controls.",
+      "anchor": "ts: Run the promotion rule for a season and the environment fills with controls — nearly all o",
       "gap_note": null
     },
     {
