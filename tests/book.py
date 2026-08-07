@@ -766,6 +766,149 @@ def check_ir_render_fidelity() -> "tuple[str, list[str]]":
     return (FAIL if active else PASS), active
 
 
+# ---- rule 13: no only-child heading (a heading with exactly one next-level child) ----------------
+
+
+class _HNode:
+    """One node in the book's conceptual heading tree (DESIGN §2.2). `level` is 0=BOOK, so PART=0's
+    children, then CHAPTER (the implicit H1 root, level 1), then H2/H3/H4 blocks by their heading level.
+    `anchor` is the lone child's explicit `{#slug}` id (for the finding), or None."""
+    __slots__ = ("level", "label", "anchor", "children")
+
+    def __init__(self, level: int, label: str, anchor: str | None = None):
+        self.level = level
+        self.label = label
+        self.anchor = anchor
+        self.children: list[_HNode] = []
+
+
+def _only_child_pairs(root: "_HNode") -> "list[tuple[_HNode, _HNode]]":
+    """Walk `root`'s subtree; return `(parent, lone_child)` for every node with EXACTLY one child. This is
+    the whole predicate (DESIGN §2.3): 0 children = leaf (fine), 2+ = fine, exactly 1 = a finding. Pure over
+    the node tree so the self-test can inject a synthetic 0/1/2-child tree."""
+    out: list[tuple[_HNode, _HNode]] = []
+    stack = [root]
+    while stack:
+        n = stack.pop()
+        if len(n.children) == 1:
+            out.append((n, n.children[0]))
+        stack.extend(n.children)
+    return out
+
+
+def _build_only_child_forest() -> "tuple[list[_HNode], list[_HNode]]":
+    """Build the two heading trees the only-child rule walks (DESIGN §2.1-§2.2), from the typed book IR:
+
+    - the VOLUME tree: a synthetic BOOK root whose children are PART nodes; each PART's children are its
+      CONTENT chapters (`chapter >= 1`). The `chapter == 0` record is the part's own landing page
+      (part-intro / appendix front-door / divider), not a sibling chapter, so it is not a child.
+    - the WITHIN-PAGE trees: one per chapter (ALL pages, including `chapter == 0`), rooted at a synthesized
+      H1 node (level 1, label = chapter title) whose descendants are the page's H2/H3/H4 heading blocks,
+      attached by the standard nesting stack.
+
+    Returns (volume_roots, page_roots) — both fed through `_only_child_pairs`."""
+    import sys as _sys  # noqa: E402 — local path bootstrap so the book/ IR + book-models symbols import
+    if BOOK not in _sys.path:
+        _sys.path.insert(0, BOOK)
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in _sys.path:
+        _sys.path.insert(0, bm)
+    import book_ir as _ir       # noqa: E402 — the typed book IR lives under book/
+    import book_symbols as _sym  # noqa: E402 — heading_id_and_text peels `{#slug}` with the renderer SSOT
+
+    doc = _ir.parse_book(include_appendices=True)
+
+    # VOLUME tree: BOOK -> PART -> content chapters.
+    book = _HNode(-1, "BOOK")
+    by_part: dict[int, list] = {}
+    for ch in doc.chapters:
+        by_part.setdefault(ch.part, []).append(ch)
+    for part in sorted(by_part):
+        chs = by_part[part]
+        intro = next((c for c in chs if c.chapter == 0), None)
+        label = intro.title if intro is not None else f"Part {part}"
+        part_node = _HNode(0, label, intro.slug if intro is not None else None)
+        for c in chs:
+            if c.chapter >= 1:
+                part_node.children.append(_HNode(1, c.title, c.slug))
+        book.children.append(part_node)
+
+    # WITHIN-PAGE trees: per chapter, an H1 root, then H2/H3/H4 by nesting stack.
+    page_roots: list[_HNode] = []
+    for ch in doc.chapters:
+        root = _HNode(1, ch.title, ch.slug)
+        stack = [root]
+        for b in ch.blocks:
+            if b.kind is not _ir.BlockKind.HEADING:
+                continue
+            anchor, text = _sym.heading_id_and_text(b)
+            node = _HNode(b.heading_level, text, anchor)
+            while len(stack) > 1 and stack[-1].level >= b.heading_level:
+                stack.pop()
+            stack[-1].children.append(node)
+            stack.append(node)
+        page_roots.append(root)
+    return [book], page_roots
+
+
+_PAIR_LABEL = {
+    (0, 1): "part→chapter",
+    (1, 2): "chapter→section",
+    (2, 3): "section→subsection",
+    (3, 4): "subsection→sub-subsection",
+}
+
+
+def check_only_child_headings() -> "tuple[str, list[str]]":
+    """BLOCKING gate (rule-#55 audit-only-first): FAIL if any heading has EXACTLY ONE immediate child
+    heading of the next level down — an "only child" (DESIGN §1). At every level: a part with a single
+    content chapter, a chapter (page H1) with a single section (H2), a section (H2) with a single subsection
+    (H3), a subsection (H3) with a single sub-subsection (H4). 0 children = a leaf (fine); 2+ = fine. The fix
+    is to promote the lone child (drop the wrapper heading, fold its content up) or give it a sibling. Walks
+    the two typed trees `_build_only_child_forest` derives from the book IR (the volume part→chapter tree and
+    the per-page H1→H2→H3→H4 tree). Landed audit-only, drained to 0, then promoted."""
+    volume_roots, page_roots = _build_only_child_forest()
+    issues: list[str] = []
+    for root in volume_roots:
+        for parent, child in _only_child_pairs(root):
+            pair = _PAIR_LABEL.get((parent.level, child.level), f"L{parent.level}→L{child.level}")
+            issues.append(f"[volume] Part holding only {child.label!r} ({child.anchor}) — a lone content "
+                          f"chapter under {parent.label!r} ({pair})")
+    for root in page_roots:
+        for parent, child in _only_child_pairs(root):
+            pair = _PAIR_LABEL.get((parent.level, child.level), f"L{parent.level}→L{child.level}")
+            anchor = f" {{#{child.anchor}}}" if child.anchor else ""
+            issues.append(f"{root.anchor} — [H{parent.level}] {parent.label!r} has exactly one child: "
+                          f"[H{child.level}] {child.label!r}{anchor} ({pair})")
+    return (FAIL if issues else PASS), issues
+
+
+def check_only_child_headings_selftest() -> "tuple[str, list[str]]":
+    """Failure-injection self-test for the only-child predicate (`_only_child_pairs`). A promoted BLOCKING
+    check that silently degraded to a no-op would go green forever; this asserts the predicate flags an
+    injected 1-child node, passes a 0-child (leaf) and a 2-child node, and reports the offending parent."""
+    problems: list[str] = []
+    root = _HNode(1, "root")
+    leaf = _HNode(2, "leaf")                       # 0 children — must NOT flag
+    two = _HNode(2, "two-kids")                     # 2 children — must NOT flag
+    two.children = [_HNode(3, "a"), _HNode(3, "b")]
+    lone = _HNode(2, "lone-parent")                 # 1 child — MUST flag
+    lone.children = [_HNode(3, "only")]
+    root.children = [leaf, two, lone]
+    pairs = _only_child_pairs(root)
+    flagged = {p.label for p, _c in pairs}
+    if "lone-parent" not in flagged:
+        problems.append("a heading with exactly one child was NOT flagged — the predicate degraded to a no-op")
+    if "leaf" in flagged:
+        problems.append("a 0-child leaf was flagged (predicate over-fires on leaves)")
+    if "two-kids" in flagged:
+        problems.append("a 2-child heading was flagged (predicate over-fires on multi-child nodes)")
+    # root itself has 3 children — must not flag.
+    if "root" in flagged:
+        problems.append("a 3-child root was flagged (predicate over-fires)")
+    return (FAIL if problems else PASS), problems
+
+
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
 # (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.

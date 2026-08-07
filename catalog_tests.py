@@ -38,6 +38,8 @@ from tests.book import (
     check_float_ref_gate,
     check_ir_render_fidelity,
     check_no_stray_comments,
+    check_only_child_headings,
+    check_only_child_headings_selftest,
     check_part_opener_traceability,
     run_book_audit,
 )
@@ -175,6 +177,16 @@ CHECKS = [
     Check("book: no orphaned table caption (caption rides with its body; PDF sensor)", 1,
           lambda strict: check_caption_orphan_gate()),
     Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),
+    # AUDIT-ONLY-first (rule #55): no only-child heading — a heading with EXACTLY one immediate next-level
+    # child (a part with one content chapter, a page H1 with one H2, an H2 with one H3, an H3 with one H4).
+    # Walks the two typed trees over the book IR (the volume part→chapter tree + the per-page H1→H2→H3→H4
+    # tree). Lands audit-only while the drain worklist (a redundant duplicate-title H2, a generated
+    # single-family sub-heading, and the hand-authored one-child sections) is worked to 0; the follow-up drops
+    # audit_only=True. See tests/book.py + book/_design/drafts/only-child-heading-sensor-DESIGN-260806.md.
+    Check("book: no only-child heading (a heading with exactly one next-level child)", 1,
+          lambda strict: check_only_child_headings(), audit_only=True),
+    Check("book: only-child predicate flags an injected 1-child tree (self-test)", 1,
+          lambda strict: check_only_child_headings_selftest()),
     # Bibliography subsystem gates (book/_design/bibliography-subsystem-260801.md §8-§9). BLOCKING: every
     # [cite:] resolves to references.bib (BIB-2); citations.json is fresh vs the .bib (BIB-6); the
     # sidebar↔Works-Cited number mirror holds (BIB-4); citation glyphs (digits) and note glyphs (symbols)
