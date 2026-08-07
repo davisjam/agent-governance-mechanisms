@@ -27,14 +27,14 @@
 
   "deck_issue_count": "42",
   "hours_per_document": "3",
-  "documents_per_course": "~100",
+  "documents_per_course": "100",
   "hours_per_course": "300",
   "workweeks_per_course": "7.5",
   "diy_cost_per_course": "$20,000",
 
-  "vendor_cost_per_page": "$3",
-  "vendor_cost_per_course_low": "$10,000",
-  "vendor_cost_per_course_high": "$15,000",
+  "vendor_cost_per_page": "$3 to $40",
+  "vendor_cost_per_course_low": "$5,000",
+  "vendor_cost_per_course_high": "$50,000",
 
   "per_deck_process_time": "about a minute",
   "per_deck_process_cost": "about a dollar",

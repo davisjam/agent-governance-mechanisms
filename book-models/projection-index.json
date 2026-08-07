@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 26,
-    "total_sites": 1178,
+    "total_sites": 1179,
     "by_projection": {
       "book-pdf": 25,
-      "book-web": 839,
+      "book-web": 840,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -3268,6 +3268,10 @@
             "occ": 1
           },
           {
+            "file": "book/5.1-the-ada-context.html",
+            "occ": 1
+          },
+          {
             "file": "book/5.3-the-built-system.html",
             "occ": 2
           },
@@ -3299,7 +3303,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 21
+            "occ": 22
           }
         ]
       },
