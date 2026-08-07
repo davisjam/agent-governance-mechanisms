@@ -3597,6 +3597,14 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
         "appendix; a web-only mechanism links to its live catalogue entry, marked *(online)*.",
         "",
     ]
+    # Families per role, so a role that owns EXACTLY ONE family suppresses its lone `#### <family>`
+    # sub-heading — a single sub-heading under a role is an only-child outline smell (a lone `#### System
+    # models` under `### Models-bridge`), so fold its bullets directly under the `### <role>` heading. This
+    # hardens the generator against the same shape if any future role collapses to one family.
+    families_by_group: dict[str, set] = {}
+    for rec in ordered:
+        families_by_group.setdefault(rec["group"], set()).add(rec["family"])
+    single_family_groups = {g for g, fams in families_by_group.items() if len(fams) == 1}
     last_group: str | None = None
     last_family: str | None = None
     for rec in ordered:
@@ -3610,10 +3618,12 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
         if rec["family"] != last_family:
             # A blank line BEFORE each family sub-heading closes the previous family's bullet list, so the
             # heading starts its own block instead of lazy-continuing the last bullet (the old run-on). Each
-            # family is its own `#### ` sub-heading; its mechanisms follow as a proper bulleted list.
+            # family is its own `#### ` sub-heading; its mechanisms follow as a proper bulleted list — UNLESS
+            # this role owns a single family, in which case the lone sub-heading is suppressed (only-child).
             if last_family is not None:
                 parts += [""]
-            parts += [f"#### {_family_display(rec['family'])}", ""]
+            if rec["group"] not in single_family_groups:
+                parts += [f"#### {_family_display(rec['family'])}", ""]
             last_family = rec["family"]
         marker = " `package`" if rec.get("move") == "package" else ""
         if "appendix_num" in rec:
