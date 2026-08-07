@@ -1189,6 +1189,22 @@ def cmd_validate(_args) -> int:
             print(f"           {f}")
     else:
         print(f"  [theory] AUDIT-ONLY: {len(tmm.derive_propositions())} named proposition(s) well-formed")
+    # INDUSTRY-CASES MODEL — AUDIT-ONLY (rule #55 first landing). The book's external-evidence base
+    # (book-models/industry_cases_declared.json) is a queryable, drift-gated model: a six-site roster
+    # (Cloudflare authored + five pending-writeup stubs) whose authored records project a DocAble+authored
+    # correspondence matrix against a declared, ordered construct-universe column set. This band reports the
+    # STATUS-AWARE joins (IC1 schema / IC2 citation / IC3 construct / IC4 hypothesis / IC6 roster + audit-only
+    # IC7; IC5 matrix parity vacuous until the prose wave places the matrix on a page) plus the coverage /
+    # only-docable burndown note — but does NOT increment n_issues on first landing. A follow-up flips
+    # IC1-IC6 to BLOCKING once a clean session confirms the drain. See book-models/industry_cases_model.py.
+    import industry_cases_model as icm  # noqa: E402 — audit-only external-evidence model
+    ic_findings = icm.all_findings()
+    print(f"  [industry] AUDIT-ONLY: {icm.coverage_note()}")
+    if ic_findings:
+        print(f"  [industry] AUDIT-ONLY: {len(ic_findings)} industry-cases finding(s) — "
+              f"run `python3 book-models/industry_cases_model.py verify` (does not gate):")
+        for f in ic_findings:
+            print(f"             {f}")
     # SOAPBOX GATE — BLOCKING. The substantiation aggregator (book-models/substantiation.py) nests the three
     # evidence legs (data / literature / field-note) under the claim universe (spine + theory + discussion).
     # SOAPBOX is its sharp report: a reality-claim asserted with NO backing of any kind AND no honest

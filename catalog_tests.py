@@ -50,6 +50,7 @@ from tests.book_models import (
     check_chapter_shape,
     check_claims_model,
     check_flagship_stack,
+    check_industry_cases,
     check_lit_positioning,
     check_metaphor_slogan_index,
     check_metaphor_spans,
@@ -356,6 +357,17 @@ CHECKS = [
     # path). A future chapter<->model drift now reddens the suite. See tests/book_models.py.
     Check("book-models: theory-of-mage hypotheses-table drift (theory_of_mage_declared.json)", 1,
           lambda strict: check_theory_model()),
+    # AUDIT-ONLY (rule #55 first landing): the INDUSTRY-CASES model — the book's external-evidence base as a
+    # queryable, drift-gated model. A six-site roster (Cloudflare authored + five pending-writeup stubs)
+    # whose authored records project a DocAble+authored correspondence matrix against a declared, ordered
+    # construct-universe column set, plus the live queries (constructs / bears-on / only-docable / coverage /
+    # roster) the volume unlocks. Reports the STATUS-AWARE joins IC1 (schema/traceability — a stub needs only
+    # the roster minimum) / IC2 (citation join) / IC3 (construct join) / IC4 (hypothesis join) / IC6 (roster
+    # guard) + audit-only IC7; IC5 matrix parity is vacuous until the prose wave authors the matrix onto a
+    # page. Lands audit-only-first (green from birth — Cloudflare authored from the projection); a follow-up
+    # flips IC1-IC6 to blocking once a clean session confirms the drain. See tests/book_models.py.
+    Check("book-models: industry-cases schema + joins (industry_cases_declared.json)", 1,
+          lambda strict: check_industry_cases(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.

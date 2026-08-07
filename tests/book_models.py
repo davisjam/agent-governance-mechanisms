@@ -393,6 +393,28 @@ def check_theory_model():
     return (FAIL if issues else PASS), issues
 
 
+def check_industry_cases():
+    """The industry-cases model's schema + join check (audit-only first landing, rule-#55 discipline). The
+    book's external-evidence base (`industry_cases_declared.json`) is a queryable model: a six-site roster
+    (Cloudflare authored + five pending-writeup stubs) whose authored records project a DocAble+authored
+    correspondence matrix. Re-derives the model and reports the STATUS-AWARE joins — IC1 schema/traceability
+    (kebab-unique id; a stub needs only the roster minimum; an authored record additionally carries in-range
+    enums + correspondence/descriptive vocabs), IC2 citation join (authored citation_key resolves in
+    references.bib AND citations.json), IC3 construct join (every cell resolves against the declared construct
+    universe), IC4 hypothesis join (every hypotheses[] id resolves to a real theory hypothesis), IC6 roster
+    guard (record id-set == roster id-set + field agreement), and audit-only IC7 scale-fact presence. IC5
+    matrix parity is VACUOUS this wave — the matrix is not yet authored into a chapter page. Keyed off
+    `book-models/industry_cases_declared.json` + references.bib + citations.json + theory_of_mage_declared.json."""
+    import industry_cases_model as icm  # noqa: E402 — path set above; the book-model package
+
+    issues = list(icm.all_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded from
+    # the fail tally. A follow-up flips IC1-IC6 to blocking once a clean session confirms the drain (and the
+    # prose wave wires IC5 matrix parity onto a real page).
+    return (FAIL if issues else PASS), issues
+
+
 def check_metaphor_spans():
     """The metaphor + slogan registry's structural + overlap check (audit-only first landing, rule-#55
     discipline). The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span —
