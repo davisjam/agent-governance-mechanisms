@@ -1,11 +1,11 @@
 # Callout typography — the `>`-blockquote taxonomy
 
-The book authors four distinct constructs as markdown blockquotes (`>` lines). They
+The book authors five distinct constructs as markdown blockquotes (`>` lines). They
 share one syntax but carry different jobs, so `build_book_html.py`'s blockquote
 classifier routes each to a different rendering. This note is the source of truth for
 that taxonomy: what each construct is, how it renders, and why.
 
-## The four constructs
+## The five constructs
 
 | Construct | Authored as | Renders as | Why |
 |---|---|---|---|
@@ -13,6 +13,7 @@ that taxonomy: what each construct is, how it renders, and why.
 | **DEFINITION** | `> **<Term>.** <definition>` | **Footnote/aside** — lighter margin treatment (`aside-sidenote`) | A definition is a glossary aside — it pins a term the surrounding prose uses. The author called the churn definition a "footnote": it supports the reading, it does not interrupt it. Lighter, not boxed. |
 | **CONCEPT-INSET** | `> ### Title` + prose (+ optional diagram) | **Box** — boxed primer (`concept-inset`) | A concept inset is a self-contained primer with a titled label. It already reads as a box (its label sets it apart); unchanged from prior behavior. |
 | **PLAIN-SIDENOTE** | plain `> <prose>` (no bold lead, no heading) | **Sidenote** — Tufte-style margin float (`aside-sidenote`) | A short editorial remark that belongs beside the column, not in it. Unchanged from prior behavior. |
+| **PULL-QUOTE** | `<!-- pullquote -->` glued above `> <prose>` | **Display quote** — large centered italic, thin accent rule above/below, no fill/border box (`pull-quote`) | A pull-quote is not a categorized claim, term, or primer — it is the book's own words made momentarily larger, the printed-page convention for a memorable closing/emphasis line. It earns neither a box's fill (that signals a category) nor a footnote's marginal treatment (that signals "supports the reading, does not interrupt it") — it is deliberately the loudest, most centered element in the taxonomy, and deliberately rare. |
 
 ## Boxes vs footnotes/sidenotes — the deciding axis
 
@@ -24,6 +25,11 @@ The split is **prominence**, and prominence tracks **structural weight**:
 - **Footnote / sidenote** (DEFINITION, PLAIN-SIDENOTE) — the callout *supports* the
   reading without arresting it. It stays light: no fill on narrow screens, and on wide
   screens it floats into the right gutter as a Tufte sidenote.
+
+A third axis exists alongside prominence: a **display quote** (PULL-QUOTE) is prominent but carries no
+semantic *category* — no fill, no left accent bar, because there is no claim/term/primer color-family to
+signal. It differentiates by size and centering alone, and — unlike a box, which an author may reach for
+repeatedly — earns its emphasis only when used rarely.
 
 A THESIS and a DEFINITION are both bold-lead blockquotes, so the classifier
 distinguishes them by the **lead token**: a bold lead matching `The <…> Thesis.`

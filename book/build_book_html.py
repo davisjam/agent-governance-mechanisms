@@ -320,6 +320,9 @@ MARKER_KEYWORDS = (
     #    them by construction. `stack-legend` / `brick-grid` EMIT a build-generated block (a linked legend /
     #    a packed brick grid); `note-spread` / `note-fold` are Typst-only keep-together wrappers, inert in HTML.
     "stack-legend", "brick-grid", "note-spread", "note-fold",
+    # `<!-- pullquote -->` — arms the NEXT blockquote as a label-less pull-quote (large centered
+    #   emphasis, no fill/border box). [INFRA-1], part6-apply-SPEC-260807.md §C-1/§F.
+    "pullquote",
 )
 # `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
 # a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
@@ -1193,6 +1196,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     pending_table_caption: list[str] = []   # a `<!-- table: … -->` caption armed for the next table
     pending_label: list[str] = []           # a `<!-- label: … -->` cross-ref key armed for the next float
     pending_def: list[str] = []             # a core-term `index-def` armed for the next block (→ def-box)
+    pending_pullquote: list[bool] = []      # a `<!-- pullquote -->` marker armed for the next blockquote
     occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
 
     def _with_label(frag: str) -> str:
@@ -1297,6 +1301,13 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # renders normally; HTML keep-together is best-effort CSS on the section wrapper). Consume so
                 # the marker never leaks into the reader-visible page.
                 return True
+            if s == "<!-- pullquote -->":
+                # `<!-- pullquote -->` — arms the NEXT blockquote as a label-less pull-quote. Consumed
+                # here so the marker never reaches reader-visible output (mirrors index-def arming
+                # `pending_def` for def-box, in the same dispatch family). Full-string match (the bare
+                # no-arg idiom used by `glossary-auto` above), since `inner` still carries the trailing `-->`.
+                pending_pullquote.append(True)
+                return True
             if inner.startswith("label:"):
                 # A cross-ref key for the NEXT float: `<!-- label: <key> -->`. Armed here, consumed by
                 # `_with_label` when the figure/mermaid/table emits, which stamps it as `data-label`.
@@ -1367,6 +1378,8 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         # and clear here so it applies to exactly the next content block, never leaking further.
         def_armed = bool(pending_def)
         pending_def.clear()
+        pullquote_armed = bool(pending_pullquote)
+        pending_pullquote.clear()
         stripped = block.strip()
         # ── The A-flip: one classifier, one renderer per node kind. ────────────────────────────────
         # Classification is single-sourced through the typed IR (`book_ir.classify_render_block`, which
@@ -1401,7 +1414,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         # that strip, a legitimate directive living inside the quote (an inline `> <!-- figure: … -->` inset
         # diagram) is deleted as if it were a stray authoring comment, silently dropping the figure.
         if kind is _ir.BlockKind.BLOCKQUOTE:
-            _emit(_render_blockquote(block, is_def=def_armed))
+            _emit(_render_blockquote(block, is_def=def_armed, is_pullquote=pullquote_armed))
             continue
         # Gap-marker callouts (`[FILL IN: …]` / `[MORE CHAPTERS FOLLOW: …]`) — the IR classifies these as
         # PARA (they are prose-shaped), so the renderer keeps the shape test for them just ahead of prose.
@@ -1604,12 +1617,14 @@ def _render_heading(block: str, section_no: str | None = None) -> str:
     return f"<h1{anc}>{inline(txt)}</h1>"
 
 
-def _render_blockquote(block: str, is_def: bool = False) -> str:
+def _render_blockquote(block: str, is_def: bool = False, is_pullquote: bool = False) -> str:
     """A blockquote (every line starts with `>`) → a classified `<blockquote>`. Its inner content is itself
     markdown (heading + prose + a `> ```mermaid ``` fence), rendered recursively; an inner heading is demoted
-    to a styled `inset-title` paragraph (no document-outline break). The class is picked by shape: a demoted
-    label → `concept-inset`; a `**The … Thesis.**` lead → `thesis-box`; a `**Term.**` lead armed by a
-    core-term `index-def` (`is_def`) → the blue `def-box`; else a light `aside-sidenote`."""
+    to a styled `inset-title` paragraph (no document-outline break). The class is picked by shape: an explicit
+    `<!-- pullquote -->` marker (`is_pullquote`) → the label-less `pull-quote` (checked first — an author
+    declaration outranks lead-text inference); a demoted label → `concept-inset`; a `**The … Thesis.**` lead →
+    `thesis-box`; a `**Term.**` lead armed by a core-term `index-def` (`is_def`) → the blue `def-box`; else a
+    light `aside-sidenote`."""
     inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
     inner_html = md_to_html(inner_md)
     inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
@@ -1618,7 +1633,9 @@ def _render_blockquote(block: str, is_def: bool = False) -> str:
     # the rendered label (the id/anchor on the <p> is untouched, so intra-book links still resolve). This
     # also moots any "insets out of numeric order" reading — the reader never sees a number.
     inner_html = re.sub(r'(<p class="inset-title"[^>]*>)\s*Inset\s+I\d+\s*—\s*', r'\1', inner_html)
-    if 'class="inset-title"' in inner_html:
+    if is_pullquote:
+        klass = "pull-quote"
+    elif 'class="inset-title"' in inner_html:
         klass = "concept-inset"
     elif _IS_THESIS_LEAD_RE.search(inner_html):
         klass = "thesis-box"
@@ -1942,6 +1959,29 @@ blockquote.def-box strong {{ color: var(--box-def-rule); }}
 blockquote.def-inset {{ font-style: italic; }}
 blockquote.def-inset > p:first-child > strong:first-child,
 blockquote.def-box > p:first-child > strong:first-child {{ font-style: normal; }}
+/* PULL-QUOTE — a prominent, LABEL-LESS emphasis line (e.g. a chapter/book closing thought). Unlike
+   THESIS/DEFINITION/CONCEPT-INSET it carries NO semantic color-family (no fill, no left accent bar,
+   no radius) — those signal a CATEGORIZED construct (a claim / a term / a primer). A pull-quote is not
+   a category; it differentiates by SIZE and CENTERING alone — the printed-page convention of an
+   enlarged pulled line, bounded by a thin accent rule above and below. Authored via a bare
+   pullquote marker comment glued above a plain blockquote (see callout-typography.md).
+   [INFRA-1], part6-apply-SPEC-260807.md. */
+blockquote.pull-quote {{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--fs-thesis-title);
+  line-height: 1.32;
+  color: var(--ink);
+  text-align: center;
+  max-width: 34rem;
+  margin: 2.6rem auto;
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+}}
+blockquote.pull-quote p {{ margin: 0; }}
+blockquote.pull-quote strong {{ font-style: normal; }}
 .book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
            font-size: 1.2em; color: var(--ink); margin: 1.3rem 0; letter-spacing: 0.02em; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}

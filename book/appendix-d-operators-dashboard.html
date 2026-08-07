@@ -328,6 +328,29 @@ blockquote.def-box strong { color: var(--box-def-rule); }
 blockquote.def-inset { font-style: italic; }
 blockquote.def-inset > p:first-child > strong:first-child,
 blockquote.def-box > p:first-child > strong:first-child { font-style: normal; }
+/* PULL-QUOTE — a prominent, LABEL-LESS emphasis line (e.g. a chapter/book closing thought). Unlike
+   THESIS/DEFINITION/CONCEPT-INSET it carries NO semantic color-family (no fill, no left accent bar,
+   no radius) — those signal a CATEGORIZED construct (a claim / a term / a primer). A pull-quote is not
+   a category; it differentiates by SIZE and CENTERING alone — the printed-page convention of an
+   enlarged pulled line, bounded by a thin accent rule above and below. Authored via a bare
+   pullquote marker comment glued above a plain blockquote (see callout-typography.md).
+   [INFRA-1], part6-apply-SPEC-260807.md. */
+blockquote.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--fs-thesis-title);
+  line-height: 1.32;
+  color: var(--ink);
+  text-align: center;
+  max-width: 34rem;
+  margin: 2.6rem auto;
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+}
+blockquote.pull-quote p { margin: 0; }
+blockquote.pull-quote strong { font-style: normal; }
 .book-eq { text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
            font-size: 1.2em; color: var(--ink); margin: 1.3rem 0; letter-spacing: 0.02em; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }

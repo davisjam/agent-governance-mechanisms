@@ -429,15 +429,34 @@ _DEFN_LEAD_RE = re.compile(r"^\*\*[^*]+\.\*\*")
 # selector.) Mirrors `blockquote.def-inset`/`.def-box` typography in the web stylesheet.
 _DEFN_ITALIC_PRELUDE = '#show strong: set text(style: "normal")\n  #set text(style: "italic")\n  '
 
-def _render_blockquote(raw: str, is_def: bool = False) -> str:
-    """A `>`-prefixed blockquote → a Typst block. A thesis blockquote (`> **The … Thesis.** …`) becomes a
-    GREEN boxed callout; a core-term definition blockquote (armed by a preceding index-def, `is_def`) a BLUE
-    def-box; any other blockquote stays a plain `#quote(block: true)[…]`. All three mirror the web book's
-    boxes and draw their colours from the shared `dt` tokens. Inner content is itself markdown; we recurse
-    the whole emitter over it so an inner heading/list/mermaid renders."""
+def _render_blockquote(raw: str, is_def: bool = False, is_pullquote: bool = False) -> str:
+    """A `>`-prefixed blockquote → a Typst block. An explicit `<!-- pullquote -->` marker (`is_pullquote`)
+    becomes a label-less pull-quote — large centered italic display type, a thin accent rule above and below,
+    NO fill (checked first, since an author declaration outranks lead-text-shape inference). A thesis
+    blockquote (`> **The … Thesis.** …`) becomes a GREEN boxed callout; a core-term definition blockquote
+    (armed by a preceding index-def, `is_def`) a BLUE def-box; any other blockquote stays a plain
+    `#quote(block: true)[…]`. All mirror the web book's constructs and draw their colours from the shared
+    `dt` tokens. Inner content is itself markdown; we recurse the whole emitter over it so an inner
+    heading/list/mermaid renders."""
     inner_md = "\n".join(bb._strip_blockquote_prefix(ln) for ln in raw.splitlines())
     inner = _render_markdown_body(inner_md, _EmitCtx.inert())
     stripped = inner_md.strip()
+    if is_pullquote:
+        # An explicit-marker pull-quote — mirrors the web `.pull-quote` CSS token-for-token: display serif,
+        # italic, thesis-title size, umber hairline rule top+bottom, centered, NO fill (absence of a fill is
+        # what keeps it visually distinct from the box family).
+        return (
+            "#align(center)[\n"
+            "  #block(width: 82%, "
+            "stroke: (top: dt.border-hairline + dt.accent, bottom: dt.border-hairline + dt.accent), "
+            "inset: (y: 14pt))[\n"
+            "    #set text(font: dt.font-display, style: \"italic\", weight: 600, "
+            "size: dt.fs-thesis-title, fill: dt.ink)\n"
+            "    #set par(justify: false, leading: 0.62em)\n"
+            f"{_indent(inner, 4)}\n"
+            "  ]\n"
+            "]"
+        )
     if _THESIS_LEAD_RE.match(stripped):
         return (f'#block(fill: dt.box-thesis-fill, stroke: (left: dt.border-box-rule + dt.box-thesis-rule), '
                 f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
@@ -603,6 +622,7 @@ class _EmitCtx:
         self.root = root
         self.metadata_emitted = 0
         self.pending_def: list[str] = []   # a core-term index-def armed for the next block (→ blue def-box)
+        self.pending_pullquote = False     # a `<!-- pullquote -->` marker armed for the next block
 
     @classmethod
     def inert(cls) -> "_EmitCtx":
@@ -611,6 +631,7 @@ class _EmitCtx:
         c.root = cls.root
         c.metadata_emitted = 0
         c.pending_def = []
+        c.pending_pullquote = False
         return c
 
 
@@ -628,7 +649,7 @@ _POINT_RE = re.compile(r"^<!--\s*point:\s*(?P<slug>[a-z0-9-]+)\s*\|\s*(?P<text>.
 
 
 def render_typst(block: Block_t, caption_md: str | None = None, is_def: bool = False,
-                 section_no: str | None = None) -> str:
+                 is_pullquote: bool = False, section_no: str | None = None) -> str:
     """Render ONE IR block to Typst markup — the sibling to `Block.render_html()`, reusing the SAME
     `book_ir.BlockKind` taxonomy and `classify_render_block` classification (the blocks arrive already
     classified from the IR parse). `caption_md` is the folded mermaid caption when the driving walk detects a
@@ -649,7 +670,7 @@ def render_typst(block: Block_t, caption_md: str | None = None, is_def: bool = F
     if k is K.CODE_INSET:
         return _render_inset(block.raw)
     if k is K.BLOCKQUOTE:
-        return _render_blockquote(block.raw, is_def=is_def)
+        return _render_blockquote(block.raw, is_def=is_def, is_pullquote=is_pullquote)
     if k is K.TABLE:
         return _render_table(block)
     if k is K.FIGURE:
@@ -713,7 +734,10 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
     if mp:
         ctx.metadata_emitted += 1
         return _render_index_metadata(mp.group("slug"), "point", mp.group("text"))
-    if ir._MARKER_LINE.match(s):
+    mline = ir._MARKER_LINE.match(s)
+    if mline:
+        if mline.group(1).lower() == "pullquote":
+            ctx.pending_pullquote = True   # arm the pull-quote render for the block this marker heads
         return ""                                        # a consumed notation marker with no print output
     return None
 
@@ -934,6 +958,8 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         # this content block. Capture and clear so it applies to exactly the next content block.
         is_def = bool(ctx.pending_def)
         ctx.pending_def.clear()
+        is_pullquote = ctx.pending_pullquote
+        ctx.pending_pullquote = False
         # A top-level `## ` section heading advances the per-chapter counter → `part.chapter.N` (mirrors the
         # web build's `section_no`; `###`/`####` subsections do not advance it). Only when the chapter is numbered.
         sec = None
@@ -946,7 +972,7 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         if bb._stem_to_label(chapter.slug) == bb._WHAT_THIS_BOOK_ARGUES_LABEL and b.kind is ir.BlockKind.ORDERED_LIST:
             frag = _render_argues_claims(b.raw)
         else:
-            frag = render_typst(b, caption_md, is_def=is_def, section_no=sec)
+            frag = render_typst(b, caption_md, is_def=is_def, is_pullquote=is_pullquote, section_no=sec)
         # D71(a) keep-with-next: a paragraph that immediately introduces a figure/table/diagram sticks to it,
         # so the introducing sentence ("… in Table 4.2-1.", "… shown below.") is never split from its float
         # across a page break. Systematic — every paragraph that directly precedes a float, not one-off.
