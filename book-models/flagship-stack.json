@@ -23,7 +23,7 @@
   "stacks": [
     {
       "id": "provenance-and-fidelity",
-      "name": "The provenance + fidelity stack",
+      "name": "The Provenance stack",
       "goal": "Reconstruct a remediated document's mutation history from the artifact itself, and catch any damage done through the sanctioned door — who and why for every change, and nothing silently lost.",
       "capabilities": [
         "Track provenance and trace causes",
@@ -156,7 +156,7 @@
     },
     {
       "id": "specification-and-verification",
-      "name": "The specification + verification stack",
+      "name": "The Assurance stack",
       "goal": "Turn a concurrent behavioral spec into checked assurance: model the lifecycle as composed state machines, derive from it every test obligation, discharge each at the rigor its shape demands — an exhaustive proof for a safety or liveness invariant, a deterministic lint for a linear one — then map coverage back onto the model so an unexercised invariant is a visible gap, not a guess.",
       "capabilities": [
         "Establish completion on re-derived evidence",
@@ -289,7 +289,7 @@
     },
     {
       "id": "resource-mediation",
-      "name": "The resource-mediation stack",
+      "name": "The Mediation stack",
       "goal": "Share one machine among dozens of concurrent agent worktrees without letting them trample each other or drown the host. Declare which work must be serialized and which may run in parallel, hold each declaration with a host-level mediator, and govern the whole with a live pressure signal that refuses new heavy work before it starts and sheds running work when the host spikes.",
       "capabilities": [
         "Manage work, state, and resources"
@@ -411,7 +411,7 @@
     },
     {
       "id": "context-management",
-      "name": "The context-management stack",
+      "name": "The Briefing stack",
       "goal": "Get the right policy and context to an agent at the moment a decision is due: map the files it is about to touch to the constraints that govern them, paste the standing safety boilerplate into its brief, load the numbered rule index into its boot context, fire the steps it would otherwise omit off the runtime lifecycle, and nudge a standing discipline at the right cadence — so the agent acts on the relevant slice, not the whole corpus and not its memory. This stack is the book's explicit durable-versus-2026-transient exemplar: each part is marked for whether it is infrastructure that endures or a crutch a stronger model eases.",
       "capabilities": [
         "Manage work, state, and resources"
