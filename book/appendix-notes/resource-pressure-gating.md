@@ -31,6 +31,9 @@ gate could not foresee — the two layers are not redundant. One shared reading 
 admit-then-shed churn is that disagreement, and moving the check left to dispatch is the same shift-left as a
 cheap gate before an expensive one.
 
+Use this when a saturable host resource is the bottleneck and admission alone cannot protect it. Don't reach
+for it when the contention is imaginary — a gate on a resource that never saturates is pure latency.
+
 ## Implementation seam
 
 The signal needs a pre-dispatch gate seam sibling to existing admission checks, an execution-time shed at the

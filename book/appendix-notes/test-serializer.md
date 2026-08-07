@@ -29,6 +29,9 @@ contention. The distinction is a mediated single-writer whose raw call is struct
 uncoordinated processes contending for a shared machine. The deliberate trade is correctness of results over
 raw parallelism.
 
+Use this when concurrent workers share one un-isolable host resource. Don't use it as a substitute for real
+isolation where isolation is available — a flock is a queue, not a sandbox.
+
 ## Implementation seam
 
 Three parts carry the pattern: a host-global lock file every worktree contends on as the single point of

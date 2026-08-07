@@ -42,6 +42,18 @@ queryable. Grep finds the importers but not their assumption; lifting the stance
 importer and its posture toward the substrate one queryable fact, so the blast radius is computed before you
 touch the substrate.
 
+An ordinary architecture diagram cannot answer the question this mechanism answers. A component diagram draws
+what calls what; a deployment diagram draws what runs where. Neither draws which *governance assumptions* a
+control silently depends on — that a lint presumes a marker file exists, that a gate presumes a wrapper is on
+the canonical path, that a sweep presumes a registry is authoritative. Those assumptions are invisible to a
+box-and-arrow picture because they are not calls or hosts; they are preconditions. So the blast radius of an
+infrastructure change stays unknowable until something breaks in production. Declaring the assumption as a
+queryable edge is what turns "we'll find out when it breaks" into a query you run before you touch the
+substrate.
+
+Use this once cross-cutting substrate churn has burned you once. Don't build the dependency model for a
+substrate nobody changes — the query pays off only where the ground actually moves.
+
 ## Implementation seam
 
 Four pieces: the closed enum of substrate stances, the structured field extending the control's existing

@@ -31,6 +31,10 @@ modeled state space or returns a concrete counterexample trace, where a sampled 
 schedule it never visited. The cost is weight — a model checker is not a per-commit gate, so it runs
 dev/CI-only, and the derived-tier routing reserves it for the hairy multi-actor races that earn it.
 
+Reach for this when an invariant is safety-critical AND its state space is small enough to search. Don't
+spend it on a property a fast property-test already covers — exhaustive search is a cost you pay for the
+corners sampling misses, nothing more.
+
 ## Implementation seam
 
 The temporal-form field on each cross-service invariant plus the derivation from operator to tier; the

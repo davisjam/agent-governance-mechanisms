@@ -1,5 +1,9 @@
 <!-- note-spread: 1 -->
 
+*The next three mechanisms — this one, the model-derived obligation census, and symbol-anchored
+traceability — teach one meta-principle three ways: replace copied knowledge with continuously-derived
+knowledge. A snapshot is a drift bug waiting; a derivation cannot drift.*
+
 **Intent** — Consume the models by querying them at runtime, never by embedding a hardcoded snapshot — so a
 lint, test, or brief always reasons from the live model, and a copied-out value can't drift behind the model
 it was copied from.

@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1391,
+    "total_sites": 1393,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1060,
+      "book-web": 1062,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -1012,6 +1012,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendix-b-control-substrate-dependency.html",
+            "occ": 1
+          },
+          {
             "file": "book/appendix-b-epic-definition-of-done.html",
             "occ": 1
           },
@@ -1055,7 +1059,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 29
+            "occ": 30
           }
         ]
       },
@@ -2414,6 +2418,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendix-b-governance-graph.html",
+            "occ": 1
+          },
+          {
             "file": "book/appendix-c-mechanism-catalog.html",
             "occ": 2
           },
@@ -2425,7 +2433,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 28
+            "occ": 29
           }
         ]
       },
@@ -2737,7 +2745,7 @@
           },
           {
             "file": "book/appendix-b-control-substrate-dependency.html",
-            "occ": 17
+            "occ": 18
           },
           {
             "file": "book/appendix-b-coverage-model-mapping.html",

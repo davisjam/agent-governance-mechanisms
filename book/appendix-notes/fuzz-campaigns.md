@@ -53,6 +53,9 @@ linear-invariant campaign cleared 200 adversarial inputs with the invariant hold
 same technique caught a real zip-bomb, a never-raise-contract breach, and four latent parser crashes before
 the model-derivation half landed.
 
+Use this when the input is adversarial or malformed by nature. Don't fuzz a closed, well-typed interface —
+random bytes there buy noise, not coverage.
+
 
 ## Implementation seam
 
