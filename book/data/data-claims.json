@@ -55,7 +55,7 @@
     "observable": "Support-apparatus LoC divided by production LoC at four dated commits (prototype / mechanization / hardening / now): 0.85 -> 2.48 -> 3.68 -> 3.06.",
     "data_source": "A categorized line-count tool (run-cloc) with today's category map applied to four historical worktrees via ADA_CLOC_SCAN_ROOT (contamination-free /tmp clone, tool files never inside the counted tree); SHAs c55f3637 (prototype 04-09), e0f10aea (mechanization 05-31), b1a4c1d4 (hardening 06-30), 07af718a (now 08-03).",
     "limitation": "LoC is a coarse proxy for effort; ~20% by-design side-trees (root configs, assets, non-primary tests, the book itself) sit outside the census; single-repo, single-author-fleet — a revealed preference, not a controlled comparison of governed vs. ungoverned development. The final-window dip is production growing faster (+45%), not support falling (still +21%). Render location + holds pins land in W4.",
-    "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): governance investment led and kept pace with the fleet, crossing from sub-parity to ~3x while production LoC grew ~18x — the build-the-environment-first revealed preference."
+    "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): the support apparatus stayed larger than production across the mature windows, crossing from sub-parity to ~3x while production LoC grew ~18x — the build-the-environment-first revealed preference."
   },
   "model-sync-efficacy": {
     "source": "keeping-models-in-sync",

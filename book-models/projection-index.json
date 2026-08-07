@@ -147,7 +147,7 @@
           },
           {
             "file": "book/5.2-the-timeline-and-the-work.html",
-            "occ": 17
+            "occ": 15
           },
           {
             "file": "book/5.3-the-built-system.html",
@@ -921,7 +921,7 @@
           },
           {
             "file": "book/5.2-the-timeline-and-the-work.html",
-            "occ": 15
+            "occ": 11
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
@@ -969,11 +969,11 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 60
+            "occ": 58
           },
           {
             "file": "book/list-of-figures.html",
-            "occ": 6
+            "occ": 5
           }
         ],
         "book-pdf": [
@@ -2087,7 +2087,7 @@
           },
           {
             "file": "book/5.2-the-timeline-and-the-work.html",
-            "occ": 19
+            "occ": 20
           },
           {
             "file": "book/5.3-the-built-system.html",

@@ -4501,7 +4501,7 @@
           "section_id": "velocity",
           "level": 2,
           "heading_text": "The velocity curve",
-          "topic_sentence": "[ref:velocity-curve] plots commits per week: a steep rise as the fleet gained capability, then the dip where velocity buys trustworthiness.",
+          "topic_sentence": "[ref:velocity-curve] plots commits per week: a steep rise as the fleet gained capability, then a dip that coincides with the hardening interval, when the work record shifts toward mechanisms and validation.",
           "id_source": "explicit",
           "block_index": 23,
           "points": [
