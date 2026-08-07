@@ -16,7 +16,7 @@
         "artifacts": [],
         "artifact_would_help": false
       },
-      "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes thematically on the one-move epigraph (the map of the book now lives in the How to read this book page).",
+      "note": "Exempt (preface). Four-question refocus; comparisons moved to where-mage-fits. Lead states the shift and the book's subject; theses arrive later in the preface body. Closes thematically on the one-move epigraph (the map of the book now lives in the How to read this book page).",
       "opening_anchor": "This is a book about engineering — specifically, about what engineering work",
       "closing_anchor": "> Everything that follows is one move, repeated: convert judgment into infrastructure."
     },
@@ -809,6 +809,25 @@
       "closing_anchor": "run the experiment and report back. Come tell me what you found."
     },
     {
+      "slug": "where-mage-fits",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "both"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
+      },
+      "note": "Exempt (discussion). Opens by placing the finished method among the traditions it descends from and departs from; closes by handing off into the Conclusion.",
+      "opening_anchor": "You have now seen the whole method. This chapter places it. MAGE",
+      "closing_anchor": "subject is the engineering that governs them. The Conclusion closes that argument."
+    },
+    {
       "slug": "conclusion",
       "opening": {
         "failure_question": "explicit",
@@ -823,7 +842,7 @@
         "artifacts": [],
         "artifact_would_help": false
       },
-      "note": "Exempt (conclusion). Closes on the do-one-conversion concrete next step — a model conclusion ending.",
+      "note": "Trimmed synthesis; comparisons now one chapter back. Closes on the do-one-conversion concrete next step — a model conclusion ending.",
       "opening_anchor": "> I applied mine heart to know, and to search, and to",
       "closing_anchor": "MAGE method serves your work as well as it has served mine."
     }

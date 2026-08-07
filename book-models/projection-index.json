@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1375,
+    "total_sites": 1387,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1044,
+      "book-web": 1056,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -31,7 +31,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 33
+            "occ": 29
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -174,8 +174,12 @@
             "occ": 5
           },
           {
-            "file": "book/6.5-conclusion.html",
-            "occ": 9
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 7
+          },
+          {
+            "file": "book/6.6-conclusion.html",
+            "occ": 7
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -461,7 +465,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 110
+            "occ": 111
           }
         ]
       },
@@ -880,7 +884,11 @@
             "occ": 1
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 1
           },
           {
@@ -903,7 +911,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 22
+            "occ": 23
           }
         ]
       },
@@ -980,7 +988,11 @@
             "occ": 1
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 1
           },
           {
@@ -1035,7 +1047,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 28
+            "occ": 29
           }
         ]
       },
@@ -1152,7 +1164,7 @@
             "occ": 1
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.6-conclusion.html",
             "occ": 1
           },
           {
@@ -1293,7 +1305,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 42
+            "occ": 29
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -1436,8 +1448,12 @@
             "occ": 7
           },
           {
-            "file": "book/6.5-conclusion.html",
-            "occ": 26
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 27
+          },
+          {
+            "file": "book/6.6-conclusion.html",
+            "occ": 25
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -1723,7 +1739,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 110
+            "occ": 111
           }
         ]
       },
@@ -1781,7 +1797,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 32
+            "occ": 33
           },
           {
             "file": "catalogue-figure.html",
@@ -1962,7 +1978,11 @@
             "occ": 1
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 2
           },
           {
@@ -2245,7 +2265,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -2378,6 +2398,10 @@
             "occ": 1
           },
           {
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
             "file": "book/appendix-c-mechanism-catalog.html",
             "occ": 2
           },
@@ -2389,7 +2413,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 27
+            "occ": 28
           }
         ]
       },
@@ -2489,7 +2513,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 30
+            "occ": 25
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -2632,8 +2656,12 @@
             "occ": 10
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
             "occ": 17
+          },
+          {
+            "file": "book/6.6-conclusion.html",
+            "occ": 16
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -2919,7 +2947,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 110
+            "occ": 111
           }
         ]
       },
@@ -3534,7 +3562,11 @@
             "occ": 2
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 2
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 2
           },
           {
@@ -3817,7 +3849,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -3910,7 +3942,11 @@
             "occ": 2
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 1
           },
           {
@@ -3929,7 +3965,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 23
+            "occ": 24
           }
         ]
       },
@@ -4112,7 +4148,11 @@
             "occ": 1
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 1
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 3
           },
           {
@@ -4395,7 +4435,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -4529,7 +4569,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 18
+            "occ": 9
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -4672,8 +4712,12 @@
             "occ": 2
           },
           {
-            "file": "book/6.5-conclusion.html",
-            "occ": 8
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 15
+          },
+          {
+            "file": "book/6.6-conclusion.html",
+            "occ": 7
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -4955,7 +4999,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -4983,7 +5027,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 8
+            "occ": 9
           },
           {
             "file": "development-workflow.html",
@@ -5013,7 +5057,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 5
+            "occ": 3
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -5156,7 +5200,11 @@
             "occ": 2
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.5-where-mage-fits.html",
+            "occ": 3
+          },
+          {
+            "file": "book/6.6-conclusion.html",
             "occ": 2
           },
           {
@@ -5439,7 +5487,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 109
+            "occ": 110
           }
         ]
       },
@@ -5738,7 +5786,7 @@
             "occ": 1
           },
           {
-            "file": "book/6.5-conclusion.html",
+            "file": "book/6.6-conclusion.html",
             "occ": 2
           },
           {

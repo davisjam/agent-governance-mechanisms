@@ -9,9 +9,9 @@
         "maintenance — model and code equal under drift gates",
         "authoring direction — model→code or code→model as the rule"
       ],
-      "home": "the-lineage-the-modeling-tradition",
+      "home": "the-modeling-tradition-model-driven-software-engineering",
       "asserted_at": [
-        "the-lineage-the-modeling-tradition",
+        "the-modeling-tradition-model-driven-software-engineering",
         "state-the-derivation-direction"
       ],
       "contradicted_by": "Prose stating MAGE prescribes model→code (or code→model) as its own authoring direction — the drift the 3.1 scope-box fix corrected.",
@@ -35,7 +35,7 @@
       "home": "derive-and-join-do-not-repeat",
       "asserted_at": [
         "derive-and-join-do-not-repeat",
-        "the-lineage-the-modeling-tradition"
+        "the-modeling-tradition-model-driven-software-engineering"
       ],
       "contradicted_by": "Endorsing a model kept as a separate hand-updated artifact (a second source), or asserting one fixed derivation direction as the rule.",
       "watch_phrases": [],
@@ -50,9 +50,9 @@
       "kind": "causal",
       "statement": "A model earns its keep twice: it solves the agent's context problem and it holds quality.",
       "distinguishes": [],
-      "home": "the-lineage-the-modeling-tradition",
+      "home": "the-modeling-tradition-model-driven-software-engineering",
       "asserted_at": [
-        "the-lineage-the-modeling-tradition",
+        "the-modeling-tradition-model-driven-software-engineering",
         "models-and-the-semantic-gap",
         "the-executable-zoo"
       ],
@@ -73,9 +73,9 @@
         "churn — the symptom",
         "the three not-knowings — the causes"
       ],
-      "home": "the-premise-mechanize-discipline",
+      "home": "what-changed",
       "asserted_at": [
-        "the-premise-mechanize-discipline"
+        "what-changed"
       ],
       "contradicted_by": "Treating churn as the root problem to fix directly, or a technique aimed at the symptom rather than a cause.",
       "watch_phrases": [],
@@ -93,9 +93,9 @@
         "reasoning power and context window — the real bounds",
         "Brooks N² communication overhead"
       ],
-      "home": "the-premise-mechanize-discipline",
+      "home": "what-changed",
       "asserted_at": [
-        "the-premise-mechanize-discipline",
+        "what-changed",
         "implications-for-se"
       ],
       "contradicted_by": "Blaming coordination / communication overhead; OR treating the context window as the sole bound, ignoring reasoning capacity.",
@@ -113,9 +113,9 @@
       "kind": "scope-boundary",
       "statement": "Churn's causes are exactly three not-knowings: what to build, how to realize it, how to change safely.",
       "distinguishes": [],
-      "home": "the-premise-mechanize-discipline",
+      "home": "what-changed",
       "asserted_at": [
-        "the-premise-mechanize-discipline"
+        "what-changed"
       ],
       "contradicted_by": "Enumerating a different count or set of causes for churn.",
       "watch_phrases": [],
@@ -130,9 +130,9 @@
       "kind": "mapping",
       "statement": "The Modeling Thesis treats the first two not-knowings; the Alignment Thesis treats the third.",
       "distinguishes": [],
-      "home": "the-grammar-patterns-and-two-theses",
+      "home": "what-the-method-turned-out-to-be",
       "asserted_at": [
-        "the-grammar-patterns-and-two-theses"
+        "what-the-method-turned-out-to-be"
       ],
       "contradicted_by": "Assigning the theses differently (e.g. the Alignment Thesis attacks 'what to build').",
       "watch_phrases": [],
@@ -170,9 +170,9 @@
       "kind": "stance",
       "statement": "Engineering discipline must be mechanized, not remembered: push it into tooling so correctness never depends on recall.",
       "distinguishes": [],
-      "home": "the-premise-mechanize-discipline",
+      "home": "mechanizing-discipline-software-engineering-at-google",
       "asserted_at": [
-        "the-premise-mechanize-discipline"
+        "mechanizing-discipline-software-engineering-at-google"
       ],
       "contradicted_by": "Relying on an agent or human remembering, or being careful, as the enforcement.",
       "watch_phrases": [],
@@ -192,7 +192,7 @@
       ],
       "home": "constraints-and-sensors",
       "asserted_at": [
-        "the-grammar-patterns-and-two-theses",
+        "what-the-method-turned-out-to-be",
         "constraints-and-sensors"
       ],
       "contradicted_by": "Conflating the two — calling a detector a constraint, or a preventer a sensor.",
@@ -289,7 +289,7 @@
       "distinguishes": [],
       "home": "models-as-a-common-working-language",
       "asserted_at": [
-        "the-lineage-the-modeling-tradition",
+        "what-the-method-turned-out-to-be",
         "models-as-a-common-working-language",
         "conclusion"
       ],
@@ -362,9 +362,9 @@
       "kind": "stance",
       "statement": "Part 5 is the grounding case the method was derived from, never its proof.",
       "distinguishes": [],
-      "home": "why-build-a-system-to-study-a-method",
+      "home": "why-i-built-a-production-system-to-study-this",
       "asserted_at": [
-        "why-build-a-system-to-study-a-method"
+        "why-i-built-a-production-system-to-study-this"
       ],
       "contradicted_by": "Prose presenting Part 5 or DocAble as proof of the method or its theses — 'the proof', 'proves the method' — rather than as the grounding case / worked case / evidence base.",
       "watch_phrases": [

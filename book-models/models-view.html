@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>38</b> chapters · <b>261</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>39</b> chapters · <b>264</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -99,25 +99,21 @@
 </div>
 <div class="chapter">
 <h3 id="ch-0-4-preface"><a href="../book/0.4-preface.html" class="ch-link">0.4-preface</a> <span class="ch-slug">0.4-preface</span></h3>
-<div class="section s2" id="sec-0-4-preface--why-build-a-system-to-study-a-method">
-<div class="sec-h"><a href="../book/0.4-preface.html">Why Build a System to Study a Method?</a></div>
-<p class="topic">Building DocAble was not only a way to ship a product.</p>
+<div class="section s2" id="sec-0-4-preface--what-changed">
+<div class="sec-h"><a href="../book/0.4-preface.html">What changed</a></div>
+<p class="topic">Scaling a fleet hits a wall, the way scaling a team does — but a different one.</p>
 </div>
-<div class="section s2" id="sec-0-4-preface--where-this-book-sits-on-the-shelf">
-<div class="sec-h"><a href="../book/0.4-preface.html">Where this book sits on the shelf</a></div>
-<p class="topic">Three books frame what this one attempts.</p>
+<div class="section s2" id="sec-0-4-preface--why-i-built-a-production-system-to-study-this">
+<div class="sec-h"><a href="../book/0.4-preface.html">Why I built a production system to study this</a></div>
+<p class="topic">My name is James Davis.</p>
 </div>
-<div class="section s3" id="sec-0-4-preface--the-premise-mechanize-discipline">
-<div class="sec-h"><a href="../book/0.4-preface.html">The premise: mechanize discipline</a></div>
-<p class="topic">The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) [cite: winters2020] — three Google engineers&#x27; account of how the company sustains software engineering across tens of thousands of people and one vast codebase over decades — whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.</p>
+<div class="section s2" id="sec-0-4-preface--why-you-can-trust-what-follows">
+<div class="sec-h"><a href="../book/0.4-preface.html">Why you can trust what follows</a></div>
+<p class="topic">I want to be plain about what this book is and is not.</p>
 </div>
-<div class="section s3" id="sec-0-4-preface--the-grammar-patterns-and-two-theses">
-<div class="sec-h"><a href="../book/0.4-preface.html">The grammar: patterns, and two theses</a></div>
-<p class="topic">The second is the **Gang of Four&#x27;s** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994], the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.</p>
-</div>
-<div class="section s3" id="sec-0-4-preface--the-lineage-the-modeling-tradition">
-<div class="sec-h"><a href="../book/0.4-preface.html">The lineage: the modeling tradition</a></div>
-<p class="topic">The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017) [cite: brambilla2017], the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.</p>
+<div class="section s2" id="sec-0-4-preface--what-the-method-turned-out-to-be">
+<div class="sec-h"><a href="../book/0.4-preface.html">What the method turned out to be</a></div>
+<p class="topic">Two theses drive this book, and they run through every chapter that follows.</p>
 </div>
 <div class="section s2" id="sec-0-4-preface--three-ways-to-run-a-fleet">
 <div class="sec-h"><a href="../book/0.4-preface.html">Three ways to run a fleet</a></div>
@@ -1253,13 +1249,32 @@
 </div>
 </div>
 <div class="chapter">
-<h3 id="ch-6-5-conclusion"><span class="tier-kick">Lesson</span><a href="../book/6.5-conclusion.html" class="ch-link">6.5-conclusion</a> <span class="ch-slug">6.5-conclusion</span></h3>
-<div class="section s2" id="sec-6-5-conclusion--the-part-that-stays-yours">
-<div class="sec-h"><a href="../book/6.5-conclusion.html">The part that stays yours</a></div>
+<h3 id="ch-6-5-where-mage-fits"><span class="tier-kick">Lesson</span><a href="../book/6.5-where-mage-fits.html" class="ch-link">6.5-where-mage-fits</a> <span class="ch-slug">6.5-where-mage-fits</span></h3>
+<div class="section s2" id="sec-6-5-where-mage-fits--mechanizing-discipline-software-engineering-at-google">
+<div class="sec-h"><a href="../book/6.5-where-mage-fits.html">Mechanizing discipline: Software Engineering at Google</a></div>
+<p class="topic">**Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) [cite: winters2020] gave this book its premise: engineering discipline should be mechanized, not remembered.</p>
+</div>
+<div class="section s2" id="sec-6-5-where-mage-fits--the-design-pattern-form-the-gang-of-four">
+<div class="sec-h"><a href="../book/6.5-where-mage-fits.html">The design-pattern form: the Gang of Four</a></div>
+<p class="topic">The **Gang of Four&#x27;s** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994] gave object-oriented design its shared vocabulary.</p>
+</div>
+<div class="section s2" id="sec-6-5-where-mage-fits--the-modeling-tradition-model-driven-software-engineering">
+<div class="sec-h"><a href="../book/6.5-where-mage-fits.html">The modeling tradition: Model-Driven Software Engineering</a></div>
+<p class="topic">The third book is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017) [cite: brambilla2017], the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.</p>
+</div>
+<div class="section s2" id="sec-6-5-where-mage-fits--older-aspirations-new-economics">
+<div class="sec-h"><a href="../book/6.5-where-mage-fits.html">Older aspirations, new economics</a></div>
+<p class="topic">Step back from the three books and a longer pattern shows.</p>
+</div>
+</div>
+<div class="chapter">
+<h3 id="ch-6-6-conclusion"><span class="tier-kick">Lesson</span><a href="../book/6.6-conclusion.html" class="ch-link">6.6-conclusion</a> <span class="ch-slug">6.6-conclusion</span></h3>
+<div class="section s2" id="sec-6-6-conclusion--the-part-that-stays-yours">
+<div class="sec-h"><a href="../book/6.6-conclusion.html">The part that stays yours</a></div>
 <p class="topic">We opened by calling the agent a 3D printer, not a stapler.</p>
 </div>
-<div class="section s2" id="sec-6-5-conclusion--where-to-go-next">
-<div class="sec-h"><a href="../book/6.5-conclusion.html">Where to go next</a></div>
+<div class="section s2" id="sec-6-6-conclusion--where-to-go-next">
+<div class="sec-h"><a href="../book/6.6-conclusion.html">Where to go next</a></div>
 <p class="topic">You do not have to adopt all of this at once, and you should not.</p>
 </div>
 </div>

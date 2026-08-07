@@ -28,12 +28,12 @@
       "create": 12
     },
     "outcomes_with_elaborative_units": 21,
-    "elaborative_links": 27,
-    "units_serving_as_elaborative": 19,
-    "sections_total": 261,
+    "elaborative_links": 28,
+    "units_serving_as_elaborative": 20,
+    "sections_total": 264,
     "sections_primary_of_an_outcome": 41,
     "modules": 7,
-    "lessons": 34
+    "lessons": 35
   },
   "taxonomy": {
     "know": [
@@ -387,7 +387,12 @@
             "section_outcomes": []
           },
           {
-            "lesson": "6.5-conclusion",
+            "lesson": "6.5-where-mage-fits",
+            "own_outcomes": [],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "6.6-conclusion",
             "own_outcomes": [],
             "section_outcomes": []
           }
@@ -529,7 +534,8 @@
       "granularity": "part",
       "primary_unit": "part-6",
       "secondary_units": [
-        "conclusion"
+        "conclusion",
+        "where-mage-fits"
       ],
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",

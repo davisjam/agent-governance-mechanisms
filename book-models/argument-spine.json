@@ -4,7 +4,7 @@
   "_counts": {
     "spine_claims": 15,
     "chapters_labeled": 35,
-    "chapters_exempt": 10,
+    "chapters_exempt": 11,
     "advancement_edges": 91,
     "reconciled_claims": 20,
     "reconciled_big_ideas": 6,
@@ -100,7 +100,7 @@
         "0.4-preface",
         "1.1-the-printer",
         "4.5-lessons-learned",
-        "6.5-conclusion"
+        "6.6-conclusion"
       ],
       "body_depth": 2,
       "front_loaded": false,
@@ -445,7 +445,7 @@
         "4.4-training-data",
         "6.2-implications-for-se",
         "6.3-a-new-empirical-regime",
-        "6.5-conclusion"
+        "6.6-conclusion"
       ],
       "body_depth": 5,
       "front_loaded": false,
@@ -476,7 +476,7 @@
         "4.5-lessons-learned",
         "5.4-the-road-to-mage",
         "6.2-implications-for-se",
-        "6.5-conclusion"
+        "6.6-conclusion"
       ],
       "body_depth": 4,
       "front_loaded": false,
@@ -544,7 +544,7 @@
       "advanced_by": [
         "6.1-toward-a-theory-of-mage",
         "6.2-implications-for-se",
-        "6.5-conclusion"
+        "6.6-conclusion"
       ],
       "body_depth": 3,
       "front_loaded": false,
@@ -853,7 +853,12 @@
       "exempt": "discussion"
     },
     {
-      "slug": "6.5-conclusion",
+      "slug": "6.5-where-mage-fits",
+      "advances": [],
+      "exempt": "discussion"
+    },
+    {
+      "slug": "6.6-conclusion",
       "advances": [
         "fault-lies-in-instructions",
         "mage-becomes-practical",

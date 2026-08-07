@@ -154,6 +154,7 @@
     "implications-for-se": "discussion",
     "a-new-empirical-regime": "discussion",
     "limitations": "discussion",
+    "where-mage-fits": "discussion",
     "conclusion": "conclusion"
   },
   "chapter_advances": {
@@ -193,6 +194,7 @@
     "implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "conversions-compound"],
     "a-new-empirical-regime": ["grounded-in-one-case", "mage-becomes-practical"],
     "limitations": ["grounded-in-one-case"],
+    "where-mage-fits": [],
     "conclusion": ["fault-lies-in-instructions", "mage-becomes-practical", "seat-moves", "conversions-compound"]
   }
 }

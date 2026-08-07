@@ -187,7 +187,7 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 ## Module 6 — Implications for Software Engineering
 
-- **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Module 6 · elaborated by: conclusion)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
+- **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Module 6 · elaborated by: conclusion, where-mage-fits)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
 
 ### Lesson 6.1-toward-a-theory-of-mage
 
@@ -198,7 +198,10 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 ### Lesson 6.3-a-new-empirical-regime
 
 
-### Lesson 6.5-conclusion
+### Lesson 6.5-where-mage-fits
+
+
+### Lesson 6.6-conclusion
 
 
 ## Module 7 — Part 7
