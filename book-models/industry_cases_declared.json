@@ -1,0 +1,138 @@
+{
+  "_provenance": "HAND-AUTHORED declared source for the INDUSTRY-CASES model — the book's external-evidence base as a mechanically-checkable model (not prose accumulated ad hoc). This file IS edited by hand; it is the single source of truth for the industry cases the book reads MAGE against: the reconciled correspondence taxonomy, the declared ordered CONSTRUCT UNIVERSE (the matrix column set), the fixed DocAble row-0 correspondence, the six-site ROSTER (declared intent), and the case RECORDS (Cloudflare authored + five pending-writeup stubs). Sibling in the book-models declared->generated idiom (see theory_of_mage_declared.json / metrics-dashboard.json). WIRED: industry_cases_model.py derives a typed model, projects the DocAble+authored correspondence matrix (render_matrix_md), runs the live queries (constructs / bears-on / only-docable / coverage / roster), and checks the joins IC1-IC6 status-aware. Lands AUDIT-ONLY-first in catalog.py validate (rule-#55 blocking-lint landing discipline); a later follow-up flips IC1-IC6 to BLOCKING after a clean session confirms the drain. Regen discipline: edit HERE; the queries and matrix compute live at CLI time (NO materialized industry-cases.json — page-parity + compute-at-CLI only, per the design's REVISE-2).",
+
+  "_intent": "Encode external practitioner reports as a queryable MODEL so the book can ask its evidence base questions — which MAGE constructs have external observation, which cases bear on which hypothesis, where the base is still only DocAble — and project a drift-gated correspondence matrix, dogfooding the Modeling Thesis on the manuscript's own substantiation. One record per case; the matrix is append-a-row per authored case (a new CASE never widens the table; a new CONSTRUCT is the rare deliberate event that does — the declared construct-universe column contract, REVISE-3).",
+
+  "hedge": "These cases are practitioner reports, not replications of MAGE and not causal tests. A correspondence cell states how cleanly the source's described behavior maps onto a MAGE construct as the BOOK reads it — never a claim Cloudflare (or any site) makes about MAGE, and never proof. `not-described` means the SOURCE is silent; absence from a report is NOT evidence the company lacks the practice.",
+
+  "_taxonomy": {
+    "_note": "The controlled vocabularies. The CORRESPONDENCE set is the reconciled closed set (author's 5-value set): Phase-1's `directly-observed` folds into `strong`; Phase-1's `contrary` is renamed to the author's `counterexample`; `tension` is adopted from the author's set. A strength outside this set reddens (IC1). The `not-described` != absent gloss is load-bearing and reproduced in the Ch-6 matrix caption when the prose wave places it.",
+    "correspondence": [
+      {"value": "strong", "gloss": "Clear correspondence; the source's behavior maps cleanly onto the construct. Not to be confused with proof."},
+      {"value": "partial", "gloss": "The construct is instantiated in part; a named piece is missing. Not to be confused with strong."},
+      {"value": "not-described", "gloss": "The source is silent. Absence from a report is NOT evidence the company lacks it. Not to be confused with tension or counterexample."},
+      {"value": "tension", "gloss": "MAGE's vocabulary fits the site awkwardly — the construct describes it only with contortion, but the site does not disconfirm it. Not to be confused with counterexample."},
+      {"value": "counterexample", "gloss": "The source describes behavior that runs against the construct — genuine disconfirming evidence. Not to be confused with not-described or tension."}
+    ],
+    "source_type": ["practitioner-report", "build-report", "vendor-report", "interview-study", "academic"],
+    "independence": ["independent", "vendor-aligned", "derivative"],
+    "account_type": ["retrospective", "architectural", "experimental", "aspirational"],
+    "evidence_horizon": ["days", "weeks", "months", "years"],
+    "scale": ["single-engineer", "single-team", "multi-team", "org-wide"],
+    "judgment_cell": ["human", "llm", "deterministic", "composite"],
+    "representations": ["structured-policy", "architecture-model", "spec", "tests", "informal-knowledge"],
+    "mechanisms": ["llm-reviewer", "merge-gate", "deterministic-lint", "retrieval-layer", "stable-identity", "constrained-api", "provenance"],
+    "object_territory": ["policies", "source-code", "design-docs", "incident-reports", "specs", "models"]
+  },
+
+  "construct_universe": {
+    "_note": "The declared, ORDERED column set for the correspondence matrix (REVISE-3). Its members are the MAGE construct universe the book induced — the two theses plus the theory constructs the DocAble case exercises. Columns are STABLE: a new case renders against this fixed set (append-a-row); a new construct is the rare deliberate event that widens it. IC3 checks every case's mage_constructs[].construct resolves here. Order is the column order render_matrix_md() emits.",
+    "columns": [
+      {"id": "thesis-alignment", "label": "Alignment", "provenance": "thesis"},
+      {"id": "thesis-modeling", "label": "Modeling", "provenance": "thesis"},
+      {"id": "bootstrap-governance", "label": "Bootstrap", "provenance": "construct"},
+      {"id": "governance-conversion", "label": "Conversion", "provenance": "construct"},
+      {"id": "determinization", "label": "Determinization", "provenance": "construct"},
+      {"id": "reasoning-horizon", "label": "Reasoning horizon", "provenance": "construct"},
+      {"id": "engineers-seat", "label": "Engineer's seat", "provenance": "construct"},
+      {"id": "graduated-governance", "label": "Graduated governance", "provenance": "construct"}
+    ]
+  },
+
+  "docable_row": {
+    "_note": "The fixed row-0 of the projected matrix — the book's OWN case, whose correspondence is hand-declared once here (not a roster member, not an industry_case record). DocAble is `strong` across the construct universe it induced; render_matrix_md() emits it first, then the authored external rows. This is the baseline against which external sparsity reads as coverage, not weakness.",
+    "organization": "DocAble",
+    "cells": {
+      "thesis-alignment": "strong",
+      "thesis-modeling": "strong",
+      "bootstrap-governance": "strong",
+      "governance-conversion": "strong",
+      "determinization": "strong",
+      "reasoning-horizon": "strong",
+      "engineers-seat": "strong",
+      "graduated-governance": "strong"
+    }
+  },
+
+  "roster": {
+    "_note": "The declared six-site ROSTER — the purposive sample the book intends (author's §1.3 table verbatim). Counts DERIVE from this block (REVISE-1): IC6 checks the record-set id-set equals the roster id-set (and that shared roster fields agree between roster and record), so a silently added or dropped case reddens — a declared intent the author edits when authoring or adding a case, never a magic integer.",
+    "sites": [
+      {"id": "cloudflare-codex", "organization": "Cloudflare", "domain": "software / infrastructure", "distinctive_starting_point": "policy-first governance", "status": "authored"},
+      {"id": "spotify", "organization": "Spotify", "domain": "software / large-scale platform", "distinctive_starting_point": "platform + fleet-first autonomous implementation", "status": "pending-writeup"},
+      {"id": "shopify", "organization": "Shopify", "domain": "software / commerce platform", "distinctive_starting_point": "shared agent-ready environment + organizational learning", "status": "pending-writeup"},
+      {"id": "docker", "organization": "Docker", "domain": "software / developer infrastructure", "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops", "status": "pending-writeup"},
+      {"id": "siemens", "organization": "Siemens", "domain": "embedded / CPS / model-based engineering", "distinctive_starting_point": "model-first engineering; models already are the development surface", "status": "pending-writeup"},
+      {"id": "zenseact", "organization": "Zenseact", "domain": "engineering knowledge work / automotive", "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems", "status": "pending-writeup"}
+    ]
+  },
+
+  "industry_cases": [
+    {
+      "id": "cloudflare-codex",
+      "organization": "Cloudflare",
+      "domain": "software / infrastructure",
+      "distinctive_starting_point": "policy-first governance",
+      "status": "authored",
+
+      "source": {
+        "citation_key": "reimann2026codex",
+        "source_type": "practitioner-report",
+        "independence": "independent",
+        "author_role": "engineering (internal practice account)",
+        "account_type": "retrospective",
+        "evidence_horizon": "months"
+      },
+
+      "setting": {
+        "scale": "org-wide",
+        "brownfield": true,
+        "scale_facts": [
+          "nearly a quarter of a million standards violations flagged",
+          "~16,000 resulting in withheld approval",
+          "~600 unique open specs reviewed (3,200+ invocations)",
+          "200+ incident reports assessed"
+        ]
+      },
+
+      "autonomous_work": "Agents review code/design/incident artifacts and may withhold approval or block a merge on an unsatisfied enforced MUST; humans author, approve, and promote policy. Agents scale reach, not authority.",
+      "object_territory": ["policies", "source-code", "design-docs", "incident-reports"],
+      "representations": ["structured-policy"],
+      "traceability": "Stable requirement slug survives RFC edits (identity, not location); statements retain pointers back to originating RFC sections. LLM interprets applicability at review time — NOT a mechanical model<->implementation drift join.",
+      "context_strategy": "Lazy/on-demand retrieval of relevant statements per merge request; representation compacted from Markdown to filtered JSON so agents pull only what applies.",
+      "agent_authority": "Merge-block / approval-withhold on enforced statements; no autonomous policy change; promotion approved->enforced is human-gated.",
+      "mechanisms": ["llm-reviewer", "merge-gate", "deterministic-lint", "retrieval-layer", "stable-identity"],
+      "judgment": {
+        "policy_authoring": "human",
+        "semantic_compliance": "llm",
+        "mechanically_checkable_compliance": "deterministic"
+      },
+      "feedback_adaptation": "Representation evolution is automated (RFC change -> re-extract/compact); POLICY evolution is human-governed. Incident agent surfaces gaps but the source does NOT describe finding -> new obligation -> recurrence retired.",
+      "org_memory": "Codex = curated RFC corpus as durable institutional knowledge outliving any engineer or team.",
+      "implicit_theory": "The book reads Cloudflare as appearing to believe autonomous agents work when institutional standards are made machine-readable, given stable identities, retrieved at the point of work, and enforced by agents at review time.",
+
+      "mage_constructs": [
+        {"construct": "thesis-alignment",      "strength": "strong",        "note": "the book reads this as the Alignment behavior: a policy decided once acts against later changes without the author present"},
+        {"construct": "thesis-modeling",       "strength": "partial",       "note": "the book reads the policy as structured while the governed SYSTEM is largely not modeled"},
+        {"construct": "bootstrap-governance",  "strength": "strong",        "note": "the book reads Codex as accumulated institutional knowledge serving as an initial E(0)"},
+        {"construct": "governance-conversion", "strength": "not-described", "note": "the incident reviewer surfaces gaps; the source describes no failure->new-obligation loop, so the book records this cell as not-described"},
+        {"construct": "determinization",       "strength": "strong",        "note": "the book reads mechanically-checkable requirements becoming custom linters as determinization"},
+        {"construct": "reasoning-horizon",     "strength": "strong",        "note": "the book reads the org-scale externalization (knowledge exceeds any engineer's memory -> push to E) as a reasoning-horizon move"},
+        {"construct": "engineers-seat",        "strength": "strong",        "note": "the book reads humans propose/approve/promote while agents scale reach, not authority, as the engineer's seat"},
+        {"construct": "graduated-governance",  "strength": "strong",        "note": "the book reads the approved->enforced lifecycle as a graduated-governance instance mirroring audit->drain->blocking"}
+      ],
+
+      "hypotheses": ["H3-mechanized-assurance", "H6-oversight-amortization"],
+      "adds_to_mage": ["organizational-scale-view", "stable-claim-identities", "policy-promotion-lifecycle"],
+      "mage_explains_implicit": "MAGE connects Cloudflare's separately-described retrieval + linters + reviewer + human approval as representation + determinization + validation + authority-allocation inside ONE governed environment.",
+      "limitations": ["no-general-system-model-described", "no-failure-to-control-loop-established", "no-before-after-performance-data"],
+      "candidate_insertions": ["brownfield", "governed-environment", "engineers-seat"],
+      "result_sentence": "Cloudflare independently built a governed engineering environment whose strongest mechanisms fall under the Alignment Thesis, at an organizational scale the DocAble case cannot reach."
+    },
+
+    {"id": "spotify",  "organization": "Spotify",  "domain": "software / large-scale platform",           "distinctive_starting_point": "platform + fleet-first autonomous implementation",           "status": "pending-writeup"},
+    {"id": "shopify",  "organization": "Shopify",  "domain": "software / commerce platform",              "distinctive_starting_point": "shared agent-ready environment + organizational learning",     "status": "pending-writeup"},
+    {"id": "docker",   "organization": "Docker",   "domain": "software / developer infrastructure",       "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops",    "status": "pending-writeup"},
+    {"id": "siemens",  "organization": "Siemens",  "domain": "embedded / CPS / model-based engineering",  "distinctive_starting_point": "model-first engineering; models already are the development surface", "status": "pending-writeup"},
+    {"id": "zenseact", "organization": "Zenseact", "domain": "engineering knowledge work / automotive",   "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems", "status": "pending-writeup"}
+  ]
+}
