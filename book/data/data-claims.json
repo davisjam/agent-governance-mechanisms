@@ -75,8 +75,8 @@
     "status": "final",
     "spine_claim": "modeling-thesis",
     "observable": "The Missing-Model-Metric orphan rate (share of tests whose exercised code reaches no model-anchored symbol) draining as subsystems get modeled across nine tracer re-runs: 56% -> 55% -> 52% -> 39% -> 32.2% -> 30.1% -> 20.9% -> 14.9% -> 7.89%.",
-    "data_source": "A code->model tracer (the MMM pilot tracer, trace.py) re-run over the dispatch/orchestration test population (~144-148 tests) after each model-loop Epic modeled the biggest remaining orphan cluster; sources in the missing-model-metric Epic docs + STRATEGY.",
-    "limitation": "The population denominator drifts 144->148 across runs, and the first (56%) point was subsystem-scoped — comparable, not a fixed-N series; the cost-rollup cluster's exact landing point is not separately enumerated. A fixed-N reproducible replay is parked (see results log). Render + holds pins land in W4.",
+    "data_source": "A code->model tracer (the MMM pilot tracer, trace.py) re-run over the dispatch/orchestration test population (~144-152 tests) after each model-loop Epic modeled the biggest remaining orphan cluster; sources in the missing-model-metric Epic docs + STRATEGY.",
+    "limitation": "The population denominator drifts 144->152 across runs, and the first (56%) point was subsystem-scoped — comparable, not a fixed-N series; the cost-rollup cluster's exact landing point is not separately enumerated. A fixed-N reproducible replay is parked (see results log). Render + holds pins land in W4.",
     "gloss": "The Missing-Model-Metric drain: orphan (code-unmodelled) rate falling from 56% to 7.89% across nine tracer re-runs as the model-loop modeled each biggest orphan cluster in turn — code-to-model coverage rising to ~92%."
   },
   "churn": {
