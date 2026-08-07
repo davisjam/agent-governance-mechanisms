@@ -31,7 +31,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 29
+            "occ": 30
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -179,7 +179,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -1349,7 +1349,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 29
+            "occ": 37
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -1477,7 +1477,7 @@
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
-            "occ": 55
+            "occ": 57
           },
           {
             "file": "book/6.2-implications-for-se.html",
@@ -1497,7 +1497,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 25
+            "occ": 34
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -1777,7 +1777,7 @@
           },
           {
             "file": "book/part-6-intro.html",
-            "occ": 14
+            "occ": 15
           }
         ],
         "book-pdf": [
@@ -1841,7 +1841,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 34
+            "occ": 35
           },
           {
             "file": "catalogue-figure.html",
@@ -2689,7 +2689,7 @@
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
-            "occ": 63
+            "occ": 64
           },
           {
             "file": "book/6.2-implications-for-se.html",
@@ -2709,7 +2709,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 15
+            "occ": 16
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -4645,7 +4645,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 9
+            "occ": 10
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
@@ -4793,7 +4793,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -5133,7 +5133,7 @@
           },
           {
             "file": "book/0.4-preface.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/0.5-how-to-read-this-book.html",
