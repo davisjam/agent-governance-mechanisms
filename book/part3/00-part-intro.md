@@ -6,4 +6,5 @@ rots, but executable representations the fleet reasons through and the environme
 continuously keeps true. This Part shows the cost has moved: agents can perform the recurring
 derivation and reconciliation that once made models too expensive to keep. Kruchten's
 four-plus-one views supply the test cases. The goal is not to teach one
-modeling framework. It is to show why models have become practical again.
+modeling framework. It is to show why models have become practical again. The time for
+models has come.
