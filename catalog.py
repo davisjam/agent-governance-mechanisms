@@ -836,6 +836,10 @@ def check_big_ideas() -> list[str]:
     raw = json.load(open(path, encoding="utf-8"))
     cap = raw.get("_word_cap", 26)
     recs = {k: v for k, v in raw.items() if not k.startswith("_")}
+    # core_question is the umbrella node, not a concept record (no book_home/figure/claim) and not
+    # projected on the landing — checked separately + audit-only by _core_question_audit(). Drop it so the
+    # concept-field loop and the MODEL->SITE projection below never treat it as a Big-Idea slot.
+    recs.pop("core_question", None)
     problems: list[str] = []
     for slug in raw.get("_order", []):
         if slug not in recs:
@@ -891,6 +895,46 @@ def _big_ideas_palette_audit() -> list[str]:
     return out
 
 
+def _core_question_audit() -> list[str]:
+    """AUDIT-ONLY companion to check_big_ideas: the core-question umbrella node in landing-big-ideas.json
+    is the book's stated problem over the six Big Ideas. Asserts the joins that keep the Preface's headline
+    question and its answer-constituent Big Ideas from silently orphaning:
+      CQ1 — every slug in `core_question.answered_by` is one of the six concept slugs in `_order` (a
+            renamed/retired answer-constituent Big Idea reddens).
+      CQ2 — every id in each `through_line[].big_ideas` resolves the same way.
+      CQ3 — the Preface (`preface_anchor`) contains `core_question.question` verbatim, pinning the Preface's
+            bold question to the model. Skip-silent if the anchor file is absent OR the bold question has not
+            yet landed in the prose (the Preface edit rides a separate prose wave) — reported so a committer
+            sees the pending parity, never gated here.
+    Reported (never gated) so the node lands AUDIT-ONLY-first, the discipline every book model followed; a
+    follow-up flips these into the gating count once the Preface question lands and a clean session confirms."""
+    path = os.path.join(ROOT, "book-models", "landing-big-ideas.json")
+    if not os.path.isfile(path):
+        return []
+    raw = json.load(open(path, encoding="utf-8"))
+    cq = raw.get("core_question")
+    if not isinstance(cq, dict):
+        return []
+    order = set(raw.get("_order", []))
+    out: list[str] = []
+    for slug in cq.get("answered_by", []):
+        if slug not in order:
+            out.append(f"CQ1 core_question.answered_by {slug!r} is not one of the six Big-Idea slugs in _order")
+    for step in cq.get("through_line", []):
+        for slug in step.get("big_ideas", []):
+            if slug not in order:
+                out.append(f"CQ2 core_question.through_line[{step.get('step')!r}].big_ideas {slug!r} "
+                           f"is not one of the six Big-Idea slugs in _order")
+    question = (cq.get("question") or "").strip()
+    anchor = cq.get("preface_anchor") or ""
+    ap = os.path.join(ROOT, "book", anchor)
+    if question and anchor and os.path.isfile(ap):
+        if question not in open(ap, encoding="utf-8").read():
+            out.append(f"CQ3 Preface {anchor!r} does not yet contain the core question verbatim "
+                       f"(pending the Preface prose wave that lands the bold question)")
+    return out
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
@@ -937,6 +981,16 @@ def cmd_validate(_args) -> int:
         print(f"  [bigidea] AUDIT-ONLY: {len(bi_palette)} Big-Ideas figure(s) carry a hex outside the "
               f"SVG palette (governed audit-only by lint_design_token_drift; does not gate):")
         for msg in bi_palette:
+            print(f"            {msg}")
+    # CORE-QUESTION ANCHOR — AUDIT-ONLY-first (repo blocking-lint discipline). The core_question umbrella
+    # node in landing-big-ideas.json carries the book's stated problem + its answer-constituent joins; CQ1-CQ3
+    # PRINT any orphaned join or pending Preface parity so a committer sees drift, but do NOT increment
+    # n_issues. A follow-up flips them BLOCKING once the Preface question lands and a clean session confirms.
+    cq_findings = _core_question_audit()
+    if cq_findings:
+        print(f"  [bigidea] AUDIT-ONLY: {len(cq_findings)} core-question anchor finding(s) "
+              f"(does not gate):")
+        for msg in cq_findings:
             print(f"            {msg}")
     # CONCEPT-CARD DRIFT GATE — AUDIT-ONLY. The Concepts section's per-idea pages (concept-<slug>.html) are
     # a projection of the same landing-big-ideas.json model: landing_big_ideas_model.py renders the card body
