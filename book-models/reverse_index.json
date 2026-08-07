@@ -7669,12 +7669,12 @@
         }
       ]
     },
-    "section-id:the-design-pattern-form-the-gang-of-four": {
+    "section-id:the-design-pattern-form": {
       "kind": "section-id",
       "dependents": [
         {
           "view": "outline",
-          "element": "6.5-where-mage-fits::the-design-pattern-form-the-gang-of-four",
+          "element": "6.5-where-mage-fits::the-design-pattern-form",
           "role": "section-anchor"
         }
       ]

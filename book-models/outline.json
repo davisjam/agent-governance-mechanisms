@@ -5429,10 +5429,10 @@
           "points": []
         },
         {
-          "section_id": "the-design-pattern-form-the-gang-of-four",
+          "section_id": "the-design-pattern-form",
           "level": 2,
-          "heading_text": "The design-pattern form: the Gang of Four",
-          "topic_sentence": "The **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994] gave object-oriented design its shared vocabulary.",
+          "heading_text": "The design-pattern form",
+          "topic_sentence": "The classic *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994] gave object-oriented design its shared vocabulary.",
           "id_source": "derived",
           "block_index": 7,
           "points": []
