@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>38</b> chapters · <b>265</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>38</b> chapters · <b>259</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -318,10 +318,6 @@
 <p class="topic">The models are the map; the code is the territory.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain why hand-maintained models drifted and fell out of favor, and why agents — which reason over models, not code — flip that calculation when a linked set of models is kept in sync. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s3" id="sec-2-2-models-and-the-semantic-gap--modeling-the-surface-turned-up-real-bugs">
-<div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Modeling the surface turned up real bugs</a></div>
-<p class="topic">Before the theory of *why*, the plainer payoff the practice kept producing: modeling a subsystem surfaced real defects in it, not just a cleaner picture of it.</p>
-</div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--the-apex-of-the-documentation-hierarchy-is-a-typed-model">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">A structured model layer binds the islands</a></div>
 <p class="topic">Step back from drift for a moment and look at what you actually hand an agent to work from.</p>
@@ -332,7 +328,7 @@
 <p class="topic">The claim I just made hides a trap, and the book&#x27;s enthusiasm for drift gates can be misread into a dangerous half-truth.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness — and why only a model authored from intent, not derived from code, catches a wrong &quot;is&quot;. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s3" id="sec-2-2-models-and-the-semantic-gap--a-model-is-a-convenience-not-a-second-copy-of-the-truth">
+<div class="section s2" id="sec-2-2-models-and-the-semantic-gap--a-model-is-a-convenience-not-a-second-copy-of-the-truth">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">A model is a convenience, not a second copy of the truth</a></div>
 <p class="topic">The other side of the mirror carries an over-reach.</p>
 </div>
@@ -399,6 +395,10 @@
 <div class="sec-h"><a href="../book/2.4-lifecycles-and-runbooks.html">Runbooks: split the deterministic from the judgment</a></div>
 <p class="topic">Once the healthy path and the failure map are written, the thing you hand the agent is a **runbook** (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After this section, the reader can author a runbook that separates deterministic steps from judgment ones — giving the deterministic parts an executable tool that also yields a reusable trace, and the judgment parts a rubric or the roughest algorithm that still fits, up to a pre-canned brief for delegation. <span class="prov">derived</span></span></li></ul></div>
+</div>
+<div class="section s3" id="sec-2-4-lifecycles-and-runbooks--the-deterministic-parts-get-tools">
+<div class="sec-h"><a href="../book/2.4-lifecycles-and-runbooks.html">The deterministic parts get tools</a></div>
+<p class="topic">Anything that has a single correct outcome should be an executable script the agent runs, not a procedure it improvises.</p>
 </div>
 <div class="section s3" id="sec-2-4-lifecycles-and-runbooks--the-judgment-parts-the-roughest-algorithm-that-still-fits">
 <div class="sec-h"><a href="../book/2.4-lifecycles-and-runbooks.html">The judgment parts: the roughest algorithm that still fits</a></div>
@@ -701,10 +701,6 @@
 <div class="sec-h"><a href="../book/3.8-keeping-models-in-sync.html">The two failure modes: where drift still escapes</a></div>
 <p class="topic">The net has two escape hatches.</p>
 </div>
-<div class="section s3" id="sec-3-8-keeping-models-in-sync--the-systematic-backstops-cross-references">
-<div class="sec-h"><a href="../book/3.8-keeping-models-in-sync.html">The systematic backstops (cross-references)</a></div>
-<p class="topic">Both failure modes lean, by default, on an engineer or an agent *noticing*.</p>
-</div>
 <div class="section s2" id="sec-3-8-keeping-models-in-sync--the-honest-reading">
 <div class="sec-h"><a href="../book/3.8-keeping-models-in-sync.html">The honest reading</a></div>
 <p class="topic">The result is narrow, and stating its limits is part of stating it.</p>
@@ -785,7 +781,7 @@
 <p class="topic">The second skill, self-governance, triggers on a simple signal: a bad thing happened more than once — sometimes just once, if it was bad enough.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this section, the reader can use the self-governance signal — a bad thing happened twice — to mint a control instead of re-patching the instance. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s3" id="sec-4-2-the-skills--the-posture-minting-new-mechanisms-well">
+<div class="section s2" id="sec-4-2-the-skills--the-posture-minting-new-mechanisms-well">
 <div class="sec-h"><a href="../book/4.2-the-skills.html">The posture: minting new mechanisms well</a></div>
 <p class="topic">The first heuristic is to **avoid a teetering tower of governance.** Do too much of this and tending the tower becomes the work itself: the agent side-quests into polishing the linter while the product waits.</p>
 </div>
@@ -793,7 +789,7 @@
 <div class="sec-h"><a href="../book/4.2-the-skills.html">Self-communicate: how the agent writes and draws</a></div>
 <p class="topic">The third skill, self-communicate, governs how the agent explains itself — to you and to other people.</p>
 </div>
-<div class="section s3" id="sec-4-2-the-skills--the-lexicon-one-concept-one-word">
+<div class="section s2" id="sec-4-2-the-skills--the-lexicon-one-concept-one-word">
 <div class="sec-h"><a href="../book/4.2-the-skills.html">The lexicon: one concept, one word</a></div>
 <p class="topic">Self-communicate also owns a **lexicon**: the house vocabulary for your repo, so one concept gets one word, used consistently.</p>
 </div>
@@ -902,10 +898,6 @@
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">What this means for the job</a></div>
 <p class="topic">Watching my own experience of software engineering get compressed, I expected to feel the role shrinking.</p>
 </div>
-<div class="section s4" id="sec-4-5-lessons-learned--who-holds-the-authority-to-convert-a-lesson">
-<div class="sec-h"><a href="../book/4.5-lessons-learned.html">Who holds the authority to convert a lesson</a></div>
-<p class="topic">This is where I think companies may have trouble.</p>
-</div>
 </div>
 <div class="chapter">
 <h3 id="ch-4-6-generative-validation"><span class="tier-kick">Lesson</span><a href="../book/4.6-generative-validation.html" class="ch-link">4.6-generative-validation</a> <span class="ch-slug">4.6-generative-validation</span></h3>
@@ -939,7 +931,7 @@
 <p class="topic">The family gives a compact decision aid, and the axes of the opening table are the decision.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-evaluate">evaluate</span><span class="oc-text">After this section, the reader can choose which validation strategy to reach for by the specification it attacks. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s3" id="sec-4-6-generative-validation--the-daily-practice">
+<div class="section s2" id="sec-4-6-generative-validation--the-daily-practice">
 <div class="sec-h"><a href="../book/4.6-generative-validation.html">The daily practice</a></div>
 <p class="topic">Put end to end, the method has a daily shape.</p>
 </div>
@@ -989,10 +981,6 @@
 <div class="sec-h"><a href="../book/5.2-the-timeline-and-the-work.html">The shape of the churn</a></div>
 <p class="topic">Under the ratio sits the raw motion of the code: lines added and lines deleted, week over week, on the two paths that carry the product — `web/`, the Python service and worker, and `backend/`, the C# tool and rule engine.</p>
 </div>
-<div class="section s3" id="sec-5-2-the-timeline-and-the-work--the-deploy-saga-the-surprises-the-tests-could-not-see">
-<div class="sec-h"><a href="../book/5.2-the-timeline-and-the-work.html">The deploy saga: the surprises the tests could not see</a></div>
-<p class="topic">For a stretch of the build, nearly every unwelcome surprise came from deployment, and they shared a shape.</p>
-</div>
 <div class="section s2" id="sec-5-2-the-timeline-and-the-work--the-kinds-of-work-it-required">
 <div class="sec-h"><a href="../book/5.2-the-timeline-and-the-work.html">The kinds of work it required</a></div>
 <p class="topic">Read this timeline as a catalog of the *kinds of work* agentic development turned out to need — a more useful reading than any feature list.</p>
@@ -1028,10 +1016,6 @@
 <div class="sec-h"><a href="../book/5.3-the-built-system.html">View 3 — the edit language as the target of automated remediation</a></div>
 <p class="topic">Here the two halves of the system join, and the join is the function-call pattern from earlier in the chapter, seen once more.</p>
 </div>
-<div class="section s3" id="sec-5-3-the-built-system--why-route-through-the-language-at-all">
-<div class="sec-h"><a href="../book/5.3-the-built-system.html">Why route through the language at all</a></div>
-<p class="topic">The frontier models can already skip all of this.</p>
-</div>
 <div class="section s2" id="sec-5-3-the-built-system--same-song-second-verse">
 <div class="sec-h"><a href="../book/5.3-the-built-system.html">Same song, second verse</a></div>
 <p class="topic">Notice the shape of the argument, because the book made it again at a larger scale.</p>
@@ -1066,10 +1050,6 @@
 <div class="section s3" id="sec-5-4-the-road-to-mage--the-substrate-that-keeps-the-models-honest">
 <div class="sec-h"><a href="../book/5.4-the-road-to-mage.html">The substrate that keeps the models honest</a></div>
 <p class="topic">So the models grew a nervous system.</p>
-</div>
-<div class="section s4" id="sec-5-4-the-road-to-mage--the-architect-s-newest-instrument-measuring-what-is-still-unmodeled">
-<div class="sec-h"><a href="../book/5.4-the-road-to-mage.html">The Architect&#x27;s newest instrument: measuring what is still unmodeled</a></div>
-<p class="topic">The Architect rung is where the ladder ends, but the work on it does not.</p>
 </div>
 <div class="section s2" id="sec-5-4-the-road-to-mage--the-whole-method-made-real">
 <div class="sec-h"><a href="../book/5.4-the-road-to-mage.html">The whole method, made real</a></div>
@@ -1117,10 +1097,6 @@
 <div class="section s2" id="sec-6-1-toward-a-theory-of-mage--outcomes-and-observables">
 <div class="sec-h"><a href="../book/6.1-toward-a-theory-of-mage.html">Outcomes and observables</a></div>
 <p class="topic">The model earns its keep only if its outcomes can be watched.</p>
-</div>
-<div class="section s3" id="sec-6-1-toward-a-theory-of-mage--apparatus-measures-are-indicators-not-quality">
-<div class="sec-h"><a href="../book/6.1-toward-a-theory-of-mage.html">Apparatus measures are indicators, not quality</a></div>
-<p class="topic">A second discipline governs how the environment itself is read.</p>
 </div>
 <div class="section s2" id="sec-6-1-toward-a-theory-of-mage--principal-predictions">
 <div class="sec-h"><a href="../book/6.1-toward-a-theory-of-mage.html">Principal predictions</a></div>
