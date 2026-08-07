@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1408,
+    "total_sites": 1409,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1077,
+      "book-web": 1078,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -1268,6 +1268,10 @@
       "book": {
         "book-web": [
           {
+            "file": "book/0.3-the-books-language.html",
+            "occ": 1
+          },
+          {
             "file": "book/3.8-keeping-models-in-sync.html",
             "occ": 1
           }
@@ -1275,7 +1279,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 1
+            "occ": 2
           }
         ]
       }
@@ -1345,7 +1349,7 @@
           },
           {
             "file": "book/0.3-the-books-language.html",
-            "occ": 18
+            "occ": 21
           },
           {
             "file": "book/0.4-preface.html",
