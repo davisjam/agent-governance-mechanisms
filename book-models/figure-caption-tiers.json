@@ -248,10 +248,10 @@
       "rationale": "a point vs a space"
     },
     "assets/generative-loop.svg": {
-      "tier": "B",
+      "tier": "A",
       "kind": "conceptual-illustration",
       "location": "part4",
-      "rationale": "the coin is the model"
+      "rationale": "the generate-oracle-counterexample-coverage loop — A-tier synthesis of the whole generative-validation family; caption walks the loop"
     },
     "assets/velocity-commits-per-week.svg": {
       "tier": "B",

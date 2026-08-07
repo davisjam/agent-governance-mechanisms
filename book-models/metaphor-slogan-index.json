@@ -3,7 +3,7 @@
   "_counts": {
     "indexed_slugs": 16,
     "total_sites": 40,
-    "total_occurrences": 48,
+    "total_occurrences": 46,
     "by_idea": {
       "argument-spine/abundant-implementation": 2,
       "argument-spine/fault-lies-in-instructions": 3,
@@ -13,7 +13,7 @@
       "claims/apparatus-is-the-review": 3,
       "claims/constraint-prevents-sensor-detects": 6,
       "claims/convert-failures-to-controls": 8,
-      "claims/model-earns-keep-via-invariants": 6,
+      "claims/model-earns-keep-via-invariants": 4,
       "claims/printer-not-coder": 1,
       "claims/profile-edit-not-graph-edit": 4,
       "definitions/reasoning-horizon": 3
@@ -31,7 +31,7 @@
         {
           "file": "book/4.6-generative-validation.html",
           "anchor": "gl-ah-mut",
-          "occ": 2,
+          "occ": 1,
           "variant": "image"
         },
         {
@@ -43,7 +43,7 @@
         {
           "file": "book/figures.html",
           "anchor": "fig-4-6-2-gl-ah-mut",
-          "occ": 2,
+          "occ": 1,
           "variant": "image"
         },
         {

@@ -14,8 +14,8 @@
     "universe": {
       "section_ids": 257,
       "concepts": 158,
-      "labels": 93,
-      "refs": 93,
+      "labels": 94,
+      "refs": 94,
       "chapters": 77,
       "parts": 8,
       "points": 550,
@@ -1709,7 +1709,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-37",
+          "element": "4.6-generative-validation::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -2289,7 +2289,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-35",
+          "element": "4.6-generative-validation::block-36",
           "role": "paragraph-point"
         }
       ]
@@ -2449,7 +2449,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-33",
+          "element": "4.6-generative-validation::block-34",
           "role": "paragraph-point"
         }
       ]
@@ -2479,7 +2479,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-56",
+          "element": "4.6-generative-validation::block-61",
           "role": "paragraph-point"
         }
       ]
@@ -2509,7 +2509,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-67",
+          "element": "4.6-generative-validation::block-73",
           "role": "paragraph-point"
         }
       ]
@@ -2599,7 +2599,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-58",
+          "element": "4.6-generative-validation::block-63",
           "role": "paragraph-point"
         }
       ]
@@ -2639,7 +2639,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-50",
+          "element": "4.6-generative-validation::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -3109,7 +3109,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-60",
+          "element": "4.6-generative-validation::block-66",
           "role": "paragraph-point"
         }
       ]
@@ -3609,7 +3609,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-69",
+          "element": "4.6-generative-validation::block-75",
           "role": "paragraph-point"
         }
       ]
@@ -3739,7 +3739,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-47",
+          "element": "4.6-generative-validation::block-50",
           "role": "paragraph-point"
         }
       ]
@@ -4019,7 +4019,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-52",
+          "element": "4.6-generative-validation::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -4139,7 +4139,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-45",
+          "element": "4.6-generative-validation::block-48",
           "role": "paragraph-point"
         }
       ]
@@ -5529,7 +5529,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-42",
+          "element": "4.6-generative-validation::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -9529,7 +9529,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-45",
+          "element": "4.6-generative-validation::block-48",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9744,7 +9744,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-52",
+          "element": "4.6-generative-validation::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10114,7 +10114,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-60",
+          "element": "4.6-generative-validation::block-66",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10139,7 +10139,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-55",
+          "element": "4.6-generative-validation::block-60",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11519,22 +11519,22 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "4.6-generative-validation::block-34",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.6-generative-validation::block-36",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.6-generative-validation::block-38",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.6-generative-validation::block-33",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.6-generative-validation::block-35",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.6-generative-validation::block-37",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.6-generative-validation::block-32",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11574,7 +11574,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-41",
+          "element": "4.6-generative-validation::block-43",
           "role": "section-term[tier-1]"
         },
         {
@@ -11584,7 +11584,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-64",
+          "element": "4.6-generative-validation::block-70",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12134,17 +12134,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-56",
+          "element": "4.6-generative-validation::block-61",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-58",
+          "element": "4.6-generative-validation::block-63",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-55",
+          "element": "4.6-generative-validation::block-60",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12344,7 +12344,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-52",
+          "element": "4.6-generative-validation::block-56",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -12384,7 +12384,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-52",
+          "element": "4.6-generative-validation::block-56",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -12779,7 +12779,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-37",
+          "element": "4.6-generative-validation::block-38",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -13194,12 +13194,12 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-42",
+          "element": "4.6-generative-validation::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-45",
+          "element": "4.6-generative-validation::block-48",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13249,12 +13249,12 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-56",
+          "element": "4.6-generative-validation::block-61",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-60",
+          "element": "4.6-generative-validation::block-66",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13954,7 +13954,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-33",
+          "element": "4.6-generative-validation::block-34",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14124,12 +14124,12 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-33",
+          "element": "4.6-generative-validation::block-34",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-42",
+          "element": "4.6-generative-validation::block-45",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14509,17 +14509,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-47",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "4.6-generative-validation::block-50",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-41",
+          "element": "4.6-generative-validation::block-53",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.6-generative-validation::block-43",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14914,7 +14914,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-60",
+          "element": "4.6-generative-validation::block-66",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15949,7 +15949,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-67",
+          "element": "4.6-generative-validation::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15974,7 +15974,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-64",
+          "element": "4.6-generative-validation::block-70",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16039,12 +16039,12 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-35",
+          "element": "4.6-generative-validation::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-47",
+          "element": "4.6-generative-validation::block-50",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -16534,7 +16534,7 @@
         },
         {
           "view": "outline",
-          "element": "4.6-generative-validation::block-67",
+          "element": "4.6-generative-validation::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {

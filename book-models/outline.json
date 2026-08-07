@@ -4176,7 +4176,7 @@
             },
             {
               "slug": "a-property-has-no-case-to-special-case",
-              "text": "A property has no single case to special-case.",
+              "text": "A broadly quantified property makes one-input special-casing less effective.",
               "block_index": 21
             }
           ]
@@ -4205,24 +4205,24 @@
           "section_id": "fuzzing-the-contract-is-never-crash-never-corrupt",
           "level": 2,
           "heading_text": "Fuzzing: the contract is \"never crash, never corrupt\"",
-          "topic_sentence": "Property testing asks tame inputs a rich question.",
+          "topic_sentence": "Property testing asks a rich question of inputs drawn from an authored domain.",
           "id_source": "derived",
-          "block_index": 31,
+          "block_index": 32,
           "points": [
             {
               "slug": "fuzzing-asks-a-coarse-question-of-wild-inputs",
               "text": "Fuzzing asks a coarse question of wild inputs.",
-              "block_index": 33
+              "block_index": 34
             },
             {
               "slug": "fix-a-crash-to-the-spec-point",
               "text": "Fix a crash to the spec point, not the seed.",
-              "block_index": 35
+              "block_index": 36
             },
             {
               "slug": "coverage-makes-we-fuzzed-it-a-claim",
               "text": "Coverage makes 'we fuzzed it' a measured claim.",
-              "block_index": 37
+              "block_index": 38
             }
           ]
         },
@@ -4230,34 +4230,34 @@
           "section_id": "fuzz-mbse-the-structured-model-becomes-the-oracle",
           "level": 2,
           "heading_text": "Fuzz + MBSE: the structured model becomes the oracle",
-          "topic_sentence": "This is the synthesis.",
+          "topic_sentence": "\"Fuzz + model\" is this book's practical label for one point in a well-populated space: adversarial generation judged against a structured system model as oracle.",
           "id_source": "derived",
-          "block_index": 40,
+          "block_index": 42,
           "points": [
             {
               "slug": "the-typed-model-becomes-the-oracle",
               "text": "The structured model itself becomes the oracle.",
-              "block_index": 42
+              "block_index": 45
             },
             {
               "slug": "sort-outcomes-against-the-closed-legal-set",
               "text": "Sort adversarial outcomes against the model's closed legal set.",
-              "block_index": 45
+              "block_index": 48
             },
             {
               "slug": "producer-dialect-is-the-adversarial-input",
               "text": "Let a rival producer's legal dialect be the input.",
-              "block_index": 47
+              "block_index": 50
             },
             {
               "slug": "harvest-producers-before-hand-rolling-a-grammar",
               "text": "Harvest real producers before hand-rolling a grammar.",
-              "block_index": 50
+              "block_index": 53
             },
             {
               "slug": "search-interleavings-against-the-invariant-predicate",
               "text": "For a concurrency invariant, search interleavings against the predicate.",
-              "block_index": 52
+              "block_index": 56
             }
           ]
         },
@@ -4267,22 +4267,22 @@
           "heading_text": "Coverage: did we explore the spec-relevant space?",
           "topic_sentence": "Once you have a generator, a new question appears that example tests never had to ask: *did the campaign explore the space that matters, or did it just spin?* The book already owns coverage — the [metrics chapter](2.5-metrics.html) develops it as a flagship, with the rule to measure one level deeper than the raw percentage — so this section adds only the one cut that is genuinely native to generation and hands the rest back.",
           "id_source": "derived",
-          "block_index": 54,
+          "block_index": 59,
           "points": [
             {
               "slug": "generation-adds-a-native-coverage-question",
               "text": "Generation adds one coverage question native to it.",
-              "block_index": 56
+              "block_index": 61
             },
             {
               "slug": "grammar-coverage-measures-inputs-not-code",
               "text": "Grammar coverage measures the inputs, not the code.",
-              "block_index": 58
+              "block_index": 63
             },
             {
               "slug": "model-claim-coverage-is-the-saturation-oracle",
               "text": "Model-claim coverage is the family's real saturation oracle.",
-              "block_index": 60
+              "block_index": 66
             }
           ]
         },
@@ -4292,17 +4292,17 @@
           "heading_text": "When to reach for which",
           "topic_sentence": "The family gives a compact decision aid, and the axes of the opening table are the decision.",
           "id_source": "derived",
-          "block_index": 63,
+          "block_index": 69,
           "points": [
             {
               "slug": "generative-validation-is-hard-governance",
               "text": "Generative validation is hard governance, the Alignment Thesis mechanical.",
-              "block_index": 67
+              "block_index": 73
             },
             {
               "slug": "part-4-put-the-method-to-work-part-5-tells-the-story",
               "text": "The method ran; the next Part tells its story.",
-              "block_index": 69
+              "block_index": 75
             }
           ]
         }

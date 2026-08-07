@@ -139,7 +139,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 9
+            "occ": 8
           },
           {
             "file": "book/5.1-the-ada-context.html",
@@ -735,7 +735,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 40
+            "occ": 41
           },
           {
             "file": "catalogue-figure.html",
@@ -809,7 +809,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 3
+            "occ": 2
           },
           {
             "file": "book/5.1-the-ada-context.html",
@@ -1047,7 +1047,7 @@
         "book-web": [
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 4
+            "occ": 3
           },
           {
             "file": "book/6.2-implications-for-se.html",
@@ -1055,7 +1055,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 4
+            "occ": 3
           },
           {
             "file": "book/list-of-figures.html",
@@ -1343,7 +1343,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 8
+            "occ": 7
           },
           {
             "file": "book/5.1-the-ada-context.html",
@@ -2079,7 +2079,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 50
+            "occ": 72
           },
           {
             "file": "book/5.1-the-ada-context.html",
@@ -2311,7 +2311,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 253
+            "occ": 254
           },
           {
             "file": "book/index.html",
@@ -3265,7 +3265,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 2
+            "occ": 1
           },
           {
             "file": "book/5.3-the-built-system.html",
@@ -4405,7 +4405,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 12
+            "occ": 17
           },
           {
             "file": "book/5.1-the-ada-context.html",
@@ -4633,7 +4633,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 33
+            "occ": 34
           },
           {
             "file": "book/index.html",
@@ -4951,7 +4951,7 @@
           },
           {
             "file": "book/4.6-generative-validation.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/5.3-the-built-system.html",
@@ -5003,7 +5003,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 14
+            "occ": 15
           }
         ],
         "book-pdf": [
