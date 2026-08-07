@@ -186,6 +186,11 @@ class Chapter:
     title: str
     blocks: list[Block]
     chapter: int = 0   # the within-part chapter number; `<part>.<chapter>` is the float-numbering prefix
+    #: The reader-facing appendix locator ("D", "D.1", "B.29") the web build stamps for D80 monotonic figure
+    #: numbering. When set (appendix chapters only), the Typst float-numbering prefix uses it instead of the
+    #: numeric `<part>.<chapter>` — so App-D tables read "Table D.1-1", not "Table 12.1-1". None for body
+    #: chapters, which keep `<part>.<chapter>`.
+    fig_prefix: "str | None" = None
 
     def floats(self) -> list[Block]:
         return [b for b in self.blocks if b.is_float]
@@ -357,7 +362,7 @@ def _parse_chapter(rec: dict) -> Chapter:
 
     return Chapter(slug=slug, part=rec["part"],
                    title=rec.get("chapter_title") or rec.get("part_title", ""), blocks=blocks,
-                   chapter=rec.get("chapter", 0))
+                   chapter=rec.get("chapter", 0), fig_prefix=rec.get("fig_prefix"))
 
 
 def parse_book(include_appendices: bool = False, for_print: bool = False) -> Document:

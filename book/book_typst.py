@@ -763,9 +763,8 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
 # print projection, mirroring the web book's `.apparatus-page` box. Matched by TITLE (like the relocated
 # acknowledgments) so the source slug can change without silently un-framing it; the match tolerates an
 # appendix locator prefix (see `_matches_apparatus_title`), so the Operator's Dashboard keeps its frame after
-# moving to an appendix card whose title reads "Appendix D - 1. The Operator's Dashboard". "How to read this
-# book" (its short prose + the whole-book map) is the founding member; the Operator's Dashboard (now Appendix
-# D.1) is the second.
+# moving to an appendix card whose title reads "D.1 The Operator's Dashboard". "How to read this book" (its
+# short prose + the whole-book map) is the founding member; the Operator's Dashboard (now D.1) is the second.
 def _how_to_read_title() -> str:
     """The 'How to read this book' chapter title, resolved THROUGH its identity label so a retitle updates
     the apparatus-frame match automatically (chapter_identity model). Falls back to the known literal if the
@@ -794,10 +793,11 @@ _APPARATUS_BREAKABLE_TITLES = {"how to read this book", "the operator's dashboar
 
 def _matches_apparatus_title(title_norm: str, titles: "set[str]") -> bool:
     """Whether a normalized chapter title names one of the apparatus one-pagers. Matches the exact title OR a
-    title carrying an appendix locator prefix ("appendix d - 1. the operator's dashboard" → "the operator's
-    dashboard"), so the Operator's Dashboard keeps its landscape/frame treatment after it moved from a
-    back-matter chapter (bare title) to an appendix card (locator-prefixed title). The founding how-to-read
-    page has no prefix and still matches exactly."""
+    title carrying ANY appendix locator prefix — the `endswith` tolerates the current "d.1 the operator's
+    dashboard" as well as the older "appendix d - 1. the operator's dashboard" form — so the Operator's
+    Dashboard keeps its landscape/frame treatment after it moved from a back-matter chapter (bare title) to an
+    appendix card (locator-prefixed title). The founding how-to-read page has no prefix and still matches
+    exactly."""
     return any(title_norm == t or title_norm.endswith(t) for t in titles)
 
 
@@ -859,6 +859,18 @@ def _render_note_spread(blocks: "list[Block_t]", spread_n: int, fold_i: "int | N
     return f"#keep-together({qname}, [\n{_indent(head + render_range(blocks))}\n])"
 
 
+def _float_prefix(chapter: "ir.Chapter", is_appendix: bool) -> str:
+    """The chapter-relative float-numbering prefix — the `<X>` in a `<X>-N` figure/table number. For an
+    appendix chapter, use the reader-facing locator the web build already stamped (`chapter.fig_prefix`:
+    "D", "D.1", "B.29"), so App-D tables read "Table D.1-1" and match the web edition. For every body chapter
+    (no `fig_prefix`) keep the numeric `<part>.<chapter>`. This is the M1 fix: the numeric pair rendered as
+    "12.x" inside Appendix D because the Typst path recomputed it from `part.chapter` and ignored the locator
+    the web build had already derived."""
+    if is_appendix and chapter.fig_prefix:
+        return chapter.fig_prefix
+    return f"{chapter.part}.{chapter.chapter}"
+
+
 def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     """Walk one IR chapter → its Typst body. The IR already parsed labels/captions onto floats and classified
     every block; here we (a) peel index-def/point markers off the RAW source into #metadata (the IR records
@@ -902,7 +914,7 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # no content change. Print mode keeps the rigid asserted card (the seam is recoverable via OUTPUT_TYPE).
     spread_n, fold_i = _note_spread_info(blocks)
     if spread_n and OUTPUT_TYPE == "print":
-        chap_id = f"{chapter.part}.{chapter.chapter}"
+        chap_id = _float_prefix(chapter, is_appendix)
         num_setup = (f"#set figure(numbering: (n) => [{chap_id}-#n])\n"
                      "#counter(figure.where(kind: image)).update(0)\n"
                      "#counter(figure.where(kind: table)).update(0)\n")
@@ -1006,7 +1018,7 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # rules are location-scoped, so @refs and the lists of figures/tables resolve each float's number at
     # the float's own position). The image/table counters reset at the chapter boundary so the first float
     # is N=1. Image and table sequences are independent, matching the web's separate fig_n/tbl_n.
-    chap_id = f"{chapter.part}.{chapter.chapter}"
+    chap_id = _float_prefix(chapter, is_appendix)
     num_setup = (
         f"#set figure(numbering: (n) => [{chap_id}-#n])\n"
         "#counter(figure.where(kind: image)).update(0)\n"

@@ -3231,6 +3231,7 @@ def build_hand_authored_appendix(
     content_dir: pathlib.Path,
     pages_source: list[tuple[str, str]],
     locator_figs: bool = False,
+    locator_heading: bool = False,
     opening_extras_md: str = "",
     front_only: bool = False,
     page_body_fn: "Callable[[str, str, int], str] | None" = None,
@@ -3282,15 +3283,20 @@ def build_hand_authored_appendix(
         return chapters
 
     fold = page_body_fn or (lambda raw, stem, i: _fold_wrapped_bullets(raw.strip()))
-    # ONE PAGE PER CONTENT FILE — <letter>.1, <letter>.2, … in listed order.
+    # ONE PAGE PER CONTENT FILE — <letter>.1, <letter>.2, … in listed order. The heading form is either the
+    # generated-looking "Appendix <letter> - <i>. <title>" (legacy default) or the clean locator "<letter>.<i>
+    # <title>" ("D.1 The Operator's Dashboard") when `locator_heading` is set — currently only the Operator's
+    # Reference (App-D) opts in, so the other hand-authored appendices keep their form. The back-of-book index
+    # locator (`_index_ref_label`) parses BOTH forms.
     for i, (stem, title) in enumerate(pages, start=1):
         raw = (content_dir / f"{stem}.md").read_text(encoding="utf-8")
+        heading = f"{letter}.{i} {title}" if locator_heading else f"Appendix {letter} - {i}. {title}"
         rec: dict = {
             "slug": f"appendix-{low}-{stem}",
             "part": part,
             "part_title": part_title,
             "chapter": i,                       # sorts after the front-door's chapter 0
-            "chapter_title": f"Appendix {letter} - {i}. {title}",
+            "chapter_title": heading,
             "body_md": fold(raw, stem, i),
             "is_appendix": True,
             "mermaid": False,
@@ -3504,7 +3510,7 @@ def build_operators_reference_chapters(part: int, for_print: bool = False,
         opening_slug=_APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG,
         opening_prose=_APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE,
         content_dir=_OPERATORS_REFERENCE_DIR, pages_source=_OPERATORS_REFERENCE_PAGES,
-        locator_figs=locator_figs)
+        locator_figs=locator_figs, locator_heading=True)
 
 
 def _family_order_from_index() -> dict[str, int]:
@@ -5258,13 +5264,18 @@ def _index_ref_label(pg: dict) -> str:
     """The short locator shown beside an index term for one page: 'Appendix A', 'Preface', or 'Ch. N'."""
     if pg.get("is_appendix"):
         # Per-pattern titles read 'Appendix A - 1. Brief-linting' → locator 'Appendix A - 1'; a stack page
-        # 'Appendix D - 1. The MBSE stack' → 'Appendix D - 1'. An opening front-door page
-        # ('Appendix — the pattern language' / 'Appendix D — Mechanism Stacks', no numbered '. ') → its
-        # 'Appendix …' prefix via the '—' split. Prefer the '<letter> - <n>.' numbered split.
+        # 'Appendix D - 1. The MBSE stack' → 'Appendix D - 1'. A v2 locator-heading page (App-D) reads
+        # 'D.1 The Operator's Dashboard' → 'Appendix D - 1' via the second match, so its index locator stays
+        # consistent with the other appendices even though its heading dropped the 'Appendix … - ' prefix. An
+        # opening front-door page ('Appendix — the pattern language' / 'Appendix D — Mechanism Stacks', no
+        # numbered '. ') → its 'Appendix …' prefix via the '—' split. Prefer the '<letter> - <n>.' numbered split.
         title = pg["chapter_title"]
         m = re.match(r"^(Appendix\s+[A-Z]\s+-\s+\d+)\.", title)
         if m:
             return m.group(1).strip()
+        m2 = re.match(r"^([A-Z])\.(\d+)\s", title)   # v2 locator heading: "D.1 The Operator's Dashboard"
+        if m2:
+            return f"Appendix {m2.group(1)} - {m2.group(2)}"
         if "·" in title:
             return title.split("·")[0].strip()
         if "—" in title:
