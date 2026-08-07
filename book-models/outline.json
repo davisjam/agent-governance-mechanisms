@@ -4930,7 +4930,7 @@
             },
             {
               "slug": "zone-model-is-first-mage-model",
-              "text": "The zone model is MAGE's first model, for agents.",
+              "text": "The zone model is MAGE's first explicit model, for agents.",
               "block_index": 42
             }
           ]
@@ -4979,7 +4979,7 @@
           "section_id": "a-view-per-property-i-had-to-guarantee",
           "level": 3,
           "heading_text": "A view per property I had to guarantee",
-          "topic_sentence": "Once that first model paid off, the others followed — but the right way to see the set is not \"more models.\" Each model is a **view** of the system, and each view exists to answer for one **property or quality metric** I had to guarantee: a property like *deployability*, a quality metric like *security*.",
+          "topic_sentence": "Once that first model paid off, the others followed — but the right way to see the set is not \"more models.\" Each model is a **view** of the system, and each view exists to answer for one **property or quality attribute** I had to guarantee: a property like *deployability*, a quality attribute like *security*.",
           "id_source": "derived",
           "block_index": 59,
           "points": [
@@ -5046,12 +5046,12 @@
             {
               "slug": "modeling-found-real-shipping-bugs",
               "text": "Modeling found real shipping bugs the green tests missed.",
-              "block_index": 83
+              "block_index": 84
             },
             {
               "slug": "mage-was-demanded-not-designed",
               "text": "MAGE was demanded step by step, never designed.",
-              "block_index": 85
+              "block_index": 86
             }
           ]
         },
@@ -5061,12 +5061,12 @@
           "heading_text": "The whole method, made real",
           "topic_sentence": "This book opened on one diagram — [The MAGE Method at a Glance](0.1-the-mage-method-at-a-glance.html) — that named every part before the argument had earned it.",
           "id_source": "derived",
-          "block_index": 87,
+          "block_index": 88,
           "points": [
             {
               "slug": "the-frontispiece-boxes-are-now-real",
               "text": "Every box in the opening diagram is now real.",
-              "block_index": 89
+              "block_index": 90
             }
           ]
         }
@@ -5074,7 +5074,7 @@
       "preamble_points": [
         {
           "slug": "mage-accreted-under-rising-bar",
-          "text": "Each model was minted when a rising bar demanded it.",
+          "text": "Each model began small, expanding as the rising bar demanded.",
           "block_index": 1
         },
         {

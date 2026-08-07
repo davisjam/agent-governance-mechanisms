@@ -2949,7 +2949,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-85",
+          "element": "5.4-the-road-to-mage::block-86",
           "role": "paragraph-point"
         }
       ]
@@ -3239,7 +3239,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-83",
+          "element": "5.4-the-road-to-mage::block-84",
           "role": "paragraph-point"
         }
       ]
@@ -4789,7 +4789,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-89",
+          "element": "5.4-the-road-to-mage::block-90",
           "role": "paragraph-point"
         }
       ]
@@ -11724,12 +11724,12 @@
         },
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-85",
+          "element": "5.4-the-road-to-mage::block-86",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-89",
+          "element": "5.4-the-road-to-mage::block-90",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11769,7 +11769,7 @@
         },
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-88",
+          "element": "5.4-the-road-to-mage::block-89",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14169,7 +14169,7 @@
         },
         {
           "view": "outline",
-          "element": "5.4-the-road-to-mage::block-83",
+          "element": "5.4-the-road-to-mage::block-84",
           "role": "paragraph-term[tier-2]"
         }
       ]

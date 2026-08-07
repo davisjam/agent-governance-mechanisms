@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 26,
-    "total_sites": 1179,
+    "total_sites": 1180,
     "by_projection": {
       "book-pdf": 25,
-      "book-web": 840,
+      "book-web": 841,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -155,7 +155,7 @@
           },
           {
             "file": "book/5.4-the-road-to-mage.html",
-            "occ": 34
+            "occ": 35
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
@@ -2095,7 +2095,7 @@
           },
           {
             "file": "book/5.4-the-road-to-mage.html",
-            "occ": 45
+            "occ": 48
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
@@ -3786,6 +3786,10 @@
             "occ": 1
           },
           {
+            "file": "book/5.4-the-road-to-mage.html",
+            "occ": 1
+          },
+          {
             "file": "book/6.1-toward-a-theory-of-mage.html",
             "occ": 4
           },
@@ -3805,7 +3809,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 9
+            "occ": 10
           }
         ]
       },
