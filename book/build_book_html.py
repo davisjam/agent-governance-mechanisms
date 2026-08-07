@@ -6064,14 +6064,31 @@ def _pdf_orphan_caption_pages(pdf_path: pathlib.Path) -> list[tuple[int, str]]:
 
 
 # ── Overflow (margin-bleed) sensor ───────────────────────────────────────────────────────────────────
-# The book's page geometry (set in the Typst preamble): US-Letter portrait (8.5×11in, 1.1in x-margins) for
-# body pages, flipped to landscape (11×8.5in, 0.6in x-margins) for the wide apparatus. `pdftotext -bbox`
-# reports word boxes in PDF points (72/in) with each page's width, so a page's right text edge is derived
-# from its width alone — no per-page margin bookkeeping.
+# The book's page geometry (set in the Typst preamble): US-Letter portrait (8.5×11in) with an ASYMMETRIC
+# margin — a 0.875in binding margin + a 4.75in text measure (text box ends 5.625in from the left) + a wide
+# 2.875in OUTER margin holding the Tufte note column (0.375in gutter · 1.9in note · 0.6in trim). The wide
+# apparatus flips to landscape (11×8.5in, 0.6in x-margins, no note column). `pdftotext -bbox` reports word
+# boxes in PDF points (72/in) with each page's width, so the edges below are derived from page width alone.
+#
+# The portrait body has TWO zones, because a margin note deliberately sits PAST the old text edge (it would
+# false-fail a single-edge sensor). A word is a genuine bleed only if it ORIGINATES in its zone and crosses
+# that zone's outer bound:
+#   • text-overflow  — a word whose left starts in the text column (xMin < text_right) and whose right runs
+#                       past the text edge (xMax > text_right + tol). Real content-into-margin overflow.
+#   • margin-note bleed — a word that STARTS in the note column (xMin ≥ text_right) and runs off the physical
+#                       page (xMax > page_w − outer_trim + tol). The structural backstop if the sidenote
+#                       measure-gate ever lets a too-wide note into the margin.
+# Landscape apparatus keeps the original single-edge check (page_w − 0.6in); it has no note column.
 _PT_PER_IN = 72.0
 _LANDSCAPE_PAGE_W_PT = 11.0 * _PT_PER_IN        # 792 — the flipped apparatus page
-_BODY_XMARGIN_PT = 1.1 * _PT_PER_IN             # 79.2 — portrait body x-margin
+_BODY_TEXT_RIGHT_PT = 5.625 * _PT_PER_IN        # 405 — portrait text box right edge (0.875in + 4.75in)
+_BODY_OUTER_TRIM_PT = 0.6 * _PT_PER_IN          # 43.2 — note column → physical page-edge trim
 _LANDSCAPE_XMARGIN_PT = 0.6 * _PT_PER_IN        # 43.2 — landscape apparatus x-margin
+# The narrow 4.75in text edge governs BODY-SIZE type (running text ~13pt + code). DISPLAY type — the cover
+# title, the Part-divider headings — sits on a page with its OWN full-width CENTERED layout, so it legibly
+# extends past the body edge; it is exempt from the body edge and held only to the physical page edge. A
+# word taller than this is display type. (Body ~13pt, code ~14pt tall; the cover title ~37pt.)
+_DISPLAY_TYPE_HEIGHT_PT = 24.0
 # Justified text hangs a soft hyphen or trailing punctuation a hair past the measure — measured max across
 # the whole book is 3.6pt. A too-wide table's cell text bleeds far further (10pt+). 6pt sits in the clean gap:
 # above every legitimate microtypographic overhang, below any real overflow.
@@ -6079,30 +6096,40 @@ _MARGIN_BLEED_TOL_PT = 6.0
 
 _BBOX_PAGE_RE = re.compile(r'<page width="([\d.]+)" height="[\d.]+">(.*?)</page>', re.S)
 _BBOX_WORD_RE = re.compile(
-    r'<word xMin="[\d.]+" yMin="[\d.]+" xMax="([\d.]+)" yMax="[\d.]+">(.*?)</word>', re.S)
+    r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(.*?)</word>', re.S)
 
 
 def _pdf_margin_bleed(pdf_path: pathlib.Path) -> list[tuple[int, str, float, float]]:
-    """Overflow sensor: no reader text may bleed past the page's right text edge. Runs poppler
-    `pdftotext -bbox` for per-word boxes + page geometry, derives each page's right text edge from its width
-    (portrait body vs the flipped landscape apparatus), and flags any word crossing it by more than the
-    justification-overhang tolerance. This is the 260804 table-overflow class made mechanical: a table too
-    wide to wrap pushes its cell text into the margin. Companion to the Typst `fit-table` auto-fit (which
-    scales a genuinely-too-wide table down to the measure) — this catches any RESIDUAL overflow the auto-fit
-    could not resolve legibly (an unbreakable token among wrapping cells, an over-long code line), so it can
-    be routed to landscape or restructured. Same shape as the orphaned-heading sensor: read the rendered PDF,
-    assert a layout invariant. Returns (page_number, word_text, word_right_pt, edge_pt) per offending word."""
+    """Overflow sensor: no reader text may bleed past its page's right bound. Runs poppler `pdftotext -bbox`
+    for per-word boxes + page geometry, then applies a per-page predicate. On the portrait body it is
+    TWO-ZONE (see the geometry block above): a word in the text column bleeding past the text edge, OR a
+    margin note running off the physical page. On the landscape apparatus it keeps the original single-edge
+    check. This is the 260804 table-overflow class made mechanical (a too-wide table pushes cell text into
+    the margin), companion to the Typst `fit-table` auto-fit; and, since 260806, the structural backstop for
+    the Tufte margin-note layout (a note that escapes the sidenote measure-gate). Returns (page_number,
+    word_text, word_right_pt, edge_pt) per offending word."""
     stdout = _run_pdftotext(pdf_path, "-bbox", purpose="the overflow sensor")
     bleeds: list[tuple[int, str, float, float]] = []
     for pno, pm in enumerate(_BBOX_PAGE_RE.finditer(stdout), start=1):
         page_w = float(pm.group(1))
-        xmargin = (_LANDSCAPE_XMARGIN_PT if abs(page_w - _LANDSCAPE_PAGE_W_PT) < 2 else _BODY_XMARGIN_PT)
-        right_edge = page_w - xmargin
+        is_landscape = abs(page_w - _LANDSCAPE_PAGE_W_PT) < 2
         for wm in _BBOX_WORD_RE.finditer(pm.group(2)):
-            xmax = float(wm.group(1))
-            if xmax > right_edge + _MARGIN_BLEED_TOL_PT:
-                text = html.unescape(wm.group(2)).strip()
-                bleeds.append((pno, text, round(xmax, 1), round(right_edge, 1)))
+            xmin, ymin, xmax, ymax = (float(wm.group(i)) for i in (1, 2, 3, 4))
+            if is_landscape:
+                # landscape apparatus — single-edge check (no note column)
+                edge = page_w - _LANDSCAPE_XMARGIN_PT
+            elif ymax - ymin > _DISPLAY_TYPE_HEIGHT_PT:
+                # display type (cover / Part-divider title, own centered layout) — hold to the page edge only
+                edge = page_w - _BODY_OUTER_TRIM_PT
+            elif xmin < _BODY_TEXT_RIGHT_PT:
+                # text-column word — flag if it crosses the (narrow) text edge
+                edge = _BODY_TEXT_RIGHT_PT
+            else:
+                # margin-note word — exempt from the text edge, but hold to the physical page edge
+                edge = page_w - _BODY_OUTER_TRIM_PT
+            if xmax > edge + _MARGIN_BLEED_TOL_PT:
+                text = html.unescape(wm.group(5)).strip()
+                bleeds.append((pno, text, round(xmax, 1), round(edge, 1)))
     return bleeds
 
 

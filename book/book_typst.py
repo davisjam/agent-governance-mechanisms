@@ -133,9 +133,12 @@ def _inline(s: str, stash: list[str]) -> str:
             frags.append(f"#cite(<{key}>, supplement: [{_esc(loc)}])" if loc else f"#cite(<{key}>)")
         return _hold("".join(frags))
     s = bb._CITE_MARKER_RE.sub(_cite, s)
-    # 1c. Editorial notes `[note: text]` → a Typst footnote (the print projection uses standard numbered
-    #     footnotes; the web book's symbolic superscripts are a screen affordance).
-    s = bb._NOTE_MARKER_RE.sub(lambda m: _hold(f"#footnote[{_inline(m.group(1).strip(), stash)}]"), s)
+    # 1c. Editorial notes `[note: text]` → a Tufte MARGIN note (symbolic mark, web `.editorial-note`
+    #     parity). A note too tall for the margin falls back to the old page-bottom `#footnote`.
+    def _note(m: "re.Match[str]") -> str:
+        inner = _inline(m.group(1).strip(), stash)
+        return _hold(f"#sidenote([{inner}], footnote[{inner}], marked: true)")
+    s = bb._NOTE_MARKER_RE.sub(_note, s)
     # 2. Intra-word emphasis `[+X+]` → emphasised run.
     s = _INTRAWORD_RE.sub(lambda m: _hold(f"#emph[{_esc(m.group(1))}]"), s)
     # 3. Code spans `` `x` `` → raw inline; content is literal, no further passes run inside it.
@@ -408,7 +411,9 @@ def _render_code(raw: str) -> str:
     (which may contain ``` sequences) never breaks the fence."""
     lang, inner = _fence_body(raw)
     lang_arg = f", lang: {_typst_str(lang)}" if lang else ""
-    return f"#raw({_typst_str(inner)}, block: true{lang_arg})"
+    # fit-block scales a code block wider than the (narrow Tufte) text measure down to fit — a raw block
+    # must not wrap, so wide ASCII art is uniformly shrunk rather than mangled. Narrow blocks are untouched.
+    return f"#fit-block(raw({_typst_str(inner)}, block: true{lang_arg}))"
 
 
 # A thesis blockquote leads with a bold `The <Name> Thesis.` label (`> **The Modeling Thesis.** …`). The
@@ -422,6 +427,12 @@ _THESIS_LEAD_RE = re.compile(r"^\*\*The\b.*?\bThesis\.\*\*", re.S)
 # period inside the bold is the discriminator (an em-led footnote or a plain sidenote has no such lead), and
 # theses / core-term def-boxes are matched earlier, so this only ever fires on a light glossary/aside label.
 _DEFN_LEAD_RE = re.compile(r"^\*\*[^*]+\.\*\*")
+
+# An EM-LED aside: an italic lead (`> *A footnote on "waterfall."* …`), NOT a `**bold**` lead. On the web
+# these are the light `.aside-sidenote` Tufte gutter notes; in print they go to the right margin via
+# `#sidenote` (a too-tall one falls back in-column). Bold-led theses/def-boxes are matched earlier, so this
+# only fires on the italic-lead catch-all.
+_EMLED_RE = re.compile(r"^\*[^*].*?\*")
 
 # Definition typography, injected at the head of a def-inset / def-box block: italicise the body, but reset
 # every `strong` to upright so the bold Term LEAD reads as a label, not emphasis. (Definitions are short
@@ -472,6 +483,12 @@ def _render_blockquote(raw: str, is_def: bool = False, is_pullquote: bool = Fals
     if _DEFN_LEAD_RE.match(stripped):
         # A light `> **Term.** …` definition aside: plain quote, body italic, bold Term lead upright.
         return (f"#quote(block: true)[\n  {_DEFN_ITALIC_PRELUDE}{_indent(inner).lstrip()}\n]")
+    if _EMLED_RE.match(stripped):
+        # An em-led aside → a right-margin Tufte sidenote (web `.aside-sidenote` parity), no reference
+        # mark. A note too tall for the margin falls back to the in-column quote by the measure-gate.
+        # fallback is a call ARGUMENT (code mode) → no leading `#`
+        quote_fallback = f"quote(block: true)[\n{_indent(inner)}\n]"
+        return f"#sidenote([\n{_indent(inner)}\n], {quote_fallback})"
     return f"#quote(block: true)[\n{_indent(inner)}\n]"
 
 
@@ -1009,7 +1026,11 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 // (the token body step is screen-sized; print density is protected here) while the faces + palette follow
 // the tokens: Source Serif 4 display headings, a quiet body face, umber accent, and the semantic-box anchors.
 #set document(title: "Model-Based Agentic Software Engineering")
-#set page(paper: "us-letter", margin: (x: 1.1in, y: 1in), numbering: "1", fill: dt.paper)
+// Asymmetric geometry: a narrow binding margin + a wide OUTER margin that holds the Tufte note column.
+// Text box = left 0.875in + measure 4.75in; note column = 0.375in gutter + 1.9in note + 0.6in trim.
+// 0.875 + 4.75 + 2.875 = 8.5in. The `#sidenote` helper (end of this preamble) places short editorial
+// notes + em-led asides into that outer margin; long ones fall back in-column via a measure-gate.
+#set page(paper: "us-letter", margin: (left: 0.875in, right: 2.875in, y: 1in), numbering: "1", fill: dt.paper)
 #set text(font: dt.font-body, size: 11pt, lang: "en", fill: dt.ink)
 #set par(justify: true, leading: 0.62em, first-line-indent: 0pt, spacing: 0.9em)
 #set heading(numbering: none)
@@ -1111,6 +1132,74 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
       }
     }
   })
+}
+
+// fit-block: the code-block analogue of fit-table. A raw block must NOT wrap (wrapping mangles ASCII-art
+// alignment), so — unlike fit-table's wrappability branch — this UNCONDITIONALLY scales a too-wide block
+// down to the measure. Needed since the Tufte narrow text measure (4.75in) is tighter than the old 6.3in,
+// so a wide ASCII dashboard that once fit now overflows. The raw-block show rule forces `width: 100%`,
+// which makes a wide block WRAP (and `measure` report the full region width, hiding the overflow); so the
+// natural width is probed against a `width: auto` copy. A block that fits keeps its full-width background
+// (unchanged look); only a genuinely-too-wide block is rendered at natural width and scaled down.
+#let fit-block(body) = context {
+  let probe = { show raw.where(block: true): set block(width: auto); body }
+  layout(size => {
+    let nat = measure(probe).width
+    if nat <= size.width { body }
+    else { scale(x: size.width / nat * 100%, y: size.width / nat * 100%, reflow: true, probe) }
+  })
+}
+
+// ── Tufte margin notes (custom; offline — no @preview package, so a fresh clone compiles with no
+//    network). Short editorial [note: …] marks and em-led `> *Title.* …` asides render as right-margin
+//    sidenotes matching the web `.editorial-note` / `.aside-sidenote`; a note too tall for the margin
+//    falls back to its in-column render (footnote / quote) by construction. See §"Tufte margin-note
+//    layout" design. `_mn-cursor` is a per-page anti-collision cursor holding the previous note's bottom.
+#let _mn-cursor = state("mn-cursor", (page: 0, bottom: 0pt))
+#let _MN-WIDTH  = 1.9in          // note-column width
+#let _MN-DX     = 4.75in + 0.375in   // text measure + gutter — flow-region left origin → note column
+#let _MN-TOP    = 1in            // page y-margin; `place(top+left)` anchors here, so dy = base - _MN-TOP
+#let _MN-BUDGET = 3.2in          // max note height allowed in the margin; taller → in-column fallback
+#let _MN-VGAP   = 6pt            // min vertical gap between two stacked notes on one page (absolute, not em)
+// Editorial-note mark cycle — mirrors the web `_note_glyph`: * † ‡ § ‖ ¶, doubled after six.
+#let _MN-GLYPHS = ("*", "†", "‡", "§", "‖", "¶")
+#let _mn-glyph(n) = _MN-GLYPHS.at(calc.rem(n - 1, 6)) * (calc.div-euclid(n - 1, 6) + 1)
+
+// marked: false for em-led asides (no reference symbol, web parity); true for editorial [note:] marks,
+// which draw a symbolic glyph from a dedicated counter (independent of Typst's citation footnotes).
+#let sidenote(body, fallback, marked: false) = {
+  if marked { counter("mn-editnote").step() }   // step only when marked, so the glyph cycle stays gapless
+  context {
+    let mark = if marked { _mn-glyph(counter("mn-editnote").get().first()) } else { none }
+    // The measured proxy neutralises INTROSPECTION (cite/footnote/ref): measuring live citations breaks
+    // Typst's citation locator ("cannot be located — caused by measurement"). It matches the placed box's
+    // width/size/leading so the gate height still tracks the rendered height (a `[?]` cite stand-in is ~a
+    // real superscript). The PLACED box below keeps the live cite/footnote so it still renders + numbers.
+    let measurebox = box(width: _MN-WIDTH, inset: (left: 0.55em))[
+      #set text(size: 8.5pt)
+      #set par(justify: false, leading: 0.5em)
+      #show cite: _ => [ [?] ]
+      #show footnote: _ => []
+      #if mark != none [#text(weight: "bold")[#mark] ]#body
+    ]
+    let m = measure(measurebox)
+    if m.height > _MN-BUDGET { return fallback }  // long note → stay in-column, never overflow the margin
+    let notebox = box(width: _MN-WIDTH, inset: (left: 0.55em), stroke: (left: 1pt + dt.box-inset-rule))[
+      #set text(size: 8.5pt, fill: dt.muted)
+      #set par(justify: false, leading: 0.5em)
+      #if mark != none [#text(fill: dt.accent, weight: "bold")[#mark] ]#body
+    ]
+    let loc  = here()
+    let pg   = loc.page()
+    let natY = loc.position().y                   // page-absolute y of the reference line
+    let cur  = _mn-cursor.at(loc)
+    // push this note below the previous one on the same page; reset the cursor when the page turns
+    let base = if cur.page == pg { calc.max(natY, cur.bottom + _MN-VGAP) } else { natY }
+    _mn-cursor.update(_ => (page: pg, bottom: base + m.height))
+    if mark != none { super(text(size: 0.72em, fill: dt.muted, weight: "bold")[#mark]) }  // inline mark
+    // `place(top+left)` anchors at the flow-region TOP (the y-margin), so dy is measured from _MN-TOP.
+    place(top + left, dx: _MN-DX, dy: base - _MN-TOP, notebox)
+  }
 }
 """
 
