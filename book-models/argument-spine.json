@@ -3,9 +3,9 @@
   "_note": "The argument-spine model holds the book's linear argument as an ordered run of claims, each reconciling the author's seed statements, the claims model, and the Big-Ideas model into one step — plus the per-chapter labeling of which steps each chapter advances. The `flags` block is DERIVED editorial signal and never gates: CHAPTER-side (a non-exempt chapter advancing 0 steps is suspect; one advancing more than the focus cap is probably unfocused — the directive's Phase-1c worklist) AND CLAIM-side health (a non-exempt claim advanced by 0 chapters is a gap; one advanced only within Part 0/1 is front-loaded/shallow; one advanced by more than the overmap cap is an overmapping-audit surface). Per-claim `reviewed_hash` seeds the AS8 freshness sensor: a statement edited without a re-review reddens its advancing chapters. Exempt chapters (preface / conclusion / discussion / end-of-part synthesis / apparatus) and exempt claims (genuine front-loaded-by-design premises) are the ones whose breadth, silence, or shallow reach is their job.",
   "_counts": {
     "spine_claims": 15,
-    "chapters_labeled": 33,
-    "chapters_exempt": 8,
-    "advancement_edges": 89,
+    "chapters_labeled": 35,
+    "chapters_exempt": 10,
+    "advancement_edges": 91,
     "reconciled_claims": 20,
     "reconciled_big_ideas": 6,
     "zero_claim_suspects": 2,
@@ -100,7 +100,7 @@
         "0.4-preface",
         "1.1-the-printer",
         "4.5-lessons-learned",
-        "6.3-conclusion"
+        "6.5-conclusion"
       ],
       "body_depth": 2,
       "front_loaded": false,
@@ -444,9 +444,10 @@
         "3.7-the-scope-of-modeling",
         "4.4-training-data",
         "6.2-implications-for-se",
-        "6.3-conclusion"
+        "6.3-a-new-empirical-regime",
+        "6.5-conclusion"
       ],
-      "body_depth": 4,
+      "body_depth": 5,
       "front_loaded": false,
       "overmapped": false,
       "fresh": true
@@ -475,7 +476,7 @@
         "4.5-lessons-learned",
         "5.4-the-road-to-mage",
         "6.2-implications-for-se",
-        "6.3-conclusion"
+        "6.5-conclusion"
       ],
       "body_depth": 4,
       "front_loaded": false,
@@ -509,9 +510,10 @@
         "5.2-the-timeline-and-the-work",
         "5.3-the-built-system",
         "5.4-the-road-to-mage",
-        "6.2-implications-for-se"
+        "6.3-a-new-empirical-regime",
+        "limitations"
       ],
-      "body_depth": 5,
+      "body_depth": 6,
       "front_loaded": false,
       "overmapped": false,
       "fresh": true
@@ -541,7 +543,7 @@
       "advanced_by": [
         "6.1-toward-a-theory-of-mage",
         "6.2-implications-for-se",
-        "6.3-conclusion"
+        "6.5-conclusion"
       ],
       "body_depth": 3,
       "front_loaded": false,
@@ -837,13 +839,20 @@
         "govern-the-environment",
         "mage-becomes-practical",
         "seat-moves",
-        "grounded-in-one-case",
         "conversions-compound"
       ],
       "exempt": "discussion"
     },
     {
-      "slug": "6.3-conclusion",
+      "slug": "6.3-a-new-empirical-regime",
+      "advances": [
+        "grounded-in-one-case",
+        "mage-becomes-practical"
+      ],
+      "exempt": "discussion"
+    },
+    {
+      "slug": "6.5-conclusion",
       "advances": [
         "fault-lies-in-instructions",
         "mage-becomes-practical",
@@ -856,6 +865,13 @@
       "slug": "7.2-colophon",
       "advances": [],
       "exempt": null
+    },
+    {
+      "slug": "limitations",
+      "advances": [
+        "grounded-in-one-case"
+      ],
+      "exempt": "discussion"
     }
   ],
   "flags": {

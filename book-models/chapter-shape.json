@@ -1242,7 +1242,7 @@
         "artifacts": [
           {
             "type": "framework",
-            "name": "the soft-hard spectrum figure and the evidence-forms table",
+            "name": "the soft-hard spectrum figure",
             "anchor": "soft-hard-spectrum"
           }
         ],
@@ -1254,7 +1254,6 @@
         "govern-the-environment",
         "mage-becomes-practical",
         "seat-moves",
-        "grounded-in-one-case",
         "conversions-compound"
       ]
     },

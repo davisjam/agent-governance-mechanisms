@@ -152,6 +152,8 @@
     "the-scope-of-modeling": "end-of-part-synthesis",
     "lessons-learned": "discussion",
     "implications-for-se": "discussion",
+    "a-new-empirical-regime": "discussion",
+    "limitations": "discussion",
     "conclusion": "conclusion"
   },
   "chapter_advances": {
@@ -188,7 +190,9 @@
     "the-built-system": ["modeling-thesis", "grounded-in-one-case"],
     "the-road-to-mage": ["oversight-does-not-scale", "seat-moves", "grounded-in-one-case"],
     "toward-a-theory-of-mage": ["conversions-compound"],
-    "implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "grounded-in-one-case", "conversions-compound"],
+    "implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "conversions-compound"],
+    "a-new-empirical-regime": ["grounded-in-one-case", "mage-becomes-practical"],
+    "limitations": ["grounded-in-one-case"],
     "conclusion": ["fault-lies-in-instructions", "mage-becomes-practical", "seat-moves", "conversions-compound"]
   }
 }

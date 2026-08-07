@@ -30,10 +30,10 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 256,
+    "sections_total": 261,
     "sections_primary_of_an_outcome": 41,
     "modules": 7,
-    "lessons": 33
+    "lessons": 34
   },
   "taxonomy": {
     "know": [
@@ -382,7 +382,12 @@
             "section_outcomes": []
           },
           {
-            "lesson": "6.3-conclusion",
+            "lesson": "6.3-a-new-empirical-regime",
+            "own_outcomes": [],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "6.5-conclusion",
             "own_outcomes": [],
             "section_outcomes": []
           }
