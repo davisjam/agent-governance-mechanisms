@@ -1841,7 +1841,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 35
+            "occ": 37
           },
           {
             "file": "catalogue-figure.html",
@@ -2585,7 +2585,7 @@
           },
           {
             "file": "book/1.4-why-mage-follows-from-the-machine.html",
-            "occ": 42
+            "occ": 43
           },
           {
             "file": "book/1.5-the-engineers-seat.html",
@@ -2617,7 +2617,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 155
+            "occ": 156
           },
           {
             "file": "book/3.2-the-logical-view.html",
@@ -5189,7 +5189,7 @@
           },
           {
             "file": "book/3.1-the-executable-zoo.html",
-            "occ": 15
+            "occ": 16
           },
           {
             "file": "book/3.2-the-logical-view.html",
