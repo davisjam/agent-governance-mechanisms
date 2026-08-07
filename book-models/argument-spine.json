@@ -530,7 +530,8 @@
         "conversions-compound"
       ],
       "reconciles_big_ideas": [
-        "convert-failures"
+        "convert-failures",
+        "churn"
       ],
       "reconciles_argues_claims": [],
       "exempt": null,

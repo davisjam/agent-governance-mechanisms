@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Churn is the scaling limit</title>
+<title>Choose Between Churn and Compounding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* Legacy var aliases → design tokens: --line/--link predate the token model and are referenced across
@@ -165,86 +165,77 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="index.html#concepts">Concepts</a> &nbsp;/&nbsp; Churn is the scaling limit</nav>
-<h1>Churn is the scaling limit</h1>
-<p><strong>Claim</strong> — An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.</p>
-<table><thead><tr><th>Concept</th><th>Big idea 1 · the problem</th></tr></thead><tbody><tr><td>Claim</td><td>An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.</td></tr><tr><td>Mechanisms</td><td>— none yet</td></tr><tr><td>Related</td><td>governance-centric</td></tr><tr><td>In the book</td><td>book/1.1-the-printer.html</td></tr></tbody></table>
+<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="index.html#concepts">Concepts</a> &nbsp;/&nbsp; Choose Between Churn and Compounding</nav>
+<h1>Choose Between Churn and Compounding</h1>
+<p><strong>Claim</strong> — One environment, two fates. Ungoverned, effort dissipates as churn — rediscovering, undoing, reconciling. Governed and converting, it accrues as engineering capital: the same effort compounds.</p>
+<table><thead><tr><th>Concept</th><th>Big idea 1 · the stakes</th></tr></thead><tbody><tr><td>Claim</td><td>One environment, two fates. Ungoverned, effort dissipates as churn — rediscovering, undoing, reconciling. Governed and converting, it accrues as engineering capital: the same effort compounds.</td></tr><tr><td>Mechanisms</td><td>— none yet</td></tr><tr><td>Related</td><td>governance-centric</td></tr><tr><td>In the book</td><td>book/1.1-the-printer.html</td></tr></tbody></table>
 <h2>The idea</h2>
-<figure class="cc-body-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="mg-title mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="cf-1-mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
-  <desc id="cf-1-mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+<figure class="cc-body-fig"><svg id="cf-1-mageSign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="img" aria-labelledby="mageSign-t mageSign-d"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="cf-1-mageSign-t">Churn and Compounding: two feedback regimes with opposite signs</title>
+  <desc id="cf-1-mageSign-d">Two panels side by side, the same environment under opposite signs. The
+    left panel, Churn, is a negative or balancing regime read downward: more agentic effort leads
+    to work outrunning a weak environment, then to rediscovering context, undoing recent work, and
+    reconciling, then to less durable progress, and a feedback arrow shows the same failure class
+    recurring. Its arms are drawn in red. The right panel, Compounding, is a positive or reinforcing
+    regime read upward: more agentic effort turns failure into judgment into conversion, which banks
+    engineering capital as a durable mechanism, which makes the environment more capable while the
+    capital stays fit, which supports more ambitious work at a falling per-change cost, and a
+    feedback arrow shows the gain reinforcing. Its arms are drawn in green. The contrast is the
+    point: effort dissipates on the left and accrues as engineering capital on the right.</desc>
+
   <defs>
-    <marker id="cf-1-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
+    <marker id="cf-1-mageSign-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
     </marker>
-    <marker id="cf-1-mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="cf-1-mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#2f5169"/>
+    <marker id="cf-1-mageSign-grn" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="1080" height="512" fill="#fdfcf9"/>
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
 
-  <!-- Title block -->
+  <text x="500" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Churn and Compounding: two feedback regimes</text>
+  <text x="500" y="70" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The same environment, opposite signs — effort dissipates, or accrues as engineering capital.</text>
 
-  <!-- Churn box: a short reject-branch, parked right above the fleet -->
-  <rect x="44" y="104" width="228" height="98" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
-  <text x="158" y="140" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">Churn</text>
-  <text x="158" y="165" text-anchor="middle" font-size="16.41" fill="#b23b3b">work outgrows the window;</text>
-  <text x="158" y="185" text-anchor="middle" font-size="17.28" fill="#b23b3b">drift, confidently-wrong</text>
+  <!-- divider -->
+  <line x1="500" y1="92" x2="500" y2="532" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
 
-  <!-- ================= BAD PATH: a short fray, straight up out of the fleet to Churn ================= -->
-  <!-- the reject-branch: ORIGINATES on the fleet top edge (y=293), frays up, TERMINATES on Churn's bottom edge (y=202) -->
-  <path d="M160 293 L144 280 L176 266 L142 250 L174 236"
-        fill="none" stroke="#b23b3b" stroke-width="3" stroke-linejoin="round" opacity="0.95"/>
-  <path d="M174 236 L150 224 L166 214 L158 204"
-        fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
-        marker-end="url(#cf-1-mg-ah-red)" opacity="0.9"/>
-  <text x="238" y="258" text-anchor="middle" font-size="17.28" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
+  <!-- ================= LEFT: CHURN (negative, read downward) ================= -->
+  <text x="250" y="118" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">CHURN − effort dissipates</text>
 
-  <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
-  <rect x="46" y="293" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="144" y="333" text-anchor="middle" font-size="20" font-weight="700" fill="#2f5169">The agent fleet</text>
-  <text x="144" y="359" text-anchor="middle" font-size="17.28" fill="#2f5169">fast · cheap</text>
-  <text x="144" y="380" text-anchor="middle" font-size="17.28" fill="#57534e">one input, two fates</text>
+  <text x="250" y="168" text-anchor="middle" font-size="17" fill="#1c1917">more agentic effort</text>
+  <line x1="250" y1="180" x2="250" y2="212" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#cf-1-mageSign-red)"/>
+  <text x="250" y="238" text-anchor="middle" font-size="17" fill="#1c1917">work outruns a weak environment</text>
+  <line x1="250" y1="250" x2="250" y2="282" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#cf-1-mageSign-red)"/>
+  <text x="250" y="308" text-anchor="middle" font-size="17" fill="#1c1917">rediscover · undo · reconcile</text>
+  <line x1="250" y1="320" x2="250" y2="352" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#cf-1-mageSign-red)"/>
+  <text x="250" y="378" text-anchor="middle" font-size="17" font-weight="600" fill="#b23b3b">less durable progress</text>
 
-  <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
-  <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
-  <path d="M242 344 L306 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#cf-1-mg-ah-navy)"/>
+  <!-- churn feedback: the class recurs -->
+  <path d="M150,376 C104,320 104,220 150,166" fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#cf-1-mageSign-red)"/>
+  <text x="250" y="430" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the same failure class recurs</text>
 
-  <!-- The governed environment: the HERO container (center y=344) -->
-  <rect x="308" y="216" width="452" height="256" rx="16" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <path d="M308 232 a16 16 0 0 1 16 -16 h420 a16 16 0 0 1 16 16 v22 h-452 z" fill="#1f7a4d"/>
-  <text x="534" y="245" text-anchor="middle" font-size="17.28" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
+  <!-- ================= RIGHT: COMPOUNDING (positive, read upward) ================= -->
+  <text x="750" y="118" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">COMPOUNDING + effort accrues</text>
 
-  <rect x="334" y="278" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="311" text-anchor="middle" font-size="17.28" font-weight="700" fill="#2f5169">Modeling Thesis</text>
-  <text x="534" y="335" text-anchor="middle" font-size="17.28" fill="#2f5169">a typed model the fleet reasons through</text>
+  <text x="750" y="430" text-anchor="middle" font-size="17" fill="#1c1917">more agentic effort</text>
+  <line x1="750" y1="418" x2="750" y2="392" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#cf-1-mageSign-grn)"/>
+  <text x="750" y="378" text-anchor="middle" font-size="17" fill="#1c1917">failure → judgment → conversion</text>
+  <line x1="750" y1="366" x2="750" y2="340" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#cf-1-mageSign-grn)"/>
+  <text x="750" y="326" text-anchor="middle" font-size="17" font-weight="600" fill="#1f7a4d">+ engineering capital (a durable mechanism)</text>
+  <line x1="750" y1="314" x2="750" y2="288" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#cf-1-mageSign-grn)"/>
+  <text x="750" y="274" text-anchor="middle" font-size="17" fill="#1c1917">environment more capable — while the capital stays fit</text>
+  <line x1="750" y1="262" x2="750" y2="236" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#cf-1-mageSign-grn)"/>
+  <text x="750" y="222" text-anchor="middle" font-size="17" fill="#1c1917">more ambitious work, at a falling per-change cost</text>
 
-  <rect x="334" y="370" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="403" text-anchor="middle" font-size="17.28" font-weight="700" fill="#2f5169">Alignment Thesis</text>
-  <text x="534" y="427" text-anchor="middle" font-size="17.28" fill="#2f5169">keeps output aligned with intent</text>
-
-  <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
-  <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#cf-1-mg-ah-green)"/>
-
-  <!-- Trustworthy software: the reward, on the spine — three earned attributes -->
-  <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <text x="948" y="309" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
-  <text x="948" y="331" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
-  <text x="948" y="358" text-anchor="middle" font-size="17.28" fill="#155c38">high quality · auditable</text>
-  <text x="948" y="378" text-anchor="middle" font-size="17.28" font-style="italic" fill="#1f7a4d">at velocity</text>
-  <!-- auditability motif: a small model-traceability tag, centered in the box -->
-  <rect x="870" y="389" width="156" height="20" rx="10" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
-  <path d="M881 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="956" y="404" text-anchor="middle" font-size="14.62" fill="#155c38" letter-spacing="0.2">traces to the models</text>
-
-  <!-- takeaway caption -->
-  <text x="540" y="497" text-anchor="middle" font-size="17.28" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
+  <!-- compounding feedback: the gain reinforces -->
+  <path d="M858,224 C904,290 904,360 858,424" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#cf-1-mageSign-grn)"/>
+  <text x="750" y="470" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the gain reinforces — in the well-fit region</text>
 </svg></figure>
-<p>This is the problem the rest of the concepts answer. An agent fleet is cheap and fast, so it scales — up to a point. That point is the context window. Once the work a change requires exceeds what a single context can hold, the fleet stops advancing the system and starts churning: it re-derives architecture it already worked out, re-opens questions it already settled, and confidently undoes yesterday's fix.</p>
+<p>One environment runs an agent fleet, and it can go two ways. Left ungoverned, the fleet churns: it re-derives what it already built and undoes yesterday's fix. Governed and converting, the same fleet compounds: each conversion it banks makes the next change cheaper. The fork is the stakes this Big Idea sets, and the rest of the method is about choosing the second path.</p>
+<p>Start with the wall, because it is the reason the choice matters. An agent fleet is cheap and fast, so it scales — up to the context window. Once the work a change requires exceeds what a single context can hold, the fleet stops advancing the system and starts churning: it re-derives architecture it already worked out, re-opens questions it already settled, and confidently undoes yesterday's fix.</p>
 <p>Trace the chain end to end, because each link is a step you can point at. Long-horizon reasoning creates working-memory pressure. Pressure forces the reasoning state to be compressed and reconstructed. Reconstruction is lossy, and lossy reconstruction degrades the reasoning it stands in for. The degradation surfaces as churn — effort spent rebuilding a picture the reasoner keeps losing, rather than moving the system forward.</p>
 <figure class="cc-body-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
      role="group" aria-labelledby="rhTitle rhDesc"
@@ -319,15 +310,23 @@
   <text x="735" y="510" text-anchor="middle" font-size="22" font-weight="700" fill="#9a3f12">Productive progress</text>
 </svg><figcaption><em>The chain that ends in churn.</em> Reasoning state grows with the task; once it outruns working memory it is compacted, and lossy compaction degrades the reasoning it stands in for. The left branch ends in churn; the right shows the same task reasoned through a model, which loses less.</figcaption></figure>
 <p>Name the links concretely and the failure stops being abstract. An agent handed the raw code re-derives the architecture, badly, because the real structure never fit its window. A second agent reverts a fix whose reason it never saw. A decided design question comes back around because the decision lived only in a conversation that scrolled out of context. None of these is a bad agent; each is the same finite horizon, hit from a different side.</p>
-<p>A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn is the symptom; its causes are three not-knowings — what to build, how to realize it, how to change safely — and the theses below divide them: models treat the first two, governance the third.</p>
-<p>So churn is not one failure but a family, and the family has a shape. This entry names the problem; the concepts that follow are the responses. No mechanism enforces churn — it is the wall the whole catalogue exists to hold off. The two theses divide the work of holding it: the modeling thesis treats <em>what to build</em> and <em>how to realize it</em> by giving the fleet a model to reason through; governance treats <em>how to change the system safely</em> by moving policy into the environment. Read the rest as answers to this.</p>
-<h2>Why it's more than a team slowing down</h2>
+<p>A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window — that is churn, effort re-spent rediscovering and undoing. The same environment has a positive sign: govern each recurring failure and convert it, and the effort banks as engineering capital that lowers the cost of every later change. The fork is what the whole method decides; Part 6 cashes the compounding half.</p>
+<p>So churn is not one failure but a family, and the family has a shape. The concepts that follow are the responses. No mechanism enforces churn — it is the wall the whole catalogue exists to hold off. The two theses divide the work of holding it: the modeling thesis treats <em>what to build</em> and <em>how to realize it</em> by giving the fleet a model to reason through; governance treats <em>how to change the system safely</em> by moving policy into the environment.</p>
+<h2>The compounding pole</h2>
+<p>The same environment has a positive sign. Convert a recurring failure into a durable mechanism and you do not merely retire one failure — you leave the environment more able to absorb the next change, for as long as the accumulated capital stays fit. The judgment spent once keeps paying.</p>
+<p>The unit that compounds has a name: <strong>engineering capital</strong>. A validator, a structured model, an architectural constraint, a generated artifact — each is capital on the balance sheet of the environment, because it lowers the recurring reasoning a future change demands. Where churn is a negative-feedback regime in which effort dissipates, compounding is a positive-feedback regime in which effort accrues. Same system, two directions.</p>
+<p>Read the word as compound <em>interest</em>, not compound risk. The book uses "compounding" once with the opposite sign — <em>compounding failure probability</em>, where the chance of a wrong step multiplies across a long leap. That names error snowballing; this names capability accruing. The capital vehicle keeps the two apart.</p>
+<h2>Why churn is more than a team slowing down</h2>
 <p>Brooks's Law says adding people to a late project makes it later: communication paths multiply faster than hands, so throughput degrades. That is a slowdown — the work still moves, just at rising cost per head. A fleet does something different. It does not slow smoothly; it hits a wall and reverses, spending its cheap velocity re-deriving and undoing.</p>
 <p>The limit is not coordination between workers. It is the finite reasoning horizon inside each context, and speed does not relieve it — it reaches it faster. A team feels the pain gradually and can staff around it; a fleet crosses the horizon in an afternoon and produces confident, plausible, subtly wrong work at a scale no human can read. That is why the answer is not "add fewer agents" but "change what each agent has to hold."</p>
+<h2>Why compounding is more than "governance is good"</h2>
+<p>Compounding is not the claim that more governance is always better. The book is emphatic that governance accumulation is <em>non-monotonic</em>: push apparatus past the point of fit and it collides, duplicates, and blocks legitimate work — a tower of governance that lowers the environment's quality while the control count climbs. Compounding does not deny that curve; it explains it.</p>
+<p>Accumulation compounds only when it stays capital. <strong>Bureaucracy</strong> is the shadow: accumulation that raises the cost of change without reducing future reasoning — extra checklists, approval gates, duplicated docs, process re-applied by hand. It never compounds. And capital itself <strong>depreciates</strong>: a validator for a retired subsystem was capital and becomes friction as the product moves on. So the honest bound names two ways accumulation stops compounding — apparatus past its fit, and capital that outlived its fit — which is exactly why mature adaptation retires and reconciles as well as adds.</p>
+<p>The operating question follows: does this decision increase churn, or increase engineering capital?</p>
 <h2>The mechanisms that instantiate it</h2>
 <p>No mechanism edge is declared yet — this concept ships thin for now; the edge is enriched in a later pass.</p>
 <h2>Related concepts</h2>
-<ul><li><a href="concept-governance-centric.html">Governance-centric — the enabling substrate</a></li><li><a href="concept-compounding.html">Compounding — the positive dual, effort accruing as engineering capital</a></li></ul>
+<ul><li><a href="concept-governance-centric.html">Governance-centric — the enabling substrate</a></li></ul>
 <h2>Read in the book →</h2>
 <p><a href="book/1.1-the-printer.html">Read in the book →</a></p>
 <footer class="site-foot"><span class="foot-line foot-copy">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span><span class="foot-line foot-links"><a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a></span><span class="foot-line foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>

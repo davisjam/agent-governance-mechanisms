@@ -115,7 +115,7 @@
     "site_home": "N/A",
     "derived_from": "book/_design/drafts/compounding-principle-design-260806.md#naming-recommendation",
     "book_home": "the-books-language#idx-def-compounding",
-    "book_home_owed": {"section": "Front Matter — The Book's Language (glossary, core-ideas group)", "status": "landed", "note": "Landed: the compounding green-box in the glossary's core-ideas group carries the index-def tag and renders as the light def-inset. Book-only by design; the formal treatment (the Compounding-Governance proposition + the Bureaucracy-vs-Engineering-capital section) is in Part 6. A website concept ENTRY page (concept-compounding.html) renders the site preview, reachable as churn's Counterpart; no landing Big-Idea card (six stays six). The projection-index SITE-HOME gate tracks the real site presence this N/A field cannot express, exactly as it does for churn."},
+    "book_home_owed": {"section": "Front Matter — The Book's Language (glossary, core-ideas group)", "status": "landed", "note": "Landed: the compounding green-box in the glossary's core-ideas group carries the index-def tag and renders as the light def-inset. Book-only by design; the formal treatment (the Compounding-Governance proposition + the Bureaucracy-vs-Engineering-capital section) is in Part 6. The compounding site preview folded into the reframed churn/compounding Big-Idea page (concept-churn.html) when Big Idea 1 was reframed to 'Choose Between Churn and Compounding'; the standalone concept-compounding page was removed. No landing Big-Idea card (six stays six)."},
     "lexicon_link": "the-books-language",
     "concepts_link": "book/data/concepts.json"
   },

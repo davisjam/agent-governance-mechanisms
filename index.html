@@ -338,84 +338,74 @@
 
   <div class="big-ideas" id="concepts">
   <div class="idea-hero" id="bi-churn">
-  <figure class="ih-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="mg-title mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="bi-churn-mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
-  <desc id="bi-churn-mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+  <figure class="ih-fig"><svg id="bi-churn-mageSign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="img" aria-labelledby="mageSign-t mageSign-d"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="bi-churn-mageSign-t">Churn and Compounding: two feedback regimes with opposite signs</title>
+  <desc id="bi-churn-mageSign-d">Two panels side by side, the same environment under opposite signs. The
+    left panel, Churn, is a negative or balancing regime read downward: more agentic effort leads
+    to work outrunning a weak environment, then to rediscovering context, undoing recent work, and
+    reconciling, then to less durable progress, and a feedback arrow shows the same failure class
+    recurring. Its arms are drawn in red. The right panel, Compounding, is a positive or reinforcing
+    regime read upward: more agentic effort turns failure into judgment into conversion, which banks
+    engineering capital as a durable mechanism, which makes the environment more capable while the
+    capital stays fit, which supports more ambitious work at a falling per-change cost, and a
+    feedback arrow shows the gain reinforcing. Its arms are drawn in green. The contrast is the
+    point: effort dissipates on the left and accrues as engineering capital on the right.</desc>
+
   <defs>
-    <marker id="bi-churn-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
+    <marker id="bi-churn-mageSign-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
     </marker>
-    <marker id="bi-churn-mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="bi-churn-mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#2f5169"/>
+    <marker id="bi-churn-mageSign-grn" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="1080" height="512" fill="#fdfcf9"/>
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
 
-  <!-- Title block -->
+  <text x="500" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Churn and Compounding: two feedback regimes</text>
+  <text x="500" y="70" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The same environment, opposite signs — effort dissipates, or accrues as engineering capital.</text>
 
-  <!-- Churn box: a short reject-branch, parked right above the fleet -->
-  <rect x="44" y="104" width="228" height="98" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
-  <text x="158" y="140" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">Churn</text>
-  <text x="158" y="165" text-anchor="middle" font-size="16.41" fill="#b23b3b">work outgrows the window;</text>
-  <text x="158" y="185" text-anchor="middle" font-size="17.28" fill="#b23b3b">drift, confidently-wrong</text>
+  <!-- divider -->
+  <line x1="500" y1="92" x2="500" y2="532" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
 
-  <!-- ================= BAD PATH: a short fray, straight up out of the fleet to Churn ================= -->
-  <!-- the reject-branch: ORIGINATES on the fleet top edge (y=293), frays up, TERMINATES on Churn's bottom edge (y=202) -->
-  <path d="M160 293 L144 280 L176 266 L142 250 L174 236"
-        fill="none" stroke="#b23b3b" stroke-width="3" stroke-linejoin="round" opacity="0.95"/>
-  <path d="M174 236 L150 224 L166 214 L158 204"
-        fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
-        marker-end="url(#bi-churn-mg-ah-red)" opacity="0.9"/>
-  <text x="238" y="258" text-anchor="middle" font-size="17.28" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
+  <!-- ================= LEFT: CHURN (negative, read downward) ================= -->
+  <text x="250" y="118" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">CHURN − effort dissipates</text>
 
-  <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
-  <rect x="46" y="293" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="144" y="333" text-anchor="middle" font-size="20" font-weight="700" fill="#2f5169">The agent fleet</text>
-  <text x="144" y="359" text-anchor="middle" font-size="17.28" fill="#2f5169">fast · cheap</text>
-  <text x="144" y="380" text-anchor="middle" font-size="17.28" fill="#57534e">one input, two fates</text>
+  <text x="250" y="168" text-anchor="middle" font-size="17" fill="#1c1917">more agentic effort</text>
+  <line x1="250" y1="180" x2="250" y2="212" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-red)"/>
+  <text x="250" y="238" text-anchor="middle" font-size="17" fill="#1c1917">work outruns a weak environment</text>
+  <line x1="250" y1="250" x2="250" y2="282" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-red)"/>
+  <text x="250" y="308" text-anchor="middle" font-size="17" fill="#1c1917">rediscover · undo · reconcile</text>
+  <line x1="250" y1="320" x2="250" y2="352" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-red)"/>
+  <text x="250" y="378" text-anchor="middle" font-size="17" font-weight="600" fill="#b23b3b">less durable progress</text>
 
-  <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
-  <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
-  <path d="M242 344 L306 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#bi-churn-mg-ah-navy)"/>
+  <!-- churn feedback: the class recurs -->
+  <path d="M150,376 C104,320 104,220 150,166" fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#bi-churn-mageSign-red)"/>
+  <text x="250" y="430" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the same failure class recurs</text>
 
-  <!-- The governed environment: the HERO container (center y=344) -->
-  <rect x="308" y="216" width="452" height="256" rx="16" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <path d="M308 232 a16 16 0 0 1 16 -16 h420 a16 16 0 0 1 16 16 v22 h-452 z" fill="#1f7a4d"/>
-  <text x="534" y="245" text-anchor="middle" font-size="17.28" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
+  <!-- ================= RIGHT: COMPOUNDING (positive, read upward) ================= -->
+  <text x="750" y="118" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">COMPOUNDING + effort accrues</text>
 
-  <rect x="334" y="278" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="311" text-anchor="middle" font-size="17.28" font-weight="700" fill="#2f5169">Modeling Thesis</text>
-  <text x="534" y="335" text-anchor="middle" font-size="17.28" fill="#2f5169">a typed model the fleet reasons through</text>
+  <text x="750" y="430" text-anchor="middle" font-size="17" fill="#1c1917">more agentic effort</text>
+  <line x1="750" y1="418" x2="750" y2="392" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-grn)"/>
+  <text x="750" y="378" text-anchor="middle" font-size="17" fill="#1c1917">failure → judgment → conversion</text>
+  <line x1="750" y1="366" x2="750" y2="340" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-grn)"/>
+  <text x="750" y="326" text-anchor="middle" font-size="17" font-weight="600" fill="#1f7a4d">+ engineering capital (a durable mechanism)</text>
+  <line x1="750" y1="314" x2="750" y2="288" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-grn)"/>
+  <text x="750" y="274" text-anchor="middle" font-size="17" fill="#1c1917">environment more capable — while the capital stays fit</text>
+  <line x1="750" y1="262" x2="750" y2="236" stroke="#1f7a4d" stroke-width="2.5" marker-end="url(#bi-churn-mageSign-grn)"/>
+  <text x="750" y="222" text-anchor="middle" font-size="17" fill="#1c1917">more ambitious work, at a falling per-change cost</text>
 
-  <rect x="334" y="370" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="403" text-anchor="middle" font-size="17.28" font-weight="700" fill="#2f5169">Alignment Thesis</text>
-  <text x="534" y="427" text-anchor="middle" font-size="17.28" fill="#2f5169">keeps output aligned with intent</text>
-
-  <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
-  <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#bi-churn-mg-ah-green)"/>
-
-  <!-- Trustworthy software: the reward, on the spine — three earned attributes -->
-  <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <text x="948" y="309" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
-  <text x="948" y="331" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
-  <text x="948" y="358" text-anchor="middle" font-size="17.28" fill="#155c38">high quality · auditable</text>
-  <text x="948" y="378" text-anchor="middle" font-size="17.28" font-style="italic" fill="#1f7a4d">at velocity</text>
-  <!-- auditability motif: a small model-traceability tag, centered in the box -->
-  <rect x="870" y="389" width="156" height="20" rx="10" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
-  <path d="M881 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="956" y="404" text-anchor="middle" font-size="14.62" fill="#155c38" letter-spacing="0.2">traces to the models</text>
-
-  <!-- takeaway caption -->
-  <text x="540" y="497" text-anchor="middle" font-size="17.28" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
+  <!-- compounding feedback: the gain reinforces -->
+  <path d="M858,224 C904,290 904,360 858,424" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#bi-churn-mageSign-grn)"/>
+  <text x="750" y="470" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the gain reinforces — in the well-fit region</text>
 </svg></figure>
   <div class="ih-words">
-    <p class="s-kick">Big idea 1 · the problem</p>
-    <h2 class="s-title">Churn is the scaling limit</h2>
-    <p class="s-claim">An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.</p>
+    <p class="s-kick">Big idea 1 · the stakes</p>
+    <h2 class="s-title">Choose Between Churn and Compounding</h2>
+    <p class="s-claim">One environment, two fates. Ungoverned, effort dissipates as churn — rediscovering, undoing, reconciling. Governed and converting, it accrues as engineering capital: the same effort compounds.</p>
     <a class="s-concept" href="concept-churn.html">→ read the concept</a>
   </div>
 </div>

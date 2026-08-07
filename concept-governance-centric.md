@@ -53,7 +53,7 @@ commit without getting tired. Reviewers watch the work; the environment holds th
 
 ## Related concepts
 
-- [Churn is the scaling limit](concept-churn.md)
+- [Choose Between Churn and Compounding](concept-churn.md)
 - [Documentation, taken to its limit, is a structured model](concept-modeling-thesis.md)
 
 ## Read in the book →

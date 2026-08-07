@@ -11,14 +11,14 @@
 
   "churn": {
     "id": "bi-churn",
-    "role": "problem",
+    "role": "problem-and-dual",
     "order": 1,
-    "kicker": "Big idea 1 · the problem",
-    "title": "Churn is the scaling limit",
-    "figure": "mage-overview.svg",
+    "kicker": "Big idea 1 · the stakes",
+    "title": "Choose Between Churn and Compounding",
+    "figure": "mage-churn-vs-compounding.svg",
     "book_home": "the-printer",
-    "claim": "An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.",
-    "more": "A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn is the symptom; its causes are three not-knowings — what to build, how to realize it, how to change safely — and the theses below divide them: models treat the first two, governance the third.",
+    "claim": "One environment, two fates. Ungoverned, effort dissipates as churn — rediscovering, undoing, reconciling. Governed and converting, it accrues as engineering capital: the same effort compounds.",
+    "more": "A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window — that is churn, effort re-spent rediscovering and undoing. The same environment has a positive sign: govern each recurring failure and convert it, and the effort banks as engineering capital that lowers the cost of every later change. The fork is what the whole method decides; Part 6 cashes the compounding half.",
     "mechanisms": [],
     "related_ideas": [],
     "entry_figures": [

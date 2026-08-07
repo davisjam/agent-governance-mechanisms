@@ -3,12 +3,12 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1196,
+    "total_sites": 1189,
     "by_projection": {
       "book-pdf": 24,
       "book-web": 858,
       "website-catalogue": 221,
-      "website-concepts": 41,
+      "website-concepts": 34,
       "website-landing": 8,
       "website-misc": 44
     }
@@ -425,7 +425,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 18
+            "occ": 15
           }
         ],
         "website-concepts": [
@@ -435,7 +435,7 @@
           },
           {
             "file": "concept-churn.html",
-            "occ": 10
+            "occ": 7
           },
           {
             "file": "concept-convert-failures.html",
@@ -860,18 +860,6 @@
         ]
       },
       "website": {
-        "website-landing": [
-          {
-            "file": "index.html",
-            "occ": 2
-          }
-        ],
-        "website-concepts": [
-          {
-            "file": "concept-churn.html",
-            "occ": 2
-          }
-        ],
         "website-misc": [
           {
             "file": "constructing-the-gee.html",
@@ -1005,11 +993,7 @@
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 18
-          },
-          {
-            "file": "concept-compounding.html",
-            "occ": 9
+            "occ": 22
           },
           {
             "file": "concept-governance-centric.html",
@@ -1140,14 +1124,20 @@
         ]
       },
       "website": {
+        "website-landing": [
+          {
+            "file": "index.html",
+            "occ": 7
+          }
+        ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 1
+            "occ": 18
           },
           {
-            "file": "concept-compounding.html",
-            "occ": 11
+            "file": "concept-governance-centric.html",
+            "occ": 1
           }
         ],
         "website-catalogue": [
@@ -1641,17 +1631,13 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 10
+            "occ": 14
           }
         ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 2
-          },
-          {
-            "file": "concept-compounding.html",
-            "occ": 4
+            "occ": 9
           },
           {
             "file": "concept-governance-centric.html",
@@ -1752,14 +1738,16 @@
         ]
       },
       "website": {
+        "website-landing": [
+          {
+            "file": "index.html",
+            "occ": 5
+          }
+        ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 1
-          },
-          {
-            "file": "concept-compounding.html",
-            "occ": 4
+            "occ": 9
           }
         ]
       }
@@ -1894,12 +1882,6 @@
         ]
       },
       "website": {
-        "website-concepts": [
-          {
-            "file": "concept-compounding.html",
-            "occ": 1
-          }
-        ],
         "website-catalogue": [
           {
             "file": "models-bridge/system-models/governance-graph.html",
@@ -2389,7 +2371,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 14
+            "occ": 12
           }
         ],
         "website-concepts": [
@@ -2399,11 +2381,7 @@
           },
           {
             "file": "concept-churn.html",
-            "occ": 7
-          },
-          {
-            "file": "concept-compounding.html",
-            "occ": 2
+            "occ": 6
           },
           {
             "file": "concept-convert-failures.html",
@@ -3352,16 +3330,10 @@
         ]
       },
       "website": {
-        "website-landing": [
-          {
-            "file": "index.html",
-            "occ": 2
-          }
-        ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 3
+            "occ": 1
           }
         ],
         "website-misc": [
@@ -4299,14 +4271,10 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 5
+            "occ": 4
           }
         ],
         "website-concepts": [
-          {
-            "file": "concept-churn.html",
-            "occ": 1
-          },
           {
             "file": "concept-governance-centric.html",
             "occ": 1
@@ -4752,7 +4720,7 @@
             "occ": 1
           },
           {
-            "file": "concept-compounding.html",
+            "file": "concept-churn.html",
             "occ": 1
           },
           {

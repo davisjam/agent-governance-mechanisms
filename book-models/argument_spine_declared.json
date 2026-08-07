@@ -132,7 +132,7 @@
       "order": 15,
       "statement": "Each conversion banks engineering capital that lowers the future cost of change, so effort compounds — later work extends capability instead of re-solving settled problems, while that capital stays fit.",
       "seeds": [6, 7],
-      "reconciles": {"claims": ["conversions-compound"], "big_ideas": ["convert-failures"]},
+      "reconciles": {"claims": ["conversions-compound"], "big_ideas": ["convert-failures", "churn"]},
       "reviewed_hash": "3d5cdcd1963c",
       "quantifiable": false, "reality_claim": true, "frame": "offered-for-replication", "measurand": "share of future effort extending capability versus re-solving settled problems, as effective conversion coverage grows"
     }
