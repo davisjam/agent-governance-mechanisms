@@ -411,13 +411,21 @@ a.gloss-site:hover, a.gloss-site:focus { color: var(--accent); border-bottom-col
 }
 /* Part-nav footer on a Part landing page — a pill bar over the six numbered Parts (current = filled, non-link).
    Mirrors the .chapnav pill look. */
-.part-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
-             margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.part-pill { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
-              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
-              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-a.part-pill:hover, a.part-pill:focus { border-color: var(--accent); background: var(--panel); }
-.part-pill.current { color: var(--ink); background: var(--panel); border-color: var(--accent); font-weight: 700; }
+/* Interactive book-roadmap nav on a Part landing page (web only). The SVG reuses assets/book-map.svg;
+   each numbered Part is an <a> or the highlighted current node. Tokens only (theme + print safe). */
+.roadmap-nav { margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule);
+               display: flex; justify-content: center; }
+.roadmap-nav svg { width: 100%; max-width: 460px; height: auto; }
+.roadmap-nav a.bm-part-link { cursor: pointer; }
+.roadmap-nav a.bm-part-link rect { transition: stroke-width 80ms ease; }
+.roadmap-nav a.bm-part-link:hover rect,
+.roadmap-nav a.bm-part-link:focus-visible rect { stroke-width: 3.5; }
+.roadmap-nav a.bm-part-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Current Part: heavier stroke — NOT color-only (pairs with aria-current + the hidden "current part" text). */
+.roadmap-nav .bm-part.current rect { stroke-width: 4; }
+/* Off-screen but reader-available (screen-reader fallback list + the current-Part-in-text cue). */
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+                    clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */

@@ -2042,13 +2042,21 @@ a.gloss-site:hover, a.gloss-site:focus {{ color: var(--accent); border-bottom-co
 }}
 /* Part-nav footer on a Part landing page — a pill bar over the six numbered Parts (current = filled, non-link).
    Mirrors the .chapnav pill look. */
-.part-nav {{ display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
-             margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }}
-.part-pill {{ font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
-              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
-              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
-a.part-pill:hover, a.part-pill:focus {{ border-color: var(--accent); background: var(--panel); }}
-.part-pill.current {{ color: var(--ink); background: var(--panel); border-color: var(--accent); font-weight: 700; }}
+/* Interactive book-roadmap nav on a Part landing page (web only). The SVG reuses assets/book-map.svg;
+   each numbered Part is an <a> or the highlighted current node. Tokens only (theme + print safe). */
+.roadmap-nav {{ margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule);
+               display: flex; justify-content: center; }}
+.roadmap-nav svg {{ width: 100%; max-width: 460px; height: auto; }}
+.roadmap-nav a.bm-part-link {{ cursor: pointer; }}
+.roadmap-nav a.bm-part-link rect {{ transition: stroke-width 80ms ease; }}
+.roadmap-nav a.bm-part-link:hover rect,
+.roadmap-nav a.bm-part-link:focus-visible rect {{ stroke-width: 3.5; }}
+.roadmap-nav a.bm-part-link:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
+/* Current Part: heavier stroke — NOT color-only (pairs with aria-current + the hidden "current part" text). */
+.roadmap-nav .bm-part.current rect {{ stroke-width: 4; }}
+/* Off-screen but reader-available (screen-reader fallback list + the current-Part-in-text cue). */
+.visually-hidden {{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+                    clip: rect(0 0 0 0); white-space: nowrap; border: 0; }}
 .book-foot {{ margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }}
 /* index page */
@@ -2252,19 +2260,53 @@ def _static_nav_html(name: str, back_extra: list[tuple[str, str, str]] | None = 
     return _render_chapnav(back, name, fwd)
 
 
-def _part_nav_html(current_part: int) -> str:
-    """The Part-nav footer for a Part landing page: a pill bar over the six numbered Parts. The current Part is
-    a non-link `<strong aria-current="page">`; every other Part links to its own landing page (`part-<N>-intro`).
-    Reads one list — `_PART_TITLES` restricted to Parts 1–6 — so it is the web twin of `_part_nav_typst` (one
-    list, two projections). Front matter and the apparatus are not numbered Parts, so they are not nav targets."""
-    pills: list[str] = []
+_ROADMAP_SVG_PATH = HERE / "assets" / "book-map.svg"
+
+
+def _roadmap_nav_html(current_part: int) -> str:
+    """The interactive book-roadmap on a Part landing page (WEB only) — the web twin of the Typst
+    `_part_nav_typst` chip strip (one list, `_PART_TITLES`, two projections). Reuses `assets/book-map.svg`:
+    each numbered Part (1–6) becomes a native SVG `<a>` to its intro page; the CURRENT Part is a non-link,
+    highlighted, `aria-current` node. No JS — the highlight is a build-time class, the links are plain
+    `<a href>`. Carries NO caption and is caption-tier-exempt: it renders as a `<nav>` landmark, not a
+    numbered `<figure>`. A visually-hidden fallback list carries real HTML links (reachability + the current
+    Part named in text, so the SVG highlight needs no per-node "you are here" geometry)."""
+    svg = _ROADMAP_SVG_PATH.read_text(encoding="utf-8")
+    svg = re.sub(r"^\s*<\?xml[^>]*\?>\s*", "", svg)
+    svg = re.search(r"<svg\b.*</svg>", svg, re.S).group(0)
+    # Neutralize the intrinsic width/height so the viewBox drives responsive scaling (mirrors _figure_block).
+    svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
+    svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
+    # Unique-suffix the shared ids so this nav SVG never collides with the static Figure 0.5-1 if a page ever
+    # carries both (defensive; part-intro pages don't embed the figure today).
+    svg = (svg.replace('id="bmTitle"', 'id="bmTitle-nav"').replace('id="bmDesc"', 'id="bmDesc-nav"')
+              .replace('aria-labelledby="bmTitle bmDesc"', 'aria-labelledby="bmTitle-nav bmDesc-nav"')
+              .replace('id="bm-ah"', 'id="bm-ah-nav"').replace('url(#bm-ah)', 'url(#bm-ah-nav)'))
+
+    def decorate(mo: "re.Match[str]") -> str:
+        n = int(mo.group("n"))
+        inner = mo.group("inner")
+        label = f'Part {n} — {_PART_TITLES.get(n, "")}'
+        if n == current_part:
+            # Non-link current node: emphasized class + aria-current (cue is stroke-weight + aria + the
+            # fallback text — never color alone, per WCAG 1.4.1).
+            return (f'<g id="bm-part-{n}" class="bm-part current" role="img" aria-current="page" '
+                    f'aria-label="{html.escape(label + " (current part)", quote=True)}">{inner}</g>')
+        return (f'<a href="part-{n}-intro.html" class="bm-part-link" role="link" '
+                f'aria-label="{html.escape(label, quote=True)}">'
+                f'<g id="bm-part-{n}" class="bm-part">{inner}</g></a>')
+
+    svg = re.sub(r'<g id="bm-part-(?P<n>[1-6])" class="bm-part">(?P<inner>.*?)</g>', decorate, svg, flags=re.S)
+
+    items: list[str] = []
     for n in range(1, 7):
         label = html.escape(f'Part {n} — {_PART_TITLES.get(n, "")}')
         if n == current_part:
-            pills.append(f'<strong class="part-pill current" aria-current="page">{label}</strong>')
+            items.append(f'<li aria-current="page">{label} (current part)</li>')
         else:
-            pills.append(f'<a class="part-pill" href="part-{n}-intro.html">{label}</a>')
-    return ('<nav class="part-nav" aria-label="Parts of the book">' + "".join(pills) + '</nav>')
+            items.append(f'<li>{label}: <a href="part-{n}-intro.html">go to Part {n}</a></li>')
+    fallback = '<ul class="visually-hidden roadmap-fallback">' + "".join(items) + "</ul>"
+    return (f'<nav class="roadmap-nav" aria-label="Book roadmap — jump to a part">{svg}{fallback}</nav>')
 
 
 def toc_html(chapters: list[dict], current_slug: str | None) -> str:
@@ -6576,7 +6618,7 @@ def build() -> int:
             body = _link_glossary_sites(body, gloss_link_map)
         body += works_cited_section()  # per-chapter numbered Works Cited (empty when nothing is cited)
         if c.get("is_part_page"):
-            body += _part_nav_html(c["part"])  # the Part-nav pill bar sits at the foot of a Part landing page
+            body += _roadmap_nav_html(c["part"])  # interactive book-roadmap replaces the flat pill bar (web only)
         # The single left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … » Index), bottom-only.
         nav_bar = _chapter_nav_html(chapters, i)
         foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'

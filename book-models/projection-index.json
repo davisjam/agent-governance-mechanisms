@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1393,
+    "total_sites": 1405,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1062,
+      "book-web": 1074,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -914,12 +914,36 @@
           {
             "file": "book/figures.html",
             "occ": 24
+          },
+          {
+            "file": "book/part-1-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-2-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-3-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-4-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-5-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-6-intro.html",
+            "occ": 3
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 25
+            "occ": 31
           }
         ]
       },
@@ -1729,27 +1753,27 @@
           },
           {
             "file": "book/part-1-intro.html",
-            "occ": 10
+            "occ": 12
           },
           {
             "file": "book/part-2-intro.html",
-            "occ": 16
+            "occ": 18
           },
           {
             "file": "book/part-3-intro.html",
-            "occ": 10
+            "occ": 12
           },
           {
             "file": "book/part-4-intro.html",
-            "occ": 10
+            "occ": 12
           },
           {
             "file": "book/part-5-intro.html",
-            "occ": 10
+            "occ": 12
           },
           {
             "file": "book/part-6-intro.html",
-            "occ": 12
+            "occ": 14
           }
         ],
         "book-pdf": [
@@ -2941,27 +2965,27 @@
           },
           {
             "file": "book/part-1-intro.html",
-            "occ": 10
+            "occ": 13
           },
           {
             "file": "book/part-2-intro.html",
-            "occ": 10
+            "occ": 13
           },
           {
             "file": "book/part-3-intro.html",
-            "occ": 15
+            "occ": 18
           },
           {
             "file": "book/part-4-intro.html",
-            "occ": 9
+            "occ": 12
           },
           {
             "file": "book/part-5-intro.html",
-            "occ": 9
+            "occ": 12
           },
           {
             "file": "book/part-6-intro.html",
-            "occ": 9
+            "occ": 12
           }
         ],
         "book-pdf": [
@@ -3843,27 +3867,27 @@
           },
           {
             "file": "book/part-1-intro.html",
-            "occ": 3
+            "occ": 5
           },
           {
             "file": "book/part-2-intro.html",
-            "occ": 4
+            "occ": 6
           },
           {
             "file": "book/part-3-intro.html",
-            "occ": 9
+            "occ": 11
           },
           {
             "file": "book/part-4-intro.html",
-            "occ": 3
+            "occ": 5
           },
           {
             "file": "book/part-5-intro.html",
-            "occ": 3
+            "occ": 5
           },
           {
             "file": "book/part-6-intro.html",
-            "occ": 3
+            "occ": 5
           }
         ],
         "book-pdf": [
@@ -3980,12 +4004,36 @@
           {
             "file": "book/figures.html",
             "occ": 25
+          },
+          {
+            "file": "book/part-1-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-2-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-3-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-4-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-5-intro.html",
+            "occ": 3
+          },
+          {
+            "file": "book/part-6-intro.html",
+            "occ": 3
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 24
+            "occ": 30
           }
         ]
       },
@@ -4993,27 +5041,27 @@
           },
           {
             "file": "book/part-1-intro.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/part-2-intro.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/part-3-intro.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/part-4-intro.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/part-5-intro.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/part-6-intro.html",
-            "occ": 4
+            "occ": 5
           }
         ],
         "book-pdf": [

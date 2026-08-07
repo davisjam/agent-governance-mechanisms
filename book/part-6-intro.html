@@ -411,13 +411,21 @@ a.gloss-site:hover, a.gloss-site:focus { color: var(--accent); border-bottom-col
 }
 /* Part-nav footer on a Part landing page — a pill bar over the six numbered Parts (current = filled, non-link).
    Mirrors the .chapnav pill look. */
-.part-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
-             margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.part-pill { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
-              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
-              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-a.part-pill:hover, a.part-pill:focus { border-color: var(--accent); background: var(--panel); }
-.part-pill.current { color: var(--ink); background: var(--panel); border-color: var(--accent); font-weight: 700; }
+/* Interactive book-roadmap nav on a Part landing page (web only). The SVG reuses assets/book-map.svg;
+   each numbered Part is an <a> or the highlighted current node. Tokens only (theme + print safe). */
+.roadmap-nav { margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule);
+               display: flex; justify-content: center; }
+.roadmap-nav svg { width: 100%; max-width: 460px; height: auto; }
+.roadmap-nav a.bm-part-link { cursor: pointer; }
+.roadmap-nav a.bm-part-link rect { transition: stroke-width 80ms ease; }
+.roadmap-nav a.bm-part-link:hover rect,
+.roadmap-nav a.bm-part-link:focus-visible rect { stroke-width: 3.5; }
+.roadmap-nav a.bm-part-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Current Part: heavier stroke — NOT color-only (pairs with aria-current + the hidden "current part" text). */
+.roadmap-nav .bm-part.current rect { stroke-width: 4; }
+/* Off-screen but reader-available (screen-reader fallback list + the current-Part-in-text cue). */
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+                    clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -631,4 +639,83 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-theory.html">Appendix E - 1. Theory</a></li>
-<li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap part-page" aria-label="Part 6 · Reflections"><header class="chap"><div class="kicker"><a href="index.html" aria-label="Book contents — jump to the chapter list">Part 6</a></div><h1>Reflections</h1></header><p>Every book eventually reaches the same question: what should change because of everything that came before? This final Part asks that question of software engineering itself. If implementation has become abundant, what remains the scarce work? If coding agents can build almost anything we describe, what distinguishes engineering from programming? Drawing together the theory, the governed environment, the models, and the DocAble case study, these chapters argue that software engineering is not disappearing but changing shape. The engineer increasingly becomes the author of intent, the designer of environments, the builder of models, and the governor of systems that evolve faster than any individual can inspect. The book closes by asking what this means for research, education, organizations, and the next generation of engineering practice.</p><nav class="part-nav" aria-label="Parts of the book"><a class="part-pill" href="part-1-intro.html">Part 1 — The Mindset</a><a class="part-pill" href="part-2-intro.html">Part 2 — The Governed Engineering Environment</a><a class="part-pill" href="part-3-intro.html">Part 3 — The Model Zoo</a><a class="part-pill" href="part-4-intro.html">Part 4 — Putting It to Work</a><a class="part-pill" href="part-5-intro.html">Part 5 — A MAGE Case Study</a><strong class="part-pill current" aria-current="page">Part 6 — Reflections</strong></nav><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="5.4-the-road-to-mage.html" aria-label="Previous chapter — 29 · The Road to MAGE">« Previous chapter</a></div><span class="chapnav-here" title="Reflections">Reflections</span><div class="chapnav-fwd"><a href="6.1-toward-a-theory-of-mage.html" aria-label="Next chapter — 30 · Toward a Theory of MAGE">Next chapter »</a><a href="7.1-about-the-author.html" aria-label="Next part — Back Matter">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap part-page" aria-label="Part 6 · Reflections"><header class="chap"><div class="kicker"><a href="index.html" aria-label="Book contents — jump to the chapter list">Part 6</a></div><h1>Reflections</h1></header><p>Every book eventually reaches the same question: what should change because of everything that came before? This final Part asks that question of software engineering itself. If implementation has become abundant, what remains the scarce work? If coding agents can build almost anything we describe, what distinguishes engineering from programming? Drawing together the theory, the governed environment, the models, and the DocAble case study, these chapters argue that software engineering is not disappearing but changing shape. The engineer increasingly becomes the author of intent, the designer of environments, the builder of models, and the governor of systems that evolve faster than any individual can inspect. The book closes by asking what this means for research, education, organizations, and the next generation of engineering practice.</p><nav class="roadmap-nav" aria-label="Book roadmap — jump to a part"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 890"
+     role="group" aria-labelledby="bmTitle-nav bmDesc-nav"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="bmTitle-nav">A map of the book — the parts and how they compose</title>
+  <desc id="bmDesc-nav">Part 1, The Mindset, sits at the top and introduces the two theses. It
+    branches to two parts that work each thesis out: Part 2, The Governed Environment,
+    develops the Alignment Thesis as the controls that govern the fleet; Part 3, The Model
+    Zoo, develops the Modeling Thesis as the models the fleet reasons through. Both feed
+    Part 4, Putting It to Work, the method in daily practice, which leads to Part 5, a MAGE
+    case study of DocAble that the book's claims rest on, and then to Part 6, Reflections —
+    the theory, implications for software engineering, and conclusion. Below it sits the back
+    matter (Part 7: about the author and colophon) and the patterns appendix used as a reference.</desc>
+
+  <defs>
+    <marker id="bm-ah-nav" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- Part 1: the frame -->
+  <a href="part-1-intro.html" class="bm-part-link" role="link" aria-label="Part 1 — The Mindset"><g id="bm-part-1" class="bm-part">
+  <rect x="270" y="30" width="420" height="88" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
+  <text x="480" y="66" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 1 · The Mindset</text>
+  <text x="480" y="96" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">the frame, and the two theses</text>
+  </g></a>
+
+  <!-- the fork: one thesis each -->
+  <path d="M370,118 C320,140 280,155 250,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+  <path d="M590,118 C640,140 680,155 710,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+
+  <!-- Part 2: the Alignment Thesis -->
+  <a href="part-2-intro.html" class="bm-part-link" role="link" aria-label="Part 2 — The Governed Engineering Environment"><g id="bm-part-2" class="bm-part">
+  <rect x="20" y="180" width="440" height="88" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="240" y="216" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 2 · The Governed Environment</text>
+  <text x="240" y="246" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">Alignment Thesis: controls that govern</text>
+  </g></a>
+
+  <!-- Part 3: the Modeling Thesis -->
+  <a href="part-3-intro.html" class="bm-part-link" role="link" aria-label="Part 3 — The Model Zoo"><g id="bm-part-3" class="bm-part">
+  <rect x="500" y="180" width="440" height="88" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="720" y="216" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 3 · The Model Zoo</text>
+  <text x="720" y="246" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">Modeling Thesis: models the fleet reasons through</text>
+  </g></a>
+
+  <!-- both theses meet in practice -->
+  <path d="M250,268 C290,290 330,305 372,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+  <path d="M710,268 C670,290 630,305 588,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+
+  <!-- Part 4: the practice -->
+  <a href="part-4-intro.html" class="bm-part-link" role="link" aria-label="Part 4 — Putting It to Work"><g id="bm-part-4" class="bm-part">
+  <rect x="270" y="330" width="420" height="88" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
+  <text x="480" y="366" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 4 · Putting It to Work</text>
+  <text x="480" y="396" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">the method in daily practice</text>
+  </g></a>
+
+  <line x1="480" y1="418" x2="480" y2="474" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+
+  <!-- Part 5: the grounding case -->
+  <a href="part-5-intro.html" class="bm-part-link" role="link" aria-label="Part 5 — A MAGE Case Study"><g id="bm-part-5" class="bm-part">
+  <rect x="270" y="480" width="420" height="88" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="480" y="516" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 5 · A MAGE Case Study</text>
+  <text x="480" y="546" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">DocAble, end to end: the grounding case</text>
+  </g></a>
+
+  <line x1="480" y1="568" x2="480" y2="624" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+
+  <!-- Part 6: reflections (a numbered Part, peer to 1-5) -->
+  <g id="bm-part-6" class="bm-part current" role="img" aria-current="page" aria-label="Part 6 — Reflections (current part)">
+  <rect x="270" y="630" width="420" height="88" rx="8" fill="#efeaf4" stroke="#5b4a72" stroke-width="2"/>
+  <text x="480" y="666" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 6 · Reflections</text>
+  <text x="480" y="696" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">theory, implications, conclusion</text>
+  </g>
+
+  <line x1="480" y1="718" x2="480" y2="774" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah-nav)"/>
+
+  <!-- Part 7: back matter (apparatus — muted, not a numbered Part) -->
+  <rect x="270" y="780" width="420" height="88" rx="8" fill="#fdfcf9" stroke="#57534e" stroke-width="2"/>
+  <text x="480" y="816" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 7 · Back matter</text>
+  <text x="480" y="846" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">about the author, colophon, appendix</text>
+</svg><ul class="visually-hidden roadmap-fallback"><li>Part 1 — The Mindset: <a href="part-1-intro.html">go to Part 1</a></li><li>Part 2 — The Governed Engineering Environment: <a href="part-2-intro.html">go to Part 2</a></li><li>Part 3 — The Model Zoo: <a href="part-3-intro.html">go to Part 3</a></li><li>Part 4 — Putting It to Work: <a href="part-4-intro.html">go to Part 4</a></li><li>Part 5 — A MAGE Case Study: <a href="part-5-intro.html">go to Part 5</a></li><li aria-current="page">Part 6 — Reflections (current part)</li></ul></nav><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="5.4-the-road-to-mage.html" aria-label="Previous chapter — 29 · The Road to MAGE">« Previous chapter</a></div><span class="chapnav-here" title="Reflections">Reflections</span><div class="chapnav-fwd"><a href="6.1-toward-a-theory-of-mage.html" aria-label="Next chapter — 30 · Toward a Theory of MAGE">Next chapter »</a><a href="7.1-about-the-author.html" aria-label="Next part — Back Matter">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

@@ -411,13 +411,21 @@ a.gloss-site:hover, a.gloss-site:focus { color: var(--accent); border-bottom-col
 }
 /* Part-nav footer on a Part landing page — a pill bar over the six numbered Parts (current = filled, non-link).
    Mirrors the .chapnav pill look. */
-.part-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
-             margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.part-pill { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
-              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
-              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-a.part-pill:hover, a.part-pill:focus { border-color: var(--accent); background: var(--panel); }
-.part-pill.current { color: var(--ink); background: var(--panel); border-color: var(--accent); font-weight: 700; }
+/* Interactive book-roadmap nav on a Part landing page (web only). The SVG reuses assets/book-map.svg;
+   each numbered Part is an <a> or the highlighted current node. Tokens only (theme + print safe). */
+.roadmap-nav { margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule);
+               display: flex; justify-content: center; }
+.roadmap-nav svg { width: 100%; max-width: 460px; height: auto; }
+.roadmap-nav a.bm-part-link { cursor: pointer; }
+.roadmap-nav a.bm-part-link rect { transition: stroke-width 80ms ease; }
+.roadmap-nav a.bm-part-link:hover rect,
+.roadmap-nav a.bm-part-link:focus-visible rect { stroke-width: 3.5; }
+.roadmap-nav a.bm-part-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Current Part: heavier stroke — NOT color-only (pairs with aria-current + the hidden "current part" text). */
+.roadmap-nav .bm-part.current rect { stroke-width: 4; }
+/* Off-screen but reader-available (screen-reader fallback list + the current-Part-in-text cue). */
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+                    clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -652,46 +660,58 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   </defs>
 
   <!-- Part 1: the frame -->
+  <g id="bm-part-1" class="bm-part">
   <rect x="270" y="30" width="420" height="88" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
   <text x="480" y="66" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 1 · The Mindset</text>
   <text x="480" y="96" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">the frame, and the two theses</text>
+  </g>
 
   <!-- the fork: one thesis each -->
   <path d="M370,118 C320,140 280,155 250,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
   <path d="M590,118 C640,140 680,155 710,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
   <!-- Part 2: the Alignment Thesis -->
+  <g id="bm-part-2" class="bm-part">
   <rect x="20" y="180" width="440" height="88" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="240" y="216" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 2 · The Governed Environment</text>
   <text x="240" y="246" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">Alignment Thesis: controls that govern</text>
+  </g>
 
   <!-- Part 3: the Modeling Thesis -->
+  <g id="bm-part-3" class="bm-part">
   <rect x="500" y="180" width="440" height="88" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="720" y="216" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 3 · The Model Zoo</text>
   <text x="720" y="246" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">Modeling Thesis: models the fleet reasons through</text>
+  </g>
 
   <!-- both theses meet in practice -->
   <path d="M250,268 C290,290 330,305 372,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
   <path d="M710,268 C670,290 630,305 588,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
   <!-- Part 4: the practice -->
+  <g id="bm-part-4" class="bm-part">
   <rect x="270" y="330" width="420" height="88" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
   <text x="480" y="366" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 4 · Putting It to Work</text>
   <text x="480" y="396" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">the method in daily practice</text>
+  </g>
 
   <line x1="480" y1="418" x2="480" y2="474" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
   <!-- Part 5: the grounding case -->
+  <g id="bm-part-5" class="bm-part">
   <rect x="270" y="480" width="420" height="88" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="480" y="516" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 5 · A MAGE Case Study</text>
   <text x="480" y="546" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">DocAble, end to end: the grounding case</text>
+  </g>
 
   <line x1="480" y1="568" x2="480" y2="624" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
   <!-- Part 6: reflections (a numbered Part, peer to 1-5) -->
+  <g id="bm-part-6" class="bm-part">
   <rect x="270" y="630" width="420" height="88" rx="8" fill="#efeaf4" stroke="#5b4a72" stroke-width="2"/>
   <text x="480" y="666" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 6 · Reflections</text>
   <text x="480" y="696" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">theory, implications, conclusion</text>
+  </g>
 
   <line x1="480" y1="718" x2="480" y2="774" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
