@@ -413,11 +413,12 @@ CHECKS = [
     # false positives. See tests/svg_fit.py.
     Check("svg: drawing hygiene (marker +x / stitched arrowhead / stroke-through-glyph)", 1,
           lambda strict: check_svg_drawing_hygiene(), audit_only=True),
-    # AUDIT-ONLY (land here, promote to blocking once drained to 0): a figure whose viewBox aspect projects
-    # past the page bottom at image(width:85%) and clips. Deterministic (a pure function of the viewBox), so
-    # it can be a real gate later; it found the messy-timeline figure at 11.6in on a 9in page. See svg_fit.py.
+    # BLOCKING (promoted — drain confirmed 0 at HEAD): a figure whose viewBox aspect projects past the page
+    # bottom at image(width:85%) and clips. Deterministic (a pure function of the viewBox), unlike the crude
+    # glyph-width heuristics above, so it is a real gate; it found the messy-timeline figure at 11.6in on a
+    # 9in page. check_svg_page_fit now returns FAIL on any overflow. See svg_fit.py.
     Check("svg: page-fit (figure projected height overflows the page)", 1,
-          lambda strict: check_svg_page_fit(), audit_only=True),
+          lambda strict: check_svg_page_fit()),
     # BLOCKING: a mermaid edge-label pipe (`A -->|label| B`) carrying `[`, `]`, or `~>` breaks the parser
     # at render time with a cryptic message. Lands as a real gate check — the tree is at 0 findings.
     Check("book: mermaid edge-label footguns ([ ] / ~> inside |label|)", 1,

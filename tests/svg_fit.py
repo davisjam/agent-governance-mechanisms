@@ -27,7 +27,7 @@ import os
 import re
 import xml.etree.ElementTree as ET
 
-from tests.common import PASS, ROOT, rel
+from tests.common import FAIL, PASS, ROOT, rel
 
 # Where an agent goes when a figure is flagged. Repo-relative; the check echoes it on every finding.
 RUNBOOK = "book/_design/figure-text-fit-runbook.md"
@@ -292,8 +292,8 @@ def check_svg_text_fit():
 # collision the messy-timeline figure hit at 11.6in). This reads each asset's viewBox aspect and flags any
 # whose projected print height exceeds the text page minus a caption budget. Deterministic — a pure function
 # of the viewBox — unlike the glyph-width heuristics above; detect-and-fail beats silent auto-scale for a
-# print book (auto-scaling to fit shrinks the text quietly instead). Land AUDIT-ONLY; promote to blocking
-# once the tree is drained to 0.
+# print book (auto-scaling to fit shrinks the text quietly instead). Promoted to BLOCKING (the tree is
+# drained to 0), so a newly-added too-tall figure fails the gate rather than only reporting.
 TEXT_WIDTH_IN = 6.3        # book text-measure width (US-Letter) — the figure's 100% reference
 PAGE_HEIGHT_IN = 9.0       # text-area height on the page
 IMAGE_WIDTH_FRAC = 0.85    # a `<!-- figure: -->` renders at image(width: 85%) of the measure
@@ -316,7 +316,8 @@ def check_svg_page_fit():
     """Scan every `book/assets/*.svg`; flag any whose projected print height overflows the page.
 
     projected_height = IMAGE_WIDTH_FRAC * TEXT_WIDTH_IN * (viewBox_h / viewBox_w). A figure clearing
-    PAGE_FIT_LIMIT_IN (page height minus a caption budget) will clip on the page. AUDIT-ONLY: always PASS.
+    PAGE_FIT_LIMIT_IN (page height minus a caption budget) will clip on the page. BLOCKING: FAIL on any
+    overflow (deterministic — a pure function of the viewBox; the tree is drained to 0 at promotion).
     """
     assets_dir = os.path.join(ROOT, "book", "assets")
     if not os.path.isdir(assets_dir):
@@ -346,7 +347,7 @@ def check_svg_page_fit():
     if issues:
         issues.insert(0, f"{len(issues)} figure(s) taller than the page (limit {PAGE_FIT_LIMIT_IN:.2f}in = "
                          f"{PAGE_HEIGHT_IN:.1f}in page - {CAPTION_BUDGET_IN:.1f}in caption):")
-    return PASS, issues  # AUDIT-ONLY: never FAIL
+    return (FAIL if issues else PASS), issues  # BLOCKING: a figure taller than the page fails the gate
 
 
 # ---- drawing hygiene: the native-construct discipline (arrowheads via <marker>, +x geometry, no
