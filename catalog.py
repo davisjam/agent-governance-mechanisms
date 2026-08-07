@@ -1311,6 +1311,26 @@ def cmd_validate(_args) -> int:
     else:
         print("  [opcard] operator-card deck matches the model "
               "(10 cards; every evidence_ref resolves; schema clean; every card has a page)")
+    # OPERATOR-CARD SHAPE — AUDIT-ONLY. The ~60s-read shape sensor over the declared deck (operator_question
+    # length + evidence-field count per family band). Lands AUDIT-ONLY-first (repo blocking-lint discipline):
+    # it PRINTS any over-band card but does NOT increment n_issues. A tighten pass drains it; a follow-up may
+    # flip it blocking. See book-models/lint_operator_card_shape.py.
+    import lint_operator_card_shape as ocsh  # noqa: E402 — audit-only card-shape sensor
+    shape_over = ocsh.findings()
+    if shape_over:
+        print(f"  [opshape] AUDIT-ONLY: {ocsh.summary_line(shape_over)} (does not gate) — "
+              f"run `python3 book-models/lint_operator_card_shape.py`:")
+        for f in shape_over:
+            print(f"            {f.card_id}: {f.kind} = {f.value} (band {f.limit})")
+    # OPERATOR-CARD PAGE-SPAN — AUDIT-ONLY. The post-render one-page-fit sensor over the compiled PDF. It
+    # PRINTS the offender worklist but does NOT gate; a fit-pass drains it, and the Phase-3 flip makes it
+    # BLOCKING (BLOCKING=True) AND turns on operator_cards_model.HARD_PAGE_ASSERT (the model's ordering guard
+    # couples the two). No-op when book/mage-book.pdf is absent. See book-models/lint_operator_card_page_span.py.
+    import lint_operator_card_page_span as ocps  # noqa: E402 — audit-only page-span sensor
+    span_over = ocps.findings()
+    if span_over:
+        print(f"  [opspan] AUDIT-ONLY: {ocps.summary_line(span_over)} (does not gate) — "
+              f"run `python3 book-models/lint_operator_card_page_span.py`")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")
