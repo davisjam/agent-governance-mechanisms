@@ -5,6 +5,10 @@ it is infrastructure that endures or a crutch a stronger model eases.*
 
 ## The capability
 
+An agent starts a task. Does it have the exact policy this task needs — not the whole rulebook, not whatever
+it happens to remember — in front of it at the moment the decision is due? Get that wrong and it burns
+rounds repairing a rule it would have honored had it seen it.
+
 **Deliver the policy an agent needs at the grain and moment it needs it — the task's constraints into the
 brief, the standing rules into the boot, an omitted step off the runtime lifecycle, a soft discipline as a
 rate-limited nudge.** It meets one capability on its context face: *manage work, state, and resources*.
@@ -13,15 +17,21 @@ rather than re-reading a whole rulebook or trusting its memory. Read against the
 are infrastructure a larger window does not retire, some are 2026-era crutches whose pressure eases as
 models improve.
 
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- An agent reads the wrong part of a rulebook and burns rounds repairing a rule it would have honored had it seen it.
+- A brief ships missing a piece of safety boilerplate, and the agent trips exactly that sharp edge downstream.
+- A step that must happen at a precise moment depends on someone remembering it.
+- Several soft reminders each fire on their own cadence and compound into noise the operator learns to tune out.
+
 ### When to adopt this stack
 
 Use this stack when:
 
 - a bounded-context agent must act on the relevant policy slice, not a whole rulebook or its own memory
-- agents read the wrong part of a rulebook and burn rounds repairing violations they would have honored had the rule been in front of them
-- briefs ship missing a piece of safety boilerplate and the agent trips exactly that sharp edge downstream
-- a step that must happen at a precise moment depends on someone remembering it
-- several soft reminders each fire on their own cadence and compound into noise the operator learns to ignore
+- policy has to arrive at several grains and moments — task constraints into the brief, standing rules into the boot, an omitted step off the runtime lifecycle
 
 Typical domains:
 
@@ -189,6 +199,18 @@ This stack is where the book makes the durable-versus-transient call explicit, p
    forgotten discipline both compensate for a 2026 limit — a small window, a model losing track over a long
    run. Their pressure eases as windows grow, though relevance-focusing and fatigue-prevention never fall to
    zero.
+
+## Why this composition holds
+
+These five parts are not a pipeline; they are one delivery surface that leaves no grain and no moment
+uncovered. The rule index puts the standing policy in every boot; injection narrows it to the exact
+constraints the files about to be touched invoke; the snippet registry guarantees the safety boilerplate a
+brief cannot be trusted to carry; the lifecycle hook fires the step that must happen at a precise instant
+whether or not anyone remembers it; and the rate-limited nudge carries the soft disciplines a hard gate
+would over-police. Miss any one and the gap is exact: no boot policy and the agent re-derives conventions,
+no injection and it reads the whole rulebook or the wrong part, no hook and the timed step is lost the once
+it is forgotten. What holds the set together is coverage across every grain and moment — and the book marks
+which parts are durable infrastructure and which are 2026-era crutches a larger context window will ease.
 
 ## The full treatment
 

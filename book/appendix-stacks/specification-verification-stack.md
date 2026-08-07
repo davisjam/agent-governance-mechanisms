@@ -5,6 +5,10 @@ invariant is a visible gap, not a guess.*
 
 ## The capability
 
+Ask a hard question of a concurrent system: how much assurance do you actually have that it is correct — and
+could you say where the assurance runs out? Usually the honest answer is "some, somewhere," which is no
+answer at all.
+
 **Say what "correct" means for a concurrent system, derive every check that correctness owes, and prove each
 one at the right rigor.** Two capabilities run through it: *establish completion on re-derived evidence*
 and *constrain where and how agents act*. It models the lifecycle as state machines running at once, names
@@ -12,14 +16,20 @@ the predicates that must hold across them, and routes each to a checker by its s
 for a hairy safety or liveness invariant, a deterministic lint for a linear one. Then it projects coverage
 back onto the model, so a verified-in-principle invariant with no live test is a named hole.
 
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- "Correct" for your concurrent system is nowhere written down, so no one can say when it has been violated.
+- A concurrency bug ships proven-absent because the one interleaving that breaks it was never sampled.
+- Coverage reads 80% and everyone relaxes while a critical invariant sits at zero covering tests.
+- The same mistake keeps re-entering through review, because a convention decays under a fleet.
+
 ### When to adopt this stack
 
 Use this stack when:
 
-- correctness spans concurrent components and "correct" is nowhere written down
-- concurrency invariants are "tested" by a handful of sampled interleavings, so the violating one ships proven-absent
-- coverage is a line percentage that averages a critical invariant's zero down to invisibility
-- a recurring mistake keeps re-entering through review because a convention decays under a fleet
+- correctness spans concurrent components, with safety or liveness invariants that must hold across them
 - you need each correctness obligation discharged at the rigor its shape demands — a proof for the hairy ones, a lint for the linear ones
 
 Typical domains:
@@ -199,6 +209,19 @@ test surfaces as a gap.
    most expensive failure to notice.
 4. **COVER last.** A projection, not a runtime dependency; it keeps the discharged set honest against the
    spec's nodes.
+
+## Why this composition holds
+
+The six parts turn a claim of correctness into checked assurance, and each rests on the one before it.
+Nothing can be derived, proved, or measured until the lifecycle is modeled and its invariants named — the
+spec is the substrate the rest read. From it the census derives every obligation owed, so a missing test is
+a computed gap and not a lucky catch. The two dischargers split by shape: an exhaustive proof for the hairy
+safety and liveness invariants, a blocking lint for the linear ones, each aimed at the level where its
+property first becomes legible. Then coverage projects back onto the model's own nodes, so a
+verified-in-principle invariant with no live test shows up as a hole instead of hiding inside a comfortable
+percentage. Drop the spec and there is nothing to derive from; drop the census and the checks test only what
+someone thought of; drop the coverage projection and "proven" quietly decays to "proven once, somewhere."
+Together they make assurance a quantity you can point at, and point at where it runs out.
 
 ## The full treatment
 

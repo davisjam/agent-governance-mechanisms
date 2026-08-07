@@ -5,6 +5,9 @@ signal.*
 
 ## The capability
 
+Eight agents, one machine. How many heavy jobs should run at once — and who decides when the box is already
+sliding into swap? Answer "all of them" and it thrashes; answer "one" and a capable host sits idle.
+
 **Run dozens of agent worktrees on one box at the right degree of parallelism — no collisions, no thrash, no
 swap.** It serves a single capability — *manage work, state, and resources* — on the resource face. It
 declares which work must be
@@ -13,14 +16,29 @@ pressure signal over the whole that refuses new heavy work before it starts and 
 host spikes. The contract says how many; the mediators hold that many; the pressure gate decides whether they
 run at all.
 
+Picture the failure the first three parts alone do not catch. A fleet of eight worktrees is running, every
+heavy tool correctly behind its lock — the test suite serialized, the builds bounded to a safe count.
+Nothing is oversubscribed. Then three builds that were each admitted while the machine was healthy keep
+running as a fourth agent's compile loads a large model into memory, and the box tips into swap. Now every
+process crawls, the locks are all still held by work that cannot finish, and the fleet has wedged itself —
+not by breaking a rule, but by obeying all of them at a moment the host could no longer bear the admitted
+load. A fixed cardinality cap counts jobs; it cannot feel the machine. That gap is what the live pressure
+signal, the stack's fourth part, exists to close.
+
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- Two worktrees run the heavy test suite at once, saturate the disk, and both come back slow and flaky.
+- Who may run what, and how many at once, lives as folklore in scattered wrapper scripts.
+- Your heavy tools run one-at-a-time and waste a capable box, or all-at-once and thrash it.
+- A correctly-serialized fleet still drives the host into swap under its own admitted load.
+
 ### When to adopt this stack
 
 Use this stack when:
 
-- many agents or jobs share one machine and trample each other's heavy work
-- who may run what, and how many at once, lives as folklore in scattered wrapper scripts
-- heavy tools run either one-at-a-time, wasting a capable host, or all-at-once, thrashing it
-- a correctly-serialized fleet still drives the host into swap under its own admitted load
+- many agents or jobs share one machine and contend for the same heavy resources
 - you need parallelism that rises to the machine's capacity and stops there
 
 Typical domains:
@@ -159,6 +177,18 @@ work already in flight, so a correctly-serialized fleet still cannot drive the h
    latency on the monopoly resource; the semaphore needs a tuned M per machine and degrades gracefully.
 3. **SHED last, and it earns its place under load.** A live-signal gate adapts where a fixed cap cannot. It
    fails only if the signal lags the real pressure, so read the saturating resource as directly as possible.
+
+## Why this composition holds
+
+The four parts answer one question — how many may run — at descending levels of trust. The contract declares
+which work is serialized and which may share, so the mediators below hold a typed rule instead of folklore.
+The single-writer lock and the counting semaphore hold exactly those declarations: one resource pinned to a
+single writer, the shareable ones bounded to a tuned count. But a fixed cap counts jobs and cannot feel the
+machine, so the live pressure gate sits over all of them, refusing new heavy work before it starts and
+shedding running work when the host spikes — catching the self-inflicted swap the cardinality caps admit.
+Drop the contract and the locks guard the wrong things; drop the pressure gate and a correctly-serialized
+fleet still wedges itself under its own admitted load. Counting is necessary and never sufficient; the
+machine has the final say.
 
 ## The full treatment
 

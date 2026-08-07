@@ -4,21 +4,31 @@ responses instead of scraping logs and reasoning from memory.*
 
 ## The capability
 
+The pipeline is green and shipping garbage. That is the operator's nightmare — not the crash you can see,
+but the run that looks fine and is not. Can you even tell it is happening, and do you know what to do when
+you can?
+
 **Turn a running-but-wrong pipeline — the worst failure because it is invisible — into a named signal and a
 procedure that answers it.** It discharges two capabilities: *manage work, state, and resources*, and
 *govern the control estate itself*. Every substrate emits its health onto one typed surface; a written
 procedure answers each signal; a gate refuses new work while a serious one stands unresolved; and a standing
 map makes every signal interpretable. The operator reacts to structure, not to scraped text.
 
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- You learn a pipeline is shipping garbage from a user, not from any signal of your own.
+- A long-running job goes silent and nobody can tell a wedged process from a slow one.
+- The same red state keeps firing and every responder re-reasons the fix from scratch, under pressure.
+- Fleet health is scattered across a dozen logs in different shapes, and always learned late, by reading.
+
 ### When to adopt this stack
 
 Use this stack when:
 
-- fleet health is scattered across a dozen logs in different shapes and learned late, by reading
-- a long-running process goes silent and nothing tells a wedged one from a slow one
-- a red signal fires but says nothing about what to do, so each response is re-reasoned under incident pressure
-- operators keep piling work onto a known-broken substrate because ignoring a signal costs nothing
-- an operating agent knows the symptom but not how the substrate is supposed to work, so it mis-operates the fleet
+- ignoring a serious signal costs nothing, so operators keep piling work onto a known-broken substrate
+- an operating agent must run the fleet but has no model of how the substrate is supposed to work
 
 Typical domains:
 
@@ -59,10 +69,10 @@ fires, a gate raises the cost of ignoring a serious one, and an operator skill s
 **Make fleet health legible.** Give every substrate one typed surface to announce its lifecycle and health
 on, so the operator reacts to a single signal stream instead of scraping logs. (WATCH.)
 
-**Receives** — lifecycle and health facts from across the fleet: is cron running, is the merge-train
+**Depends on** — lifecycle and health facts from across the fleet: is cron running, is the merge-train
 yielding, are tombstones stuck. Nothing precedes it; this is where the loop starts.
 
-**Guarantees** — a queryable, self-documenting signal surface. Every event carries a topic drawn from a
+**Exposes** — a queryable, self-documenting signal surface. Every event carries a topic drawn from a
 closed const-string registry, so a typo cannot silently create a dead topic that disables a signal. Health
 is read from structure, not scraped from a dozen logs in different shapes — and read on a defined cadence,
 not by chance.
@@ -78,10 +88,10 @@ high-severity events. Everything after reacts to what the bus says.
 **Tell a hung process from a slow one.** A long-running process emits a periodic beat carrying its phase and
 elapsed time, and a sweep flags a worker that has stopped beating; silence past the cadence reads as stale. (BEAT.)
 
-**Receives** — the runtime state of long operations: a deploy that runs many minutes, a worker grinding
+**Depends on** — the runtime state of long operations: a deploy that runs many minutes, a worker grinding
 through a slow phase. It rides the WATCH bus as that bus's liveness channel.
 
-**Guarantees** — liveness turned into a signal instead of an ambiguity. The beat proves the process is
+**Exposes** — liveness turned into a signal instead of an ambiguity. The beat proves the process is
 *moving*, not just alive; a deadlocked process is alive too, but it stops advancing its phase. Silence past
 the known cadence reads as stale. The signal proves motion, not correctness — a deploy can beat steadily and
 still fail.
@@ -97,10 +107,10 @@ tells the operator whether to wait or to act, which is the first thing the playb
 procedure names the trigger, the ordered steps, and the reflexes to avoid — so an operator under incident
 pressure follows a pre-reasoned response instead of re-deriving one badly. (RESPOND.)
 
-**Receives** — a fired signal from WATCH: a broken deploy, a wedged cron, a worktree destroyed mid-flight,
+**Depends on** — a fired signal from WATCH: a broken deploy, a wedged cron, a worktree destroyed mid-flight,
 an alert gate that deadlocked. The bus says what happened; the playbook takes it from there.
 
-**Guarantees** — a consistent, incident-tested response, reasoned once when no incident was burning. Each
+**Exposes** — a consistent, incident-tested response, reasoned once when no incident was burning. Each
 procedure gives the steps in order and the sharp edges to avoid — the flailing reset that destroys landed
 work, the naive cron restart that re-enters the same loop. The value is that the correct steps are written
 down and discoverable at the moment they are needed.
@@ -136,11 +146,11 @@ supply the standing map that makes the whole loop interpretable.
 the substrate works — its lifecycles and healthy baselines — first, and a symptom-to-resolving-doc catalog as
 the fallback when something breaks. (OPERATE.)
 
-**Receives** — an operator, human or agent, who must know two things: how the substrate runs when healthy,
+**Depends on** — an operator, human or agent, who must know two things: how the substrate runs when healthy,
 and what to do when it breaks. Where WATCH and BEAT show state and RESPOND and BLOCK handle each bad one,
 this supplies the standing map those four are read through.
 
-**Guarantees** — self-operation from a model of the substrate, not from memory. The skill leads with normal
+**Exposes** — self-operation from a model of the substrate, not from memory. The skill leads with normal
 so a fault is spottable against a baseline, is keyed to what the operator *observes* rather than the doc they
 would have to already know, and is generated from a typed source so a reference-validity lint resolves every
 pointer's file and heading anchor — a moved doc becomes a build error, not a dangling chase.
@@ -174,6 +184,15 @@ it drives from a model of the fleet rather than from memory.
 4. **BEAT and OPERATE are complementary.** The loop functions without per-phase heartbeats or the operating
    map, but a long pipeline is far more legible with beats, and recovery is faster with the map. Add them
    where the substrate is long-running or agent-operated.
+
+## Why this composition holds
+
+The loop holds together because a signal and a response are two halves of one thing: a bus with no playbook
+is noise, a playbook with no bus never fires. The heartbeat earns its place so the bus can tell motion from
+death; the gate earns its place so a serious signal cannot be waved past; the operator map earns its place
+so every other part is read against a baseline instead of from memory. Observe without react is a dashboard
+nobody acts on; react without observe is a runbook for a fault you cannot see. The five are the smallest set
+that makes a running-but-wrong system both visible and answerable.
 
 ## The full treatment
 

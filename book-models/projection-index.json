@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1390,
+    "total_sites": 1391,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1059,
+      "book-web": 1060,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -195,15 +195,15 @@
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
-            "occ": 34
+            "occ": 37
           },
           {
             "file": "book/appendix-a-governance-of-governance-stack.html",
-            "occ": 15
+            "occ": 16
           },
           {
             "file": "book/appendix-a-model-coherence-stack.html",
-            "occ": 9
+            "occ": 10
           },
           {
             "file": "book/appendix-a-observe-react-stack.html",
@@ -215,7 +215,7 @@
           },
           {
             "file": "book/appendix-a-resource-mediation-stack.html",
-            "occ": 8
+            "occ": 9
           },
           {
             "file": "book/appendix-a-specification-verification-stack.html",
@@ -2693,15 +2693,15 @@
           },
           {
             "file": "book/appendix-a-governance-of-governance-stack.html",
-            "occ": 28
+            "occ": 29
           },
           {
             "file": "book/appendix-a-model-coherence-stack.html",
-            "occ": 67
+            "occ": 69
           },
           {
             "file": "book/appendix-a-observe-react-stack.html",
-            "occ": 13
+            "occ": 14
           },
           {
             "file": "book/appendix-a-provenance-fidelity-stack.html",
@@ -2709,11 +2709,11 @@
           },
           {
             "file": "book/appendix-a-resource-mediation-stack.html",
-            "occ": 9
+            "occ": 10
           },
           {
             "file": "book/appendix-a-specification-verification-stack.html",
-            "occ": 31
+            "occ": 32
           },
           {
             "file": "book/appendix-b-agent-registry.html",
@@ -5814,8 +5814,12 @@
             "occ": 1
           },
           {
+            "file": "book/appendix-a-model-coherence-stack.html",
+            "occ": 1
+          },
+          {
             "file": "book/appendix-a-observe-react-stack.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/appendix-b-content-validator.html",
@@ -5845,7 +5849,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 28
+            "occ": 29
           }
         ]
       },

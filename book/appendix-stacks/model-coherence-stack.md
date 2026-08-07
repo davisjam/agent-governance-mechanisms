@@ -4,6 +4,9 @@ the agent queries is what is true.*
 
 ## The capability
 
+An agent cannot hold the whole codebase in its context. It has to act anyway. So the question is whether it
+can reason *safely* about a system it can only see a slice of at a time.
+
 **Give a bounded-context agent a typed map it can reason through, and hold that map equal to the code so the
 map never lies.** It answers two capabilities at once — *maintain authoritative system
 knowledge* and *keep representations equal to reality*. The models are executable data, not prose — read live, checked against
@@ -11,14 +14,20 @@ reality by a gate, derived where a derived edge cannot drift, and generated back
 that cannot hold the whole codebase queries the map instead, and the map is trustworthy because machinery,
 not hope, keeps it current.
 
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- Your architecture lives in diagrams and prose, and it is stale the day after the code moves.
+- A fact copied out of a model into a consumer's own code has quietly diverged from what the model now says.
+- The map points at something the code no longer has — or misses something the code does — and the fleet reasons through it anyway.
+- One complex file format is written from a hundred raw call sites, so a malformed write can land from any of them.
+
 ### When to adopt this stack
 
 Use this stack when:
 
 - an agent cannot hold the whole system in context and must reason through a map of it instead
-- structure lives in diagrams and prose a program cannot read, so it drifts the moment the code moves
-- consumers copy facts out of a model into their own code and the copies diverge silently
-- a complex file format is mutated from a hundred raw call sites with nowhere to encode its invariants
 - you need a map the fleet can trust because machinery, not habit, keeps it equal to the code
 
 Typical domains:
@@ -63,10 +72,10 @@ artifacts from the model, and apply the same discipline to a shipped file format
 **Make the system machine-readable.** Model the system as executable data the tools import and run on, so a
 program reads the structure and catches it the moment it moves. (DATA.)
 
-**Receives** — the system's own structure: its components, its state machines, its service topology, its
+**Draws on** — the system's own structure: its components, its state machines, its service topology, its
 registries. Nothing precedes it; this is the ground the rest stand on.
 
-**Guarantees** — a machine-readable model a tool loads on every run and generates real artifacts from. A
+**Ensures** — a machine-readable model a tool loads on every run and generates real artifacts from. A
 query returns the live fact where a stale sentence cannot. The structure lives as data, so a program can
 check it, not merely a reader who happens to look.
 
@@ -82,10 +91,10 @@ own it is just well-typed documentation.
 **Read the fact, never a copy of it.** Each consumer resolves the fact it needs by querying the live model,
 so no second copy exists to fall out of date. (CONSUME.)
 
-**Receives** — the typed model DATA published, and a consumer that needs one of its facts: a queue name, a
+**Draws on** — the typed model DATA published, and a consumer that needs one of its facts: a queue name, a
 component boundary, a policy value.
 
-**Guarantees** — one authoritative value and no second copy to fall out of date. The consumer reads the
+**Ensures** — one authoritative value and no second copy to fall out of date. The consumer reads the
 model in place, so the fact it acts on is the fact the model holds now. A copy-detecting lint catches the
 one consumer that smuggles a constant back in.
 
@@ -101,10 +110,10 @@ is the discipline that makes the DATA above it worth trusting.
 **Catch drift mechanically.** A fleet of deterministic lints fails the build whenever a model and the
 reality it mirrors disagree, in either direction. (PARITY.)
 
-**Receives** — the executable model and the reality it claims to mirror: the code, the artifacts, the things
+**Draws on** — the executable model and the reality it claims to mirror: the code, the artifacts, the things
 on disk it names.
 
-**Guarantees** — bidirectional parity or a red gate. Every model row resolves to a real thing, and every
+**Ensures** — bidirectional parity or a red gate. Every model row resolves to a real thing, and every
 real thing carries its row; a meta-sync contract names, per model, what reality it mirrors and when it must
 be re-derived. So the map cannot quietly lie while the fleet reasons through it.
 
@@ -120,10 +129,10 @@ optimistic documentation.
 **Make every join refactor-proof.** Anchor each model-to-code edge on a resolvable symbol a lint re-checks,
 so moving the code reddens the scan instead of silently breaking the link. (DERIVE.)
 
-**Receives** — the parity-held models and the code symbols they connect to: the functions, the classes, the
+**Draws on** — the parity-held models and the code symbols they connect to: the functions, the classes, the
 checks that give each edge a real endpoint.
 
-**Guarantees** — edges that cannot drift. Each terminates on a resolvable symbol, never a line number, and
+**Ensures** — edges that cannot drift. Each terminates on a resolvable symbol, never a line number, and
 is a derived obligation a lint re-checks at scan time. Move the code and the symbol either stays resolvable
 or the scan reddens; the broken link turns mechanically visible instead of rotting in someone's head.
 
@@ -138,9 +147,9 @@ higher rung. It leaves the generator standing on links that a refactor cannot si
 **Generate from the model, don't restate it.** A generator emits real artifacts from the model — policy,
 wiring, catalogs, contract types — each carrying a provenance header. (EMIT.)
 
-**Receives** — the parity-held, traceable model, consumed the way a compiler consumes a source file.
+**Draws on** — the parity-held, traceable model, consumed the way a compiler consumes a source file.
 
-**Guarantees** — generated artifacts that cannot silently drift from the model. Each is emitted from the
+**Ensures** — generated artifacts that cannot silently drift from the model. Each is emitted from the
 model, so the model drives the system rather than merely describing it. A provenance header names the
 emitter and the regen path, so a hand-edit to a generated file is caught on the next run and reverted.
 
@@ -242,6 +251,18 @@ Derive it instead from the artifacts that already record the truth — a project
 and history — and it cannot drift, because there is no second surface to fall behind. That is the ladder
 applied to one field: climb from a hand-kept copy (comment rung) to a derived projection (UNIFY/DERIVE) and
 the whole drift class closes.
+
+## Why this composition holds
+
+The six parts make one guarantee only together: a map the fleet can trust because machinery, not habit,
+keeps it equal to the code. Modeling the system as executable data is inert until something reads it live,
+so the consume-don't-copy rule is what turns the data into a source of truth rather than one more document
+to maintain. But a read map still lies the moment the code moves past it, which is why the parity gate fails
+the build when model and reality disagree, and why every model-to-code edge is anchored to a symbol a lint
+re-checks — a join that cannot drift silently under a rename. Generation closes the loop back into the
+system, and the sealed format seam gives the invariants one place to live. Drop consumption and the models
+decay into prose; drop parity and the map drifts; drop the anchored joins and the drift hides in a renamed
+symbol. Each part removes the failure the next one would otherwise inherit.
 
 ## The full treatment
 

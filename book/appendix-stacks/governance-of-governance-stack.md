@@ -5,6 +5,10 @@ governing document itself as enforced, queryable infrastructure.*
 
 ## The capability
 
+The lints, gates, and mediators have quietly become a system of their own — with their own failure modes.
+The question stops being "is the product governed?" and becomes "can I improve the *governance* on purpose —
+or only find out when two guardrails collide in production?"
+
 **Govern the control estate the way you govern the product — model it, measure its coverage, bound its
 changes, and grow it by design.** One capability defines it: *govern the control estate itself*. A
 fleet accumulates lints, gates, mediators, and registries until the estate is a system in its own right,
@@ -12,16 +16,22 @@ with its own failure modes: controls that collide, targets no one guards, substr
 blast radius, and a governing document that rots. The stack turns each of those into a modeled, queryable,
 self-repairing fact.
 
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- Two guardrails collide over one shared resource, and you only find out in production.
+- A target turns out to have been guarded by soft aims or by nothing, discovered the day it fails.
+- A cross-cutting substrate change lands blind because its blast radius was a grep no one ran completely.
+- The same failure gets re-patched locally every time it recurs, and never closed as a class.
+- The governing document itself has rotted — renumbered, bloated past context, or drifted from the checks it names.
+
 ### When to adopt this stack
 
 Use this stack when:
 
 - the control estate has grown large enough to be a system in its own right, with its own failure modes
-- two guardrails collide over one shared resource and the clash surfaces only in production
-- a target is guarded by soft aims or by nothing, and no artifact ever asks whether coverage is balanced
-- a cross-cutting substrate change lands blind because its blast radius was a grep no one ran completely
-- the same failure is re-patched locally each time it recurs instead of the class being closed once
-- the governing document itself rots — renumbered, bloated past what fits in context, or drifted from the checks it names
+- you need to govern that estate deliberately — model it, measure its coverage, bound its changes — not discover its failures in production
 
 Typical domains:
 
@@ -65,10 +75,10 @@ and hold the top-level document itself as enforced, capped infrastructure.
 control a node tagged by the event it fires on and the resources it reads, writes, or locks; each edge a
 conflict where two controls contend over one shared resource. (GRAPH.)
 
-**Receives** — the fleet's existing guardrails: turn-end hooks, pre-commit checks, dispatch gates,
+**Reads** — the fleet's existing guardrails: turn-end hooks, pre-commit checks, dispatch gates,
 host-level lock mediators. Nothing precedes it; this is the map the rest of the stack reads.
 
-**Guarantees** — collisions caught at model time, not in production. Two controls can place contradictory
+**Delivers** — collisions caught at model time, not in production. Two controls can place contradictory
 demands on one commit-set, or contend for one turn-end slot, and neither one's own code shows it — the
 failure lives in the interaction. A conflict edge over a typed, closed resource vocabulary makes that
 interaction visible, and a consistency check decides the mechanically-decidable conflicts before a new
@@ -85,10 +95,10 @@ edges. Both read this graph rather than re-deriving the estate from scratch.
 **Find the estate's blind spots.** Classify each control by the target it guards — derived from its own code
 anchor, never hand-declared — and roll the set up per target, so a bare target is a first-class finding. (CENSUS.)
 
-**Receives** — the graph's control nodes. It reads the same typed node-set GRAPH drew, now asking not how
+**Reads** — the graph's control nodes. It reads the same typed node-set GRAPH drew, now asking not how
 two controls collide but how many guard each target.
 
-**Guarantees** — a re-derived map of the estate's own blind spots. A control portfolio grows toward the last
+**Delivers** — a re-derived map of the estate's own blind spots. A control portfolio grows toward the last
 painful failure, so effort piles onto the target that just hurt while another accretes nothing, and the
 imbalance stays invisible because no artifact ever asks whether coverage is balanced. Here a target with
 zero controls, or with only soft aims and no hard hold, is a first-class finding. A fail-loud classifier
@@ -105,10 +115,10 @@ conversion loop downstream turns that gap into an actual new control rather than
 typed metadata, so "which controls depend on this part of the substrate, and what breaks if I change it"
 becomes a query, not a grep-and-read. (RADIUS.)
 
-**Receives** — the same controls the graph holds as nodes, now read through their substrate edges. It reads
+**Reads** — the same controls the graph holds as nodes, now read through their substrate edges. It reads
 each control's declared stance toward the substrate it checks against.
 
-**Guarantees** — a computed blast radius. A control usually buries an assumption about its substrate (a
+**Delivers** — a computed blast radius. A control usually buries an assumption about its substrate (a
 service is a deployment under this directory; the manifest carries this field), invisible until a migration
 lands and the fleet fails two silent ways: a false FAIL that blocks every release, or a false PASS where a
 migrated thing drops out of every check. Lifting the assumption into a typed declaration makes the importer
@@ -148,10 +158,10 @@ what exists.
 document — identifier, scope, severity, enforcing check, canonical detail location — and extract those blocks
 into a typed registry the tooling can query. (REGISTRY.)
 
-**Receives** — the knowledge the graph and census hold only implicitly, plus every rule the conversion loop
+**Reads** — the knowledge the graph and census hold only implicitly, plus every rule the conversion loop
 lands. A rule is human prose until its block makes it extractable.
 
-**Guarantees** — governance you can query instead of grep. As long as the rules are only paragraphs, every
+**Delivers** — governance you can query instead of grep. As long as the rules are only paragraphs, every
 aggregate question — which rules have an automated enforcer, which govern this subtree, which are blocking —
 is a manual read that rots as the document grows. The metadata block is the bridge: once extracted, a rule
 citing an enforcer that no longer exists, or a detail pointer that dangles, is a build finding, so the
@@ -168,11 +178,11 @@ that lets the governing document be checked against its own rules, not merely re
 conformance-checked infrastructure — a numbered, stable-numbered index loaded into every agent's boot
 context, held honest by its own enforcement counterpart. (INDEX.)
 
-**Receives** — everything the registry models and the conversion loop produces: the rules the estate has
+**Reads** — everything the registry models and the conversion loop produces: the rules the estate has
 learned, each now a short boot-context statement cross-referenced to the canonical doc that carries it in
 full.
 
-**Guarantees** — a governing document that cannot silently rot. The document that carries every other
+**Delivers** — a governing document that cannot silently rot. The document that carries every other
 mechanism fails two ways: it bloats until nothing in it is read, or its rules drift from the canonical docs
 they summarize, and both tax every agent, because every agent boots it. A cap lint fails the build when the
 index outgrows its scannable budget; a conformance lint fails when a rule stops citing its canonical doc;
@@ -211,6 +221,18 @@ context, capped and conformance-checked so the governing document cannot silentl
 4. **INDEX delivers it, and is durable infrastructure regardless of model.** Its cost is the discipline of
    stable numbering and the cap; a rule added without its enforcement counterpart is the gap, which the
    conformance lint refuses.
+
+## Why this composition holds
+
+The six parts treat the governance estate as its own subject, and each closes a blind spot the others cannot
+see. The interaction graph catches two controls that would collide before they trip in production; the
+coverage census names the target no control guards; the blast-radius computation answers "what breaks if I
+change this substrate" before the change, not after it. The conversion loop turns each recurring failure
+into one proportionate new control, so the estate grows by design instead of by scar tissue — and the rule
+registry and the enforced index keep the governing document queryable and capped, so the thing that carries
+every other mechanism cannot quietly rot. Drop the graph and collisions surface in production; drop the
+census and blind spots are found by failing; drop the conversion loop and the same class bites every new
+agent. Together they make a growing pile of guardrails a governed system rather than an accreting one.
 
 ## The full treatment
 

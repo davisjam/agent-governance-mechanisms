@@ -4,6 +4,9 @@ sanctioned door. Who and why for every change, and nothing silently lost.*
 
 ## The capability
 
+Months after a file ships, someone asks what the tool changed, and why. The pipeline is long gone; all you
+have is the document. Can you answer from the artifact alone?
+
 **Reconstruct the full mutation history of a shipped artifact from the artifact alone — and prove nothing
 the author wrote was dropped on the way out.** Two capabilities converge here: *track provenance and
 trace causes*, and *preserve product semantics*. It assumes every change already flows through one
@@ -11,15 +14,21 @@ sanctioned door; on that door it builds attribution you can read back and a fide
 The evidence lives inside the file, so it survives copy, download, and re-open — no side log to trust or
 lose.
 
+### Symptoms you need this stack
+
+You are probably feeling one of these:
+
+- The only honest answer to "what did the tool change here, and why?" is "we'd have to re-run the pipeline."
+- A shipped file looks fine, then a reader hits a hole — a dropped table, a lost caption — that no pass flagged.
+- You cannot tell tool-inserted content from what the author actually wrote.
+- "We record every change" is a claim no one can exercise on a delivered file.
+
 ### When to adopt this stack
 
 Use this stack when:
 
-- you must reconstruct what a tool changed, and why, from the shipped artifact alone — with no side log to trust
-- failures show up as lost history or unexplained changes that leave no durable trace
 - auditors or downstream consumers require traceable, reversible attribution of every change
 - tool-inserted content must stay distinguishable from what the author actually wrote
-- a pass can silently drop content and the damaged output still looks fine until a reader hits the hole
 
 Typical domains:
 
@@ -178,6 +187,16 @@ Adopt in chain order, because each part presumes the one before it.
 The chain's guarantee is only as strong as the one door it presumes — every mutation must route through the
 sanctioned surface, held by a separate ban-lint. Extraction that under-reads a format weakens the gate;
 bound it to the canonical reader.
+
+## Why this composition holds
+
+These five parts are not a checklist run in order; each makes the next one honest. Marking produces a closed
+population of insertions, which is the only thing a stamp-writer can promise to cover completely. A
+completeness lint means something only over that closed set. A reconstructed changelog can be trusted only
+because the lint holds the stamps at zero gaps. And the fidelity gate guards the one blind side attribution
+cannot see — what a sanctioned pass removed, not what it added. Drop any single part and the guarantee
+downstream falls from proof to hope. That interlock — each part making the next provable — is what separates
+the stack from a bag of five useful tools.
 
 ## The full treatment
 
