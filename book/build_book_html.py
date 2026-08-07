@@ -2963,8 +2963,9 @@ only welded to the governance that keeps it honest: the drift gate that holds it
 ban-lint that routes every change through it. That welding is what the catalogue calls a **package**: \
 {{package_count}} of the {{mechanism_count}} mechanisms carry one, most of them a model shipped with its \
 own sensors. Above the single mechanism sits the **stack** — {{stack_count}} of them, each a handful of \
-models, gates, and vocabularies that together make one governed capability. So this appendix leads with \
-the compositional units. You meet the stacks and the packaged models first, because that is the grain at \
+models, gates, and vocabularies that together make one governed capability — and the stacks together are \
+the governed environment. So this appendix leads with the compositional units: pattern, then stack, then \
+environment. You meet the stacks and the packaged models first, because that is the grain at \
 which a reader adopts a method rather than a trick; the single-mechanism pages wait underneath, one per \
 pattern, for when you need to look one up.
 
@@ -3016,6 +3017,25 @@ _STACKS: list[tuple[str, str]] = [
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\
+**A capability-architecture reference**
+
+Design patterns solved recurring object-oriented design problems one pattern at a time. MAGE engineering \
+stacks solve recurring agentic-engineering problems one capability at a time. A stack is larger than a \
+mechanism: it is the smallest reusable architecture that reliably delivers an engineering capability. \
+This appendix is not a catalog and not a pattern language — it is a capability-architecture reference.
+
+**Three levels: pattern, stack, environment**
+
+The appendix is built in three rungs, and it helps to name them before the stacks begin.
+
+- A **pattern** removes one recurring failure.
+- A **stack** assembles patterns into one reusable engineering capability.
+- The **stacks together** form the governed engineering environment.
+
+The earlier appendices are the first rung, one pattern per page. This appendix is the second: each stack \
+is the capability a cluster of those patterns makes when they travel together. The nine capabilities and \
+the dependency figure below are the third — the shape of the whole environment they compose.
+
 **Stacks: mechanisms that travel together**
 
 A single pattern in the preceding appendices kills one failure class. In practice, though, mechanisms \
@@ -3041,6 +3061,10 @@ context-injection can sit on top of a semantic-lint stack to *prevent* the viola
 *catches*; heartbeats sharpen an observability stack that already sees and responds. Worth adopting, \
 but the stack stands without them.
 
+**Mandatory members are load-bearing: without them the capability is not reliably achieved. \
+Complementary members improve cost, ergonomics, or robustness, but they are not part of the minimal \
+architecture.**
+
 Each member links to its own pattern page in the earlier appendices. Read a stack to see which \
 mechanisms you must adopt as a set, and which you can add later."""
 
@@ -3060,6 +3084,28 @@ stage, a wrapper process — and the concept carries across intact.
 
 Read every "the agent does X" in these appendices as *here is one way to realize the MAGE concept X*. The \
 concept is the portable part, and it is what you are meant to take with you."""
+
+# The stack-dependency figure (HIGH-1). Rendered at the TAIL of the value-ordered Appendix A front-door body
+# (after the nine-capability map and the vendor note, before the first stack page), so the reader sees how the
+# seven stacks rest on one another before meeting them one by one. A 3-sentence gloss precedes the figure; the
+# edge inventory the caption describes is EXTRACTED from each stack's own "leans on / feeds / consumes / shares"
+# lines (drafts appendix-a-revision). The caption + gloss name stacks by their display titles, so they move with
+# the _STACKS rename.
+_APPENDIX_A_DEPGRAPH_FIGURE_MD = """\
+The seven stacks are not a menu of independent parts; they rest on one another. Model coherence is the \
+floor — a trustworthy typed map — and provenance and specification are the first two things built on it. \
+Read the figure once before the stacks that follow: it says which stack you must have before another can \
+stand.
+
+<!-- label: stack-dependency-graph -->
+<!-- figure: assets/stack-dependency-graph.svg | How the seven stacks depend on one another. Model \
+coherence is the substrate at the top: it hands the provenance + fidelity stack the sealed door it stamps, \
+and the specification + verification stack the executable data its state machines are. Specification \
+signals a broken invariant down to the observe → react loop; that loop feeds recurring alerts to the \
+governance-of-governance stack and carries the resource-mediation stack's live pressure signal. Context \
+management sits at the bottom, sharing the rule index with governance and one host with resource. A solid \
+arrow points from the stack that provides a guarantee to the one that consumes it; a dashed line marks two \
+stacks that share a member or a machine. -->"""
 
 _STACK_MEMBER_RE = re.compile(r"\brole:([a-z0-9-]+)\b")
 
@@ -3618,16 +3664,31 @@ def _appendix_v2_enabled() -> bool:
 _APPENDICES_DIVIDER_SLUG = "appendices-front-door"
 _APPENDICES_DIVIDER_TITLE = "Appendices"
 _APPENDICES_DIVIDER_SUBTITLE = "The Working Surface of MAGE"
-# The author paragraph, VERBATIM. Do not re-list the individual appendices here — the front-matter
-# "What each appendix is for" section already does that, and the divider links across to it.
+# The author paragraph: a compressed intro (~20% shorter than the pre-revision text; the "chapters developed
+# the ideas" sentence is cut — it re-sells what the reader already bought), then the embedded book-map figure
+# and one section-link per appendix, replacing the bare front-matter pointer. "The argument ends here." and
+# "return to while building rather than read sequentially" are kept verbatim. The book-map SVG is 960px wide
+# and the divider body is a centered 40-rem column, so a later figure/CSS wave must break the figure out of the
+# column or it renders crushed — a render concern, not a prose one.
 _APPENDICES_DIVIDER_BODY_MD = (
-    "The argument ends here. What follows is the working surface of MAGE: the reference material you return "
-    "to while building rather than read sequentially. The chapters developed the ideas and showed them "
-    "operating in a real system. These appendices package those ideas for repeated use—engineering stacks, "
-    "flagship mechanisms, operational references, and implementation guidance. Like the Gang of Four, they "
-    "are meant to be consulted when a problem arises, not necessarily read cover to cover.\n\n"
-    "See [What each appendix is for](0.5-how-to-read-this-book.html#what-each-appendix-is-for) in the front "
-    "matter for the guide to each appendix and the question it answers."
+    "The argument ends here. What follows is the working surface of MAGE — the reference material you return "
+    "to while building rather than read sequentially. These appendices package the book's ideas for repeated "
+    "use: engineering stacks, flagship mechanisms, operational references, implementation guidance. Like the "
+    "Gang of Four, consult them when a problem arises; you need not read them cover to cover.\n\n"
+    "The map below shows how the parts fit, and each appendix is one place to land.\n\n"
+    "<!-- label: book-map-appendix -->\n"
+    "<!-- figure: assets/book-map.svg | A map of the book. The appendices are the working surface at the "
+    "foot of it — return here while building. -->\n\n"
+    "- **[Appendix A — Engineering stacks](appendix-stacks.html)** — the capabilities a cluster of patterns "
+    "makes when they travel together.\n"
+    "- **[Appendix B — Flagship mechanisms](appendix-b-flagship-mechanisms.html)** — the individual "
+    "patterns, each written to the Gang-of-Four template.\n"
+    "- **[Appendix C — Mechanism catalog](appendix-c-mechanism-catalog.html)** — every mechanism, at a "
+    "glance.\n"
+    "- **[Appendix D — Operator's reference](appendix-operators-reference.html)** — how to run and operate "
+    "the fleet day to day.\n"
+    "- **[Appendix E — How to write a skill](appendix-skill-recipe.html)** — the recipe for teaching an "
+    "agent a new domain."
 )
 
 
@@ -4746,8 +4807,10 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
         part=next_part, page_by_slug=page_by_slug,
         letter="A", part_name="MAGE Engineering Stacks", locator_figs=True, inline_legend=True,
         # A's opening carries the whole capability lens: the nine-capability map + lifted L1 principle (DERIVED
-        # from the classification model) then the vendor-agnostic note (§2.1, §2.4).
-        opening_extras_md=_appendix_intro_extras_md() + "\n\n" + _APPENDIX_A_VENDOR_NOTE_MD)
+        # from the classification model), the vendor-agnostic note (§2.1, §2.4), then the stack-dependency
+        # figure (HIGH-1) as the tail — the reader sees how the stacks depend before meeting them one by one.
+        opening_extras_md=(_appendix_intro_extras_md() + "\n\n" + _APPENDIX_A_VENDOR_NOTE_MD
+                           + "\n\n" + _APPENDIX_A_DEPGRAPH_FIGURE_MD))
 
     # ── APPENDIX B — Flagship Mechanisms. ONE Part; role SUBSECTIONS (Agent → Models-bridge → Product); the
     #    29 notes numbered straight through B.1…B.29. Opening frame carries the nine-capability lens + a

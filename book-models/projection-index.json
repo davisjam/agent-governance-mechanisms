@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1388,
+    "total_sites": 1390,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 1057,
+      "book-web": 1059,
       "website-catalogue": 221,
       "website-concepts": 34,
       "website-landing": 8,
@@ -191,7 +191,7 @@
           },
           {
             "file": "book/appendices-front-door.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -896,6 +896,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendices-front-door.html",
+            "occ": 3
+          },
+          {
             "file": "book/appendix-d-from-drifted-wiki-to-trusted-model.html",
             "occ": 1
           },
@@ -909,13 +913,13 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 21
+            "occ": 24
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 24
+            "occ": 25
           }
         ]
       },
@@ -1473,7 +1477,7 @@
           },
           {
             "file": "book/appendices-front-door.html",
-            "occ": 10
+            "occ": 12
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -1693,7 +1697,7 @@
           },
           {
             "file": "book/appendix-stacks.html",
-            "occ": 18
+            "occ": 23
           },
           {
             "file": "book/bibliography.html",
@@ -1709,7 +1713,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 50
+            "occ": 53
           },
           {
             "file": "book/index.html",
@@ -2681,7 +2685,7 @@
           },
           {
             "file": "book/appendices-front-door.html",
-            "occ": 8
+            "occ": 10
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -2901,7 +2905,7 @@
           },
           {
             "file": "book/appendix-stacks.html",
-            "occ": 12
+            "occ": 15
           },
           {
             "file": "book/bibliography.html",
@@ -2917,7 +2921,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 251
+            "occ": 255
           },
           {
             "file": "book/index.html",
@@ -3587,7 +3591,7 @@
           },
           {
             "file": "book/appendices-front-door.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -3819,7 +3823,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 5
+            "occ": 6
           },
           {
             "file": "book/index.html",
@@ -3954,6 +3958,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendices-front-door.html",
+            "occ": 3
+          },
+          {
             "file": "book/appendix-d-operating-doctrine.html",
             "occ": 1
           },
@@ -3963,13 +3971,13 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 22
+            "occ": 25
           }
         ],
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 23
+            "occ": 24
           }
         ]
       },
@@ -4733,7 +4741,7 @@
           },
           {
             "file": "book/appendices-front-door.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -4965,7 +4973,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 10
+            "occ": 11
           },
           {
             "file": "book/index.html",
