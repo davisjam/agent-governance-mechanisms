@@ -104,7 +104,14 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
   intensifiers. Bold one or two phrases per section, not by habit.
 - **Describe, don't sell.** Give the mechanism and the failure it kills. Don't crown it (*the best*, *the
   highest-leverage*), don't tell the reader every project should adopt it, and don't comment on the
-  entry's own novelty or thinness — those are the reader's calls.
+  entry's own novelty or thinness — those are the reader's calls. In book prose the same rule holds —
+  present clinically, confidence paired with an explicit caveat, never absolutism — but the sanctioned
+  first-person field-note asides that carry the book's warmth stay intact (see
+  [`writing/voice.md`](plugin/mage/skills/self-communicate/writing/voice.md) §"Engineering textbook, not conference keynote").
+- **Organize exposition by the engineering system, not the project timeline.** A lived incident may
+  *motivate* a section, but its spine is the architecture the mechanism belongs to, and the reader should
+  be able to follow the mechanism without the chronology (as-built status notes excepted — mark them as
+  divergence). See [`writing/voice.md`](plugin/mage/skills/self-communicate/writing/voice.md) §"Engineering textbook, not conference keynote".
 - **Avoid excessive LLM tells — vary, don't ban.** The em-dash-as-universal-joint, the mechanical
   tricolon (rule of three), the reflexive "not X, but Y", and a uniform antithesis cadence are the giveaways
   of machine prose. The fix is not prohibition — these are classical rhetorical figures that land when used

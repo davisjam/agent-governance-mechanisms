@@ -144,6 +144,17 @@ the result; cut the warm-up and cut the recap.
 - **Definition first, motivation second.** Open with the result, the definition, the claim; let a
   sentence of motivation follow only where it earns its place. This is the principle behind the glossary's
   definition-first entries and the warm-up-deletion pass across the prose.
+- **Organize exposition by the engineering system, not the project timeline.** When a mechanism was
+  discovered "because this happened next," present it "because it logically follows." The case study
+  *motivates* a mechanism; the exposition is organized around the engineered system it belongs to. A lived
+  incident may open a section as motivation, but the section's spine is the architecture, and the reader
+  should be able to follow the mechanism without the chronology. (As-built status notes are the sanctioned
+  exception — mark them as divergence, do not let them structure the argument.)
+- **Present clinically: problem, structure, trade-offs, failure modes, consequences — not exhortation.**
+  Describe the mechanism and the failure it kills; do not crown it, do not tell the reader every project
+  should adopt it, do not comment on the idea's own importance. Confidence paired with an explicit caveat,
+  never absolutism. This governs *structure and stance*; the sanctioned lived-detail / field-note asides
+  (the first-person incidents that carry the book's warmth) stay intact.
 
 ## Progressive density — let the book's language do more work over time
 
