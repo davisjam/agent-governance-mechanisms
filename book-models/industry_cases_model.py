@@ -353,9 +353,19 @@ def render_matrix_md(model: "IndustryCasesModel | None" = None) -> str:
 
 # ---- projection: the modeling-ceiling matrix --------------------------------------------------------
 
+#: The modeling-ceiling glyphs — the 4-level ladder vocabulary rendered as marks the reader scans at a
+#: glance instead of text tokens. Shares its shapes with the convergence tables' `_SUPPORT_GLYPH` (✓ full
+#: presence, ◐ present in part, — absent/silent) so one visual language spans all three of 6.5's tables; the
+#: ceiling adds ○ for its distinct `implicit` level (exercised but not a named representation), which the
+#: 3-level support vocabulary never emits. Mirrors `_SUPPORT_GLYPH`'s shape.
+_CEILING_GLYPH = {"yes": "✓", "some": "◐", "implicit": "○", "not-seen": "—"}
+
+
 def _ceiling_cell(level: "str | None") -> str:
-    """A ceiling cell — the declared level where the case rates the rung, else an em-dash."""
-    return level if level else "—"
+    """A ceiling cell — the glyph for the declared level where the case rates the rung, else an em-dash."""
+    if not level:
+        return "—"
+    return _CEILING_GLYPH.get(level, level)
 
 
 def render_modeling_ceiling_md(model: "IndustryCasesModel | None" = None) -> str:

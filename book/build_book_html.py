@@ -323,6 +323,11 @@ MARKER_KEYWORDS = (
     # `<!-- pullquote -->` — arms the NEXT blockquote as a label-less pull-quote (large centered
     #   emphasis, no fill/border box). [INFRA-1], part6-apply-SPEC-260807.md §C-1/§F.
     "pullquote",
+    # `<!-- table-landscape -->` — a Typst-only per-table directive: the Typst emitter drops the NEXT table
+    #   onto a flipped/landscape page (a wide matrix that cramps in portrait). INERT in HTML (the pipe table
+    #   renders through the ordinary table path; web width relies on CSS overflow), like note-spread: consumed
+    #   and stripped so the marker never leaks into reader-visible output.
+    "table-landscape",
 )
 # `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
 # a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
@@ -1300,6 +1305,12 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # Keep-together wrappers (§13.6) are a PRINT/Typst guarantee — inert in HTML (the note prose
                 # renders normally; HTML keep-together is best-effort CSS on the section wrapper). Consume so
                 # the marker never leaks into the reader-visible page.
+                return True
+            if inner.startswith("table-landscape"):
+                # A Typst-only per-table landscape directive (the flipped page is a PRINT/PDF layout choice) —
+                # inert in HTML: the pipe table renders through the ordinary table path and web width relies on
+                # CSS overflow. Consume so the marker never leaks into the reader-visible page (mirrors
+                # note-spread; the Typst emitter wraps the next table in a flipped page).
                 return True
             if s == "<!-- pullquote -->":
                 # `<!-- pullquote -->` — arms the NEXT blockquote as a label-less pull-quote. Consumed

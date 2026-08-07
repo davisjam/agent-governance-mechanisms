@@ -801,6 +801,24 @@ def _matches_apparatus_title(title_norm: str, titles: "set[str]") -> bool:
     return any(title_norm == t or title_norm.endswith(t) for t in titles)
 
 
+def _landscape_wrap_typst(body: str) -> str:
+    """Wrap a rendered fragment in a flipped/landscape `#page`, so a wide table gets full landscape width
+    without `fit-table` cramping it into the portrait measure. `#page(flipped: true)[…]` starts its own
+    page and resumes portrait immediately after, so wrapping ONE table's fragment mid-chapter drops that
+    table alone onto a landscape page. The tighter margins + 8.5pt body + tight inset widen the measure
+    further; the table figure stays breakable as a safety valve. Shared by two sites (extract-on-the-second
+    -site): the apparatus landscape path (emit_document) and the per-table `<!-- table-landscape -->` marker
+    (render_chapter)."""
+    return (
+        "#page(flipped: true, margin: (x: 0.6in, y: 0.7in))[\n"
+        "#set text(size: 8.5pt)\n"
+        "#show table.cell: set text(size: 8.5pt)\n"
+        "#set table(inset: (x: 6pt, y: 3pt))\n"
+        "#show figure.where(kind: table): set block(breakable: true)\n"
+        + body + "\n]"
+    )
+
+
 def _frame_apparatus_typst(body: str, breakable: bool = False) -> str:
     """Wrap a rendered apparatus chapter in a bordered `#block` — a hairline box on the panel tint with an
     accent top-rule, mirroring the web `.apparatus-page`. `breakable: false` (the default) keeps the whole
@@ -926,6 +944,7 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
                 + _render_note_spread(blocks, spread_n, fold_i, name=chapter.slug, title_frag=title_line))
     skip: set[int] = set()
     section_no = 0                     # per-chapter `## ` counter (advanced only when the chapter is numbered)
+    pending_landscape = False          # a `<!-- table-landscape -->` marker armed for the next TABLE block
     _title_norm = chapter.title.strip().lower()
     for i, b in enumerate(blocks):
         if i in skip:
@@ -940,6 +959,9 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
             continue
         # DIRECTIVE blocks carry index-def / index-example / point markers → #metadata.
         if b.kind is ir.BlockKind.DIRECTIVE:
+            if b.directive == "table-landscape":
+                pending_landscape = True   # arm the flipped-page wrap for the next TABLE block (inert in HTML)
+                continue
             frag = _peel_metadata_marker(b.raw.strip(), ctx)
             if frag:
                 out.append(frag)
@@ -1008,6 +1030,10 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         if (frag and b.kind is ir.BlockKind.PARA and i + 1 < len(blocks)
                 and (i + 1) not in skip and blocks[i + 1].kind in _FLOAT_KINDS):
             frag = f"#block(sticky: true)[{frag}]"
+        # A `<!-- table-landscape -->` marker preceding this TABLE drops it alone onto a flipped page.
+        if frag and pending_landscape and b.kind is ir.BlockKind.TABLE:
+            frag = _landscape_wrap_typst(frag)
+            pending_landscape = False
         if frag:
             out.append(frag)
     if is_part_page:
@@ -1512,14 +1538,7 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
             # only inside this flipped page (the body size and the portrait apparatus pages are untouched).
             # The table figure stays breakable as a safety valve (its header row repeats), so an accidental
             # overflow flows rather than clips, but at this size the dashboard lands on the single page.
-            rendered = (
-                "#page(flipped: true, margin: (x: 0.6in, y: 0.7in))[\n"
-                "#set text(size: 8.5pt)\n"
-                "#show table.cell: set text(size: 8.5pt)\n"
-                "#set table(inset: (x: 6pt, y: 3pt))\n"
-                "#show figure.where(kind: table): set block(breakable: true)\n"
-                + rendered + "\n]"
-            )
+            rendered = _landscape_wrap_typst(rendered)
         parts.append(rendered)
     # End-of-book Bibliography — Chicago notes, rendered by Typst from the SAME references.bib that
     # generated citations.json, so the PDF's reference strings equal the web book's by construction
