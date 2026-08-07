@@ -8,7 +8,8 @@ It is the human-facing morning complement to the automated reflex the loop alrea
 
 1. **Are the models healthy?** → Model Health: drift, coverage, freshness, traceability.
 2. **Any recurring failures?** → Governance Conversion: a class recurring un-converted is a mechanism owed.
-3. **Any drift?** → System and Model Health: are the sync gates green?
+3. **Did anything move the wrong way since yesterday?** → drift, validation, and the churn curve: did any
+   of them move against you since the last check?
 4. **Any regressions?** → System Health: did the validators or the churn curve move the wrong way?
 5. **Anything that should become infrastructure?** → Human Judgment: a decision made repeatedly is a
    conversion candidate.
@@ -18,7 +19,7 @@ It is the human-facing morning complement to the automated reflex the loop alrea
   ──────────────────────────────────────────────────────────────────────────
   1  Are the models healthy?          → Model Health
   2  Any recurring failures?          → Governance Conversion
-  3  Any drift?                       → System / Model Health
+  3  Anything move the wrong way?     → drift · validation · churn
   4  Any regressions?                 → System Health
   5  Anything → infrastructure?       → Human Judgment
   ──────────────────────────────────────────────────────────────────────────

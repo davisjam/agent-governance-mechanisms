@@ -3444,10 +3444,14 @@ _APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG = "appendix-operators-reference"
 # is the first (D.1); absent-on-disk files are skipped, so the front-door alone still renders without them.
 _OPERATORS_REFERENCE_PAGES: list[tuple[str, str]] = [
     ("operators-dashboard", "The Operator's Dashboard"),
-    ("from-drifted-wiki-to-trusted-model", "From Drifted Wiki to Trusted Model"),
+    ("from-drifted-wiki-to-trusted-model", "Brownfield Migration Drill"),
     # The operator-card deck (Appendix-D). One card = one page; the deck is declared in
     # book-models/operator-cards.json and its evidence-resolution gate is BLOCKING in `catalog.py validate`.
-    # Order follows the deck spine: Steering, then Compounding, then Shipping, then Doctrine.
+    # The Daily Operator Review leads the sensed cards so the deck teaches its own loop
+    # (Dashboard -> Daily Review -> specialist cards -> Doctrine). This print order MUST match the
+    # operator-cards.json `cards[]` order in lockstep — the page-span sensor derives each card's page bound
+    # from the NEXT card in json order, so a reorder here without the same move there stales the sensor.
+    ("daily-review", "Daily Operator Review"),
     ("system-health", "System Health"),
     ("model-health", "Model Health"),
     ("human-judgment", "Human Judgment"),
@@ -3455,8 +3459,7 @@ _OPERATORS_REFERENCE_PAGES: list[tuple[str, str]] = [
     ("governance-conversion", "Governance Conversion"),
     ("release-readiness", "Release Readiness"),
     ("evidence-quality", "Evidence Quality"),
-    ("brownfield-progress", "Brownfield Progress"),
-    ("daily-review", "Daily Operator Review"),
+    ("brownfield-progress", "Brownfield Progress Gauge"),
     ("operating-doctrine", "Operating Doctrine"),
 ]
 
@@ -3467,22 +3470,20 @@ This appendix collects operational reference material used while running a Gover
 Environment. The chapters teach the method; these pages support *practicing* it. You do not read them once \
 and move on — you come back to them mid-build, the way you keep a wiring diagram at the bench.
 
-Each entry answers a standing operational question with a single surface you can scan. The first is the \
-**Operator's Dashboard**: the metrics you steer by while the work is in flight and certify the result with \
-at maturity, on one page. The second is **From Drifted Wiki to Trusted Model**: the brownfield migration \
-drill that joins a legacy wiki to the code and walks it from drifted documentation to a governed model, \
-projected from Chapter 4.1 onto a single tear-out card.
+The deck answers standing operational questions, one scannable surface each, grouped by the job you are doing:
 
-The appendix is built to grow. These are the first reference cards, not the last; future editions add \
-the operational surfaces a practitioner reaches for often enough to want them collected:
+- **Orient** — *The Operator's Dashboard* (the metrics you steer by and certify with) and *The Daily \
+Operator Review* (the morning pass that routes you into the rest).
+- **Diagnose** — *System Health*, *Model Health*, *Human Judgment*, and *Engineering Capital*: is the \
+machine healthy, is the map healthy, am I spending judgment correctly, is the environment compounding?
+- **Act** — *Governance Conversion*, the *Brownfield Migration Drill*, and *Brownfield Progress*: convert \
+recurring failures into infrastructure and drive a legacy codebase toward a governed model.
+- **Certify** — *Release Readiness* and *Evidence Quality*: can I ship, and how much do I actually trust \
+the claims?
 
-- **MAGE lifecycle summary** — the stages a governed build passes through, and what each one owes the next.
-- **Governance-conversion quick reference** — turning a recurring failure into a durable control, at a glance.
-- **Operational decision heuristics** — the calls you make while operating a fleet, with the signal that \
-should drive each one.
-
-Together these make the laminated reference card for running the environment: the pages you consult while \
-operating, kept apart from the narrative that explains why they read the way they do."""
+*Operating Doctrine* closes the deck: the three stances that govern all of the above. Together these are the \
+laminated reference for running the environment — the pages you consult while operating, kept apart from the \
+narrative that explains why they read the way they do."""
 
 
 def build_operators_reference_chapters(part: int, for_print: bool = False,

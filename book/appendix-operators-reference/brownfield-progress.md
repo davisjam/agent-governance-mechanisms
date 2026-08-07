@@ -23,7 +23,7 @@ biggest remaining cluster.
   declared measure; an operator glance.
 
 ```
-  BROWNFIELD PROGRESS         "Where should the next conversion happen?"
+  BROWNFIELD PROGRESS GAUGE   "Where should the next conversion happen?"
   ──────────────────────────────────────────────────────────────────────
   early    Ungoverned ██████████   Governed ██
   now      Ungoverned ██           Governed ████████   (Missing-Model draining)

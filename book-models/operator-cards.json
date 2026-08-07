@@ -23,6 +23,21 @@
 
   "cards": [
     {
+      "card-id": "daily-review",
+      "title": "Daily Operator Review",
+      "family": "doctrine",
+      "operator_question": "The morning five questions.",
+      "evidence_refs": [
+        "LIFE:L6-govern-your-own-loop",
+        "CONC:governance-conversion"
+      ],
+      "assessment_signals": ["recurring-failure-count", "governance-conversion-rate"],
+      "page_geometry": "portrait",
+      "one_page": true,
+      "status": "derive-meta",
+      "_note": "Meta-card: the five questions cross-link Cards model-health/governance-conversion/system-health/human-judgment (internal deck NAV, not evidence_refs — nav links are not gate-resolved). LIFE:L6 backs the ~30-min windowed hook. ORDER: leads the sensed cards (D.3) so the deck teaches its own loop — MUST stay in lockstep with _OPERATORS_REFERENCE_PAGES (the page-span sensor derives adjacency from this cards[] order)."
+    },
+    {
       "card-id": "system-health",
       "title": "System Health",
       "family": "steering",
@@ -159,7 +174,7 @@
     },
     {
       "card-id": "brownfield-progress",
-      "title": "Brownfield Progress",
+      "title": "Brownfield Progress Gauge",
       "family": "doctrine",
       "operator_question": "Where is governance weakest, and where should the next conversion happen?",
       "evidence_refs": [
@@ -172,21 +187,6 @@
       "one_page": true,
       "status": "derive",
       "_note": "PAGE:from-drifted-wiki-to-trusted-model is a sibling operator-reference page (in _OPERATORS_REFERENCE_PAGES) — resolves against the operators-reference card list, NOT catalogue-cards. The Sizing Matrix + four stages both live in CH:4.1-brownfield. page_geometry landscape (before/after bars)."
-    },
-    {
-      "card-id": "daily-review",
-      "title": "Daily Operator Review",
-      "family": "doctrine",
-      "operator_question": "The morning five questions.",
-      "evidence_refs": [
-        "LIFE:L6-govern-your-own-loop",
-        "CONC:governance-conversion"
-      ],
-      "assessment_signals": ["recurring-failure-count", "governance-conversion-rate"],
-      "page_geometry": "portrait",
-      "one_page": true,
-      "status": "derive-meta",
-      "_note": "Meta-card: the five questions cross-link Cards model-health/governance-conversion/system-health/human-judgment (internal deck NAV, not evidence_refs — nav links are not gate-resolved). LIFE:L6 backs the ~30-min windowed hook."
     },
     {
       "card-id": "operating-doctrine",
