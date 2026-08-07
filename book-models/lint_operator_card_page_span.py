@@ -32,8 +32,9 @@ _SOURCE = os.path.join(HERE, "operator-cards.json")
 _DEFAULT_PDF = os.path.join(ROOT, "book", "mage-book.pdf")
 
 #: Phase-3 flip flag — the single source of truth the model's _ordering_guard reads. OFF during the audit
-#: window; set True at the BLOCKING commit (paired with operator_cards_model.HARD_PAGE_ASSERT).
-BLOCKING = False
+#: window; set True at the BLOCKING commit (paired with operator_cards_model.HARD_PAGE_ASSERT). FLIPPED True
+#: once the deck drained to zero spans (App-D v2 tuning, M2): a card overflowing one page now reddens validate.
+BLOCKING = True
 
 
 def _declared_cards() -> "list[tuple[str, str, str]]":

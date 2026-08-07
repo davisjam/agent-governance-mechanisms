@@ -1322,15 +1322,20 @@ def cmd_validate(_args) -> int:
               f"run `python3 book-models/lint_operator_card_shape.py`:")
         for f in shape_over:
             print(f"            {f.card_id}: {f.kind} = {f.value} (band {f.limit})")
-    # OPERATOR-CARD PAGE-SPAN — AUDIT-ONLY. The post-render one-page-fit sensor over the compiled PDF. It
-    # PRINTS the offender worklist but does NOT gate; a fit-pass drains it, and the Phase-3 flip makes it
-    # BLOCKING (BLOCKING=True) AND turns on operator_cards_model.HARD_PAGE_ASSERT (the model's ordering guard
-    # couples the two). No-op when book/mage-book.pdf is absent. See book-models/lint_operator_card_page_span.py.
-    import lint_operator_card_page_span as ocps  # noqa: E402 — audit-only page-span sensor
+    # OPERATOR-CARD PAGE-SPAN — the post-render one-page-fit sensor over the compiled PDF. Its BLOCKING flag
+    # is the single source of truth (the model's _ordering_guard reads the same flag); it FLIPPED True once the
+    # App-D deck drained to zero spans (v2 tuning, M2), paired with operator_cards_model.HARD_PAGE_ASSERT. When
+    # BLOCKING, a card overflowing one page contributes to n_issues; otherwise it stays audit-only. No-op when
+    # book/mage-book.pdf is absent (nothing to sense). See book-models/lint_operator_card_page_span.py.
+    import lint_operator_card_page_span as ocps  # noqa: E402 — post-render page-span sensor (BLOCKING flag SSOT)
     span_over = ocps.findings()
     if span_over:
-        print(f"  [opspan] AUDIT-ONLY: {ocps.summary_line(span_over)} (does not gate) — "
+        span_gates = bool(getattr(ocps, "BLOCKING", False))
+        print(f"  [opspan] {'BLOCKING' if span_gates else 'AUDIT-ONLY'}: {ocps.summary_line(span_over)}"
+              f"{'' if span_gates else ' (does not gate)'} — "
               f"run `python3 book-models/lint_operator_card_page_span.py`")
+        if span_gates:
+            n_issues += len(span_over)
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

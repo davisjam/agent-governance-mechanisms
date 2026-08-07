@@ -65,9 +65,10 @@ EXPECT_FAMILY = {"steering": 3, "compounding": 2, "shipping": 2, "doctrine": 3}
 EXPECT_GEOMETRY = {"portrait": 7, "landscape": 3}
 
 #: Phase-3 flip constant. OFF during the audit window; set True at the BLOCKING commit (and ONLY then, once
-#: the page-span sensor is BLOCKING — enforced by _ordering_guard). At the flip the projector wraps portrait
-#: cards in the compile-time keep-together assert so an over-tall card fails `typst compile`.
-HARD_PAGE_ASSERT = False
+#: the page-span sensor is BLOCKING — enforced by _ordering_guard). FLIPPED True with the page-span sensor
+#: (App-D v2 tuning, M2), once the deck drained to zero spans. The two halves move in lockstep via
+#: _ordering_guard: HARD_PAGE_ASSERT may be True only while lint_operator_card_page_span.BLOCKING is True.
+HARD_PAGE_ASSERT = True
 
 
 # ---- typed model ------------------------------------------------------------------------------------
