@@ -3753,7 +3753,7 @@
             },
             {
               "slug": "agent-fluency-ran-wider-than-difficulty-alone-explains",
-              "text": "Agent fluency ran wider than difficulty alone explains — training-data fit.",
+              "text": "Agent fluency ran wider than intrinsic difficulty alone explains.",
               "block_index": 11
             }
           ]
