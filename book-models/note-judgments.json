@@ -64,7 +64,7 @@
     },
     "typed-event-bus": {
       "judgment": "Give the fleet a structured, self-documenting signal surface and make the orchestrator react to it — silent degradation accretes for hours without a queryable health signal and something that acts on it. A closed topic registry keeps a typo from minting a dead signal; the reaction loop is the half that turns a read into a steer.",
-      "one_line": "Build the observe-then-react loop: a structured signal plus something that acts on it.",
+      "one_line": "Wire every failure to its reaction, so nothing has to be watching when it fires.",
       "foundational": true,
       "distinct_from": {
         "operational-playbooks": "the event bus is the SIGNAL + reactor; playbooks are the RESPONSE content it opens"
@@ -72,7 +72,7 @@
     },
     "resource-pressure-gating": {
       "judgment": "Govern a saturable resource on a live pressure signal read at two layers — an admission gate that refuses heavy work before it starts and an execution shed that stops work pressure has overtaken. A count of how many jobs run is not the same fact as whether the host can bear them now, and one shared reading keeps the two layers from disagreeing.",
-      "one_line": "Gate a saturable resource on live pressure at both admission and execution.",
+      "one_line": "Count jobs and you gate on a guess; read pressure and you gate on the truth.",
       "foundational": false,
       "distinct_from": {
         "synchronization-model": "resource-pressure-gating reacts to dynamic SATURATION of a resource; synchronization-model declares static lock ORDERING contracts",
@@ -200,7 +200,7 @@
     },
     "synchronization-model": {
       "judgment": "Declare concurrency contracts — every lock, the resource it guards, and the required acquisition order — as a checkable model, so an inverted lock order fails at author time instead of deadlocking in production where the lesson arrives too late. An undeclared lock and an unstated ordering are both invisible in the code and catastrophic at runtime.",
-      "one_line": "Declare locks and their ordering as a checkable model; invert one and fail at author time.",
+      "one_line": "A deadlock is a design error you catch at authoring, not a race you chase in production.",
       "foundational": false,
       "distinct_from": {
         "governance-graph": "synchronization-model models LOCK ORDERING among resources; governance-graph models CONFLICTS between control mechanisms over shared resources"

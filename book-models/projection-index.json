@@ -2833,7 +2833,7 @@
           },
           {
             "file": "book/appendix-b-synchronization-model.html",
-            "occ": 19
+            "occ": 18
           },
           {
             "file": "book/appendix-b-test-serializer.html",
@@ -5385,7 +5385,7 @@
           },
           {
             "file": "book/appendix-b-typed-event-bus.html",
-            "occ": 4
+            "occ": 3
           },
           {
             "file": "book/appendix-c-mechanism-catalog.html",
