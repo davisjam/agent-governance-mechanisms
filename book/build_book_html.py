@@ -6714,10 +6714,16 @@ def build() -> int:
             content = header + body
         main = content + nav_bar + foot
         toc = toc_html(chapters, c["slug"])
-        # The divider's <title> reads as the mode-marker ("Appendices — The Working Surface of MAGE") rather
-        # than the redundant "Appendices · Appendices" the num_label/title join would produce.
-        page_title = (f'{_APPENDICES_DIVIDER_TITLE} — {_APPENDICES_DIVIDER_SUBTITLE}'
-                      if c.get("is_appendix_divider") else f'{num_label} · {c["chapter_title"]}')
+        # The browser-tab <title>: MAGE-branded, and de-doubled. For matter/divider pages the num_label IS
+        # the chapter_title ("Preface"), so the naive `{num_label} · {chapter_title}` join printed "Preface ·
+        # Preface"; collapse that to the single label. The divider keeps its mode-marker title, which already
+        # names MAGE ("Appendices — The Working Surface of MAGE"); every other page ends "— MAGE".
+        if c.get("is_appendix_divider"):
+            page_title = f'{_APPENDICES_DIVIDER_TITLE} — {_APPENDICES_DIVIDER_SUBTITLE}'
+        else:
+            descriptor = (c["chapter_title"] if num_label == c["chapter_title"]
+                          else f'{num_label} · {c["chapter_title"]}')
+            page_title = f'{descriptor} — MAGE'
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
             page(page_title, toc, main, mermaid=c.get("mermaid", False),

@@ -2824,7 +2824,7 @@ def build_views_page(entries: list[Entry]) -> str:
     mapfig = _inline_svg("assets/model-map.svg")
     head = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
             f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
-            f"<title>Governance catalogue — codegen'd views</title>\n{FONTS_LINK}\n"
+            f"<title>MAGE — Mechanism Catalogue</title>\n{FONTS_LINK}\n"
             f"<style>{VIEWS_CSS}{FONT_CSS}</style>\n</head>\n<body>\n")
     # Tabs are rendered server-side (so they exist without JS); "By model" is the default. The card-based
     # views (family/enf/form) render into #stage on demand; the model view lives in #view-model.
@@ -3382,7 +3382,7 @@ def cmd_build(_args) -> int:
     ))
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
-               f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
+               f"<title>MAGE — Model-Based Agentic Software Engineering</title>\n{FONTS_LINK}\n"
                f"<style>{PAGE_CSS}{LANDING_CSS}{FONT_CSS}</style>\n</head>\n"
                f'<body class="landing">\n<main>\n{landing_body}\n{_site_footer("")}\n</main>\n</body>\n</html>\n')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
