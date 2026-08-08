@@ -134,7 +134,17 @@ SELF_OPERATIONS = SkillSpec(
     ),
 )
 
-SPECS = [SELF_GOVERNANCE, SELF_OPERATIONS]
+SELF_COMMUNICATE = SkillSpec(
+    name="self-communicate",
+    # Hand-authored — no Part-A starter doc, no catalogue mirror, so `is_generated` is False and the
+    # `build` mode skips it. It is registered here to bring it under the install/refresh MANAGED set: its
+    # plugin dir is the single SSOT, the install path propagates it to an adopter, and its
+    # writing/lexicon.local.md overlay is honored. Before this, self-communicate had two hand-synced copies
+    # (a parent-repo mirror + this plugin copy) that DIFFERED and drifted — the exact mirror-drift class the
+    # Epic kills. One authored copy + one managed install path retires that class (Phase-1b review §3.7).
+)
+
+SPECS = [SELF_GOVERNANCE, SELF_OPERATIONS, SELF_COMMUNICATE]
 
 
 def _write(path: str, text: str) -> None:
