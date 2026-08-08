@@ -989,6 +989,14 @@ def cmd_validate(_args) -> int:
     for msg in check_big_ideas():
         print(f"  [bigidea] {msg}")
         n_issues += 1
+    # INDUSTRY-CASE-STUDIES pillar drift gate — BLOCKING. The pillar's index + six per-case pages are a
+    # projection of book-models/industry_cases_declared.json; this holds the projection faithful the way
+    # check_big_ideas holds the landing: roster parity + construct resolution (model-level, always on) and,
+    # when the pillar is built, page presence + trace marker + index linkage (best-effort, mirrors the
+    # landing id-scan). Lands blocking-clean — the projector renders every authored case to 0 findings.
+    for msg in reconstruction_site_findings():
+        print(f"  [reconstruction] {msg}")
+        n_issues += 1
     bi_palette = _big_ideas_palette_audit()
     if bi_palette:
         print(f"  [bigidea] AUDIT-ONLY: {len(bi_palette)} Big-Ideas figure(s) carry a hex outside the "
@@ -2469,6 +2477,8 @@ def _landing_closing() -> str:
     ways = [
         ("The construction kit", "constructing-the-gee.html",
          "the architecture: 9 capabilities · 25 canonical mechanisms · 8 compositions"),
+        ("Industry case studies", "industry-case-studies.html",
+         "six industrial systems, read through MAGE"),
         ("Full catalogue", "catalogue-views.html", "every mechanism, by role · model · enforcement"),
         ("Book", "book/index.html", "the full treatment of the method"),
         ("Claude quickstart", "quick-start.html", "install the skills in your repo"),
@@ -2483,7 +2493,7 @@ def _landing_closing() -> str:
         'under which fast code can be trusted — the machine can search faster than any of us, but it cannot '
         'tell us what is worth searching for. So start with one recurring failure your agents keep handing '
         'you, and convert it: one type, one lint, one gate. The theory and methodology grow from there; below '
-        'are four ways in.</p>\n'
+        'are five ways in.</p>\n'
         f'  <div class="close-ways">\n    {buttons}\n  </div>\n'
         '</section>')
 
@@ -2565,6 +2575,259 @@ def _landing_reference() -> str:
         f'    <div class="deep-row">\n      {more_links}\n    </div>\n'
         '  </div>\n'
         '</section>')
+
+
+# ── Industry case studies pillar — a PROJECTION of the industry-cases model ───────────────────────
+# Each per-case page and the index are projected from book-models/industry_cases_declared.json (the same
+# source industry_cases_model.py derives + drift-gates). The page STRUCTURE is composed here — the
+# correspondence table, the theory-coverage checklist, the tag rows, the source block; every NARRATIVE
+# SENTENCE a reader reads is a HAND-AUTHORED string, either read verbatim from the record (onepager_lede /
+# result_sentence / autonomous_work / agent_authority / implicit_theory / mage_explains_implicit / each
+# mage_constructs[].note / the top-level hedge + the distinctive framing) or a fixed literal authored in
+# place here. No sentence is machine-composed from slug lists. Each page carries a `<!-- industry-case:
+# <id> -->` trace marker binding it to its record id (the site analogue of the book's per-case one-pager
+# `<!-- case-onepager: -->` marker), so a projection can be joined back to the evidence it renders.
+
+_IC_INDEX_PAGE = "industry-case-studies.html"
+
+#: The correspondence-strength glyph — the at-a-glance mark for the theory-coverage checklist. Shares the
+#: ✓ / ◐ / — shapes with the book's matrix glyphs; adds ~ for `tension` and ✗ for `counterexample`, the two
+#: strengths the 3-value support vocabulary never emits.
+_IC_CORR_GLYPH = {"strong": "✓", "partial": "◐", "not-described": "—", "tension": "~", "counterexample": "✗"}
+
+
+def _ic_page_name(case_id: str) -> str:
+    return f"industry-case-{case_id}.html"
+
+
+def _ic_declared() -> dict:
+    """The hand-authored industry-cases source (the same file industry_cases_model.py derives). Read here
+    for the authored PROSE fields the typed model does not carry (autonomous_work / agent_authority /
+    implicit_theory / mage_explains_implicit) and the top-level hedge + distinctive framing."""
+    p = os.path.join(ROOT, "book-models", "industry_cases_declared.json")
+    return json.load(open(p, encoding="utf-8"))
+
+
+def _ic_construct_labels() -> "dict[str, str]":
+    """Construct-universe id → reader-facing label, from the declared column set (authored labels)."""
+    raw = _ic_declared()
+    return {c.get("id", ""): c.get("label", "")
+            for c in raw.get("construct_universe", {}).get("columns", [])}
+
+
+def _ic_html_table(headers: "list[str]", rows: "list[list[str]]") -> str:
+    """A plain HTML table — headers PLAIN-escaped, each row cell passed in ALREADY rendered (so an authored
+    note routes through `_inline` and a raw token through `_esc` at the call site). Built as HTML rather
+    than markdown so a `|` inside an authored note can never split a cell."""
+    thead = "".join(f"<th>{_esc(h)}</th>" for h in headers)
+    body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
+    return f"<table><thead><tr>{thead}</tr></thead><tbody>{body}</tbody></table>"
+
+
+def _ic_tags(tokens: "list[str]") -> str:
+    """A row of the record's raw kebab tokens rendered verbatim as `<code>` chips. These are identifiers
+    (labels / structure), never prose — the model bans de-kebabbing them into user-facing text, so they are
+    shown as-authored. Empty list renders an em-dash."""
+    if not tokens:
+        return '<p>—</p>'
+    return "<p>" + " ".join(f"<code>{_esc(t)}</code>" for t in tokens) + "</p>"
+
+
+def _ic_case_body(rec: dict, labels: "dict[str, str]", hedge: str, distinctive: dict) -> str:
+    """One per-case page body — projected structure around hand-authored sentences. `rec` is the raw case
+    record; `labels` the construct-universe labels; `hedge` the top-level honesty hedge; `distinctive` the
+    cross_case_patterns distinctive headline + hedge. Exactly one `<h1>`; the trace marker leads the body."""
+    org = rec.get("organization", "")
+    cid = rec.get("id", "")
+    setting = rec.get("setting", {}) or {}
+    source = rec.get("source", {}) or {}
+    constructs = rec.get("mage_constructs", []) or []
+    p: "list[str]" = []
+    p.append(f"<!-- industry-case: {cid} -->")
+    p.append("<h1>Industry case studies</h1>")
+    # Identity band + the pillar-level honesty framing (hand-authored line in place + the model's hedge).
+    p.append(f'<div class="concept-band"><span class="concept-chip">Reconstruction</span>'
+             f'<span class="concept-kicker">{_esc(org)} · {_esc(rec.get("domain", ""))}</span></div>')
+    p.append('<p>MAGE did not run at this company. This page reads an independent practitioner report '
+             'through MAGE’s vocabulary, to see how cleanly an outside system maps onto the theory. '
+             'Every correspondence below is the book’s reading of the source, never a claim the '
+             'company makes about MAGE.</p>')
+    if hedge:
+        p.append(f"<p>{_inline(hedge)}</p>")
+    # Meet the case — the authored one-pager lede.
+    p.append("<h2>Meet the case</h2>")
+    if rec.get("onepager_lede"):
+        p.append(f'<p>{_inline(rec["onepager_lede"])}</p>')
+    p.append(f'<p><strong>Distinctive starting point:</strong> {_esc(rec.get("distinctive_starting_point", ""))}</p>')
+    # What the book concludes + what the agents do + the setting facts.
+    p.append("<h2>What the case shows</h2>")
+    if rec.get("result_sentence"):
+        p.append(f'<p>{_inline(rec["result_sentence"])}</p>')
+    if rec.get("autonomous_work"):
+        p.append("<h3>What the agents do</h3>")
+        p.append(f'<p>{_inline(rec["autonomous_work"])}</p>')
+    scale = setting.get("scale", "")
+    field = "brownfield" if setting.get("brownfield") else "greenfield"
+    p.append(f'<p><strong>Setting:</strong> <code>{_esc(scale)}</code> · <code>{_esc(field)}</code></p>')
+    facts = setting.get("scale_facts", []) or []
+    if facts:
+        p.append("<p>Scale, as the source reports it:</p>")
+        p.append("<ul>" + "".join(f"<li>{_inline(f)}</li>" for f in facts) + "</ul>")
+    # The engineering environment — projected tag rows + the authored authority paragraph.
+    p.append("<h2>The engineering environment</h2>")
+    p.append("<h3>Object territory</h3>")
+    p.append(_ic_tags(rec.get("object_territory", []) or []))
+    p.append("<h3>Representations</h3>")
+    p.append(_ic_tags(rec.get("representations", []) or []))
+    p.append("<h3>Mechanisms observed</h3>")
+    p.append(_ic_tags(rec.get("mechanisms", []) or []))
+    if rec.get("agent_authority"):
+        p.append("<h3>Where authority sits</h3>")
+        p.append(f'<p>{_inline(rec["agent_authority"])}</p>')
+    # Mapping into MAGE — the important table: construct label · correspondence · the authored note.
+    p.append("<h2>Mapping into MAGE</h2>")
+    p.append("<p>Each row is one MAGE construct, the strength of the correspondence, and how the book reads "
+             "the source against it. The note is the book’s reading; the strength is not a score.</p>")
+    rows = []
+    for cell in constructs:
+        con = cell.get("construct", "")
+        strength = cell.get("strength", "")
+        glyph = _IC_CORR_GLYPH.get(strength, "")
+        rows.append([_esc(labels.get(con, con)),
+                     f"{glyph} {_esc(strength)}".strip(),
+                     _inline(cell.get("note", ""))])
+    p.append(_ic_html_table(["MAGE construct", "Correspondence", "How the book reads the case"], rows))
+    # What the book reads the case as believing.
+    if rec.get("implicit_theory"):
+        p.append("<h2>The theory the case appears to hold</h2>")
+        p.append(f'<p>{_inline(rec["implicit_theory"])}</p>')
+    # What the case adds back to MAGE — the authored explanation + the raw contribution tokens.
+    p.append("<h2>What the case adds to MAGE</h2>")
+    if rec.get("mage_explains_implicit"):
+        p.append(f'<p>{_inline(rec["mage_explains_implicit"])}</p>')
+    p.append(_ic_tags(rec.get("adds_to_mage", []) or []))
+    # What MAGE adds that no case reaches — the shared distinctive framing.
+    p.append("<h2>What MAGE adds that this case does not reach</h2>")
+    if distinctive.get("headline"):
+        p.append(f'<p>{_inline(distinctive["headline"])}</p>')
+    if distinctive.get("hedge"):
+        p.append(f'<p>{_inline(distinctive["hedge"])}</p>')
+    # Honest bounds + the hypotheses the case bears on (tokens).
+    p.append("<h2>Honest bounds</h2>")
+    p.append("<p>The limitations the analysis records, and the falsifiable hypotheses the case bears on:</p>")
+    p.append(_ic_tags(rec.get("limitations", []) or []))
+    p.append(_ic_tags(rec.get("hypotheses", []) or []))
+    # Sources — the provenance data block.
+    p.append("<h2>Source</h2>")
+    src_rows = [
+        ["Citation", f"<code>{_esc(source.get('citation_key', ''))}</code>"],
+        ["Source type", f"<code>{_esc(source.get('source_type', ''))}</code>"],
+        ["Independence", f"<code>{_esc(source.get('independence', ''))}</code>"],
+        ["Account type", f"<code>{_esc(source.get('account_type', ''))}</code>"],
+        ["Evidence horizon", f"<code>{_esc(source.get('evidence_horizon', ''))}</code>"],
+        ["Author role", _inline(source.get("author_role", ""))],
+    ]
+    p.append(_ic_html_table(["Field", "Value"], src_rows))
+    # Theory coverage at a glance — the projection of mage_constructs[].strength over the construct universe.
+    p.append("<h2>Theory coverage at a glance</h2>")
+    p.append("<p>Where the source’s described behavior maps onto each MAGE construct: "
+             "✓ strong · ◐ partial · ~ tension · ✗ counterexample · — not described.</p>")
+    by_con = {c.get("construct", ""): c.get("strength", "") for c in constructs}
+    cov_rows = []
+    for con, label in labels.items():
+        strength = by_con.get(con, "not-described")
+        glyph = _IC_CORR_GLYPH.get(strength, "")
+        cov_rows.append([_esc(label), f"{glyph} {_esc(strength)}".strip()])
+    p.append(_ic_html_table(["MAGE construct", "Correspondence"], cov_rows))
+    return "\n".join(p)
+
+
+def _ic_index_body(cases: "list[dict]", hedge: str) -> str:
+    """The pillar index body — the honest framing + one card per authored case linking its page. Exactly one
+    `<h1>`. The cards carry the authored `result_sentence` as their blurb; no card sentence is composed."""
+    p: "list[str]" = []
+    p.append("<h1>Industry case studies</h1>")
+    p.append('<div class="concept-band"><span class="concept-chip">Six reconstructions</span>'
+             '<span class="concept-kicker">independent industrial systems, read through MAGE</span></div>')
+    # The honesty box — a hand-authored purpose line in place + the model's own hedge.
+    p.append("<h2>What these are, and what they are not</h2>")
+    p.append('<p>These are <strong>reconstructions</strong>, not case studies in the empirical-SE sense. '
+             'MAGE ran at none of these companies. Each page reads one independent practitioner report '
+             'through MAGE’s vocabulary, to test how cleanly a system built by other people, for other '
+             'reasons, maps onto the theory. The correspondence is always the book’s reading of the '
+             'source — never a claim the company makes.</p>')
+    if hedge:
+        p.append(f"<p>{_inline(hedge)}</p>")
+    # The six cards.
+    p.append("<h2>The six</h2>")
+    cards: "list[str]" = []
+    for rec in cases:
+        cid = rec.get("id", "")
+        href = _ic_page_name(cid)
+        org = rec.get("organization", "")
+        dom = rec.get("domain", "")
+        blurb = _inline(rec.get("result_sentence", ""))
+        cards.append(
+            f'<a class="deep-item" href="{_attr(href)}">'
+            f'<b>{_esc(org)}</b><span>{_esc(dom)}</span><span>{blurb}</span></a>')
+    p.append('<div class="ic-cards">\n  ' + "\n  ".join(cards) + "\n</div>")
+    # The comparative page is a later wave — name it without a dead link (it does not exist yet).
+    p.append("<h2>Across all six</h2>")
+    p.append("<p>A comparative analysis — the full correspondence matrix, the modeling-ceiling ladder, "
+             "and the convergence tables read across all six systems at once — is being drawn from the "
+             "same model, and will be linked here.</p>")
+    return "\n".join(p)
+
+
+def reconstruction_site_findings() -> "list[str]":
+    """The site drift-check for the Industry-case-studies pillar — the "site is a projection, can't drift"
+    discipline extended from the catalogue to the pillar. Model-level joins always run; the page-level
+    joins are best-effort (skipped when the pillar is not built yet, mirroring `_landing_id_scan`). Asserts:
+      (a) ROSTER PARITY — every authored roster id has a case record (surfaces the model's IC6 at site level).
+      (b) CONSTRUCT RESOLVE — every mage_constructs[].construct resolves in the declared construct universe
+          (surfaces IC3 at site level, the join the mapping table + coverage checklist project).
+      (c) PAGE PRESENT + TRACE — when the index is built, every authored case has a rendered
+          `industry-case-<id>.html` carrying its `<!-- industry-case: <id> -->` trace marker.
+      (d) INDEX LINKAGE — when the index is built, it links every authored case's page (the inbound edge the
+          orphan gate needs for all six children).
+    Returns a list of finding strings (empty = clean)."""
+    raw = _ic_declared()
+    labels = set((c.get("id", "") for c in raw.get("construct_universe", {}).get("columns", [])))
+    roster_ids = [s.get("id", "") for s in raw.get("roster", {}).get("sites", [])
+                  if s.get("status") == "authored"]
+    cases = {c.get("id", ""): c for c in raw.get("industry_cases", [])}
+    findings: "list[str]" = []
+    # (a) roster parity + (b) construct resolve.
+    for rid in roster_ids:
+        rec = cases.get(rid)
+        if rec is None:
+            findings.append(f"reconstruction: authored roster site {rid!r} has no case record")
+            continue
+        for cell in rec.get("mage_constructs", []) or []:
+            con = cell.get("construct", "")
+            if con not in labels:
+                findings.append(f"reconstruction: case {rid!r} construct {con!r} resolves against no "
+                                f"declared construct-universe column")
+    # (c) + (d) page-level joins — best-effort, only when the pillar index is built.
+    index_path = os.path.join(ROOT, _IC_INDEX_PAGE)
+    if not os.path.isfile(index_path):
+        return findings  # site not built yet — model joins only (mirrors the landing best-effort pattern)
+    index_html = open(index_path, encoding="utf-8").read()
+    for rid in roster_ids:
+        if rid not in cases:
+            continue
+        page = os.path.join(ROOT, _ic_page_name(rid))
+        if not os.path.isfile(page):
+            findings.append(f"reconstruction: authored case {rid!r} has no rendered {_ic_page_name(rid)} "
+                            f"(rebuild)")
+            continue
+        if f"<!-- industry-case: {rid} -->" not in open(page, encoding="utf-8").read():
+            findings.append(f"reconstruction: {_ic_page_name(rid)} is missing its "
+                            f"`<!-- industry-case: {rid} -->` trace marker (the page/record binding)")
+        if _ic_page_name(rid) not in index_html:
+            findings.append(f"reconstruction: the pillar index does not link {_ic_page_name(rid)} "
+                            f"(the child would orphan)")
+    return findings
 
 
 LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 =====================
@@ -3476,6 +3739,32 @@ def cmd_build(_args) -> int:
                f'<body class="landing">\n<main>\n{landing_body}\n{_site_footer("")}\n</main>\n</body>\n</html>\n')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
+    # Industry-case-studies pillar — a projection of book-models/industry_cases_declared.json. The index +
+    # one per-case page per AUTHORED case are written directly (like index.html / catalogue-views.html), not
+    # from a `.md`: projected structure around hand-authored record prose (rule: no machine-composed prose).
+    # The index links each child (the orphan-gate inbound edge for all six); the landing closing links the
+    # index. Same "site is a projection, can't drift" discipline the reconstruction_site_findings gate holds.
+    ic_raw = _ic_declared()
+    ic_labels = _ic_construct_labels()
+    ic_hedge = ic_raw.get("hedge", "")
+    ic_dist = ic_raw.get("cross_case_patterns", {})
+    ic_distinctive = {"headline": ic_dist.get("distinctive_headline", ""),
+                      "hedge": ic_dist.get("distinctive_hedge", "")}
+    ic_authored = [c for c in ic_raw.get("industry_cases", []) if c.get("status") == "authored"]
+    ic_index = _page("Industry case studies",
+                     _crumb("", [("Industry case studies", "")]),
+                     _ic_index_body(ic_authored, ic_hedge), rel_root="")
+    open(os.path.join(ROOT, _IC_INDEX_PAGE), "w", encoding="utf-8").write(ic_index)
+    n_ic = 0
+    for rec in ic_authored:
+        cid = rec.get("id", "")
+        org = rec.get("organization", "")
+        crumb = _crumb("", [("Industry case studies", _IC_INDEX_PAGE), (org, "")])
+        html = _page(f"Industry case studies — {org}", crumb,
+                     _ic_case_body(rec, ic_labels, ic_hedge, ic_distinctive), rel_root="")
+        open(os.path.join(ROOT, _ic_page_name(cid)), "w", encoding="utf-8").write(html)
+        n_ic += 1
+    print(f"built {_IC_INDEX_PAGE} + {n_ic} industry-case page(s)")
     # The six concept ENTRY pages (`concept-<slug>.html`) were rendered in the md loop above from their
     # hand-authored `concept-<slug>.md`, with the model's figures + `more` projected in — no separate
     # whole-body projection now (Option B: the entry is authored + parity-gated, not generated whole).
