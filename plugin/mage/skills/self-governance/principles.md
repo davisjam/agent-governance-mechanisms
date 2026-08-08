@@ -39,6 +39,23 @@ Four groups:
 Each principle is the crisp statement + the WHY. Many are also enforced, in the source project, as a
 numbered rule plus a lint or gate — adopt the principle, and wire your own enforcement.
 
+**The three partner skills.** This starter is the *govern* leg of a trio the fleet operates with, each a
+skill in the same plugin:
+
+- **Govern** — the `self-governance` skill, whose method is this Part A. It converts a recurring failure
+  into a durable mechanism (a lint, a gate, a typed seam) and audits a repo for the guardrails it is
+  missing.
+- **Operate** — the `self-operations` skill. It runs the substrate as a DevOps engineer: a positive-first
+  lifecycle map of how the fleet, the git repo, the deploys, and the orchestrator's own hooks work, plus a
+  symptom-to-resolving-doc catalog for when something breaks.
+- **Communicate** — the `self-communicate` skill. It writes and diagrams the engineer-facing prose the
+  other two produce — a control's description, a design doc, a runbook, a status report — with a rhetoric
+  toolkit and a shared house lexicon.
+
+They route to each other: a recurring *operate* failure hands off to *govern* to become a control, and
+every control, runbook, and report *govern* and *operate* emit is prose *communicate* audits. Adopt the
+trio together, or start with *govern* and add the others as the operation grows.
+
 ## A.1 — The governance view — Governance: judgment, as code
 
 The frame the rest of the method hangs on: what governance is, how the standard playbook maps into it, and
