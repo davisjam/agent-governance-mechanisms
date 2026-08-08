@@ -213,6 +213,12 @@ table.book-table.meta-card td { padding: 0.32rem 0.7rem; line-height: 1.4; }
 table.book-table.meta-card td:first-child { font-weight: 600; color: var(--muted);
                                              white-space: nowrap; width: 1%; }
 table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }
+/* Per-case one-pager card (`.case-onepager`, the "Meet the six" gallery): a light left-ruled panel that sets
+   the projected reconstruction table apart from the body prose, deliberately lighter than the lavender
+   concept-inset (per-case-onepager-DESIGN §5). The inner <table> keeps its booktabs style + numbering. */
+.case-onepager { border-left: 3px solid var(--accent); padding: 0.1rem 0 0.1rem 1.1rem; margin: 1.3rem 0; }
+.case-onepager table.book-table { margin: 0.4rem 0; }
+.case-onepager table.book-table thead th { font-size: 1.03em; border-bottom-color: var(--accent); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }

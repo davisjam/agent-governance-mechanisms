@@ -156,6 +156,9 @@ class IndustryCase:
     hypotheses: "list[str]" = field(default_factory=list)
     scale_facts: "list[str]" = field(default_factory=list)
     result_sentence: str = ""
+    onepager_lede: str = ""                                    # the authored "meet the case" opener (one-pager)
+    adds_to_mage: "list[str]" = field(default_factory=list)    # what the case adds back to MAGE (one-pager Part 6)
+    limitations: "list[str]" = field(default_factory=list)     # the honest bounds (one-pager Part 6 frontier)
 
     @property
     def authored(self) -> bool:
@@ -252,6 +255,9 @@ def derive_model(raw: "dict | None" = None) -> IndustryCasesModel:
             mage_constructs=cells, modeling_ceiling=ceiling, hypotheses=list(c.get("hypotheses", []) or []),
             scale_facts=list((c.get("setting", {}) or {}).get("scale_facts", []) or []),
             result_sentence=c.get("result_sentence", ""),
+            onepager_lede=c.get("onepager_lede", ""),
+            adds_to_mage=list(c.get("adds_to_mage", []) or []),
+            limitations=list(c.get("limitations", []) or []),
         ))
     ceiling_rungs = [
         CeilingRung(id=r.get("id", ""), label=r.get("label", ""), tier=r.get("tier", ""))
@@ -401,6 +407,12 @@ _SUPPORT_GLYPH = {"yes": "✓", "partial": "◐", "no": "—"}
 #: The projected buckets (universal + generalizes render as tables; distinctive is prose, not a table).
 _TABLE_BUCKETS = ("universal", "generalizes")
 
+#: The five non-Cloudflare authored cases the book's "Meet the six" gallery renders as one-pagers, in roster
+#: order (Cloudflare keeps its deep reading — per-case-onepager-DESIGN §4 rec-i). IC7 holds each placed block
+#: byte-equal to render_case_onepager(id, 'book'). Each kicker header is unique (distinct org), so the parity
+#: anchor is occurrence 0 per card.
+_ONEPAGER_GALLERY_IDS = ("spotify-honk", "shopify", "docker", "siemens", "zenseact")
+
 #: The short-key PREFIX per table bucket (U1..U9 for universal, G1..G6 for generalizes). Distinct prefixes
 #: so the prose and the per-case one-pagers can cite a grid row unambiguously across the two tables, and so a
 #: grid row joins its key-list row by an exact token. Computed from position in patterns_in(bucket) order.
@@ -459,6 +471,85 @@ def render_convergence_key_md(bucket: str, model: "IndustryCasesModel | None" = 
         construct = p.maps_to_construct or "—"
         rows.append("| " + " | ".join([_pattern_key(bucket, i), p.short_label, construct, p.statement]) + " |")
     return "\n".join([header, rule, *rows])
+
+
+# ---- projection: the per-case one-pager ("Meet the six") --------------------------------------------
+
+#: The order the mapping strip (one-pager Part 5) names correspondence strengths, and the phrase each opens.
+_MAPPING_STRENGTHS = (("strong", "Strong on"), ("partial", "partial on"), ("tension", "in tension"),
+                      ("not-described", "not described"), ("counterexample", "counterexample"))
+
+
+def _dekebab(slug: str) -> str:
+    """A kebab tag as a plain phrase — `no-generalized-drift-gate` -> `no generalized drift gate`."""
+    return slug.replace("-", " ")
+
+
+def _onepager_parts(case: IndustryCase, model: IndustryCasesModel) -> "list[str]":
+    """The seven ordered one-pager parts as inline-markdown strings (see per-case-onepager-DESIGN §2), each a
+    single line free of `|` so the book surface can carry each as one pipe-table row. Projected wholly from
+    the record; the site surface renders the SAME parts as HTML."""
+    label_by_id = {col.id: col.label for col in model.columns}
+    by_strength: "dict[str, list[str]]" = {}
+    for cell in case.mage_constructs:
+        by_strength.setdefault(cell.strength, []).append(label_by_id.get(cell.construct, cell.construct))
+    mapping_bits = [f"{phrase} {', '.join(by_strength[s])}"
+                    for s, phrase in _MAPPING_STRENGTHS if by_strength.get(s)]
+    src = case.source
+    scale = " · ".join(case.scale_facts[:2])
+    adds = _dekebab(case.adds_to_mage[0]) if case.adds_to_mage else "—"
+    frontier = _dekebab(case.limitations[0]) if case.limitations else "—"
+    source_line = (f"*{src.get('source_type', '?')}, {src.get('independence', '?')}; "
+                   f"{src.get('evidence_horizon', '?')} horizon; not-described ≠ absent.*")
+    return [
+        f"**{case.organization}** · {case.domain} · {case.distinctive_starting_point}",
+        f"*Scale.* {scale}",
+        case.onepager_lede,
+        (f"*Environment.* Works over {', '.join(case.object_territory)}; "
+         f"represents {', '.join(case.representations)}; mechanisms {', '.join(case.mechanisms)}."),
+        f"*Maps to MAGE.* {'; '.join(mapping_bits)}.",
+        f"*Adds.* {adds}. *Frontier.* {frontier}.",
+        f"{case.result_sentence} — {source_line}",
+    ]
+
+
+def _case_by_id(case_id: str, model: IndustryCasesModel) -> "IndustryCase | None":
+    for c in model.cases:
+        if c.id == case_id:
+            return c
+    return None
+
+
+def render_case_onepager(case_id: str, surface: str = "book",
+                         model: "IndustryCasesModel | None" = None) -> str:
+    """One reconstruction one-pager for a single AUTHORED case, projected from its record (per-case-onepager
+    -DESIGN §2/§3). Seven parts: kicker · scale · lede · environment · maps-into-MAGE · adds/frontier ·
+    result+source.
+      surface='book' -> a single-column markdown TABLE (the kicker is the header row, the other six parts are
+        body rows), placed into the "Meet the six" gallery and held byte-equal by IC7. A real table (not a
+        meta-card) so it renders + cross-references cleanly; the `case-onepager` marker styles it as a card.
+      surface='site' -> the HTML section body W3's reconstruction page wraps (present now; W3 wires it later).
+    Authored-only, exactly as render_matrix_md — a stub/unknown case renders "" ."""
+    if model is None:
+        model = derive_model()
+    case = _case_by_id(case_id, model)
+    if case is None or not case.authored:
+        return ""
+    parts = _onepager_parts(case, model)
+    if surface == "site":
+        # The HTML body W3 wraps in page chrome. Present now (kicker as a heading, the rest as paragraphs);
+        # the site-only extras (diagram, full Theory-Coverage checklist) live in W3's _reconstruction_page.
+        import html as _html
+        head, *rest = parts
+        body = [f'<p class="op-kicker">{_html.escape(head)}</p>']
+        body += [f"<p>{_html.escape(p)}</p>" for p in rest]
+        return f'<section class="case-onepager" data-case="{_html.escape(case_id, quote=True)}">' \
+               + "".join(body) + "</section>"
+    # surface == "book": a one-column pipe table (kicker header + six part rows).
+    head, *rest = parts
+    lines = [f"| {head} |", "|---|"]
+    lines += [f"| {p} |" for p in rest]
+    return "\n".join(lines)
 
 
 # ---- live queries ----------------------------------------------------------------------------------
@@ -807,6 +898,8 @@ def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
       - CCP5 — the convergence key-lists, two wires: `render_convergence_key_md('universal')` +
         `render_convergence_key_md('generalizes')` (reuses page_block_parity verbatim with `occurrence`,
         exactly as CCP4 disambiguates the two grids — zero new machinery).
+      - IC7 — the "Meet the six" gallery, one wire per placed one-pager card: each byte-equal to
+        `render_case_onepager(id, 'book')` (five non-Cloudflare cards; unique kicker headers, occurrence 0).
     IC5 — the DocAble correspondence matrix — is NOT yet authored into any page, so it stays VACUOUS."""
     if model is None:
         model = derive_model()
@@ -834,6 +927,15 @@ def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
             page, key[0], key, display=_PAGE_REL, label=f"{bucket} convergence key-list",
             regen_hint=f"python3 book-models/industry_cases_model.py convergence-key {bucket}",
             occurrence=occurrence)
+    # IC7 — the "Meet the six" gallery: each placed one-pager card byte-equal to render_case_onepager(id,
+    # 'book'). Each kicker header is unique (distinct org), so the anchor is occurrence 0 per card.
+    for case_id in _ONEPAGER_GALLERY_IDS:
+        card = render_case_onepager(case_id, "book", model).splitlines()
+        if not card:
+            continue
+        findings += page_block_parity(
+            page, card[0], card, display=_PAGE_REL, label=f"{case_id} one-pager card",
+            regen_hint=f"python3 book-models/industry_cases_model.py onepager {case_id}")
     # IC5 — the correspondence matrix stays vacuous until it too is placed on a page.
     return findings
 
@@ -971,6 +1073,15 @@ def _cmd_convergence_key(bucket: str) -> int:
     return 0
 
 
+def _cmd_onepager(case_id: str) -> int:
+    block = render_case_onepager(case_id, "book")
+    if not block:
+        print(f"usage: industry_cases_model.py onepager <authored-case-id> (one of {_ONEPAGER_GALLERY_IDS})")
+        return 2
+    print(block)
+    return 0
+
+
 def _cmd_ceiling_gaps() -> int:
     model = derive_model()
     labels = {r.id: r.label for r in model.ceiling_rungs}
@@ -1011,7 +1122,8 @@ def _cmd_verify() -> int:
             print(f"  {f}")
         return 1
     print("industry-cases: schema + joins clean (IC1-IC4 + IC6 + MCL1-MCL4 + CCP1-CCP3; "
-          "MCL5 + CCP4 + CCP5 parity ACTIVE — placed tables byte-equal to the model; IC5 parity still vacuous)")
+          "MCL5 + CCP4 + CCP5 + IC7 parity ACTIVE — placed tables + one-pagers byte-equal to the model; "
+          "IC5 parity still vacuous)")
     return 0
 
 
@@ -1048,12 +1160,18 @@ def main(argv: "list[str]") -> int:
             print("usage: industry_cases_model.py convergence-key <universal|generalizes>")
             return 2
         return _cmd_convergence_key(argv[2])
+    if cmd == "onepager":
+        if len(argv) < 3:
+            print(f"usage: industry_cases_model.py onepager <case-id> (one of {_ONEPAGER_GALLERY_IDS})")
+            return 2
+        return _cmd_onepager(argv[2])
     if cmd == "ceiling-gaps":
         return _cmd_ceiling_gaps()
     if cmd == "pattern-constructs":
         return _cmd_pattern_constructs()
     print(f"usage: {argv[0]} [verify|matrix|constructs|bears-on <H>|only-docable|coverage|roster|show|"
-          f"ceiling|convergence <bucket>|convergence-key <bucket>|ceiling-gaps|pattern-constructs]")
+          f"ceiling|convergence <bucket>|convergence-key <bucket>|onepager <case-id>|ceiling-gaps|"
+          f"pattern-constructs]")
     return 2
 
 

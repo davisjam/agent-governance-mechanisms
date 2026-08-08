@@ -819,6 +819,15 @@ def _landscape_wrap_typst(body: str) -> str:
     )
 
 
+def _onepager_card_typst(body: str) -> str:
+    """Wrap a rendered one-pager table in a light, left-ruled card — the Typst twin of the web
+    `.case-onepager` panel (per-case-onepager-DESIGN §5). Lighter than the framed apparatus and the lavender
+    concept-inset: just an accent left rule + inset, so the projected reconstruction table reads as set-apart
+    without a heavy box. Breakable, so a tall card flows rather than clipping."""
+    return ("#block(stroke: (left: 2pt + dt.accent), inset: (left: 12pt, top: 3pt, bottom: 3pt), "
+            f"width: 100%, breakable: true)[\n{body}\n]")
+
+
 def _frame_apparatus_typst(body: str, breakable: bool = False) -> str:
     """Wrap a rendered apparatus chapter in a bordered `#block` — a hairline box on the panel tint with an
     accent top-rule, mirroring the web `.apparatus-page`. `breakable: false` (the default) keeps the whole
@@ -945,6 +954,7 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     skip: set[int] = set()
     section_no = 0                     # per-chapter `## ` counter (advanced only when the chapter is numbered)
     pending_landscape = False          # a `<!-- table-landscape -->` marker armed for the next TABLE block
+    pending_onepager = False           # a `<!-- case-onepager -->` marker armed for the next TABLE block
     _title_norm = chapter.title.strip().lower()
     for i, b in enumerate(blocks):
         if i in skip:
@@ -961,6 +971,9 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         if b.kind is ir.BlockKind.DIRECTIVE:
             if b.directive == "table-landscape":
                 pending_landscape = True   # arm the flipped-page wrap for the next TABLE block (inert in HTML)
+                continue
+            if b.directive == "case-onepager":
+                pending_onepager = True    # arm the one-pager card wrap for the next TABLE block
                 continue
             frag = _peel_metadata_marker(b.raw.strip(), ctx)
             if frag:
@@ -1034,6 +1047,10 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         if frag and pending_landscape and b.kind is ir.BlockKind.TABLE:
             frag = _landscape_wrap_typst(frag)
             pending_landscape = False
+        # A `<!-- case-onepager -->` marker preceding this TABLE wraps it as a light left-ruled card.
+        if frag and pending_onepager and b.kind is ir.BlockKind.TABLE:
+            frag = _onepager_card_typst(frag)
+            pending_onepager = False
         if frag:
             out.append(frag)
     if is_part_page:

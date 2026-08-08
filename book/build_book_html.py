@@ -328,6 +328,10 @@ MARKER_KEYWORDS = (
     #   renders through the ordinary table path; web width relies on CSS overflow), like note-spread: consumed
     #   and stripped so the marker never leaks into reader-visible output.
     "table-landscape",
+    # `<!-- case-onepager -->` — arms the NEXT table as a per-case one-pager CARD: HTML wraps it in
+    #   `<div class="case-onepager">` (a light left-ruled panel); Typst wraps the table fragment in the
+    #   matching card block. Consumed + stripped so the marker never leaks. (per-case-onepager-DESIGN §5.)
+    "case-onepager",
 )
 # `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
 # a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
@@ -1202,6 +1206,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     pending_label: list[str] = []           # a `<!-- label: … -->` cross-ref key armed for the next float
     pending_def: list[str] = []             # a core-term `index-def` armed for the next block (→ def-box)
     pending_pullquote: list[bool] = []      # a `<!-- pullquote -->` marker armed for the next blockquote
+    pending_onepager: list[bool] = []       # a `<!-- case-onepager -->` marker armed for the next table (card)
     occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
 
     def _with_label(frag: str) -> str:
@@ -1318,6 +1323,12 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # `pending_def` for def-box, in the same dispatch family). Full-string match (the bare
                 # no-arg idiom used by `glossary-auto` above), since `inner` still carries the trailing `-->`.
                 pending_pullquote.append(True)
+                return True
+            if inner.startswith("case-onepager"):
+                # `<!-- case-onepager -->` — arms the NEXT table as a per-case one-pager CARD (a light
+                # left-ruled wrapper, per-case-onepager-DESIGN §5). Consumed here so the marker never leaks;
+                # the table renders normally and is wrapped in `<div class="case-onepager">` below.
+                pending_onepager.append(True)
                 return True
             if inner.startswith("label:"):
                 # A cross-ref key for the NEXT float: `<!-- label: <key> -->`. Armed here, consumed by
@@ -1459,7 +1470,13 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             if pending_table_caption:
                 cap_el = _caption_el("caption", pending_table_caption.pop(0))
                 tbl = re.sub(r"(<table\b[^>]*>)", lambda mm: mm.group(1) + cap_el, tbl, count=1)
-            _emit(_with_label(tbl))
+            tbl = _with_label(tbl)
+            if pending_onepager:
+                # A `<!-- case-onepager -->` marker heads this table: wrap it as a light card. The inner
+                # <table> survives, so the float-numbering pass still finds it and `[ref:]` still resolves.
+                pending_onepager.clear()
+                tbl = f'<div class="case-onepager">{tbl}</div>'
+            _emit(tbl)
             continue
         if kind is _ir.BlockKind.LIST:
             _emit(_render_unordered_list(block))
@@ -1855,6 +1872,12 @@ table.book-table.meta-card td {{ padding: 0.32rem 0.7rem; line-height: 1.4; }}
 table.book-table.meta-card td:first-child {{ font-weight: 600; color: var(--muted);
                                              white-space: nowrap; width: 1%; }}
 table.book-table.meta-card tr + tr td {{ border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }}
+/* Per-case one-pager card (`.case-onepager`, the "Meet the six" gallery): a light left-ruled panel that sets
+   the projected reconstruction table apart from the body prose, deliberately lighter than the lavender
+   concept-inset (per-case-onepager-DESIGN §5). The inner <table> keeps its booktabs style + numbering. */
+.case-onepager {{ border-left: 3px solid var(--accent); padding: 0.1rem 0 0.1rem 1.1rem; margin: 1.3rem 0; }}
+.case-onepager table.book-table {{ margin: 0.4rem 0; }}
+.case-onepager table.book-table thead th {{ font-size: 1.03em; border-bottom-color: var(--accent); }}
 blockquote table.book-table {{ background: transparent; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}

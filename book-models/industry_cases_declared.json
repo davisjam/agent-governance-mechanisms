@@ -105,6 +105,7 @@
   "industry_cases": [
     {
       "id": "cloudflare-codex",
+      "onepager_lede": "Cloudflare's problem arrived before its agents did. An organization accumulates more engineering standards than any one person can hold in their head, and every change risks quietly breaking one; Cloudflare's answer was to turn the standards themselves into durable, machine-readable knowledge, each requirement given a stable identity that survives the edits around it. Agents then enforce those standards at the moment of review, while people keep the authority to author and promote policy. The book reads the case as a bet that autonomy works once institutional knowledge is made legible to the machine, retrieved where the work happens, and enforced without its author present.",
       "organization": "Cloudflare",
       "domain": "software / infrastructure",
       "distinctive_starting_point": "policy-first governance",
@@ -182,6 +183,7 @@
 
     {
       "id": "spotify-honk",
+      "onepager_lede": "Spotify is the case where the environment came first. For years before autonomous coding agents existed, Spotify had been standardizing its software estate for human engineers and deterministic bots: a catalog that named every service and its owners, fleet-wide tooling that could push a single change across thousands of repositories, and an automatic gate that admitted work on evidence. That long head start is both the case's defining feature and its evidential gift. The environment was mature and measured before the agent arrived, so Spotify offers something close to a before-and-after on what a governed substrate buys you, with the caution that the productivity figures are self-reported rather than a causal test.",
       "organization": "Spotify",
       "domain": "software / large-scale platform",
       "distinctive_starting_point": "platform + fleet-first autonomous implementation",
@@ -261,6 +263,7 @@
     },
     {
       "id": "shopify",
+      "onepager_lede": "Meet Shopify through River, an agent you summon from a public Slack channel to read code, run tests, query the data warehouse, and open a pull request. River is public on purpose: a lesson learned in a private session helps no one else, so every session becomes a searchable artifact the company mines into skills and defaults. Underneath sits the deliberate part, a single work surface that centralizes context and reproducible execution, where each new agent is a profile over the shared substrate rather than a platform of its own. Shopify's distinctive habit is organizational rather than technical, keeping the work visible so one engineer's experience becomes everyone's, on a short evidence horizon with outcome numbers the company reports itself.",
       "organization": "Shopify",
       "domain": "software / commerce platform",
       "distinctive_starting_point": "shared agent-ready environment + organizational learning",
@@ -338,6 +341,7 @@
     },
     {
       "id": "docker",
+      "onepager_lede": "Docker began from a question about trust: how much freedom can you give an agent whose behavior you cannot fully predict? Its answer moved the boundary off the prompt and into the runtime, giving each agent a disposable microVM where the forbidden thing is simply absent (the home SSH directory is not in the agent's world, rather than a rule telling it not to look), so inside the box it can install, run, and modify freely. On that footing Docker ran a small team of role-specialized agents on CI, each free to investigate the unexpected, with an independent reviewer and a human standing between every pull request and the main branch. It is the youngest system in the set, so read it for its architecture and authority story rather than for long-run outcomes.",
       "organization": "Docker",
       "domain": "software / developer infrastructure",
       "distinctive_starting_point": "authority boundaries + autonomous fleet + evaluation loops",
@@ -418,6 +422,7 @@
     },
     {
       "id": "siemens",
+      "onepager_lede": "Siemens inverts the brownfield. Where the software companies built an environment around an arriving agent, Siemens's agents arrive into an engineering culture that spent decades encoding intent, geometry, physics, requirements, and verification into executable models, with code as one downstream artifact those models generate rather than the source of truth. On its sharpest prototype an engineer states intent in plain words ('validate this part under 200 lb in the Y-direction') and the agent reads the CAD geometry, sets up the finite-element model, calls the solver, and returns a validated report. This is the case that never had to be persuaded engineering should run through models; the evidence is prototype-and-product rather than a long deployment, and it comes from the vendor's own writing.",
       "organization": "Siemens",
       "domain": "embedded / CPS / model-based engineering",
       "distinctive_starting_point": "model-first engineering; models already are the development surface",
@@ -498,6 +503,7 @@
     },
     {
       "id": "zenseact",
+      "onepager_lede": "Zenseact carries MAGE past source code. Its agents do not write software; they do knowledge work across the company's own systems, reasoning over issue trackers, code review, CI, search, and even ERP to decide which tool and which piece of expertise a task needs. The platform, called ZAP, is federated: a central team owns the runtime, permissions, and context machinery, while each domain team ships an agent as little more than a directory holding a config file and a skill. The origin is telling: an earlier, open approach 'did not scale,' so Zenseact rebuilt the environment around the same commodity models, betting that capability lives partly in the environment, on a single company-authored source that reports no outcome numbers yet.",
       "organization": "Zenseact",
       "domain": "engineering knowledge work / automotive",
       "distinctive_starting_point": "autonomous knowledge work over distributed engineering systems",
