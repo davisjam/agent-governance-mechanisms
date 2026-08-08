@@ -87,7 +87,7 @@ lives in markdown; the structure lives in the model; the gate keeps the two from
 
 ## Related concepts
 
-- [Governance-centric — the enabling substrate](concept-governance-centric.md)
+- [The Engineered Environment](concept-governance-centric.md)
 - [Hold intent with a mechanism: prevent first, sense the rest](concept-alignment-thesis.md)
 
 ## Read in the book →

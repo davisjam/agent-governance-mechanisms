@@ -2354,6 +2354,24 @@ def _concept_link(slug: str) -> str:
     return f'<a class="s-concept" href="concept-{_attr(slug)}.html">→ read the concept</a>'
 
 
+def _big_idea_rec(slug: str) -> "dict | None":
+    """Fetch ANY Big-Idea record by slug from the raw model, tagged with its `_slug` — the brick-only path.
+    `_big_ideas_ordered()` only yields `_order` records (the six Concept entries); the three website-v2
+    ideas (new-problem, independent-convergence, research-agenda) live in the model but sit OUTSIDE `_order`
+    (they have no Concept entry yet), so the projector reaches them here. check_big_ideas still gates their
+    book_home/figure/claim/id — being off `_order` only exempts them from the two-tier Concept model."""
+    raw = _load_big_ideas()
+    rec = raw.get(slug)
+    return (rec | {"_slug": slug}) if isinstance(rec, dict) else None
+
+
+def _book_link(rec: dict) -> str:
+    """The brick's link straight into the book chapter — used by the brick-only ideas that have no Concept
+    ENTRY yet, so 'Read in the book →' replaces '→ read the concept'. Reuses the `s-concept` link styling."""
+    href = _chapter_href(rec.get("book_home", "")).split("#")[0]
+    return f'<a class="s-concept" href="{_attr(href)}">Read in the book →</a>'
+
+
 def _idea_figure(rec: dict) -> str:
     """The slot's figure, spliced inline with its internal ids namespaced per-slot (so no two figures — or
     a figure reused — collide on element ids). Falls back to empty if the asset is missing."""
@@ -2361,11 +2379,14 @@ def _idea_figure(rec: dict) -> str:
     return _ns_svg_ids(svg, "bi-" + rec.get("_slug", rec.get("id", "x")))
 
 
-def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False) -> str:
+def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False,
+                   link_html: "str | None" = None) -> str:
     """One Big Idea as a full-width band: figure beside words (sides alternate for rhythm), one clean
     block — no card, no thumbnail, no peek. Divider handled by the caller. `bigfig` renders the band
     stacked full-width (figure above centred words) for ideas whose figure needs the whole column to
-    stay legible; it supersedes `figright` (side is moot when the figure spans the column)."""
+    stay legible; it supersedes `figright` (side is moot when the figure spans the column). `link_html`
+    overrides the default '→ read the concept' link — a brick-only idea (not in `_order`, so it has no
+    Concept entry yet) passes `_book_link(rec)` to point straight at its book chapter instead."""
     cls = "slot slot-bigfig" if bigfig else ("slot figright" if figright else "slot")
     return (
         f'<div class="{cls}" id="{_attr(rec.get("id", ""))}">\n'
@@ -2374,7 +2395,7 @@ def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False) -> s
         f'    <p class="s-kick">{_esc(rec.get("kicker", ""))}</p>\n'
         f'    <h2 class="s-title">{_esc(rec.get("title", ""))}</h2>\n'
         f'    <p class="s-claim">{_esc(rec.get("claim", ""))}</p>\n'
-        f'    {_concept_link(rec.get("_slug", ""))}\n'
+        f'    {link_html if link_html is not None else _concept_link(rec.get("_slug", ""))}\n'
         f'  </div>\n'
         f'</div>')
 
@@ -2394,39 +2415,49 @@ def _thesis_cell(rec: dict, concept_id: str) -> str:
 
 
 def _landing_big_ideas() -> str:
-    """The six Big Ideas, rendered from the model in the book's argument order: idea 1 (the problem)
-    fused as the full-width churn-flowchart band directly under the hero; the stance as one band; the two
-    theses as a matched PAIR (Thesis 1 / Thesis 2); then practice and seat as alternating bands. The
-    thesis pair cells carry the thesis concepts' site ids."""
+    """The six Big Ideas of the website-v2 argument, rendered from problem to research frontier: idea 1
+    (the New Engineering Problem) as the full-width lead band under the hero; Engineering Capital as one
+    band; the Two Theses as a matched PAIR (Thesis 1 / Thesis 2); the Engineered Environment as a band;
+    then Independent Convergence and the Research Agenda. Three of the six (new-problem, independent-
+    convergence, research-agenda) are BRICK-ONLY records fetched via `_big_idea_rec` — off `_order`, so
+    they link straight into the book (`_book_link`) until their Concept entries are authored. The other
+    three plus the thesis pair are `_order` Concept entries and keep their '→ read the concept' link. The
+    thesis pair cells carry the thesis concepts' site ids (`card-thesis-*`)."""
     by_slug = {r["_slug"]: r for r in _big_ideas_ordered()}
+    np = _big_idea_rec("new-problem") or {}
+    ic = _big_idea_rec("independent-convergence") or {}
+    ra = _big_idea_rec("research-agenda") or {}
     parts: list[str] = []
-    # Idea 1 — the problem — the full-width churn flowchart, the hero-void fix, with Big-Idea framing.
-    p1 = by_slug["churn"]
+    # Idea 1 — the problem — the full-width lead band directly under the hero (brick-only → book link).
     parts.append(
-        f'<div class="idea-hero" id="{_attr(p1.get("id", ""))}">\n'
-        f'  <figure class="ih-fig">{_idea_figure(p1)}</figure>\n'
+        f'<div class="idea-hero" id="{_attr(np.get("id", ""))}">\n'
+        f'  <figure class="ih-fig">{_idea_figure(np)}</figure>\n'
         '  <div class="ih-words">\n'
-        f'    <p class="s-kick">{_esc(p1.get("kicker", ""))}</p>\n'
-        f'    <h2 class="s-title">{_esc(p1.get("title", ""))}</h2>\n'
-        f'    <p class="s-claim">{_esc(p1.get("claim", ""))}</p>\n'
-        f'    {_concept_link(p1.get("_slug", ""))}\n'
+        f'    <p class="s-kick">{_esc(np.get("kicker", ""))}</p>\n'
+        f'    <h2 class="s-title">{_esc(np.get("title", ""))}</h2>\n'
+        f'    <p class="s-claim">{_esc(np.get("claim", ""))}</p>\n'
+        f'    {_book_link(np)}\n'
         '  </div>\n'
         '</div>')
     parts.append('<hr class="i-sep" />')
-    # Idea 2 — the stance — one band.
-    parts.append(_big_idea_band(by_slug["governance-centric"], figright=True))
+    # Idea 2 — Engineering Capital (churn vs compounding) — one band.
+    parts.append(_big_idea_band(by_slug["churn"]))
     parts.append('<hr class="i-sep" />')
-    # Ideas 3 & 4 — the two theses — a matched pair (the concepts' site homes).
+    # Idea 3 — the Two Theses — a matched pair (the thesis concepts' site homes; both kickered "Big idea 3").
     parts.append(
         '<div class="pair">\n'
         + _thesis_cell(by_slug["modeling-thesis"], "card-thesis-modeling") + "\n"
         + _thesis_cell(by_slug["alignment-thesis"], "card-thesis-alignment") + "\n"
         + '</div>')
     parts.append('<hr class="i-sep" />')
-    # Ideas 5 & 6 — practice, then seat — enlarged full-width figures (legible without zooming).
-    parts.append(_big_idea_band(by_slug["convert-failures"], bigfig=True))
+    # Idea 4 — the Engineered Environment (the environment is the object of engineering) — one band.
+    parts.append(_big_idea_band(by_slug["governance-centric"], figright=True))
     parts.append('<hr class="i-sep" />')
-    parts.append(_big_idea_band(by_slug["seat-moves"], bigfig=True))
+    # Idea 5 — Independent Convergence — brick-only band (→ book).
+    parts.append(_big_idea_band(ic, link_html=_book_link(ic)))
+    parts.append('<hr class="i-sep" />')
+    # Idea 6 — the Research Agenda — brick-only, enlarged full-width figure (→ book).
+    parts.append(_big_idea_band(ra, bigfig=True, link_html=_book_link(ra)))
     return "\n\n  ".join(parts)
 
 
@@ -2454,6 +2485,30 @@ def _landing_closing() -> str:
         'you, and convert it: one type, one lint, one gate. The theory and methodology grow from there; below '
         'are four ways in.</p>\n'
         f'  <div class="close-ways">\n    {buttons}\n  </div>\n'
+        '</section>')
+
+
+def _landing_demoted_ideas() -> str:
+    """The small back-matter strip for the two ideas the website-v2 reorg moved off the six main bands —
+    convert-failures and seat-moves. Each renders as an anchored card carrying its `bi-<slug>` id, so the
+    Big-Ideas projection-drift check keeps passing (every non-gateway record's id must resolve on the
+    landing), and links its Concept entry — the inbound edge the orphan gate needs once the idea no longer
+    has a main brick. Deliberately minimal: two cards reusing the reference-strip chrome, not a masonry."""
+    by_slug = {r["_slug"]: r for r in _big_ideas_ordered()}
+    items = "\n      ".join(
+        f'<a class="deep-item" id="{_attr(by_slug[s]["id"])}" href="concept-{_attr(s)}.html">'
+        f'<b>{_esc(by_slug[s]["title"])}</b><span>{_esc(by_slug[s]["claim"])}</span></a>'
+        for s in ("convert-failures", "seat-moves") if s in by_slug)
+    if not items:
+        return ""
+    return (
+        '<section class="reference" aria-labelledby="demoted-h">\n'
+        '  <h2 id="demoted-h" class="deep-h">Two more ideas, expanded in the book</h2>\n'
+        '  <p class="deep-note">Off the six-idea spine, but part of the method — each expanded in the book '
+        'and kept in the catalogue.</p>\n'
+        '  <div class="deep-grp">\n'
+        f'    <div class="deep-row">\n      {items}\n    </div>\n'
+        '  </div>\n'
         '</section>')
 
 
@@ -3413,7 +3468,7 @@ def cmd_build(_args) -> int:
         book_title_block=_book_title_block(),
         big_ideas=_landing_big_ideas(),
         closing=_landing_closing(),
-    ))
+    ) + '\n  <hr class="sep" />\n  ' + _landing_demoted_ideas())
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>MAGE — Model-Based Agentic Software Engineering</title>\n{FONTS_LINK}\n"

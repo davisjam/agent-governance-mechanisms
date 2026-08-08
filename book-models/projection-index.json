@@ -3,13 +3,13 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1410,
+    "total_sites": 1414,
     "by_projection": {
       "book-pdf": 24,
       "book-web": 1079,
       "website-catalogue": 221,
-      "website-concepts": 34,
-      "website-landing": 8,
+      "website-concepts": 35,
+      "website-landing": 11,
       "website-misc": 44
     }
   },
@@ -473,7 +473,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 14
+            "occ": 10
           }
         ],
         "website-concepts": [
@@ -948,6 +948,12 @@
         ]
       },
       "website": {
+        "website-landing": [
+          {
+            "file": "index.html",
+            "occ": 5
+          }
+        ],
         "website-misc": [
           {
             "file": "constructing-the-gee.html",
@@ -1091,7 +1097,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 11
+            "occ": 15
           }
         ],
         "website-concepts": [
@@ -1799,17 +1805,17 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 15
+            "occ": 37
           }
         ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 9
+            "occ": 12
           },
           {
             "file": "concept-governance-centric.html",
-            "occ": 3
+            "occ": 6
           },
           {
             "file": "concept-modeling-thesis.html",
@@ -2325,13 +2331,17 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 5
+            "occ": 8
           }
         ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
-            "occ": 9
+            "occ": 12
+          },
+          {
+            "file": "concept-governance-centric.html",
+            "occ": 1
           }
         ]
       }
@@ -3011,7 +3021,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 13
+            "occ": 21
           }
         ],
         "website-concepts": [
@@ -3033,7 +3043,7 @@
           },
           {
             "file": "concept-modeling-thesis.html",
-            "occ": 35
+            "occ": 38
           },
           {
             "file": "concept-seat-moves.html",
@@ -4050,6 +4060,12 @@
         ]
       },
       "website": {
+        "website-landing": [
+          {
+            "file": "index.html",
+            "occ": 5
+          }
+        ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
@@ -4598,6 +4614,12 @@
         ]
       },
       "website": {
+        "website-landing": [
+          {
+            "file": "index.html",
+            "occ": 4
+          }
+        ],
         "website-concepts": [
           {
             "file": "concept-churn.html",
@@ -5579,7 +5601,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 7
+            "occ": 11
           }
         ],
         "website-concepts": [
@@ -5597,7 +5619,7 @@
           },
           {
             "file": "concept-modeling-thesis.html",
-            "occ": 11
+            "occ": 9
           }
         ],
         "website-catalogue": [

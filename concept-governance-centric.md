@@ -1,10 +1,10 @@
-# Governance-centric — the enabling substrate
+# The Engineered Environment
 
-**Claim** — Build the environment first: encode each obligation as a mechanism the environment enforces, so quality is a property of the ground the agents stand on.
+**Claim** — The environment is the object of engineering. Encode each obligation as a mechanism it enforces, so quality is a property of the ground agents stand on.
 
-| Concept | Big idea 2 · the stance |
+| Concept | Big idea 4 · the object |
 | --- | --- |
-| Claim | Build the environment first: encode each obligation as a mechanism the environment enforces, so quality is a property of the ground the agents stand on. |
+| Claim | The environment is the object of engineering. Encode each obligation as a mechanism it enforces, so quality is a property of the ground agents stand on. |
 | Mechanisms | 3 — pre-commit-hook, staged-deploy-gates, cron-alerts-gate |
 | Related | churn · modeling-thesis |
 | In the book | book/2.3-the-governed-environment.html |
@@ -53,7 +53,7 @@ commit without getting tired. Reviewers watch the work; the environment holds th
 
 ## Related concepts
 
-- [Choose Between Churn and Compounding](concept-churn.md)
+- [Engineering Capital — Churn vs. Compounding](concept-churn.md)
 - [Documentation, taken to its limit, is a structured model](concept-modeling-thesis.md)
 
 ## Read in the book →

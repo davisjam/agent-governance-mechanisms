@@ -1,8 +1,8 @@
-# Choose Between Churn and Compounding
+# Engineering Capital — Churn vs. Compounding
 
 **Claim** — One environment, two fates. Ungoverned, effort dissipates as churn — rediscovering, undoing, reconciling. Governed and converting, it accrues as engineering capital: the same effort compounds.
 
-| Concept | Big idea 1 · the stakes |
+| Concept | Big idea 2 · the stakes |
 | --- | --- |
 | Claim | One environment, two fates. Ungoverned, effort dissipates as churn — rediscovering, undoing, reconciling. Governed and converting, it accrues as engineering capital: the same effort compounds. |
 | Mechanisms | — none yet |
@@ -97,7 +97,7 @@ No mechanism edge is declared yet — this concept ships thin for now; the edge 
 
 ## Related concepts
 
-- [Governance-centric — the enabling substrate](concept-governance-centric.md)
+- [The Engineered Environment](concept-governance-centric.md)
 
 ## Read in the book →
 
