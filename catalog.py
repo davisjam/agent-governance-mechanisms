@@ -1123,6 +1123,20 @@ def cmd_validate(_args) -> int:
     if outofband:
         print(f"  [fontband] AUDIT-ONLY: {lffb.summary_line(outofband)} — "
               f"run `python3 book-models/lint_figure_font_band.py` (does not gate)")
+    # FIGURE LABEL-COLLISION — the stroke-through-a-free-label sensor over book/assets/*.svg (the third
+    # figure legibility class, after overflow and font-band): a connector line/arrow/curve that runs through
+    # the readable core of a FREE-FLOATING text label so stroke and glyphs smear together. A pilot validated
+    # it against one ground-truth defect (a feedback edge drawn through a rotated label) and prescribed the
+    # two precision filters this carries — flag only labels NOT enclosed by a filled shape (box / chip /
+    # pill / halo), and gate out faint low-contrast strokes. It reads clean today; it exists to catch the
+    # NEXT edge someone routes through a bare label. AUDIT-ONLY-first per the repo's blocking-lint
+    # discipline: it PRINTS any finding but does NOT increment n_issues. See
+    # book-models/lint_figure_label_collision.py.
+    import lint_figure_label_collision as lflc  # noqa: E402 — audit-only stroke-through-label sensor
+    collisions = lflc.findings()
+    if collisions:
+        print(f"  [labelcol] AUDIT-ONLY: {lflc.summary_line(collisions)} — "
+              f"run `python3 book-models/lint_figure_label_collision.py` (does not gate)")
     # BRICK FITNESS — the Appendix-C §13.4 sensor: a brick whose Structure diagram scores SIMPLIFY/GLYPH under
     # the thumbnail-fitness rubric but carries NO verdict in book-models/brick-fitness.json (the model the grid
     # renderer reads to pick diagram-vs-glyph). AUDIT-ONLY-first per the repo's blocking-lint discipline: all 83
