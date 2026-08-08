@@ -22,7 +22,7 @@ Reads the meta-files at check-time (rule-#33 best form — stable, no codegen, n
 AUDIT-ONLY-first (rule-#55 blocking-lint discipline) — the `[agenda]` band in `catalog.py validate`
 PRINTS RA1-RA4 findings but does NOT increment the issue count; a follow-up flips them to BLOCKING once a
 clean session confirms the drain, the path every book model took. RA5 prose-parity activates once the
-coda section is placed; RA5 figure-parity stays VACUOUS until the SVG lands.
+coda section is placed; RA5 figure-parity activates once the open-frontiers map SVG lands.
 
 Run `python3 book-models/research_agenda_model.py verify` to drift-check (RA1-RA5); `... agenda-prose`
 to print the coda index table for the page; `... nodes` to print the figure node manifest; `... show` to
@@ -54,6 +54,11 @@ _CODA_PAGE_REL = chapter_identity.filename("where-mage-fits")
 #: The ratified count — encode the author's set so a silent add/drop reddens (the theory model's
 #: EXPECT_HYPOTHESES analogue: the count guard is the backstop against silent agenda drift).
 EXPECT_AGENDA_ITEMS = 7
+
+#: The research-program map the figure wave placed (RA5 FIGURE-parity target). Its accessible `<desc>` node
+#: enumeration must name every render_agenda_nodes() title — the softer figure analogue of the prose parity,
+#: run against the enumeration a screen reader reaches rather than against the drawn boxes. Book-relative.
+_FIGURE_SVG_REL = os.path.join("assets", "open-frontiers.svg")
 
 #: The coda index columns (the header the projection emits and the page carries; parity is exact).
 _COLUMNS = ("Kind", "Open direction", "Home")
@@ -283,9 +288,11 @@ def parity_findings(model: "AgendaModel | None" = None) -> "list[str]":
         render_frontier_prose_md() byte-for-byte. VACUOUS until the coda section lands: guarded on the
         projection's header line being present on the target page, so before placement this contributes
         nothing (and after placement a drift reddens).
-      - FIGURE parity — the map SVG's `<desc>` must name exactly the render_agenda_nodes() id/title set.
-        VACUOUS this wave — the SVG is not yet drawn; the figure wave wires it against the `<desc>` node
-        list (the softer figure analogue of the industry model's parity, on the accessible enumeration).
+      - FIGURE parity — the map SVG's `<desc>` must name every render_agenda_nodes() title. ACTIVE once the
+        open-frontiers map SVG lands: guarded on the file being present, so it contributes nothing before the
+        figure wave places it, and after placement a title the `<desc>` fails to name reddens (the softer
+        figure analogue of the industry model's parity, run on the accessible enumeration a reader reaches
+        rather than the drawn boxes).
     """
     if model is None:
         model = derive_model()
@@ -299,15 +306,44 @@ def parity_findings(model: "AgendaModel | None" = None) -> "list[str]":
                 page, _TABLE_HEADER, render_frontier_prose_md(model).splitlines(),
                 display=_CODA_PAGE_REL, label="research-agenda coda index",
                 regen_hint="python3 book-models/research_agenda_model.py agenda-prose")
-    # FIGURE parity — VACUOUS until the open-frontiers-map SVG lands; the figure wave wires it here.
+    # FIGURE parity — active once the open-frontiers map SVG lands; each node title must appear in its <desc>.
+    desc = _svg_desc_text(os.path.join(_BOOK, _FIGURE_SVG_REL))
+    if desc is not None:
+        ndesc = _norm_node_title(desc)
+        for n in render_agenda_nodes(model):
+            if _norm_node_title(n.title) not in ndesc:
+                findings.append(
+                    f"RA5 figure-parity: node {n.id!r} title {n.title!r} is not named in "
+                    f"{_FIGURE_SVG_REL}'s <desc> node enumeration (name it in the figure desc, or reconcile)")
     return findings
+
+
+def _svg_desc_text(path: str) -> "str | None":
+    """The visible text of an SVG's `<desc>` element, nested tags stripped and entities unescaped; None when
+    the file is absent (parity stays vacuous) or carries no `<desc>`."""
+    if not os.path.isfile(path):
+        return None
+    import html
+    import re
+    m = re.search(r"<desc\b[^>]*>(.*?)</desc>", open(path, encoding="utf-8").read(), re.S)
+    if not m:
+        return None
+    return html.unescape(re.sub(r"<[^>]+>", " ", m.group(1)))
+
+
+def _norm_node_title(s: str) -> str:
+    """Normalize a node title / desc for the substring match: lowercase, `&`/`+` spelled as `and`, whitespace
+    collapsed. Lets a title's `&`/`+` (`Development completeness & supply chain`) match a `<desc>` that spells
+    it out, without the figure author restating the exact glyph."""
+    import re
+    return re.sub(r"\s+", " ", s.lower().replace("&", " and ").replace("+", " and ")).strip()
 
 
 def all_findings(model: "AgendaModel | None" = None) -> "list[str]":
     """RA1-RA5 — the whole `[agenda]` band. Wired AUDIT-ONLY-first (rule-#55): the band PRINTS these but does
     NOT gate `catalog.py validate` on first landing; a follow-up promotes RA1-RA4 to BLOCKING once a clean
-    session confirms the drain. RA5 prose-parity activates once the coda is placed; RA5 figure-parity stays
-    vacuous until the SVG lands."""
+    session confirms the drain. RA5 prose-parity activates once the coda is placed; RA5 figure-parity
+    activates once the open-frontiers map SVG lands."""
     if model is None:
         model = derive_model()
     return structural_findings(model) + count_guard_findings(model) + parity_findings(model)
@@ -322,8 +358,9 @@ def coverage_note(model: "AgendaModel | None" = None) -> str:
     page = os.path.join(_BOOK, _CODA_PAGE_REL)
     placed = os.path.isfile(page) and _TABLE_HEADER in open(page, encoding="utf-8").read()
     prose = "ACTIVE" if placed else "vacuous (coda not yet placed)"
+    fig = "ACTIVE" if os.path.isfile(os.path.join(_BOOK, _FIGURE_SVG_REL)) else "vacuous (SVG not yet placed)"
     return (f"{len(model.items)} agenda items ({by_kind}) · statuses: {', '.join(statuses)} · "
-            f"RA5 prose-parity {prose}, figure-parity vacuous (SVG deferred)")
+            f"RA5 prose-parity {prose}, figure-parity {fig}")
 
 
 # ---- CLI --------------------------------------------------------------------------------------------
@@ -365,7 +402,7 @@ def _cmd_verify() -> int:
             print(f"  {f}")
         return 1
     print("research-agenda: schema + joins clean (RA1 schema + RA2 hypothesis-join + RA3 section-join + "
-          "RA4 count; RA5 prose-parity per coverage note, figure-parity vacuous)")
+          "RA4 count; RA5 prose-parity + figure-parity per coverage note)")
     return 0
 
 

@@ -927,6 +927,189 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>So place MAGE among them. It mechanizes discipline like Software Engineering at Google, writes its mechanisms as patterns in the classic design-pattern form, and inherits the modeling tradition's conviction that structure should be explicit and checkable. It departs from each on one axis: the workforce is a fleet, the patterns govern rather than construct, and the model's job is maintenance under drift, not generation from scratch.</p>
 <p>The three together leave a gap this book set out to fill. Not how to build an agent — how to engineer with a fleet of them, and trust what ships. The titles that share this book's era mostly teach the first, where the agent is the product. This one runs the other way. The agents are the workforce, and the subject is the engineering that governs them. The Conclusion closes that argument.</p>
 <h2><span class="sec-num">6.5.9</span> Where the frontier goes next</h2>
-<p>The open work of this book gathers here, sorted into four kinds. <strong>Frontiers</strong> trace the moving lines the argument names and hands onward: how far judgment compiles into machinery, how richer models move that line, whether a governed environment emits its own assurance, and what openness means once the environment is the asset. A <strong>measurement</strong> program turns governance into quantities you can report. Learning and organizational <strong>dynamics</strong> ask how a lesson, once encoded, propagates to later work, and how the organization changes shape as agent throughput climbs. <strong>Generalization</strong> asks whether the answer holds past software.</p>
+<p>The open work of this book gathers here, sorted into four kinds. <strong>Frontiers</strong> trace the moving lines the argument names and hands onward: how far judgment compiles into machinery, how richer models move that line, whether a governed environment emits its own assurance, and what openness means once the environment is the asset. A <strong>measurement</strong> program turns governance into quantities you can report. Learning and organizational <strong>dynamics</strong> ask how a lesson, once encoded, propagates to later work, and how the organization changes shape as agent throughput climbs. <strong>Generalization</strong> asks whether the answer holds past software. <a class="xref" href="6.5-where-mage-fits.html#fig-6-5-3">Figure&nbsp;6.5-3</a> maps the whole program: the four kinds as regions, every direction welded by a dropper edge to the hypotheses (H1–H8) that would make it testable.</p>
+<figure id="fig-6-5-3" class="book-figure" data-label="open-frontiers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720"
+     role="group" aria-labelledby="ofTitle ofDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="ofTitle">Where the frontier goes next: the open work of MAGE partitions into four kinds, each anchored to the hypothesis that makes it falsifiable</title>
+  <desc id="ofDesc">A research-program map. The open work of MAGE sorts into four kinds, drawn as four
+    regions, and every item is a titled box joined by a thin dropper edge down to the eight hypotheses that
+    make it testable. FRONTIERS holds four items: Determinization frontier — how far judgment compiles into
+    machinery — open, rust, anchored to H3 mechanized-assurance and H4 representation-leverage, home section
+    6.5; Modeling moves the frontier — richer models expand what alignment can determinize — open, green,
+    anchored to H4, home 6.1; Assurance frontier, the MAGE-II conjecture — conjectured, dashed, rust,
+    anchored to H3, home 6.2; Development completeness and supply chain — open, green, anchored to H7
+    conversion-conditions, home 6.2. MEASUREMENT holds one item: the Governance census — established, rust,
+    the one node that expands into three metric chips, Coverage, Under-governance, and Governance-debt, plus
+    one dashed conjectured chip, propagation-latency, the proposed fourth metric — anchored to H3, H6
+    oversight-amortization, and H8 learning-propagation, home 6.5. DYNAMICS holds one item: Learning
+    propagation and organizational scaling — open, blue, anchored to H1 failure-class-exposure, H7, and H8,
+    homes 6.1 and 6.5. GENERALIZATION holds one item: Generalization beyond software, MBAE — conjectured,
+    dashed, green, anchored to H4, home 6.5. Two inter-item edges carry book claims: Modeling moves the
+    frontier points to the Determinization frontier, labelled richer models move it; and the census's
+    propagation-latency chip points to Learning propagation, labelled future metric. The anchor rail across
+    the foot names the eight hypotheses: H1 exposure, H2 moderation, H3 assurance, H4 leverage, H5
+    deficiency, H6 amortization, H7 conversion, H8 propagation. Border style encodes status: solid for open
+    and established, dashed for a conjecture the book states but does not prove. None is settled here.</desc>
+
+  <defs>
+    <marker id="of-drop" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a8a29e"/>
+    </marker>
+    <marker id="of-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+    <marker id="of-rust" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a3f12"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="720" fill="#fdfcf9"/>
+  <text x="500" y="38" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">Where the frontier goes next</text>
+  <text x="500" y="64" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">The open work of MAGE sorts into four kinds — each welded to the hypothesis that makes it falsifiable.</text>
+
+  <!-- legend: status border key (left) + colour key (right) -->
+  <g font-size="16" fill="#57534e">
+    <rect x="40" y="80" width="26" height="16" rx="3" fill="#fdfcf9" stroke="#57534e" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <text x="72" y="93">conjectured</text>
+    <rect x="182" y="80" width="26" height="16" rx="3" fill="#fdfcf9" stroke="#57534e" stroke-width="1.8"/>
+    <text x="214" y="93">open</text>
+    <rect x="266" y="80" width="26" height="16" rx="3" fill="#fdfcf9" stroke="#57534e" stroke-width="2.6"/>
+    <text x="298" y="93">established</text>
+    <circle cx="566" cy="88" r="7" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="580" y="93">modeling</text>
+    <circle cx="690" cy="88" r="7" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <text x="704" y="93">governance</text>
+    <circle cx="836" cy="88" r="7" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="850" y="93">autonomy</text>
+  </g>
+
+  <!-- ============ REGION 1: FRONTIERS (four items across the top) ============ -->
+  <line x1="40" y1="119" x2="360" y2="119" stroke="#e4e0d8" stroke-width="1.5"/>
+  <line x1="640" y1="119" x2="960" y2="119" stroke="#e4e0d8" stroke-width="1.5"/>
+  <text x="500" y="125" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="2" fill="#57534e">FRONTIERS</text>
+
+  <!-- A1 Determinization frontier — open, rust -->
+  <rect x="40" y="140" width="216" height="72" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.8"/>
+  <text x="148" y="171" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Determinization</text>
+  <text x="148" y="193" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">frontier</text>
+
+  <!-- A2 Modeling moves the frontier — open, green -->
+  <rect x="268" y="140" width="216" height="72" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.8"/>
+  <text x="376" y="171" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Modeling moves</text>
+  <text x="376" y="193" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">the frontier</text>
+
+  <!-- A3 Assurance frontier (MAGE-II) — conjectured, rust, dashed -->
+  <rect x="496" y="140" width="216" height="72" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="604" y="171" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Assurance frontier</text>
+  <text x="604" y="193" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the MAGE-II conjecture</text>
+
+  <!-- A4 Development completeness & supply chain — open, green -->
+  <rect x="724" y="140" width="216" height="72" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.8"/>
+  <text x="832" y="164" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Development</text>
+  <text x="832" y="185" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">completeness &amp;</text>
+  <text x="832" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">supply chain</text>
+
+  <!-- A2 -> A1 inter-item edge: "richer models move it" (green, a book claim) -->
+  <path d="M368,212 C300,262 224,262 156,212" fill="none" stroke="#1f7a4d" stroke-width="2.2" marker-end="url(#of-green)"/>
+  <text x="258" y="284" text-anchor="middle" font-size="16" font-style="italic" font-weight="700" fill="#1f7a4d">richer models move it</text>
+
+  <!-- ============ REGION 2/3/4 labels ============ -->
+  <text x="255" y="330" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="2" fill="#57534e">MEASUREMENT</text>
+  <text x="622" y="330" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="2" fill="#57534e">DYNAMICS</text>
+  <text x="859" y="330" text-anchor="middle" font-size="20" font-weight="700" letter-spacing="1.5" fill="#57534e">GENERALIZATION</text>
+
+  <!-- A5 Governance census — established, rust; the ONE node that expands -->
+  <rect x="40" y="342" width="430" height="118" rx="9" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.6"/>
+  <text x="255" y="368" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Governance census</text>
+  <text x="255" y="388" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">counts, not opinions</text>
+  <!-- three established metric chips + one dashed conjectured chip -->
+  <rect x="48" y="398" width="102" height="54" rx="6" fill="#fdfcf9" stroke="#9a3f12" stroke-width="1.8"/>
+  <text x="99" y="430" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">Coverage</text>
+  <rect x="154" y="398" width="102" height="54" rx="6" fill="#fdfcf9" stroke="#9a3f12" stroke-width="1.8"/>
+  <text x="205" y="421" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">Under-</text>
+  <text x="205" y="441" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">governance</text>
+  <rect x="260" y="398" width="102" height="54" rx="6" fill="#fdfcf9" stroke="#9a3f12" stroke-width="1.8"/>
+  <text x="311" y="421" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">Governance</text>
+  <text x="311" y="441" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">debt</text>
+  <rect x="366" y="398" width="102" height="54" rx="6" fill="#fdfcf9" stroke="#9a3f12" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="417" y="421" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3f12">Propagation</text>
+  <text x="417" y="441" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3f12">-latency</text>
+
+  <!-- A6 Learning propagation + organizational scaling — open, blue -->
+  <rect x="512" y="342" width="220" height="100" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="622" y="375" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">Learning</text>
+  <text x="622" y="396" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">propagation +</text>
+  <text x="622" y="417" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">organizational</text>
+  <text x="622" y="438" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">scaling</text>
+
+  <!-- A7 Generalization beyond software (MBAE) — conjectured, green, dashed -->
+  <rect x="762" y="342" width="194" height="100" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="859" y="384" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">Generalization</text>
+  <text x="859" y="406" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">beyond software</text>
+  <text x="859" y="428" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">(MBAE)</text>
+
+  <!-- census propagation-latency chip ⇢ A6 : "future metric" (dashed, the one place regions touch) -->
+  <path d="M417,398 C450,360 486,360 512,388" fill="none" stroke="#9a3f12" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#of-rust)"/>
+  <text x="462" y="348" text-anchor="middle" font-size="16" font-style="italic" fill="#9a3f12">future metric</text>
+
+  <!-- ============ DROPPER EDGES: each item -> the hypotheses it tests ============ -->
+  <g fill="none" stroke="#c7c2b9" stroke-width="1.3">
+    <!-- FRONTIERS funnel through the clear right-of-census channel, then to badges under the census -->
+    <path d="M140,212 C140,300 486,330 486,430 C486,505 323,505 323,558" marker-end="url(#of-drop)"/>   <!-- A1->H3 -->
+    <path d="M156,212 C156,300 498,332 498,432 C498,505 439,510 439,558" marker-end="url(#of-drop)"/>   <!-- A1->H4 -->
+    <path d="M376,212 C376,300 508,332 508,432 C508,505 449,512 439,558" marker-end="url(#of-drop)"/>   <!-- A2->H4 -->
+    <path d="M596,212 C596,300 478,332 478,430 C478,505 331,505 323,558" marker-end="url(#of-drop)"/>   <!-- A3->H3 -->
+    <path d="M832,212 C832,300 747,332 747,432 C747,505 787,512 787,558" marker-end="url(#of-drop)"/>   <!-- A4->H7 -->
+    <!-- MEASUREMENT: census -> H3, H6, H8 (drop into the clear band below every box) -->
+    <path d="M180,460 C180,512 300,516 323,558" marker-end="url(#of-drop)"/>                            <!-- A5->H3 -->
+    <path d="M300,460 C300,516 620,516 671,558" marker-end="url(#of-drop)"/>                            <!-- A5->H6 -->
+    <path d="M430,460 C430,522 862,522 903,558" marker-end="url(#of-drop)"/>                            <!-- A5->H8 -->
+    <!-- DYNAMICS: A6 -> H1, H7, H8 -->
+    <path d="M560,442 C560,505 200,512 91,558" marker-end="url(#of-drop)"/>                             <!-- A6->H1 -->
+    <path d="M622,442 C622,506 760,514 787,558" marker-end="url(#of-drop)"/>                            <!-- A6->H7 -->
+    <path d="M676,442 C676,506 882,514 903,558" marker-end="url(#of-drop)"/>                            <!-- A6->H8 -->
+    <!-- GENERALIZATION: A7 -> H4 -->
+    <path d="M860,442 C860,510 470,518 439,558" marker-end="url(#of-drop)"/>                            <!-- A7->H4 -->
+  </g>
+
+  <!-- ============ H1-H8 ANCHOR RAIL (id + one-word name) ============ -->
+  <line x1="40" y1="556" x2="956" y2="556" stroke="#e4e0d8" stroke-width="1.5"/>
+  <g>
+    <rect x="40"  y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="156" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="272" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="388" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="504" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="620" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="736" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+    <rect x="852" y="560" width="102" height="40" rx="6" fill="#f1f0ec" stroke="#78716c" stroke-width="1.6"/>
+  </g>
+  <g font-size="18" font-weight="700" fill="#1c1917" text-anchor="middle">
+    <text x="91"  y="586">H1</text>
+    <text x="207" y="586">H2</text>
+    <text x="323" y="586">H3</text>
+    <text x="439" y="586">H4</text>
+    <text x="555" y="586">H5</text>
+    <text x="671" y="586">H6</text>
+    <text x="787" y="586">H7</text>
+    <text x="903" y="586">H8</text>
+  </g>
+  <g font-size="16" fill="#57534e" text-anchor="middle">
+    <text x="91"  y="620">exposure</text>
+    <text x="207" y="620">moderation</text>
+    <text x="323" y="620">assurance</text>
+    <text x="439" y="620">leverage</text>
+    <text x="555" y="620">deficiency</text>
+    <text x="671" y="620">amortization</text>
+    <text x="787" y="620">conversion</text>
+    <text x="903" y="620">propagation</text>
+  </g>
+
+  <!-- caption: names the four kinds, the honesty bound, and the home sections (index, don't duplicate) -->
+  <text x="500" y="652" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Dashed = a conjecture the book states but does not prove. The map indexes; the prose expands. None is settled here.</text>
+  <text x="500" y="675" text-anchor="middle" font-size="16" fill="#57534e">Homes — §6.5: determinization, census, organizational topology · §6.2: assurance, development completeness</text>
+  <text x="500" y="697" text-anchor="middle" font-size="16" fill="#57534e">§6.1: modeling moves the frontier, learning propagation.</text>
+</svg><figcaption data-short="Where the Frontier Goes Next"><span class="fig-label">Figure 6.5-3.</span> <em>Where the Frontier Goes Next.</em> The open work of MAGE, drawn as a research-program map. It partitions into four kinds — Frontiers, Measurement, Dynamics, and Generalization — and every item is a titled box welded by a thin dropper edge to the hypotheses (H1–H8) that would make it falsifiable. Border style carries status: a solid box is open or established work, a dashed one a conjecture the book states but does not prove. Colour follows the house language on the stroke, so the map reads in grayscale. The map indexes; the prose in each home section expands. None of it is settled in these pages.</figcaption></figure>
 <p>Each row indexes work expanded in its home section, not restated here. Each also names the hypotheses (H1–H8) a study would test, so the program reads as testable claims rather than a wish list. <a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-11">Table&nbsp;6.5-11</a> gathers the seven directions; none of it is settled in these pages. This is a different closer than the practical nudge the Conclusion ends on: the research the book hands to the field, then the first step it asks of you.</p>
 <table id="tbl-6-5-11" class="book-table" data-label="frontier-agenda"><caption data-short="The research agenda"><span class="tbl-label">Table 6.5-11.</span> <em>Where the frontier goes next.</em> The seven open directions of the MAGE research program, sorted into four kinds and each pointing to the chapter that expands it.</caption><thead><tr><th>Kind</th><th>Open direction</th><th>Home</th></tr></thead><tbody><tr><td>Frontier</td><td><strong>Determinization frontier.</strong> How far judgment compiles into deterministic machinery — and how far it can be pushed by conjecturing the rungs not yet discovered.</td><td>Where MAGE Fits</td></tr><tr><td></td><td><strong>Modeling moves the frontier.</strong> Richer representation expands what Alignment can determinize — Modeling and Alignment are causally interdependent, not parallel.</td><td>Toward a Theory of MAGE</td></tr><tr><td></td><td><strong>Assurance frontier.</strong> How much assurance emerges as a by-product of a model-rich governed environment (the MAGE-II conjecture); proximity to NIST AI RMF and UL 4600.</td><td>What Changes in Software Engineering</td></tr><tr><td></td><td><strong>Development completeness &amp; supply chain.</strong> What must be shared for an outsider to reproduce not the artifact but the capacity to evolve it; which environment artifacts join the supply chain.</td><td>What Changes in Software Engineering</td></tr><tr><td>Measurement</td><td><strong>Governance census.</strong> Inventory obligations against mechanisms; measure Coverage, Under-governance, and Governance-debt — with propagation-latency proposed as a future fourth metric.</td><td>Where MAGE Fits</td></tr><tr><td>Dynamics</td><td><strong>Learning propagation + organizational scaling.</strong> How a lesson, once encoded into shared machine-actionable structure, propagates to later work; how the organization changes shape as agent throughput rises.</td><td>Toward a Theory of MAGE</td></tr><tr><td>Generalization</td><td><strong>Generalization beyond software.</strong> Whether the answer generalizes to model-based engineering at large (Siemens, Zenseact) — the widened core question of MBAE.</td><td>Where MAGE Fits</td></tr></tbody></table><section class="works-cited" aria-labelledby="wc-6-5-where-mage-fits-h"><h2 id="wc-6-5-where-mage-fits-h" class="wc-h">Works Cited</h2><ol class="wc-list"><li id="wc-6-5-where-mage-fits-1">Winters, Titus, Tom Manshreck, and Hyrum Wright. <em>Software Engineering at Google: Lessons Learned from Programming over Time</em>. O'Reilly Media, 2020.</li><li id="wc-6-5-where-mage-fits-2">Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. <em>Design Patterns: Elements of Reusable Object-Oriented Software</em>. Addison-Wesley, 1994.</li><li id="wc-6-5-where-mage-fits-3">Brambilla, Marco, Jordi Cabot, and Manuel Wimmer. <em>Model-Driven Software Engineering in Practice</em>. 2nd ed. Morgan &amp; Claypool, 2017.</li></ol></section><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="part-6-intro.html" aria-label="Beginning of Part 6 — Reflections">« Beginning of part</a><a href="6.4-limitations.html" aria-label="Previous chapter — 33 · Limitations">« Previous chapter</a></div><span class="chapnav-here" title="34 · Where MAGE Fits">34 · Where MAGE Fits</span><div class="chapnav-fwd"><a href="6.6-conclusion.html" aria-label="Next chapter — 35 · Conclusion">Next chapter »</a><a href="7.1-about-the-author.html" aria-label="Next part — Back Matter">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
