@@ -61,7 +61,12 @@ def _book_title_block() -> str:
 # html-validate) or the local build/test diverges from CI. `_drafts/` is the canonical case: gitignored
 # design-stage HTML that the orphan gate would otherwise flag as unreachable, breaking `catalog.py build`
 # locally while CI (which lacks the dir) stays green.
-NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks", "_drafts", "_print")
+# `docs/` holds internal, TRACKED engineering docs (this submodule's own `docs/epics/` Epic tree) that are
+# NOT part of the published Pages site: the catalogue render path (`catalogue_md_files`) already skips them
+# (only ROLE_DIRS + root-level `.md` render) and `_is_publishable` never auto-stages them, so `docs/` is
+# excluded by construction — this entry makes that explicit for the html-walk family (orphan gate, leak,
+# axe) so a rendered artifact ever dropped under `docs/` can't trip the reachability gate.
+NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks", "_drafts", "_print", "docs")
 
 
 def gitignored_top_dirs() -> frozenset[str]:
