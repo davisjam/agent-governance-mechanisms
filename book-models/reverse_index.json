@@ -14,8 +14,8 @@
     "universe": {
       "section_ids": 274,
       "concepts": 158,
-      "labels": 109,
-      "refs": 109,
+      "labels": 113,
+      "refs": 113,
       "chapters": 80,
       "parts": 8,
       "points": 551,
@@ -3649,7 +3649,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.8-keeping-models-in-sync::block-44",
+          "element": "3.8-keeping-models-in-sync::block-46",
           "role": "paragraph-point"
         }
       ]

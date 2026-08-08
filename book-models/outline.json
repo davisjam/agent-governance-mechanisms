@@ -3067,7 +3067,7 @@
             {
               "slug": "part-3-closed-the-zoo-part-4-starts-from-spaghetti",
               "text": "The zoo is complete; the next Part starts from spaghetti.",
-              "block_index": 44
+              "block_index": 46
             }
           ]
         }
@@ -5488,7 +5488,7 @@
           "heading_text": "MAGE in the Wild: A Comparative Analysis of Emerging Industrial Practice",
           "topic_sentence": "Cloudflare is one reading.",
           "id_source": "derived",
-          "block_index": 49,
+          "block_index": 50,
           "points": []
         },
         {
@@ -5497,7 +5497,7 @@
           "heading_text": "The modeling ceiling",
           "topic_sentence": "Here is the sharpest comparative result.",
           "id_source": "derived",
-          "block_index": 53,
+          "block_index": 54,
           "points": []
         },
         {
@@ -5506,7 +5506,7 @@
           "heading_text": "Three buckets of convergence",
           "topic_sentence": "Set the six practices side by side and the mechanisms sort into three buckets: what every source establishes, what several discovered independently and MAGE generalizes, and what the corpus does not describe in the form MAGE proposes.",
           "id_source": "derived",
-          "block_index": 61,
+          "block_index": 62,
           "points": []
         },
         {
@@ -5515,7 +5515,7 @@
           "heading_text": "What everyone does",
           "topic_sentence": "Nine patterns appear across all six sources — the shared grammar beneath very different systems.",
           "id_source": "derived",
-          "block_index": 63,
+          "block_index": 64,
           "points": []
         },
         {
@@ -5524,7 +5524,7 @@
           "heading_text": "What industry discovered independently",
           "topic_sentence": "Six more patterns are not universal.",
           "id_source": "derived",
-          "block_index": 70,
+          "block_index": 71,
           "points": []
         },
         {
@@ -5533,7 +5533,7 @@
           "heading_text": "What none of the six sites does",
           "topic_sentence": "The third bucket is not a table.",
           "id_source": "derived",
-          "block_index": 76,
+          "block_index": 77,
           "points": []
         },
         {
@@ -5542,7 +5542,7 @@
           "heading_text": "The determinization frontier",
           "topic_sentence": "One pattern is universal — combine probabilistic reasoning with deterministic machinery — and it repays a closer look, because agents change its economics.",
           "id_source": "derived",
-          "block_index": 81,
+          "block_index": 82,
           "points": []
         },
         {
@@ -5551,7 +5551,7 @@
           "heading_text": "The governance census",
           "topic_sentence": "If the environment is the object of engineering, it needs an inventory.",
           "id_source": "derived",
-          "block_index": 88,
+          "block_index": 89,
           "points": []
         },
         {
@@ -5560,7 +5560,7 @@
           "heading_text": "The organizational topology",
           "topic_sentence": "The comparison has one result the single case could not have produced.",
           "id_source": "derived",
-          "block_index": 95,
+          "block_index": 97,
           "points": []
         },
         {
@@ -5569,7 +5569,7 @@
           "heading_text": "Common destination, different entry points",
           "topic_sentence": "The comparison ends where it began, on a distinction.",
           "id_source": "derived",
-          "block_index": 104,
+          "block_index": 106,
           "points": []
         },
         {
@@ -5578,7 +5578,7 @@
           "heading_text": "Where the frontier goes next",
           "topic_sentence": "The open work of this book gathers here, sorted into four kinds.",
           "id_source": "derived",
-          "block_index": 109,
+          "block_index": 111,
           "points": []
         }
       ],
@@ -5612,7 +5612,7 @@
           "heading_text": "Where to go next",
           "topic_sentence": "You do not have to adopt all of this at once, and you should not.",
           "id_source": "derived",
-          "block_index": 34,
+          "block_index": 36,
           "points": []
         }
       ],

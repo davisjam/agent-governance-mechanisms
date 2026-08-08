@@ -645,7 +645,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-theory.html">Appendix E - 1. Theory</a></li>
-<li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 86 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
+<li><a class="" href="appendix-e-applying-the-recipe.html">Appendix E - 2. Applying the Recipe</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 90 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
      role="group" aria-labelledby="fig-0-1-1-mmTitle fig-0-1-1-mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-0-1-1-mmTitle">The MAGE method at a glance</title>
@@ -3572,7 +3572,92 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="800" y="591" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">failures → controls loop</text>
   <text x="800" y="612" text-anchor="middle" font-size="13" fill="#57534e">closes it — extends the net</text>
   <path d="M900,564 C906,480 890,420 828,388" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#fig-3-8-1-ms-grn)"/>
-</svg><figcaption data-short="Figure 3.8-1"><span class="fig-label">Figure 3.8-1.</span> <strong>Figure 3.8-1. The two-layer net.</strong> The horizontal band is the modeled surface — the code a model represents. Two layers cover it: a hard floor of derived checks, each anchor resolved to a live symbol, and a soft reading layer — a person or Opus reading prose the checks can't parse. Two regions stay uncovered: a semantic mismatch, where the anchor resolves but the meaning drifted, and the unmodeled surface, which no anchor reaches. Two backstops turn noticing into machinery — the missing-model metric measures the unmodeled region, and the failures-become-controls loop closes it. Read the net as coverage, not a guarantee: the modeled-and-decidable is enforced, the semantic only aimed at, the unmodeled merely measured until a backstop extends it.</figcaption></figure><p class="gallery-source">From <a href="3.8-keeping-models-in-sync.html#fig-3-8-1">19 · Keeping the Models in Sync with the Code — A Measurement</a></p></section><hr><section class="gallery-item"><figure id="fig-4-1-1-fig-4-1-1" class="book-figure" data-label="wiki-linkage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540"
+</svg><figcaption data-short="Figure 3.8-1"><span class="fig-label">Figure 3.8-1.</span> <strong>Figure 3.8-1. The two-layer net.</strong> The horizontal band is the modeled surface — the code a model represents. Two layers cover it: a hard floor of derived checks, each anchor resolved to a live symbol, and a soft reading layer — a person or Opus reading prose the checks can't parse. Two regions stay uncovered: a semantic mismatch, where the anchor resolves but the meaning drifted, and the unmodeled surface, which no anchor reaches. Two backstops turn noticing into machinery — the missing-model metric measures the unmodeled region, and the failures-become-controls loop closes it. Read the net as coverage, not a guarantee: the modeled-and-decidable is enforced, the semantic only aimed at, the unmodeled merely measured until a backstop extends it.</figcaption></figure><p class="gallery-source">From <a href="3.8-keeping-models-in-sync.html#fig-3-8-1">19 · Keeping the Models in Sync with the Code — A Measurement</a></p></section><hr><section class="gallery-item"><figure id="fig-3-8-2-fig-3-8-2" class="book-figure" data-label="representation-ladder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="group" aria-labelledby="fig-3-8-2-mlTitle fig-3-8-2-mlDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-3-8-2-mlTitle">The representation ladder: how richer representation expands what a machine can reason about</title>
+  <desc id="fig-3-8-2-mlDesc">A six-rung ladder climbs from left to right over a green ramp whose axis runs from
+    human-readable on the left, through machine-understandable, to machine-executable on the right. Each
+    rung sits higher than the last and unlocks a stronger kind of computation. Rung one, Documentation —
+    prose a reader can read. Rung two, Knowledge graph — entities a tool can query. Rung three, Structured
+    model — typed records a tool can validate. Rung four, Behavior model — state machines a tool can
+    simulate. Rung five, Reasoning model — invariants a tool can prove. Rung six, Computable model — a model
+    a tool can execute and reason over. Climbing the ladder does not merely make the same intent more legible;
+    it expands the reasoning the machine can perform over it.</desc>
+
+  <defs>
+    <marker id="fig-3-8-2-ml-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+    <linearGradient id="fig-3-8-2-mlRamp" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#eef7f0"/>
+      <stop offset="0.55" stop-color="#e3f0e7"/>
+      <stop offset="1" stop-color="#1f7a4d"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The representation ladder</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">How representation expands reasoning.</text>
+
+  <!-- human-readable -> machine-understandable -> machine-executable axis -->
+  <text x="90"  y="112" font-size="16" fill="#57534e">HUMAN-READABLE · a person can follow it</text>
+  <text x="500" y="112" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">→ machine-understandable →</text>
+  <text x="910" y="112" text-anchor="end" font-size="16" fill="#1f7a4d">MACHINE-EXECUTABLE · a tool can run it</text>
+
+  <!-- connectors from each rung down to its ramp column -->
+  <g stroke="#e4e0d8" stroke-width="1.5">
+    <line x1="142" y1="416" x2="142" y2="452"/>
+    <line x1="285" y1="384" x2="285" y2="452"/>
+    <line x1="428" y1="352" x2="428" y2="452"/>
+    <line x1="572" y1="320" x2="572" y2="452"/>
+    <line x1="715" y1="288" x2="715" y2="452"/>
+    <line x1="858" y1="256" x2="858" y2="452"/>
+  </g>
+
+  <!-- climbing arrows rung-to-rung -->
+  <g fill="none" stroke="#1f7a4d" stroke-width="2.2">
+    <path d="M206,372 C238,360 244,352 270,342" marker-end="url(#fig-3-8-2-ml-ah)"/>
+    <path d="M349,340 C381,328 387,320 413,310" marker-end="url(#fig-3-8-2-ml-ah)"/>
+    <path d="M492,308 C524,296 530,288 556,278" marker-end="url(#fig-3-8-2-ml-ah)"/>
+    <path d="M636,276 C668,264 673,256 699,246" marker-end="url(#fig-3-8-2-ml-ah)"/>
+    <path d="M779,244 C811,232 817,224 843,214" marker-end="url(#fig-3-8-2-ml-ah)"/>
+  </g>
+
+  <!-- the six rungs (all green — the representation lobe) -->
+  <rect x="69" y="352" width="146" height="64" rx="8" fill="#eef7f0" stroke="#1f7a4d" stroke-width="2.2"/>
+  <text x="142" y="390" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Documentation</text>
+  <rect x="221" y="320" width="128" height="64" rx="8" fill="#eef7ee" stroke="#1f7a4d" stroke-width="2.2"/>
+  <text x="285" y="350" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Knowledge</text>
+  <text x="285" y="372" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">graph</text>
+  <rect x="364" y="288" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="428" y="318" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Structured</text>
+  <text x="428" y="340" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">model</text>
+  <rect x="508" y="256" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="572" y="286" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Behavior</text>
+  <text x="572" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">model</text>
+  <rect x="651" y="224" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="715" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Reasoning</text>
+  <text x="715" y="276" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">model</text>
+  <rect x="794" y="192" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#155c38" stroke-width="3"/>
+  <text x="858" y="222" text-anchor="middle" font-size="18" font-weight="700" fill="#155c38">Computable</text>
+  <text x="858" y="244" text-anchor="middle" font-size="18" font-weight="700" fill="#155c38">model</text>
+
+  <!-- the ramp -->
+  <rect x="70" y="452" width="860" height="26" rx="7" fill="url(#fig-3-8-2-mlRamp)" stroke="#e4e0d8" stroke-width="1.2"/>
+
+  <!-- bottom labels: what computation each rung unlocks -->
+  <g font-size="16" fill="#57534e" text-anchor="middle">
+    <text x="142" y="502">read</text>
+    <text x="285" y="502">query</text>
+    <text x="428" y="502">validate</text>
+    <text x="572" y="502">simulate</text>
+    <text x="715" y="502">prove</text>
+    <text x="858" y="502">execute</text>
+  </g>
+
+  <text x="500" y="540" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Industry has converged on documentation and knowledge graphs; the opportunity lies further up — analyzable, executable models.</text>
+</svg><figcaption data-short="The Representation Ladder"><span class="fig-label">Figure 3.8-2.</span> <em>The Representation Ladder.</em> Six rungs climb from documentation a reader parses to a computable model a tool executes and reasons over, each unlocking a stronger computation — read, query, validate, simulate, prove, execute. Climbing the ladder does not merely make the same intent more legible; it expands the reasoning a machine can perform over it.</figcaption></figure><p class="gallery-source">From <a href="3.8-keeping-models-in-sync.html#fig-3-8-2">19 · Keeping the Models in Sync with the Code — A Measurement</a></p></section><hr><section class="gallery-item"><figure id="fig-4-1-1-fig-4-1-1" class="book-figure" data-label="wiki-linkage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540"
      role="group" aria-labelledby="fig-4-1-1-wlTitle fig-4-1-1-wlDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-4-1-1-wlTitle">The wiki is the model you already have</title>
@@ -6773,7 +6858,296 @@ z
   <text x="850" y="231" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
   <text x="500" y="288" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
   <text x="500" y="314" text-anchor="middle" font-size="16" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
-</svg><figcaption data-short="The Soft–Hard Spectrum"><span class="fig-label">Figure 6.2-1.</span> <em>The Soft–Hard Spectrum.</em> Mechanisms sit along an axis of increasing machine-actionability and enforcement regularity — probabilistic mechanisms that aim an agent on the left, deterministic mechanisms that hold the line on the right. A mature environment uses both, and the working rule of thumb is that the second time a soft rule fails, convert it.</figcaption></figure><p class="gallery-source">From <a href="6.2-implications-for-se.html#fig-6-2-1">31 · What Changes in Software Engineering</a></p></section><hr><section class="gallery-item"><figure id="fig-8-0-1-fig-8-0-1" class="book-figure" data-label="book-map-appendix"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 890"
+</svg><figcaption data-short="The Soft–Hard Spectrum"><span class="fig-label">Figure 6.2-1.</span> <em>The Soft–Hard Spectrum.</em> Mechanisms sit along an axis of increasing machine-actionability and enforcement regularity — probabilistic mechanisms that aim an agent on the left, deterministic mechanisms that hold the line on the right. A mature environment uses both, and the working rule of thumb is that the second time a soft rule fails, convert it.</figcaption></figure><p class="gallery-source">From <a href="6.2-implications-for-se.html#fig-6-2-1">31 · What Changes in Software Engineering</a></p></section><hr><section class="gallery-item"><figure id="fig-6-5-1-fig-6-5-1" class="book-figure" data-label="six-company-map"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 740"
+     role="group" aria-labelledby="fig-6-5-1-scmTitle fig-6-5-1-scmDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-6-5-1-scmTitle">Independent reconstructions of the theory: six industrial systems reconstruct regions of one theory of MAGE</title>
+  <desc id="fig-6-5-1-scmDesc">A table shows six industrial systems, each entering the design space through a
+    different problem yet landing on a region of the same theory, named in MAGE vocabulary in the last
+    column. Cloudflare starts from policy-first governance, invests in policy bound into mechanisms, and
+    lands on the Alignment Thesis. Spotify starts from fleet-first autonomy, invests in fleet-scale
+    verification, and lands on the Governed Engineering Environment. Shopify starts from a shared
+    agent-ready environment, invests in organizational knowledge, and lands on the Engineering Environment.
+    Docker starts from authority boundaries and evaluation loops, invests in runtime authority, and lands on
+    Governance Conversion. Siemens starts from model-first engineering, invests in models as the development
+    surface, and lands on the Modeling Thesis. Zenseact starts from autonomous knowledge work, invests in
+    context and delegation, and lands on the Reasoning Horizon. A closing synthesis row reads: MAGE assembles
+    a unified vocabulary into an engineering theory that spans the whole landscape. Badge colours key each
+    landing to the house semantic language: rust for governance and alignment, green for modeling, knowledge,
+    and environment. No two organizations began with the same problem, yet they converge.</desc>
+
+  <defs>
+    <linearGradient id="fig-6-5-1-scmSynth" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e3f0e7"/>
+      <stop offset="1" stop-color="#faf1e6"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="740" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">Independent reconstructions of the theory</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">Different entry points, common destination — each durable investment lands on a region of one theory.</text>
+
+  <!-- legend: badge colour keys to the house semantic language -->
+  <g font-size="16" fill="#57534e">
+    <rect x="212" y="90" width="18" height="18" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="238" y="105">Modeling · knowledge · environment</text>
+    <rect x="590" y="90" width="18" height="18" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <text x="616" y="105">Governance · alignment</text>
+  </g>
+
+  <!-- header row -->
+  <text x="48"  y="150" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">ORGANIZATION</text>
+  <text x="210" y="150" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">DISTINCTIVE STARTING POINT</text>
+  <text x="486" y="150" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">DURABLE INVESTMENT</text>
+  <text x="839" y="150" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">LANDS ON THE THEORY</text>
+
+  <!-- row rules -->
+  <g stroke="#e4e0d8" stroke-width="1.5">
+    <line x1="40" y1="164" x2="960" y2="164"/>
+    <line x1="40" y1="236" x2="960" y2="236"/>
+    <line x1="40" y1="308" x2="960" y2="308"/>
+    <line x1="40" y1="380" x2="960" y2="380"/>
+    <line x1="40" y1="452" x2="960" y2="452"/>
+    <line x1="40" y1="524" x2="960" y2="524"/>
+  </g>
+
+  <!-- Cloudflare -> Alignment Thesis (rust) -->
+  <text x="48"  y="206" font-size="20" font-weight="700" fill="#1c1917">Cloudflare</text>
+  <text x="210" y="206" font-size="17" fill="#57534e">Policy-first governance</text>
+  <text x="486" y="206" font-size="18" font-weight="700" fill="#1c1917">Policy → mechanisms</text>
+  <rect x="726" y="179" width="226" height="42" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="839" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3f12">Alignment Thesis</text>
+
+  <!-- Spotify -> Governed Engineering Environment (green, emphasized) -->
+  <text x="48"  y="278" font-size="20" font-weight="700" fill="#1c1917">Spotify</text>
+  <text x="210" y="278" font-size="17" fill="#57534e">Fleet-first autonomy</text>
+  <text x="486" y="278" font-size="18" font-weight="700" fill="#1c1917">Fleet-scale verification</text>
+  <rect x="726" y="251" width="226" height="42" rx="8" fill="#e3f0e7" stroke="#155c38" stroke-width="2.6"/>
+  <text x="839" y="270" text-anchor="middle" font-size="16" font-weight="700" fill="#155c38">Governed Engineering</text>
+  <text x="839" y="288" text-anchor="middle" font-size="16" font-weight="700" fill="#155c38">Environment</text>
+
+  <!-- Shopify -> Engineering Environment (green) -->
+  <text x="48"  y="350" font-size="20" font-weight="700" fill="#1c1917">Shopify</text>
+  <text x="210" y="350" font-size="17" fill="#57534e">Shared agent-ready env.</text>
+  <text x="486" y="350" font-size="18" font-weight="700" fill="#1c1917">Organizational knowledge</text>
+  <rect x="726" y="323" width="226" height="42" rx="8" fill="#eef7f0" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="839" y="342" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">Engineering</text>
+  <text x="839" y="360" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">Environment</text>
+
+  <!-- Docker -> Governance Conversion (rust) -->
+  <text x="48"  y="422" font-size="20" font-weight="700" fill="#1c1917">Docker</text>
+  <text x="210" y="422" font-size="17" fill="#57534e">Authority + eval loops</text>
+  <text x="486" y="422" font-size="18" font-weight="700" fill="#1c1917">Runtime authority</text>
+  <rect x="726" y="395" width="226" height="42" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="839" y="414" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">Governance</text>
+  <text x="839" y="432" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">Conversion</text>
+
+  <!-- Siemens -> Modeling Thesis (green) -->
+  <text x="48"  y="494" font-size="20" font-weight="700" fill="#1c1917">Siemens</text>
+  <text x="210" y="494" font-size="17" fill="#57534e">Model-first engineering</text>
+  <text x="486" y="494" font-size="18" font-weight="700" fill="#1c1917">Models as the surface</text>
+  <rect x="726" y="467" width="226" height="42" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="839" y="494" text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">Modeling Thesis</text>
+
+  <!-- Zenseact -> Reasoning Horizon (green) -->
+  <text x="48"  y="566" font-size="20" font-weight="700" fill="#1c1917">Zenseact</text>
+  <text x="210" y="566" font-size="17" fill="#57534e">Autonomous knowledge work</text>
+  <text x="486" y="566" font-size="18" font-weight="700" fill="#1c1917">Context + delegation</text>
+  <rect x="726" y="539" width="226" height="42" rx="8" fill="#eef7f0" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="839" y="566" text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">Reasoning Horizon</text>
+
+  <!-- synthesis row: MAGE assembles the pieces -->
+  <line x1="40" y1="596" x2="960" y2="596" stroke="#57534e" stroke-width="2"/>
+  <rect x="40" y="600" width="920" height="60" rx="9" fill="url(#fig-6-5-1-scmSynth)" stroke="#e4e0d8" stroke-width="1.2"/>
+  <text x="64"  y="637" font-size="20" font-weight="700" fill="#1c1917">MAGE</text>
+  <text x="210" y="637" font-size="18" fill="#57534e">unified vocabulary</text>
+  <text x="486" y="637" font-size="18" font-weight="700" fill="#1c1917">engineering theory</text>
+  <text x="839" y="637" text-anchor="middle" font-size="18" font-weight="700" fill="#155c38">the whole landscape</text>
+
+  <text x="500" y="700" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">No two organizations began with the same problem — yet they converge.</text>
+</svg><figcaption data-short="Independent Reconstructions"><span class="fig-label">Figure 6.5-1.</span> <em>Independent Reconstructions.</em> Six industrial systems, each entering the design space through a different door, reconstruct overlapping regions of one theory of MAGE. Colour marks which lobe each makes load-bearing: rust for governance and alignment, green for modeling and knowledge. No system covers the whole; read together, they trace its shape.</figcaption></figure><p class="gallery-source">From <a href="6.5-where-mage-fits.html#fig-6-5-1">34 · Where MAGE Fits</a></p></section><hr><section class="gallery-item"><figure id="fig-6-5-2-fig-6-5-2" class="book-figure" data-label="governance-census"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="group" aria-labelledby="fig-6-5-2-gcTitle fig-6-5-2-gcDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-6-5-2-gcTitle">The governance census: governed, under-governance, and governance debt are counts once obligations and mechanisms are enumerated</title>
+  <desc id="fig-6-5-2-gcDesc">Two columns face each other. On the left, Obligations — what must be governed. On the
+    right, Mechanisms — the controls that meet them. A line joins each obligation to the mechanism that
+    covers it. Three quantities fall out of the match, shown as three large outputs. Governed: an obligation
+    met by a mechanism, in green. Under-governance: an obligation with no mechanism, a hole in governance, in
+    red. Governance debt: a mechanism with no obligation, an unjustified control, in muted grey. Once
+    obligations and mechanisms are enumerated, these three become counts rather than opinions — governance
+    becomes an engineering artifact. The figure is a bipartite graph, the requirements-traceability analogue.</desc>
+
+  <defs>
+    <marker id="fig-6-5-2-gc-cov" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The governance census</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">Governance becomes an engineering artifact — governed, under-governed, and debt are counts, not opinions.</text>
+
+  <!-- column headers (both in the rust governance family) -->
+  <text x="228" y="118" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="1" fill="#9a3f12">OBLIGATIONS</text>
+  <text x="228" y="140" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">what must be governed</text>
+  <text x="772" y="118" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="1" fill="#9a3f12">MECHANISMS</text>
+  <text x="772" y="140" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the controls that meet them</text>
+
+  <!-- match lines (green = coverage), drawn behind the chips -->
+  <g stroke="#1f7a4d" stroke-width="2.2" fill="none">
+    <path d="M356,190 L644,190" marker-end="url(#fig-6-5-2-gc-cov)"/>
+    <path d="M356,246 L644,246" marker-end="url(#fig-6-5-2-gc-cov)"/>
+    <path d="M356,302 L644,302" marker-end="url(#fig-6-5-2-gc-cov)"/>
+  </g>
+
+  <!-- obligation chips (left, rust) -->
+  <rect x="128" y="166" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="242" y="196" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligation</text>
+  <rect x="128" y="222" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="242" y="252" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligation</text>
+  <rect x="128" y="278" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="242" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligation</text>
+  <!-- the under-governed obligation (no line to any mechanism) -->
+  <rect x="128" y="334" width="228" height="48" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.6"/>
+  <text x="242" y="364" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">Uncovered obligation</text>
+
+  <!-- mechanism chips (right, rust) -->
+  <rect x="644" y="166" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="758" y="196" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanism</text>
+  <rect x="644" y="222" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="758" y="252" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanism</text>
+  <rect x="644" y="278" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="758" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanism</text>
+  <!-- the debt mechanism (no line to any obligation) -->
+  <rect x="644" y="334" width="228" height="48" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2.6"/>
+  <text x="758" y="364" text-anchor="middle" font-size="18" font-weight="700" fill="#57534e">Unmatched mechanism</text>
+
+  <!-- the three derived outputs, made large -->
+  <text x="500" y="424" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">Three counts fall out of the match</text>
+  <rect x="40"  y="438" width="288" height="76" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="3"/>
+  <text x="184" y="474" text-anchor="middle" font-size="23" font-weight="700" fill="#1f7a4d">GOVERNED</text>
+  <text x="184" y="498" text-anchor="middle" font-size="16" fill="#57534e">obligation met by a mechanism</text>
+  <rect x="356" y="438" width="288" height="76" rx="10" fill="#fbeaea" stroke="#b23b3b" stroke-width="3"/>
+  <text x="500" y="474" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">UNDER-GOVERNANCE</text>
+  <text x="500" y="498" text-anchor="middle" font-size="16" fill="#57534e">obligation with no mechanism</text>
+  <rect x="672" y="438" width="288" height="76" rx="10" fill="#f3efe7" stroke="#57534e" stroke-width="3"/>
+  <text x="816" y="474" text-anchor="middle" font-size="23" font-weight="700" fill="#57534e">GOVERNANCE DEBT</text>
+  <text x="816" y="498" text-anchor="middle" font-size="16" fill="#57534e">mechanism with no obligation</text>
+
+  <text x="500" y="544" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Governance as a bipartite graph — the requirements-traceability analogue.</text>
+</svg><figcaption data-short="The Governance Census"><span class="fig-label">Figure 6.5-2.</span> <em>The Governance Census.</em> Set the obligations that must be governed against the mechanisms that govern them, and two diagnostics become counts, not opinions: a gap is an obligation no mechanism carries (under-governance); an orphan is a mechanism tracing to no obligation (governance debt). Governed is the matched middle. The inventory turns a description of an environment into a diagnosis of it.</figcaption></figure><p class="gallery-source">From <a href="6.5-where-mage-fits.html#fig-6-5-2">34 · Where MAGE Fits</a></p></section><hr><section class="gallery-item"><figure id="fig-6-6-1-fig-6-6-1" class="book-figure" data-label="determinization-frontier"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 570"
+     role="group" aria-labelledby="fig-6-6-1-dfTitle fig-6-6-1-dfDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-6-6-1-dfTitle">The determinization frontier: how far engineering judgment can be compiled into machinery</title>
+  <desc id="fig-6-6-1-dfDesc">An eight-rung staircase climbs from left to right. The first four rungs are gray and
+    implementation-level: Prompt, which reasons over text; Skill, over workflow; Rule, over policy; Lint,
+    over syntax. The fifth rung, Structured Model, is green — the representation layer — and reasons over
+    semantics. The last three rungs are rust and deterministic: Model contract, which reasons over
+    constraints; Simulation, over behavior; Proof, over mathematics. The gray-and-green left aims the agent
+    and remains probabilistic; the rust right holds the line and is deterministic. A green arrow runs from
+    the Structured Model rung up toward Simulation and Proof, labelled "expands the frontier": richer models
+    push determinizability further up the ladder. The frontier is how far a recurring judgment call has been
+    compiled up into machinery the agent cannot talk past.</desc>
+
+  <defs>
+    <marker id="fig-6-6-1-df-climb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a3f12"/>
+    </marker>
+    <marker id="fig-6-6-1-df-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+    <marker id="fig-6-6-1-df-cap" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+    <linearGradient id="fig-6-6-1-dfRamp" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f3efe7"/>
+      <stop offset="0.5" stop-color="#e3f0e7"/>
+      <stop offset="1" stop-color="#9a3f12"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="570" fill="#fdfcf9"/>
+  <text x="500" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The determinization frontier</text>
+  <text x="500" y="68" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">How far can engineering judgment be compiled into machinery?</text>
+
+  <text x="90" y="108" font-size="16" fill="#57534e">SOFT · aims the agent · probabilistic</text>
+  <text x="910" y="108" text-anchor="end" font-size="16" fill="#9a3f12">DETERMINISTIC · holds the line</text>
+
+  <!-- subtle economic note in the open band above the low rungs -->
+  <g>
+    <path d="M130,300 L462,240" fill="none" stroke="#57534e" stroke-width="1.6" marker-end="url(#fig-6-6-1-df-cap)"/>
+    <text x="292" y="258" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e"
+          transform="rotate(-10.3 292 258)">increasing reusable engineering capital</text>
+  </g>
+
+  <!-- connectors from each rung down to the ramp -->
+  <g stroke="#e4e0d8" stroke-width="1.5">
+    <line x1="82"  y1="432" x2="82"  y2="470"/>
+    <line x1="200" y1="406" x2="200" y2="470"/>
+    <line x1="318" y1="380" x2="318" y2="470"/>
+    <line x1="436" y1="354" x2="436" y2="470"/>
+    <line x1="554" y1="328" x2="554" y2="470"/>
+    <line x1="672" y1="302" x2="672" y2="470"/>
+    <line x1="790" y1="276" x2="790" y2="470"/>
+    <line x1="908" y1="250" x2="908" y2="470"/>
+  </g>
+
+  <!-- climbing arrows rung-to-rung (migrate up one rung) -->
+  <g fill="none" stroke="#9a3f12" stroke-width="2">
+    <path d="M140,400 C150,392 152,388 162,380" marker-end="url(#fig-6-6-1-df-climb)"/>
+    <path d="M258,374 C268,366 270,362 280,354" marker-end="url(#fig-6-6-1-df-climb)"/>
+    <path d="M376,348 C386,340 388,336 398,328" marker-end="url(#fig-6-6-1-df-climb)"/>
+    <path d="M494,322 C504,314 506,310 516,302" marker-end="url(#fig-6-6-1-df-climb)"/>
+    <path d="M612,296 C622,288 624,284 634,276" marker-end="url(#fig-6-6-1-df-climb)"/>
+    <path d="M730,270 C740,262 742,258 752,250" marker-end="url(#fig-6-6-1-df-climb)"/>
+  </g>
+
+  <!-- the green "expands the frontier" arrow: models push determinizability up the ladder -->
+  <path d="M560,262 C660,196 760,180 872,178" fill="none" stroke="#1f7a4d" stroke-width="2.6"
+        stroke-dasharray="1 0" marker-end="url(#fig-6-6-1-df-green)"/>
+  <text x="712" y="168" text-anchor="middle" font-size="16" font-weight="700" font-style="italic" fill="#1f7a4d">expands the frontier</text>
+
+  <!-- rungs 1-4: implementation-level (gray) -->
+  <rect x="26"  y="372" width="112" height="60" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2.2"/>
+  <text x="82"  y="408" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Prompt</text>
+  <rect x="144" y="346" width="112" height="60" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2.2"/>
+  <text x="200" y="382" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Skill</text>
+  <rect x="262" y="320" width="112" height="60" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2.2"/>
+  <text x="318" y="356" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Rule</text>
+  <rect x="380" y="294" width="112" height="60" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2.2"/>
+  <text x="436" y="330" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Lint</text>
+
+  <!-- rung 5: the representation layer (green) -->
+  <rect x="498" y="268" width="112" height="60" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="554" y="293" text-anchor="middle" font-size="16" font-weight="700" fill="#155c38">Structured</text>
+  <text x="554" y="313" text-anchor="middle" font-size="16" font-weight="700" fill="#155c38">Model</text>
+
+  <!-- rungs 6-8: deterministic machinery (rust) -->
+  <rect x="616" y="242" width="112" height="60" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.6"/>
+  <text x="672" y="267" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Model</text>
+  <text x="672" y="287" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">contract</text>
+  <rect x="734" y="216" width="112" height="60" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.6"/>
+  <text x="790" y="252" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">Simulation</text>
+  <rect x="852" y="190" width="112" height="60" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="3"/>
+  <text x="908" y="226" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3f12">Proof</text>
+
+  <!-- the ramp -->
+  <rect x="26" y="470" width="938" height="24" rx="7" fill="url(#fig-6-6-1-dfRamp)" stroke="#e4e0d8" stroke-width="1.2"/>
+
+  <!-- bottom labels: what each layer reasons over -->
+  <g font-size="16" fill="#57534e" text-anchor="middle">
+    <text x="82"  y="516">text</text>
+    <text x="200" y="516">workflow</text>
+    <text x="318" y="516">policy</text>
+    <text x="436" y="516">syntax</text>
+    <text x="554" y="516">semantics</text>
+    <text x="672" y="516">constraints</text>
+    <text x="790" y="516">behavior</text>
+    <text x="908" y="516">mathematics</text>
+  </g>
+
+  <text x="500" y="552" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The second time a soft rule fails, move it one rung toward machinery the agent cannot talk past.</text>
+</svg><figcaption data-short="The Determinization Frontier"><span class="fig-label">Figure 6.6-1.</span> <em>The Determinization Frontier.</em> Eight rungs climb from a probabilistic judgment toward fully deterministic machinery. The first rungs are gray and probabilistic — an LLM weighing a semantic question — and the last are rust and deterministic, where a checked predicate over a model settles it by machine. The frontier is the line between them, and the book's claim is that it moves: richer representation turns judged questions into decided ones. Agents change its economics on both sides, raising the value of a deterministic control and lowering the cost of building one. The top rungs stay open on purpose, since the forms not yet discovered are the invitation the method ends on.</figcaption></figure><p class="gallery-source">From <a href="6.6-conclusion.html#fig-6-6-1">35 · Conclusion</a></p></section><hr><section class="gallery-item"><figure id="fig-8-0-1-fig-8-0-1" class="book-figure" data-label="book-map-appendix"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 890"
      role="group" aria-labelledby="fig-8-0-1-bmTitle fig-8-0-1-bmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-8-0-1-bmTitle">A map of the book — the parts and how they compose</title>

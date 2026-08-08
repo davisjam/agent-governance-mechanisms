@@ -682,7 +682,115 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>Authority is allocated, not asserted. Agents may withhold approval or block a merge on an unsatisfied enforced requirement; they do not author policy, and they do not promote a rule from <em>approved</em> to <em>enforced</em>. Humans propose, approve, and promote. Agents scale the reach of a decision, not the right to make it. That approved→enforced lifecycle is a graduated rollout of authority — a new obligation lands in an advisory tier and earns its blocking power — the same shape the book draws elsewhere as audit→drain→blocking.</p>
 <p>Where Cloudflare stops is as informative as where it reaches. The <strong>policy</strong> is structured; the governed <strong>system</strong> is largely not modeled. Codex represents the obligations an implementation must satisfy, not an executable model of the implementation itself, so the reviewer still asks an LLM <em>"does this code appear to satisfy the requirement?"</em> rather than checking a predicate against a model of the system's state. And the loop the book calls governance conversion — a failure becoming a new durable obligation, the recurrence then retired — is not established in the source. The incident-review agent surfaces gaps; the account does not describe those gaps closing into new enforced rules. So the book records Cloudflare's governance-conversion cell as <em>partial</em>, not because the loop is absent in Cloudflare's practice, but because the report we read does not show it closing. What Cloudflare demonstrates instead, at an organizational scale the DocAble case cannot reach, is that the strongest of these mechanisms cluster under one of the book's two theses. Cloudflare independently built a governed engineering environment whose center of gravity is the Alignment Thesis.</p>
 <h2><span class="sec-num">6.5.7</span> Meet the six</h2>
-<p>Before the tables set the systems side by side, meet the five they compare against Cloudflare — each read once as a whole: its starting point, the environment it built, and where it maps into MAGE. Cloudflare keeps the deep reading above; the reconstructions here are Spotify (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-1">Table&nbsp;6.5-1</a>), Shopify (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-2">Table&nbsp;6.5-2</a>), Docker (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-3">Table&nbsp;6.5-3</a>), Siemens (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-4">Table&nbsp;6.5-4</a>), and Zenseact (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-5">Table&nbsp;6.5-5</a>). Each card is projected from the same record the comparative tables draw on, so a claim here and a cell there never drift.</p>
+<p>Before the tables set the systems side by side, meet the five they compare against Cloudflare — each read once as a whole: its starting point, the environment it built, and where it maps into MAGE. Cloudflare keeps the deep reading above; the reconstructions here are Spotify (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-1">Table&nbsp;6.5-1</a>), Shopify (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-2">Table&nbsp;6.5-2</a>), Docker (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-3">Table&nbsp;6.5-3</a>), Siemens (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-4">Table&nbsp;6.5-4</a>), and Zenseact (<a class="xref" href="6.5-where-mage-fits.html#tbl-6-5-5">Table&nbsp;6.5-5</a>). Each card is projected from the same record the comparative tables draw on, so a claim here and a cell there never drift. <a class="xref" href="6.5-where-mage-fits.html#fig-6-5-1">Figure&nbsp;6.5-1</a> sets all six on one map first — where each enters the design space, and which region of the theory each reconstructs.</p>
+<figure id="fig-6-5-1" class="book-figure" data-label="six-company-map"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 740"
+     role="group" aria-labelledby="scmTitle scmDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="scmTitle">Independent reconstructions of the theory: six industrial systems reconstruct regions of one theory of MAGE</title>
+  <desc id="scmDesc">A table shows six industrial systems, each entering the design space through a
+    different problem yet landing on a region of the same theory, named in MAGE vocabulary in the last
+    column. Cloudflare starts from policy-first governance, invests in policy bound into mechanisms, and
+    lands on the Alignment Thesis. Spotify starts from fleet-first autonomy, invests in fleet-scale
+    verification, and lands on the Governed Engineering Environment. Shopify starts from a shared
+    agent-ready environment, invests in organizational knowledge, and lands on the Engineering Environment.
+    Docker starts from authority boundaries and evaluation loops, invests in runtime authority, and lands on
+    Governance Conversion. Siemens starts from model-first engineering, invests in models as the development
+    surface, and lands on the Modeling Thesis. Zenseact starts from autonomous knowledge work, invests in
+    context and delegation, and lands on the Reasoning Horizon. A closing synthesis row reads: MAGE assembles
+    a unified vocabulary into an engineering theory that spans the whole landscape. Badge colours key each
+    landing to the house semantic language: rust for governance and alignment, green for modeling, knowledge,
+    and environment. No two organizations began with the same problem, yet they converge.</desc>
+
+  <defs>
+    <linearGradient id="scmSynth" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e3f0e7"/>
+      <stop offset="1" stop-color="#faf1e6"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="740" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">Independent reconstructions of the theory</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">Different entry points, common destination — each durable investment lands on a region of one theory.</text>
+
+  <!-- legend: badge colour keys to the house semantic language -->
+  <g font-size="16" fill="#57534e">
+    <rect x="212" y="90" width="18" height="18" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="238" y="105">Modeling · knowledge · environment</text>
+    <rect x="590" y="90" width="18" height="18" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <text x="616" y="105">Governance · alignment</text>
+  </g>
+
+  <!-- header row -->
+  <text x="48"  y="150" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">ORGANIZATION</text>
+  <text x="210" y="150" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">DISTINCTIVE STARTING POINT</text>
+  <text x="486" y="150" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">DURABLE INVESTMENT</text>
+  <text x="839" y="150" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#57534e">LANDS ON THE THEORY</text>
+
+  <!-- row rules -->
+  <g stroke="#e4e0d8" stroke-width="1.5">
+    <line x1="40" y1="164" x2="960" y2="164"/>
+    <line x1="40" y1="236" x2="960" y2="236"/>
+    <line x1="40" y1="308" x2="960" y2="308"/>
+    <line x1="40" y1="380" x2="960" y2="380"/>
+    <line x1="40" y1="452" x2="960" y2="452"/>
+    <line x1="40" y1="524" x2="960" y2="524"/>
+  </g>
+
+  <!-- Cloudflare -> Alignment Thesis (rust) -->
+  <text x="48"  y="206" font-size="20" font-weight="700" fill="#1c1917">Cloudflare</text>
+  <text x="210" y="206" font-size="17" fill="#57534e">Policy-first governance</text>
+  <text x="486" y="206" font-size="18" font-weight="700" fill="#1c1917">Policy → mechanisms</text>
+  <rect x="726" y="179" width="226" height="42" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="839" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3f12">Alignment Thesis</text>
+
+  <!-- Spotify -> Governed Engineering Environment (green, emphasized) -->
+  <text x="48"  y="278" font-size="20" font-weight="700" fill="#1c1917">Spotify</text>
+  <text x="210" y="278" font-size="17" fill="#57534e">Fleet-first autonomy</text>
+  <text x="486" y="278" font-size="18" font-weight="700" fill="#1c1917">Fleet-scale verification</text>
+  <rect x="726" y="251" width="226" height="42" rx="8" fill="#e3f0e7" stroke="#155c38" stroke-width="2.6"/>
+  <text x="839" y="270" text-anchor="middle" font-size="16" font-weight="700" fill="#155c38">Governed Engineering</text>
+  <text x="839" y="288" text-anchor="middle" font-size="16" font-weight="700" fill="#155c38">Environment</text>
+
+  <!-- Shopify -> Engineering Environment (green) -->
+  <text x="48"  y="350" font-size="20" font-weight="700" fill="#1c1917">Shopify</text>
+  <text x="210" y="350" font-size="17" fill="#57534e">Shared agent-ready env.</text>
+  <text x="486" y="350" font-size="18" font-weight="700" fill="#1c1917">Organizational knowledge</text>
+  <rect x="726" y="323" width="226" height="42" rx="8" fill="#eef7f0" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="839" y="342" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">Engineering</text>
+  <text x="839" y="360" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">Environment</text>
+
+  <!-- Docker -> Governance Conversion (rust) -->
+  <text x="48"  y="422" font-size="20" font-weight="700" fill="#1c1917">Docker</text>
+  <text x="210" y="422" font-size="17" fill="#57534e">Authority + eval loops</text>
+  <text x="486" y="422" font-size="18" font-weight="700" fill="#1c1917">Runtime authority</text>
+  <rect x="726" y="395" width="226" height="42" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="839" y="414" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">Governance</text>
+  <text x="839" y="432" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">Conversion</text>
+
+  <!-- Siemens -> Modeling Thesis (green) -->
+  <text x="48"  y="494" font-size="20" font-weight="700" fill="#1c1917">Siemens</text>
+  <text x="210" y="494" font-size="17" fill="#57534e">Model-first engineering</text>
+  <text x="486" y="494" font-size="18" font-weight="700" fill="#1c1917">Models as the surface</text>
+  <rect x="726" y="467" width="226" height="42" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="839" y="494" text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">Modeling Thesis</text>
+
+  <!-- Zenseact -> Reasoning Horizon (green) -->
+  <text x="48"  y="566" font-size="20" font-weight="700" fill="#1c1917">Zenseact</text>
+  <text x="210" y="566" font-size="17" fill="#57534e">Autonomous knowledge work</text>
+  <text x="486" y="566" font-size="18" font-weight="700" fill="#1c1917">Context + delegation</text>
+  <rect x="726" y="539" width="226" height="42" rx="8" fill="#eef7f0" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="839" y="566" text-anchor="middle" font-size="18" font-weight="700" fill="#1f7a4d">Reasoning Horizon</text>
+
+  <!-- synthesis row: MAGE assembles the pieces -->
+  <line x1="40" y1="596" x2="960" y2="596" stroke="#57534e" stroke-width="2"/>
+  <rect x="40" y="600" width="920" height="60" rx="9" fill="url(#scmSynth)" stroke="#e4e0d8" stroke-width="1.2"/>
+  <text x="64"  y="637" font-size="20" font-weight="700" fill="#1c1917">MAGE</text>
+  <text x="210" y="637" font-size="18" fill="#57534e">unified vocabulary</text>
+  <text x="486" y="637" font-size="18" font-weight="700" fill="#1c1917">engineering theory</text>
+  <text x="839" y="637" text-anchor="middle" font-size="18" font-weight="700" fill="#155c38">the whole landscape</text>
+
+  <text x="500" y="700" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">No two organizations began with the same problem — yet they converge.</text>
+</svg><figcaption data-short="Independent Reconstructions"><span class="fig-label">Figure 6.5-1.</span> <em>Independent Reconstructions.</em> Six industrial systems, each entering the design space through a different door, reconstruct overlapping regions of one theory of MAGE. Colour marks which lobe each makes load-bearing: rust for governance and alignment, green for modeling and knowledge. No system covers the whole; read together, they trace its shape.</figcaption></figure>
 <div class="case-onepager"><table id="tbl-6-5-1" class="book-table" data-label="op-spotify"><caption class="tbl-label-only"><span class="tbl-label">Table 6.5-1.</span></caption><thead><tr><th><strong>Spotify</strong> · software / large-scale platform · platform + fleet-first autonomous implementation</th></tr></thead><tbody><tr><td><em>Scale.</em> &gt;1,500 merged AI-generated (Honk) PRs; hundreds of internal users (Nov 2025 - Apr 2026) · &gt;300,000 automated changes merged by 2023 (~75% automerged); 2.5M+ cumulative automated maintenance PRs by 2026</td></tr><tr><td>Spotify is the case where the environment came first. For years before autonomous coding agents existed, Spotify had been standardizing its software estate for human engineers and deterministic bots: a catalog that named every service and its owners, fleet-wide tooling that could push a single change across thousands of repositories, and an automatic gate that admitted work on evidence. That long head start is both the case's defining feature and its evidential gift. The environment was mature and measured before the agent arrived, so Spotify offers something close to a before-and-after on what a governed substrate buys you, with the caution that the productivity figures are self-reported rather than a causal test.</td></tr><tr><td><em>Environment.</em> Works over source-code, models, specs; represents architecture-model, structured-policy, tests; mechanisms llm-reviewer, merge-gate, deterministic-lint, constrained-api, stable-identity, provenance.</td></tr><tr><td><em>Maps to MAGE.</em> Strong on Alignment, Modeling, Bootstrap, Determinization, Reasoning horizon, Engineer's seat; partial on Conversion, Graduated governance.</td></tr><tr><td><em>Adds.</em> environment can precede the workforce. <em>Frontier.</em> no generalized model territory drift gate.</td></tr><tr><td>Spotify built a standardized, model-backed, automatically-governed engineering substrate for humans and deterministic bots over several years, then swapped the deterministic transformation function for a probabilistic reasoner when autonomous coding agents arrived and left the surrounding targeting, verification, admission, and monitoring machinery essentially unchanged - the sample's cleanest demonstration that the governed environment is conceptually prior to the agent. — <em>practitioner-report, independent; years horizon; not-described ≠ absent.</em></td></tr></tbody></table></div>
 <div class="case-onepager"><table id="tbl-6-5-2" class="book-table" data-label="op-shopify"><caption class="tbl-label-only"><span class="tbl-label">Table 6.5-2.</span></caption><thead><tr><th><strong>Shopify</strong> · software / commerce platform · shared agent-ready environment + organizational learning</th></tr></thead><tbody><tr><td><em>Scale.</em> 59,918 River sessions across 5,170 Slack channels touching 7,000+ employees; 3,536 merged River-coauthored PRs in 30 days · ~1 in 8 company-wide merged PRs coauthored by River; median session 19 min / 50 tool calls</td></tr><tr><td>Meet Shopify through River, an agent you summon from a public Slack channel to read code, run tests, query the data warehouse, and open a pull request. River is public on purpose: a lesson learned in a private session helps no one else, so every session becomes a searchable artifact the company mines into skills and defaults. Underneath sits the deliberate part, a single work surface that centralizes context and reproducible execution, where each new agent is a profile over the shared substrate rather than a platform of its own. Shopify's distinctive habit is organizational rather than technical, keeping the work visible so one engineer's experience becomes everyone's, on a short evidence horizon with outcome numbers the company reports itself.</td></tr><tr><td><em>Environment.</em> Works over source-code, design-docs; represents informal-knowledge, spec, tests; mechanisms merge-gate, deterministic-lint, constrained-api, retrieval-layer, provenance, stable-identity.</td></tr><tr><td><em>Maps to MAGE.</em> Strong on Alignment, Bootstrap, Conversion, Determinization, Reasoning horizon, Engineer's seat; partial on Modeling, Graduated governance.</td></tr><tr><td><em>Adds.</em> publicness precondition for compounding. <em>Frontier.</em> no invariant bearing system model described.</td></tr><tr><td>Shopify made the engineering environment itself - a shared monorepo, reproducible Nix execution, a public agent corpus, and a common agent runtime - into compounding organizational memory, giving MAGE its strongest external instance of engineering capital and the refinement that experience must become observable before it can compound. — <em>practitioner-report, independent; months horizon; not-described ≠ absent.</em></td></tr></tbody></table></div>
 <div class="case-onepager"><table id="tbl-6-5-3" class="book-table" data-label="op-docker"><caption class="tbl-label-only"><span class="tbl-label">Table 6.5-3.</span></caption><thead><tr><th><strong>Docker</strong> · software / developer infrastructure · authority boundaries + autonomous fleet + evaluation loops</th></tr></thead><tbody><tr><td><em>Scale.</em> 7 autonomous roles on CI (cli-tester, performance-tester, upgrade-tester, software-engineer, project-manager, product-owner, /build-engineer) over 20 skills (13 foundational + 7 role) · cli-tester: 52+ scenarios across 14 tiers</td></tr><tr><td>Docker began from a question about trust: how much freedom can you give an agent whose behavior you cannot fully predict? Its answer moved the boundary off the prompt and into the runtime, giving each agent a disposable microVM where the forbidden thing is simply absent (the home SSH directory is not in the agent's world, rather than a rule telling it not to look), so inside the box it can install, run, and modify freely. On that footing Docker ran a small team of role-specialized agents on CI, each free to investigate the unexpected, with an independent reviewer and a human standing between every pull request and the main branch. It is the youngest system in the set, so read it for its architecture and authority story rather than for long-run outcomes.</td></tr><tr><td><em>Environment.</em> Works over source-code, specs, incident-reports; represents informal-knowledge, spec, tests; mechanisms constrained-api, deterministic-lint, llm-reviewer, merge-gate, retrieval-layer, provenance.</td></tr><tr><td><em>Maps to MAGE.</em> Strong on Alignment, Bootstrap, Conversion, Reasoning horizon, Engineer's seat; partial on Modeling, Graduated governance; in tension Determinization.</td></tr><tr><td><em>Adds.</em> hard boundaries enable more autonomy. <em>Frontier.</em> no invariant bearing system model described.</td></tr><tr><td>Docker made authority itself an engineered property of the runtime - a hard microVM boundary placed outside the reasoner rather than asserted in prompts - then built a seven-role autonomous fleet and a worker/reviewer loop on top, giving MAGE its sharpest Alignment-Thesis instance and the lesson that hard boundaries enable more autonomy, not less, while keeping a human on every merge under the shortest evidence horizon in the set. — <em>practitioner-report, independent; weeks horizon; not-described ≠ absent.</em></td></tr></tbody></table></div>
@@ -727,7 +835,78 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>The two frontiers turn a loop that does not settle. Richer models make more obligations machine-checkable; more machine-checkable obligations mean less per-change human and LLM judgment; less judgment per change means a larger fleet can run safely; a larger fleet attempts more ambitious work; ambitious work surfaces new failure classes no model yet covers; and those failures demand new models and mechanisms, which move the frontier again. This is the same non-terminating dynamic the dynamic model already draws, read along one axis: the determinization frontier is where the green adaptation loop and the purple amplification loop meet. Each turn of the loop hands the next fleet a larger share of its obligations already settled by machine.</p>
 <p>The book leaves the frontier open on purpose. The cases show several distinct places to cross it; there are surely forms of deterministic frontier that are only theorized today, or not yet discovered at all. Naming the ones we can see is an invitation to find the ones we cannot.</p>
 <h3>The governance census</h3>
-<p>If the environment is the object of engineering, it needs an inventory. The census is that inventory, and it turns a description of a system into a diagnosis of it. The move has six steps: inventory the obligations, map each to the representations and mechanisms that carry it, identify the gaps and the orphans, judge whether each gap merits governance, choose the cheapest adequate mechanism, and measure how the environment changed.</p>
+<p>If the environment is the object of engineering, it needs an inventory. The census is that inventory, and it turns a description of a system into a diagnosis of it. The move has six steps: inventory the obligations, map each to the representations and mechanisms that carry it, identify the gaps and the orphans, judge whether each gap merits governance, choose the cheapest adequate mechanism, and measure how the environment changed. <a class="xref" href="6.5-where-mage-fits.html#fig-6-5-2">Figure&nbsp;6.5-2</a> draws the move: obligations on one side, mechanisms on the other, and the two diagnostic counts that fall out of matching them.</p>
+<figure id="fig-6-5-2" class="book-figure" data-label="governance-census"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="group" aria-labelledby="gcTitle gcDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="gcTitle">The governance census: governed, under-governance, and governance debt are counts once obligations and mechanisms are enumerated</title>
+  <desc id="gcDesc">Two columns face each other. On the left, Obligations — what must be governed. On the
+    right, Mechanisms — the controls that meet them. A line joins each obligation to the mechanism that
+    covers it. Three quantities fall out of the match, shown as three large outputs. Governed: an obligation
+    met by a mechanism, in green. Under-governance: an obligation with no mechanism, a hole in governance, in
+    red. Governance debt: a mechanism with no obligation, an unjustified control, in muted grey. Once
+    obligations and mechanisms are enumerated, these three become counts rather than opinions — governance
+    becomes an engineering artifact. The figure is a bipartite graph, the requirements-traceability analogue.</desc>
+
+  <defs>
+    <marker id="gc-cov" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The governance census</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">Governance becomes an engineering artifact — governed, under-governed, and debt are counts, not opinions.</text>
+
+  <!-- column headers (both in the rust governance family) -->
+  <text x="228" y="118" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="1" fill="#9a3f12">OBLIGATIONS</text>
+  <text x="228" y="140" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">what must be governed</text>
+  <text x="772" y="118" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="1" fill="#9a3f12">MECHANISMS</text>
+  <text x="772" y="140" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the controls that meet them</text>
+
+  <!-- match lines (green = coverage), drawn behind the chips -->
+  <g stroke="#1f7a4d" stroke-width="2.2" fill="none">
+    <path d="M356,190 L644,190" marker-end="url(#gc-cov)"/>
+    <path d="M356,246 L644,246" marker-end="url(#gc-cov)"/>
+    <path d="M356,302 L644,302" marker-end="url(#gc-cov)"/>
+  </g>
+
+  <!-- obligation chips (left, rust) -->
+  <rect x="128" y="166" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="242" y="196" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligation</text>
+  <rect x="128" y="222" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="242" y="252" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligation</text>
+  <rect x="128" y="278" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="242" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligation</text>
+  <!-- the under-governed obligation (no line to any mechanism) -->
+  <rect x="128" y="334" width="228" height="48" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.6"/>
+  <text x="242" y="364" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">Uncovered obligation</text>
+
+  <!-- mechanism chips (right, rust) -->
+  <rect x="644" y="166" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="758" y="196" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanism</text>
+  <rect x="644" y="222" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="758" y="252" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanism</text>
+  <rect x="644" y="278" width="228" height="48" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="758" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanism</text>
+  <!-- the debt mechanism (no line to any obligation) -->
+  <rect x="644" y="334" width="228" height="48" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2.6"/>
+  <text x="758" y="364" text-anchor="middle" font-size="18" font-weight="700" fill="#57534e">Unmatched mechanism</text>
+
+  <!-- the three derived outputs, made large -->
+  <text x="500" y="424" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">Three counts fall out of the match</text>
+  <rect x="40"  y="438" width="288" height="76" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="3"/>
+  <text x="184" y="474" text-anchor="middle" font-size="23" font-weight="700" fill="#1f7a4d">GOVERNED</text>
+  <text x="184" y="498" text-anchor="middle" font-size="16" fill="#57534e">obligation met by a mechanism</text>
+  <rect x="356" y="438" width="288" height="76" rx="10" fill="#fbeaea" stroke="#b23b3b" stroke-width="3"/>
+  <text x="500" y="474" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">UNDER-GOVERNANCE</text>
+  <text x="500" y="498" text-anchor="middle" font-size="16" fill="#57534e">obligation with no mechanism</text>
+  <rect x="672" y="438" width="288" height="76" rx="10" fill="#f3efe7" stroke="#57534e" stroke-width="3"/>
+  <text x="816" y="474" text-anchor="middle" font-size="23" font-weight="700" fill="#57534e">GOVERNANCE DEBT</text>
+  <text x="816" y="498" text-anchor="middle" font-size="16" fill="#57534e">mechanism with no obligation</text>
+
+  <text x="500" y="544" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Governance as a bipartite graph — the requirements-traceability analogue.</text>
+</svg><figcaption data-short="The Governance Census"><span class="fig-label">Figure 6.5-2.</span> <em>The Governance Census.</em> Set the obligations that must be governed against the mechanisms that govern them, and two diagnostics become counts, not opinions: a gap is an obligation no mechanism carries (under-governance); an orphan is a mechanism tracing to no obligation (governance debt). Governed is the matched middle. The inventory turns a description of an environment into a diagnosis of it.</figcaption></figure>
 <p>Two metrics do the diagnostic work.</p>
 <ul><li><strong>A gap</strong> is an obligation or property you care about for which no adequate mechanism carries authority or evidence. A gap is under-governance — a place the environment is silent where it should speak.</li><li><strong>An orphan</strong> is a mechanism that exists but traces to no current obligation, failure class, or purpose. An orphan is accumulated governance debt — machinery that outlived its reason.</li></ul>
 <p>The census reframes the comparison the whole section has been circling. Ask not "who governs the most?" but the census questions: <em>what properties of the engineering environment are represented? Which are governed? By what mechanism? Where is there no mechanism? Where does a mechanism exist without a clearly identified obligation?</em> Under those questions the six sites stop competing on a single axis and start making <em>different portions of the environment</em> load-bearing. Cloudflare makes policy-to-mechanism dense. Spotify makes topology, verification, and admission dense. Shopify makes knowledge, context, and runtime dense. Docker makes the authority boundary and the evaluation loop dense. Siemens makes models, traceability, and verification dense. Zenseact makes context routing, permission, and delegation dense. Each governs the portion its domain makes central, and leaves other portions implicit; the census asks whether those silences are acceptable for the domain, which is the honest question and a harder one than "how many controls do you have."</p>

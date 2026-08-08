@@ -179,7 +179,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 9
+            "occ": 13
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -427,7 +427,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 105
+            "occ": 109
           },
           {
             "file": "book/index.html",
@@ -889,7 +889,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 3
+            "occ": 6
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -913,7 +913,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 29
+            "occ": 32
           },
           {
             "file": "book/part-1-intro.html",
@@ -1501,11 +1501,11 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 64
+            "occ": 76
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 43
+            "occ": 47
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -1753,7 +1753,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 96
+            "occ": 111
           },
           {
             "file": "book/index.html",
@@ -2035,7 +2035,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -2279,7 +2279,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 20
+            "occ": 21
           },
           {
             "file": "book/index.html",
@@ -2653,7 +2653,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 61
+            "occ": 73
           },
           {
             "file": "book/4.1-brownfield.html",
@@ -2717,7 +2717,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 16
+            "occ": 22
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -2965,7 +2965,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 255
+            "occ": 271
           },
           {
             "file": "book/index.html",
@@ -3995,7 +3995,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 1
+            "occ": 4
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -4015,7 +4015,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 30
+            "occ": 33
           },
           {
             "file": "book/part-1-intro.html",
@@ -4579,7 +4579,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 6
+            "occ": 9
           },
           {
             "file": "book/book-index.html",
@@ -4587,7 +4587,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 4
+            "occ": 7
           },
           {
             "file": "book/list-of-figures.html",
@@ -5229,7 +5229,7 @@
           },
           {
             "file": "book/3.8-keeping-models-in-sync.html",
-            "occ": 3
+            "occ": 5
           },
           {
             "file": "book/4.1-brownfield.html",
@@ -5293,7 +5293,7 @@
           },
           {
             "file": "book/6.6-conclusion.html",
-            "occ": 2
+            "occ": 5
           },
           {
             "file": "book/7.1-about-the-author.html",
@@ -5537,7 +5537,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 40
+            "occ": 45
           },
           {
             "file": "book/index.html",

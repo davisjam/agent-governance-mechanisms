@@ -761,4 +761,91 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <h2><span class="sec-num">3.8.6</span> The honest reading</h2>
 <p>The result is narrow, and stating its limits is part of stating it. Four readings bound what this measurement does and does not show.</p>
 <ul><li><strong>Preliminary, small N.</strong> Per window, the count of <em>genuine</em> model↔code drifts is small — a handful, not a headline. The model-sync claim rests on that small set of genuine model drifts the derived floor caught, plus zero model-drift reopens under heavy churn — not on any headline catch-rate, which would mix doc-legible catches with modeled ones and rest on a denominator too small for the model-sync slice. This is a field-report result, not a proof.</li><li><strong>The catch-rate rose by composition, not by loosening.</strong> The refresh window caught more drift (17 of 20 closes vs. the original's 6 of 36) because it moved more territory — product-heavy Epics with more doc surface — exactly where the reading layer is the only practical control. The net did not get weaker; there was more for it to catch.</li><li><strong>The claim is narrow and it is about sync, not hygiene.</strong> The three legs: the drift is real and used to escape (the ~27 pre-floor findings); the mechanism is derived reconciliation, not snapshot-and-sync (freshness by derivation); and it held under load (the churn row, with zero model-drift reopens). The doc-hygiene aside is kept separate on purpose.</li><li><strong>The two failure modes are the boundary of the claim.</strong> Sync is enforced for the modeled and mechanically-decidable; it is <em>aimed</em> for the semantic; and it is <em>absent</em> for the unmodeled until a metamodel or a self-governance reflex extends the net. That boundary is the honest shape of the result.</li></ul>
+<p>Step back from sync to the whole Part. Every model walked here sits on one ladder of representation, and the ladder is the Part's real claim: richer representation does not merely make the same intent more legible, it expands what a machine can compute over it. <a class="xref" href="3.8-keeping-models-in-sync.html#fig-3-8-2">Figure&nbsp;3.8-2</a> climbs it from documentation a reader parses to a computable model a tool executes and reasons over.</p>
+<figure id="fig-3-8-2" class="book-figure" data-label="representation-ladder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="group" aria-labelledby="mlTitle mlDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="mlTitle">The representation ladder: how richer representation expands what a machine can reason about</title>
+  <desc id="mlDesc">A six-rung ladder climbs from left to right over a green ramp whose axis runs from
+    human-readable on the left, through machine-understandable, to machine-executable on the right. Each
+    rung sits higher than the last and unlocks a stronger kind of computation. Rung one, Documentation —
+    prose a reader can read. Rung two, Knowledge graph — entities a tool can query. Rung three, Structured
+    model — typed records a tool can validate. Rung four, Behavior model — state machines a tool can
+    simulate. Rung five, Reasoning model — invariants a tool can prove. Rung six, Computable model — a model
+    a tool can execute and reason over. Climbing the ladder does not merely make the same intent more legible;
+    it expands the reasoning the machine can perform over it.</desc>
+
+  <defs>
+    <marker id="ml-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+    <linearGradient id="mlRamp" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#eef7f0"/>
+      <stop offset="0.55" stop-color="#e3f0e7"/>
+      <stop offset="1" stop-color="#1f7a4d"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The representation ladder</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">How representation expands reasoning.</text>
+
+  <!-- human-readable -> machine-understandable -> machine-executable axis -->
+  <text x="90"  y="112" font-size="16" fill="#57534e">HUMAN-READABLE · a person can follow it</text>
+  <text x="500" y="112" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">→ machine-understandable →</text>
+  <text x="910" y="112" text-anchor="end" font-size="16" fill="#1f7a4d">MACHINE-EXECUTABLE · a tool can run it</text>
+
+  <!-- connectors from each rung down to its ramp column -->
+  <g stroke="#e4e0d8" stroke-width="1.5">
+    <line x1="142" y1="416" x2="142" y2="452"/>
+    <line x1="285" y1="384" x2="285" y2="452"/>
+    <line x1="428" y1="352" x2="428" y2="452"/>
+    <line x1="572" y1="320" x2="572" y2="452"/>
+    <line x1="715" y1="288" x2="715" y2="452"/>
+    <line x1="858" y1="256" x2="858" y2="452"/>
+  </g>
+
+  <!-- climbing arrows rung-to-rung -->
+  <g fill="none" stroke="#1f7a4d" stroke-width="2.2">
+    <path d="M206,372 C238,360 244,352 270,342" marker-end="url(#ml-ah)"/>
+    <path d="M349,340 C381,328 387,320 413,310" marker-end="url(#ml-ah)"/>
+    <path d="M492,308 C524,296 530,288 556,278" marker-end="url(#ml-ah)"/>
+    <path d="M636,276 C668,264 673,256 699,246" marker-end="url(#ml-ah)"/>
+    <path d="M779,244 C811,232 817,224 843,214" marker-end="url(#ml-ah)"/>
+  </g>
+
+  <!-- the six rungs (all green — the representation lobe) -->
+  <rect x="69" y="352" width="146" height="64" rx="8" fill="#eef7f0" stroke="#1f7a4d" stroke-width="2.2"/>
+  <text x="142" y="390" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Documentation</text>
+  <rect x="221" y="320" width="128" height="64" rx="8" fill="#eef7ee" stroke="#1f7a4d" stroke-width="2.2"/>
+  <text x="285" y="350" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Knowledge</text>
+  <text x="285" y="372" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">graph</text>
+  <rect x="364" y="288" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="428" y="318" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Structured</text>
+  <text x="428" y="340" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">model</text>
+  <rect x="508" y="256" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="572" y="286" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Behavior</text>
+  <text x="572" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">model</text>
+  <rect x="651" y="224" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="715" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Reasoning</text>
+  <text x="715" y="276" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">model</text>
+  <rect x="794" y="192" width="128" height="64" rx="8" fill="#e3f0e7" stroke="#155c38" stroke-width="3"/>
+  <text x="858" y="222" text-anchor="middle" font-size="18" font-weight="700" fill="#155c38">Computable</text>
+  <text x="858" y="244" text-anchor="middle" font-size="18" font-weight="700" fill="#155c38">model</text>
+
+  <!-- the ramp -->
+  <rect x="70" y="452" width="860" height="26" rx="7" fill="url(#mlRamp)" stroke="#e4e0d8" stroke-width="1.2"/>
+
+  <!-- bottom labels: what computation each rung unlocks -->
+  <g font-size="16" fill="#57534e" text-anchor="middle">
+    <text x="142" y="502">read</text>
+    <text x="285" y="502">query</text>
+    <text x="428" y="502">validate</text>
+    <text x="572" y="502">simulate</text>
+    <text x="715" y="502">prove</text>
+    <text x="858" y="502">execute</text>
+  </g>
+
+  <text x="500" y="540" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Industry has converged on documentation and knowledge graphs; the opportunity lies further up — analyzable, executable models.</text>
+</svg><figcaption data-short="The Representation Ladder"><span class="fig-label">Figure 3.8-2.</span> <em>The Representation Ladder.</em> Six rungs climb from documentation a reader parses to a computable model a tool executes and reasons over, each unlocking a stronger computation — read, query, validate, simulate, prove, execute. Climbing the ladder does not merely make the same intent more legible; it expands the reasoning a machine can perform over it.</figcaption></figure>
 <p>That honest reading closes the zoo. This Part walked each kind of model on real code and showed the drift gate that holds each one to the code, so the map cannot quietly rot away from the territory. What it has not shown is how you reach that state from a codebase that carries none of it. The next Part starts from spaghetti.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="part-3-intro.html" aria-label="Beginning of Part 3 — The Model Zoo">« Beginning of part</a><a href="3.7-the-scope-of-modeling.html" aria-label="Previous chapter — 18 · The Scope of Modeling">« Previous chapter</a></div><span class="chapnav-here" title="19 · Keeping the Models in Sync with the Code — A Measurement">19 · Keeping the Models in Sync with the Code — A Measurement</span><div class="chapnav-fwd"><a href="part-4-intro.html" aria-label="Next chapter — Putting It to Work">Next chapter »</a><a href="part-4-intro.html" aria-label="Next part — Part 4 — Putting It to Work">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
