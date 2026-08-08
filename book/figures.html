@@ -3498,7 +3498,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- human-readable -> machine-understandable -> machine-executable axis -->
   <text x="90"  y="112" font-size="16" fill="#57534e">HUMAN-READABLE · a person can follow it</text>
-  <text x="500" y="112" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">→ machine-understandable →</text>
+  <text x="500" y="112" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">machine-understandable</text>
   <text x="910" y="112" text-anchor="end" font-size="16" fill="#1f7a4d">MACHINE-EXECUTABLE · a tool can run it</text>
 
   <!-- connectors from each rung down to its ramp column -->
@@ -7118,8 +7118,8 @@ z
   <text x="832" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">supply chain</text>
 
   <!-- A2 -> A1 inter-item edge: "richer models move it" (green, a book claim) -->
+  <!-- Label painted later, ON TOP of the dropper web + on a canvas halo (see "edge-label plate" below). -->
   <path d="M368,212 C300,262 224,262 156,212" fill="none" stroke="#1f7a4d" stroke-width="2.2" marker-end="url(#fig-6-5-3-of-green)"/>
-  <text x="258" y="284" text-anchor="middle" font-size="16" font-style="italic" font-weight="700" fill="#1f7a4d">richer models move it</text>
 
   <!-- ============ REGION 2/3/4 labels ============ -->
   <text x="255" y="330" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="2" fill="#57534e">MEASUREMENT</text>
@@ -7157,8 +7157,8 @@ z
   <text x="859" y="428" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">(MBAE)</text>
 
   <!-- census propagation-latency chip ⇢ A6 : "future metric" (dashed, the one place regions touch) -->
+  <!-- Label painted later, ON TOP of the dropper web + on a canvas halo (see "edge-label plate" below). -->
   <path d="M417,398 C450,360 486,360 512,388" fill="none" stroke="#9a3f12" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#fig-6-5-3-of-rust)"/>
-  <text x="462" y="348" text-anchor="middle" font-size="16" font-style="italic" fill="#9a3f12">future metric</text>
 
   <!-- ============ DROPPER EDGES: each item -> the hypotheses it tests ============ -->
   <g fill="none" stroke="#c7c2b9" stroke-width="1.3">
@@ -7178,6 +7178,17 @@ z
     <path d="M676,442 C676,506 882,514 903,558" marker-end="url(#fig-6-5-3-of-drop)"/>                            <!-- A6->H8 -->
     <!-- GENERALIZATION: A7 -> H4 -->
     <path d="M860,442 C860,510 470,518 439,558" marker-end="url(#fig-6-5-3-of-drop)"/>                            <!-- A7->H4 -->
+  </g>
+
+  <!-- ============ EDGE-LABEL PLATE ============ -->
+  <!-- The two inter-item edge labels ride ON TOP of the faint dropper web, each on a canvas-coloured halo
+       so a pale connector line never crosses the glyphs (a stroke-through-label legibility fix). The
+       "future metric" label sits just above the census box's top border so its halo does not break it. -->
+  <g>
+    <rect x="160" y="270" width="196" height="21" rx="5" fill="#fdfcf9"/>
+    <text x="258" y="284" text-anchor="middle" font-size="16" font-style="italic" font-weight="700" fill="#1f7a4d">richer models move it</text>
+    <rect x="398" y="327" width="128" height="14" rx="5" fill="#fdfcf9"/>
+    <text x="462" y="340" text-anchor="middle" font-size="16" font-style="italic" fill="#9a3f12">future metric</text>
   </g>
 
   <!-- ============ H1-H8 ANCHOR RAIL (id + one-word name) ============ -->
