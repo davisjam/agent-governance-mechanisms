@@ -97,7 +97,10 @@ SELF_GOVERNANCE = SkillSpec(
     ),
     # The model-based-software-engineering starter kit: fill-in scaffolds for authoring the 4+1
     # model views (the catalogue documents them as mechanisms; these let a fresh project BUILD them).
+    # Plus the shared method-language glossary — the lexicon the govern/operate/communicate trio speaks
+    # in, so a term means the same thing across all three skills.
     vendor_downloads=(
+        "method-language-starter.md",
         "system-models-starter-kit.md",
         "state-machine-model-starter.py",
         "component-zone-model-starter.py",

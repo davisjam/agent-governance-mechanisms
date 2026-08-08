@@ -14,8 +14,15 @@
 (including commercially), provided this copyright and permission notice are
 retained. Full terms in the LICENSE file distributed with this catalogue.*
 
+**Judgment is the scarce resource.** The premise the method rests on: agents make implementation cheap, so
+the expensive part becomes judgment — what to build, what "correct" means here, which failures deserve a
+wall and which a note. The discipline that pays converts each such call into infrastructure, encoding a
+decision once so no agent has to make it again.
+
 The portable **method** behind this catalogue: principles for AI-collaborative software engineering,
-independent of any domain.
+independent of any domain. The shared vocabulary it speaks in — **Governance** ("judgment, as code"), the
+**Governed Engineering Environment** it builds, **Constraint** and **Sensor** for the two mechanism kinds,
+the **Modeling** and **Alignment** theses — ships one line each in the method-language glossary starter.
 
 They map onto the governance view the catalogue teaches — every mechanism is either an **architecture**
 that makes a failure impossible by construction, or a **control** that observes and guards against one it
@@ -24,15 +31,15 @@ here *as* those mechanisms, not re-taught.
 
 Four groups:
 
-- **[The governance view](#a1--the-governance-view) (A.1)** — frames the method.
-- **[Architecture](#a2--architecture-make-the-failure-impossible-by-construction) (A.2)** and
-  **[Controls](#a3--controls-observe-and-guard-what-you-cant-prevent) (A.3)** — the two mechanism kinds.
+- **[The governance view](#a1--the-governance-view--governance-judgment-as-code) (A.1)** — Governance: judgment, as code; frames the method.
+- **[Architecture — the Constraint](#a2--architecture-make-the-failure-impossible-by-construction--the-constraint-prevent-the-mistake) (A.2)** and
+  **[Controls — the Sensor](#a3--controls-observe-and-guard-what-you-cant-prevent--the-sensor-detect-the-mistake) (A.3)** — the two mechanism kinds (prevent the mistake vs detect it).
 - **[Operating the method](#a4--operating-the-method) (A.4)** — the working discipline that wields them.
 
 Each principle is the crisp statement + the WHY. Many are also enforced, in the source project, as a
 numbered rule plus a lint or gate — adopt the principle, and wire your own enforcement.
 
-## A.1 — The governance view
+## A.1 — The governance view — Governance: judgment, as code
 
 The frame the rest of the method hangs on: what governance is, how the standard playbook maps into it, and
 how to choose and size mechanisms.
@@ -198,7 +205,7 @@ view. Calibrating placement is a *judgment* — the lowest-naming-layer isn't me
 is a design-time reflex (→ A.1.5), not a lint. (→ A.3.7 lifecycle hooks — the mechanism menu; → A.1.3
 right-size — the sibling axis of *how much*, where this is *at what layer*.)
 
-## A.2 — Architecture: make the failure impossible by construction
+## A.2 — Architecture: make the failure impossible by construction — the Constraint (prevent the mistake)
 
 The first-choice mechanism. Shape the system so the failure class cannot be represented — a typed model
 with one sanctioned seam, a state that can't be written wrongly. Prefer these to any control that merely
@@ -424,7 +431,7 @@ an architecture change — do not hunt for embedded assumptions in a stable syst
 element-by-element orthogonality pass earns its cost only when a change is live *and* the design keeps
 dancing near the substrate boundary; a one-off is not a reason to walk the whole model.
 
-## A.3 — Controls: observe and guard what you can't prevent
+## A.3 — Controls: observe and guard what you can't prevent — the Sensor (detect the mistake)
 
 Where architecture can't make a failure impossible, catch it: a lint, a gate, a test, a validator that
 fires on violation and holds the line. The organizing move — *convert a recurring failure into a control
