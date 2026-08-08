@@ -5529,7 +5529,7 @@
           "heading_text": "What industry discovered independently",
           "topic_sentence": "Six more patterns are not universal.",
           "id_source": "derived",
-          "block_index": 71,
+          "block_index": 74,
           "points": []
         },
         {
@@ -5538,7 +5538,7 @@
           "heading_text": "What none of the six sites does",
           "topic_sentence": "The third bucket is not a table.",
           "id_source": "derived",
-          "block_index": 77,
+          "block_index": 83,
           "points": []
         },
         {
@@ -5547,7 +5547,7 @@
           "heading_text": "The determinization frontier",
           "topic_sentence": "One pattern is universal — combine probabilistic reasoning with deterministic machinery — and it repays a closer look, because agents change its economics.",
           "id_source": "derived",
-          "block_index": 82,
+          "block_index": 88,
           "points": []
         },
         {
@@ -5556,7 +5556,7 @@
           "heading_text": "The governance census",
           "topic_sentence": "If the environment is the object of engineering, it needs an inventory.",
           "id_source": "derived",
-          "block_index": 89,
+          "block_index": 95,
           "points": []
         },
         {
@@ -5565,7 +5565,7 @@
           "heading_text": "The organizational topology",
           "topic_sentence": "The comparison has one result the single case could not have produced.",
           "id_source": "derived",
-          "block_index": 97,
+          "block_index": 103,
           "points": []
         },
         {
@@ -5574,7 +5574,7 @@
           "heading_text": "Common destination, different entry points",
           "topic_sentence": "The comparison ends where it began, on a distinction.",
           "id_source": "derived",
-          "block_index": 106,
+          "block_index": 112,
           "points": []
         },
         {
@@ -5583,7 +5583,7 @@
           "heading_text": "Where the frontier goes next",
           "topic_sentence": "The open work of this book gathers here, sorted into four kinds.",
           "id_source": "derived",
-          "block_index": 111,
+          "block_index": 117,
           "points": []
         }
       ],

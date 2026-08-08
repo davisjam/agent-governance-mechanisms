@@ -819,6 +819,57 @@ def _landscape_wrap_typst(body: str) -> str:
     )
 
 
+def _render_convergence_key_typst(block: Block_t) -> str:
+    """The convergence KEY as a slimmed 3-column reference (the right panel of a convergence spread). Reads the
+    4-column key markdown (`# | Pattern | Construct | statement`) but DROPS the Construct column, folding the
+    construct into a small-caps subtitle beneath the pattern name (Layer-3 index info, not a comparison axis —
+    tables.md author review). The glyph grid it faces is untouched; this only reshapes the key. Still a numbered
+    `#figure(kind: table) <label>` so `@convergence-*-key` cross-references and the list-of-floats resolve."""
+    lines = block.raw.splitlines()
+    body_rows = [bb._split_table_row(ln) for ln in lines[2:] if ln.strip()]
+    cells = ["table.hline(stroke: 1pt)",
+             "table.header([\\#], [Pattern], [What the source establishes])",
+             "table.hline(stroke: 0.5pt)"]
+    for row in body_rows:
+        row = (row + [""] * 4)[:4]
+        key, name, construct, statement = row
+        construct_disp = construct.replace("-", " ")
+        # name over a small-caps construct subtitle — the fold that removes the Construct column.
+        patt = (f"[#strong[{inline_typst(name)}]#linebreak()"
+                f"#text(size: 0.78em, fill: dt.muted)[#smallcaps[{inline_typst(construct_disp)}]]]")
+        cells.append(f"[{inline_typst(key)}], {patt}, [{inline_typst(statement)}]")
+    cells.append("table.hline(stroke: 1pt)")
+    tbl = ("table(\n    columns: 3,\n    align: (left, left, left),\n    "
+           + ",\n    ".join(cells) + "\n  )")
+    caption = _caption_block(block.caption)
+    label = f" <{block.label}>" if block.label else ""
+    return f"#figure(\n  fit-table({tbl}),\n  kind: table,{caption}\n){label}"
+
+
+def _convergence_spread_typst(left: "list[str]", right: "list[str]") -> str:
+    """The convergence SPREAD: a single flipped/landscape page holding the glyph matrix (left) beside its key
+    (right), so a reader reads the matrix and looks right to the key with no page turn (the field-guide spread
+    the author asked for — tables.md §"strongest recommendation"). The shipped PDF is a scrolled screen edition
+    with no recto/verso, so a two-page facing spread has no meaning here; the faithful realization is one
+    landscape page split left/right, which also gives the 8-column matrix the width its Pattern column needs.
+    Landscape mirrors the existing per-table `table-landscape` convention already used in this chapter."""
+    left_body = "\n\n".join(f for f in left if f)
+    right_body = "\n\n".join(f for f in right if f)
+    return (
+        "#page(flipped: true, margin: (x: 0.55in, y: 0.6in))[\n"
+        "#set text(size: 8.5pt)\n"
+        "#show table.cell: set text(size: 8.5pt)\n"
+        "#set table(inset: (x: 5pt, y: 2.5pt))\n"
+        "#show figure.where(kind: table): set block(breakable: false)\n"
+        # Equal fixed fractions, NOT `auto`: an `auto` column sizes to its content's unwrapped natural width,
+        # which the long figure caption blows out — starving the facing panel. Fixed fractions make each
+        # panel's caption + table wrap inside its own half.
+        "#grid(\n  columns: (1.15fr, 0.85fr),\n  column-gutter: 20pt,\n  align: (left + top, left + top),\n"
+        f"  [\n{_indent(left_body)}\n  ],\n  [\n{_indent(right_body)}\n  ],\n)\n"
+        "]"
+    )
+
+
 def _onepager_card_typst(body: str) -> str:
     """Wrap a rendered one-pager table in a light, left-ruled card — the Typst twin of the web
     `.case-onepager` panel (per-case-onepager-DESIGN §5). Lighter than the framed apparatus and the lavender
@@ -975,6 +1026,39 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
             if b.directive == "case-onepager":
                 pending_onepager = True    # arm the one-pager card wrap for the next TABLE block
                 continue
+            if b.directive == "convergence-spread":
+                # A convergence spread: collect forward to `convergence-spread-end`, splitting at
+                # `convergence-spread-key` into the LEFT panel (glyph matrix + legend) and the RIGHT panel
+                # (its key, construct folded to a small-caps subtitle), then emit both on one landscape page.
+                left: list[str] = []
+                right: list[str] = []
+                target = left
+                j = i + 1
+                while j < len(blocks):
+                    bj = blocks[j]
+                    if bj.kind is ir.BlockKind.DIRECTIVE and bj.directive == "convergence-spread-end":
+                        skip.add(j)
+                        break
+                    skip.add(j)
+                    if bj.kind is ir.BlockKind.DIRECTIVE and bj.directive == "convergence-spread-key":
+                        target = right
+                        j += 1
+                        continue
+                    if bj.kind is ir.BlockKind.DIRECTIVE:
+                        j += 1                       # label/caption already folded onto the table block
+                        continue
+                    if bj.kind is ir.BlockKind.TABLE:
+                        frag = (_render_convergence_key_typst(bj) if target is right
+                                else _render_table(bj))
+                    else:
+                        frag = render_typst(bj)      # the legend paragraph rides under the matrix
+                    if frag:
+                        target.append(frag)
+                    j += 1
+                out.append(_convergence_spread_typst(left, right))
+                continue
+            if b.directive and b.directive.startswith("convergence-spread"):
+                continue                             # a stray spread divider outside a bracket — inert
             frag = _peel_metadata_marker(b.raw.strip(), ctx)
             if frag:
                 out.append(frag)

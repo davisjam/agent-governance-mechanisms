@@ -332,6 +332,12 @@ MARKER_KEYWORDS = (
     #   `<div class="case-onepager">` (a light left-ruled panel); Typst wraps the table fragment in the
     #   matching card block. Consumed + stripped so the marker never leaks. (per-case-onepager-DESIGN §5.)
     "case-onepager",
+    # `<!-- convergence-spread -->` / `<!-- convergence-spread-key -->` / `<!-- convergence-spread-end -->`
+    #   — bracket a glyph-matrix + its key so both projections set them as ONE field-guide spread: the matrix
+    #   (left) beside its key (right), no page turn between (tables.md author review). The key's Construct
+    #   column folds to a small-caps subtitle beneath each pattern name. HTML wraps the pair in a responsive
+    #   `.convergence-spread` two-column block; Typst drops them onto one landscape page. Consumed + stripped.
+    "convergence-spread", "convergence-spread-key", "convergence-spread-end",
 )
 # `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
 # a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
@@ -1207,6 +1213,8 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     pending_def: list[str] = []             # a core-term `index-def` armed for the next block (→ def-box)
     pending_pullquote: list[bool] = []      # a `<!-- pullquote -->` marker armed for the next blockquote
     pending_onepager: list[bool] = []       # a `<!-- case-onepager -->` marker armed for the next table (card)
+    pending_convergence_key: list[bool] = []  # a `<!-- convergence-spread-key -->` marker → next table is the slim key
+    spread_state: list[dict] = []           # open convergence spread(s): {start, split} indices into `out`
     occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
 
     def _with_label(frag: str) -> str:
@@ -1329,6 +1337,31 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # left-ruled wrapper, per-case-onepager-DESIGN §5). Consumed here so the marker never leaks;
                 # the table renders normally and is wrapped in `<div class="case-onepager">` below.
                 pending_onepager.append(True)
+                return True
+            if inner.startswith("convergence-spread-end"):
+                # Close the spread: everything emitted since `convergence-spread` is the LEFT panel (matrix +
+                # legend) up to the split, the RIGHT panel (the key) after it. Splice them into one
+                # `.convergence-spread` two-column block. The two <table>s survive intact, so the float pass
+                # still numbers them and `[ref:]` still resolves.
+                if spread_state:
+                    st = spread_state.pop()
+                    split = st["split"] if st["split"] is not None else len(out)
+                    left = "".join(out[st["start"]:split])
+                    right = "".join(out[split:])
+                    del out[st["start"]:]
+                    out.append(f'<div class="convergence-spread"><div class="cs-panel cs-matrix">{left}'
+                               f'</div><div class="cs-panel cs-key">{right}</div></div>')
+                return True
+            if inner.startswith("convergence-spread-key"):
+                # The divider: the left panel ends here, the key panel begins, and the next table renders as the
+                # slim key (construct folded to a small-caps subtitle).
+                if spread_state:
+                    spread_state[-1]["split"] = len(out)
+                pending_convergence_key.append(True)
+                return True
+            if inner.startswith("convergence-spread"):
+                # Open a spread — record where the left panel begins in the emit stream.
+                spread_state.append({"start": len(out), "split": None})
                 return True
             if inner.startswith("label:"):
                 # A cross-ref key for the NEXT float: `<!-- label: <key> -->`. Armed here, consumed by
@@ -1466,7 +1499,11 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             _emit(_render_heading(block, heading_no))
             continue
         if kind is _ir.BlockKind.TABLE:
-            tbl = _render_pipe_table(block)
+            if pending_convergence_key:
+                pending_convergence_key.clear()
+                tbl = _render_convergence_key_table(block)
+            else:
+                tbl = _render_pipe_table(block)
             if pending_table_caption:
                 cap_el = _caption_el("caption", pending_table_caption.pop(0))
                 tbl = re.sub(r"(<table\b[^>]*>)", lambda mm: mm.group(1) + cap_el, tbl, count=1)
@@ -1560,6 +1597,27 @@ def _render_pipe_table(block: str) -> str:
         '<table class="book-table"><thead><tr>'
         f"{thead}</tr></thead><tbody>{''.join(trs)}</tbody></table>"
     )
+
+
+def _render_convergence_key_table(block: str) -> str:
+    """The convergence KEY as a slim 3-column reference (the right panel of a convergence spread). Reads the
+    4-column key markdown (`# | Pattern | Construct | statement`) and DROPS the Construct column, folding the
+    construct into a small-caps subtitle beneath the pattern name (Layer-3 index info, not a comparison axis —
+    tables.md author review). Stays a `<table class="book-table">` so the float pass numbers it and
+    `[ref:convergence-*-key]` resolves; only the Pattern cell is reshaped (name over a `.pat-construct` line)."""
+    lines = block.splitlines()
+    body_rows = [_split_table_row(ln) for ln in lines[2:] if ln.strip()]
+    trs = []
+    for row in body_rows:
+        row = (row + [""] * 4)[:4]
+        key, name, construct, statement = row
+        construct_disp = construct.replace("-", " ")
+        patt = (f'<span class="pat-name">{inline(name)}</span>'
+                f'<span class="pat-construct">{inline(construct_disp)}</span>')
+        trs.append(f"<tr><td>{inline(key)}</td><td>{patt}</td><td>{inline(statement)}</td></tr>")
+    thead = "<th>#</th><th>Pattern</th><th>What the source establishes</th>"
+    return ('<table class="book-table convergence-key"><thead><tr>'
+            f"{thead}</tr></thead><tbody>{''.join(trs)}</tbody></table>")
 
 
 # ── Per-block-kind content renderers ──────────────────────────────────────────────────────────────
@@ -1878,6 +1936,19 @@ table.book-table.meta-card tr + tr td {{ border-top: 1px solid var(--rule, rgba(
 .case-onepager {{ border-left: 3px solid var(--accent); padding: 0.1rem 0 0.1rem 1.1rem; margin: 1.3rem 0; }}
 .case-onepager table.book-table {{ margin: 0.4rem 0; }}
 .case-onepager table.book-table thead th {{ font-size: 1.03em; border-bottom-color: var(--accent); }}
+/* Convergence spread (`.convergence-spread`): the glyph matrix beside its key as ONE field-guide object
+   (tables.md author review) — read left, look right, no page turn. Two columns on a wide viewport (matrix at
+   its natural width, key filling the rest); stacks on narrow screens. Both inner <table>s keep numbering. */
+.convergence-spread {{ display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.6rem;
+                       align-items: start; margin: 1.3rem 0; }}
+.convergence-spread .cs-panel {{ min-width: 0; overflow-x: auto; }}
+.convergence-spread table.book-table {{ margin: 0.4rem 0; }}
+@media (max-width: 60rem) {{ .convergence-spread {{ grid-template-columns: 1fr; gap: 0.5rem; }} }}
+/* The slim key (`.convergence-key`): the Construct column folded to a small-caps subtitle beneath the pattern
+   name (name over `.pat-construct`), so the key reads as name + definition with the construct as index info. */
+table.book-table.convergence-key .pat-name {{ display: block; font-weight: 600; }}
+table.book-table.convergence-key .pat-construct {{ display: block; margin-top: 0.1rem;
+    font-variant: small-caps; letter-spacing: 0.02em; font-size: 0.82em; color: var(--muted); }}
 blockquote table.book-table {{ background: transparent; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}

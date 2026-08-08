@@ -219,6 +219,19 @@ table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(1
 .case-onepager { border-left: 3px solid var(--accent); padding: 0.1rem 0 0.1rem 1.1rem; margin: 1.3rem 0; }
 .case-onepager table.book-table { margin: 0.4rem 0; }
 .case-onepager table.book-table thead th { font-size: 1.03em; border-bottom-color: var(--accent); }
+/* Convergence spread (`.convergence-spread`): the glyph matrix beside its key as ONE field-guide object
+   (tables.md author review) — read left, look right, no page turn. Two columns on a wide viewport (matrix at
+   its natural width, key filling the rest); stacks on narrow screens. Both inner <table>s keep numbering. */
+.convergence-spread { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.6rem;
+                       align-items: start; margin: 1.3rem 0; }
+.convergence-spread .cs-panel { min-width: 0; overflow-x: auto; }
+.convergence-spread table.book-table { margin: 0.4rem 0; }
+@media (max-width: 60rem) { .convergence-spread { grid-template-columns: 1fr; gap: 0.5rem; } }
+/* The slim key (`.convergence-key`): the Construct column folded to a small-caps subtitle beneath the pattern
+   name (name over `.pat-construct`), so the key reads as name + definition with the construct as index info. */
+table.book-table.convergence-key .pat-name { display: block; font-weight: 600; }
+table.book-table.convergence-key .pat-construct { display: block; margin-top: 0.1rem;
+    font-variant: small-caps; letter-spacing: 0.02em; font-size: 0.82em; color: var(--muted); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
