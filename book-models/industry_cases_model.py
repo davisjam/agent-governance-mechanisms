@@ -407,10 +407,10 @@ _SUPPORT_GLYPH = {"yes": "✓", "partial": "◐", "no": "—"}
 #: The projected buckets (universal + generalizes render as tables; distinctive is prose, not a table).
 _TABLE_BUCKETS = ("universal", "generalizes")
 
-#: The five non-Cloudflare authored cases the book's "Meet the six" gallery renders as one-pagers, in roster
-#: order (Cloudflare keeps its deep reading — per-case-onepager-DESIGN §4 rec-i). IC7 holds each placed block
-#: byte-equal to render_case_onepager(id, 'book'). Each kicker header is unique (distinct org), so the parity
-#: anchor is occurrence 0 per card.
+#: The five non-Cloudflare authored cases the book's "Meet the six" gallery carries as HAND-AUTHORED one-pager
+#: cards, in roster order (Cloudflare keeps its deep reading — per-case-onepager-DESIGN §4 rec-i). IC7 audits
+#: each placed card for COVERAGE of its record + a TRACE marker (`<!-- case-onepager: <id> -->`) back to it;
+#: it no longer composes or byte-parities the card text.
 _ONEPAGER_GALLERY_IDS = ("spotify-honk", "shopify", "docker", "siemens", "zenseact")
 
 #: The short-key PREFIX per table bucket (U1..U9 for universal, G1..G6 for generalizes). Distinct prefixes
@@ -473,44 +473,32 @@ def render_convergence_key_md(bucket: str, model: "IndustryCasesModel | None" = 
     return "\n".join([header, rule, *rows])
 
 
-# ---- projection: the per-case one-pager ("Meet the six") --------------------------------------------
-
-#: The order the mapping strip (one-pager Part 5) names correspondence strengths, and the phrase each opens.
-_MAPPING_STRENGTHS = (("strong", "Strong on"), ("partial", "partial on"), ("tension", "in tension"),
-                      ("not-described", "not described"), ("counterexample", "counterexample"))
-
+# ---- coverage/trace: the per-case one-pager ("Meet the six") -----------------------------------------
+# The five gallery one-pagers are HAND-AUTHORED prose in the where-mage-fits chapter, drawn faithfully from
+# each record (author rule: "no mechanical projections; hand-author and add tracing back to the models").
+# The model NO LONGER composes their text — it validates that each placed card COVERS its record (IC7 below)
+# and traces to it by a `<!-- case-onepager: <id> -->` marker. Nothing here renders user-facing prose.
 
 def _dekebab(slug: str) -> str:
-    """A kebab tag as a plain phrase — `no-generalized-drift-gate` -> `no generalized drift gate`."""
+    """Split a kebab slug into its words — `no-generalized-drift-gate` -> `no generalized drift gate`.
+    NEVER render user-facing text with this: `_dekebab` output is ungrammatical (bare joined tokens) and the
+    author has banned it as a text renderer. Its ONLY sanctioned use is deriving the lowercase KEYWORDS the
+    IC7 coverage check greps a hand-authored card for — a non-rendering, internal-to-the-check transform."""
     return slug.replace("-", " ")
 
 
-def _onepager_parts(case: IndustryCase, model: IndustryCasesModel) -> "list[str]":
-    """The seven ordered one-pager parts as inline-markdown strings (see per-case-onepager-DESIGN §2), each a
-    single line free of `|` so the book surface can carry each as one pipe-table row. Projected wholly from
-    the record; the site surface renders the SAME parts as HTML."""
-    label_by_id = {col.id: col.label for col in model.columns}
-    by_strength: "dict[str, list[str]]" = {}
-    for cell in case.mage_constructs:
-        by_strength.setdefault(cell.strength, []).append(label_by_id.get(cell.construct, cell.construct))
-    mapping_bits = [f"{phrase} {', '.join(by_strength[s])}"
-                    for s, phrase in _MAPPING_STRENGTHS if by_strength.get(s)]
-    src = case.source
-    scale = " · ".join(case.scale_facts[:2])
-    adds = _dekebab(case.adds_to_mage[0]) if case.adds_to_mage else "—"
-    frontier = _dekebab(case.limitations[0]) if case.limitations else "—"
-    source_line = (f"*{src.get('source_type', '?')}, {src.get('independence', '?')}; "
-                   f"{src.get('evidence_horizon', '?')} horizon; not-described ≠ absent.*")
-    return [
-        f"**{case.organization}** · {case.domain} · {case.distinctive_starting_point}",
-        f"*Scale.* {scale}",
-        case.onepager_lede,
-        (f"*Environment.* Works over {', '.join(case.object_territory)}; "
-         f"represents {', '.join(case.representations)}; mechanisms {', '.join(case.mechanisms)}."),
-        f"*Maps to MAGE.* {'; '.join(mapping_bits)}.",
-        f"*Adds.* {adds}. *Frontier.* {frontier}.",
-        f"{case.result_sentence} — {source_line}",
-    ]
+#: The distinctive lowercase keyword the IC7 coverage check greps for when a card claims a strength on a
+#: construct — a stable substring of the construct's authored label, robust to prose that names it in passing.
+_CONSTRUCT_KEYWORD = {
+    "thesis-alignment": "alignment",
+    "thesis-modeling": "modeling",
+    "bootstrap-governance": "bootstrap",
+    "governance-conversion": "conversion",
+    "determinization": "determiniz",
+    "reasoning-horizon": "horizon",
+    "engineers-seat": "seat",
+    "graduated-governance": "graduat",
+}
 
 
 def _case_by_id(case_id: str, model: IndustryCasesModel) -> "IndustryCase | None":
@@ -520,36 +508,86 @@ def _case_by_id(case_id: str, model: IndustryCasesModel) -> "IndustryCase | None
     return None
 
 
-def render_case_onepager(case_id: str, surface: str = "book",
-                         model: "IndustryCasesModel | None" = None) -> str:
-    """One reconstruction one-pager for a single AUTHORED case, projected from its record (per-case-onepager
-    -DESIGN §2/§3). Seven parts: kicker · scale · lede · environment · maps-into-MAGE · adds/frontier ·
-    result+source.
-      surface='book' -> a single-column markdown TABLE (the kicker is the header row, the other six parts are
-        body rows), placed into the "Meet the six" gallery and held byte-equal by IC7. A real table (not a
-        meta-card) so it renders + cross-references cleanly; the `case-onepager` marker styles it as a card.
-      surface='site' -> the HTML section body W3's reconstruction page wraps (present now; W3 wires it later).
-    Authored-only, exactly as render_matrix_md — a stub/unknown case renders "" ."""
+def _onepager_card_lines(page_path: str, case_id: str) -> "list[str] | None":
+    """The placed one-pager card for `case_id` — the contiguous pipe-table rows that follow the card's trace
+    marker `<!-- case-onepager: <case_id> -->` on the page (blank lines and the intervening `<!-- label: -->`
+    are skipped). Returns the row list, or None when the marker is absent (the trace is broken)."""
+    if not os.path.isfile(page_path):
+        return None
+    lines = [ln.rstrip() for ln in open(page_path, encoding="utf-8").read().splitlines()]
+    marker = f"<!-- case-onepager: {case_id} -->"
+    if marker not in lines:
+        return None
+    start = lines.index(marker)
+    out: "list[str]" = []
+    seen_table = False
+    for ln in lines[start + 1:]:
+        if ln.startswith("|"):
+            seen_table = True
+            out.append(ln)
+        elif seen_table:
+            break                                   # the card's table ended
+        elif ln.strip() == "" or ln.startswith("<!--"):
+            continue                                # blank / label marker between the trace marker and table
+        else:
+            break                                   # unexpected prose before the table — treat card as ended
+    return out
+
+
+def case_onepager_coverage(case_id: str, page_path: str, model: "IndustryCasesModel | None" = None) -> "list[str]":
+    """IC7, DEMOTED from byte-parity to a COVERAGE + TRACE check. The five gallery one-pagers are hand-authored
+    prose (author rule: no mechanical projections), so the model no longer OWNS their text — it audits that the
+    placed card stays faithful to its record. For an authored gallery case, the card must:
+      - TRACE — carry the marker `<!-- case-onepager: <case_id> -->` binding the card to its `industry_cases`
+        record id (a broken/absent trace is the first finding);
+      - name the ORGANIZATION;
+      - cover the ENVIRONMENT — mention at least one object-territory word, one representation word, and a
+        majority of the record's mechanisms (any word of a mechanism slug counts);
+      - cover the STRENGTH SUMMARY — name every construct the record rates `strong`;
+      - attribute its SOURCE — mention the record's source-type.
+    A stub/unknown case yields no findings (nothing placed to audit), exactly as the old projection returned
+    "". Robust to prose wording: it greps keywords derived from the record, never a composed string."""
     if model is None:
         model = derive_model()
     case = _case_by_id(case_id, model)
     if case is None or not case.authored:
-        return ""
-    parts = _onepager_parts(case, model)
-    if surface == "site":
-        # The HTML body W3 wraps in page chrome. Present now (kicker as a heading, the rest as paragraphs);
-        # the site-only extras (diagram, full Theory-Coverage checklist) live in W3's _reconstruction_page.
-        import html as _html
-        head, *rest = parts
-        body = [f'<p class="op-kicker">{_html.escape(head)}</p>']
-        body += [f"<p>{_html.escape(p)}</p>" for p in rest]
-        return f'<section class="case-onepager" data-case="{_html.escape(case_id, quote=True)}">' \
-               + "".join(body) + "</section>"
-    # surface == "book": a one-column pipe table (kicker header + six part rows).
-    head, *rest = parts
-    lines = [f"| {head} |", "|---|"]
-    lines += [f"| {p} |" for p in rest]
-    return "\n".join(lines)
+        return []
+    name = _PAGE_REL
+    card = _onepager_card_lines(page_path, case_id)
+    if card is None:
+        return [f"IC7 trace: no `<!-- case-onepager: {case_id} -->` card marker in {name} "
+                f"(the hand-authored card must trace to its record id)"]
+    if not card:
+        return [f"IC7 coverage: {case_id} card marker in {name} is not followed by a card table"]
+    text = " ".join(card).lower()
+    findings: "list[str]" = []
+    # identity
+    if case.organization.lower() not in text:
+        findings.append(f"IC7 coverage: {case_id} card does not name the organization {case.organization!r}")
+    # environment — territory + representations + mechanisms
+    terr = {w for slug in case.object_territory for w in _dekebab(slug).split()}
+    reps = {w for slug in case.representations for w in _dekebab(slug).split()}
+    if terr and not any(w in text for w in terr):
+        findings.append(f"IC7 coverage: {case_id} card names none of its object-territory {sorted(terr)}")
+    if reps and not any(w in text for w in reps):
+        findings.append(f"IC7 coverage: {case_id} card names none of its representations {sorted(reps)}")
+    covered = sum(1 for slug in case.mechanisms if any(w in text for w in _dekebab(slug).split()))
+    need = (len(case.mechanisms) + 1) // 2
+    if case.mechanisms and covered < need:
+        findings.append(f"IC7 coverage: {case_id} card engages only {covered}/{len(case.mechanisms)} "
+                        f"of its mechanisms (need >= {need})")
+    # strength summary — every strong construct named
+    for cell in case.mage_constructs:
+        if cell.strength == "strong":
+            kw = _CONSTRUCT_KEYWORD.get(cell.construct, cell.construct)
+            if kw.lower() not in text:
+                findings.append(f"IC7 coverage: {case_id} card omits its strong construct "
+                                f"{cell.construct!r} (looked for {kw!r})")
+    # source attribution
+    stype = case.source.get("source_type", "").split("-")[0].lower()
+    if stype and stype not in text:
+        findings.append(f"IC7 coverage: {case_id} card does not attribute its source ({stype!r})")
+    return findings
 
 
 # ---- live queries ----------------------------------------------------------------------------------
@@ -898,8 +936,9 @@ def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
       - CCP5 — the convergence key-lists, two wires: `render_convergence_key_md('universal')` +
         `render_convergence_key_md('generalizes')` (reuses page_block_parity verbatim with `occurrence`,
         exactly as CCP4 disambiguates the two grids — zero new machinery).
-      - IC7 — the "Meet the six" gallery, one wire per placed one-pager card: each byte-equal to
-        `render_case_onepager(id, 'book')` (five non-Cloudflare cards; unique kicker headers, occurrence 0).
+      - IC7 — the "Meet the six" gallery, COVERAGE + TRACE (no longer byte-parity): each hand-authored card
+        must trace to its record via a `<!-- case-onepager: <id> -->` marker and cover the record's fields
+        (organization, environment, strength summary, source) — see `case_onepager_coverage`.
     IC5 — the DocAble correspondence matrix — is NOT yet authored into any page, so it stays VACUOUS."""
     if model is None:
         model = derive_model()
@@ -927,15 +966,10 @@ def parity_findings(model: "IndustryCasesModel | None" = None) -> "list[str]":
             page, key[0], key, display=_PAGE_REL, label=f"{bucket} convergence key-list",
             regen_hint=f"python3 book-models/industry_cases_model.py convergence-key {bucket}",
             occurrence=occurrence)
-    # IC7 — the "Meet the six" gallery: each placed one-pager card byte-equal to render_case_onepager(id,
-    # 'book'). Each kicker header is unique (distinct org), so the anchor is occurrence 0 per card.
+    # IC7 — the "Meet the six" gallery: COVERAGE + TRACE, not byte-parity. Each hand-authored card must trace
+    # to its record (the `<!-- case-onepager: <id> -->` marker) and cover the record's fields.
     for case_id in _ONEPAGER_GALLERY_IDS:
-        card = render_case_onepager(case_id, "book", model).splitlines()
-        if not card:
-            continue
-        findings += page_block_parity(
-            page, card[0], card, display=_PAGE_REL, label=f"{case_id} one-pager card",
-            regen_hint=f"python3 book-models/industry_cases_model.py onepager {case_id}")
+        findings += case_onepager_coverage(case_id, page, model)
     # IC5 — the correspondence matrix stays vacuous until it too is placed on a page.
     return findings
 
@@ -1074,11 +1108,19 @@ def _cmd_convergence_key(bucket: str) -> int:
 
 
 def _cmd_onepager(case_id: str) -> int:
-    block = render_case_onepager(case_id, "book")
-    if not block:
+    if case_id not in _ONEPAGER_GALLERY_IDS:
         print(f"usage: industry_cases_model.py onepager <authored-case-id> (one of {_ONEPAGER_GALLERY_IDS})")
         return 2
-    print(block)
+    # The card is hand-authored on the page; the model no longer renders it. Report the COVERAGE audit — the
+    # trace marker + the record fields the hand-authored card must engage — so an author can check a card.
+    page = os.path.join(_BOOK, _PAGE_REL)
+    findings = case_onepager_coverage(case_id, page)
+    if findings:
+        print(f"{case_id}: {len(findings)} IC7 coverage/trace finding(s):")
+        for f in findings:
+            print(f"  {f}")
+        return 1
+    print(f"{case_id}: hand-authored card covers its record + traces to it (IC7 clean)")
     return 0
 
 
@@ -1122,8 +1164,8 @@ def _cmd_verify() -> int:
             print(f"  {f}")
         return 1
     print("industry-cases: schema + joins clean (IC1-IC4 + IC6 + MCL1-MCL4 + CCP1-CCP3; "
-          "MCL5 + CCP4 + CCP5 + IC7 parity ACTIVE — placed tables + one-pagers byte-equal to the model; "
-          "IC5 parity still vacuous)")
+          "MCL5 + CCP4 + CCP5 parity ACTIVE — placed tables byte-equal to the model; IC7 coverage/trace "
+          "ACTIVE — hand-authored one-pagers cover + trace to their records; IC5 parity still vacuous)")
     return 0
 
 
