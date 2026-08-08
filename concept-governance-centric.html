@@ -170,92 +170,85 @@
 <p><strong>Claim</strong> — The environment is the object of engineering. Encode each obligation as a mechanism it enforces, so quality is a property of the ground agents stand on.</p>
 <table><thead><tr><th>Concept</th><th>Big idea 4 · the object</th></tr></thead><tbody><tr><td>Claim</td><td>The environment is the object of engineering. Encode each obligation as a mechanism it enforces, so quality is a property of the ground agents stand on.</td></tr><tr><td>Mechanisms</td><td>3 — pre-commit-hook, staged-deploy-gates, cron-alerts-gate</td></tr><tr><td>Related</td><td>churn · modeling-thesis</td></tr><tr><td>In the book</td><td>book/2.3-the-governed-environment.html</td></tr></tbody></table>
 <h2>The idea</h2>
-<figure class="cc-body-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
-     role="group" aria-labelledby="omTitle omDesc"
+<figure class="cc-body-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600"
+     role="group" aria-labelledby="eaoTitle eaoDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="cf-1-omTitle">Three process models for agentic software engineering</title>
-  <desc id="cf-1-omDesc">Three panels arranged as a triangle. The two poles sit on top:
-    velocity-centric at top-left — a human sets a goal, then a ring of role-labeled agents —
-    planner, developer, tester, reviewer, security, deploy — passes work around a cycle, with
-    insufficient quality control; and oversight-centric at top-right — a human and a single
-    agent exchange a prompt and an output in a round trip, so human attention gates every step
-    of progress. Governance-centric sits centered beneath them as the synthesis: a human hands
-    policies into a governed engineering environment that contains the agent, so known
-    obligations become controls before the agent works. The book takes the third stance.</desc>
+  <title id="cf-1-eaoTitle">The environment is the object of engineering — everyone else engineers the agent; MAGE engineers the environment</title>
+  <desc id="cf-1-eaoDesc">Two panels contrast what is being engineered. In the left panel, the common move,
+    the engineer works on the agent — prompting, fine-tuning, wrapping it — and a target ring marks the
+    agent as the object of engineering; the environment underneath is a passive backdrop. In the right
+    panel, the MAGE move, the engineer works on the environment: obligations and mechanisms are bound into
+    a governed engineering environment, and the target ring now marks the environment as the object of
+    engineering; the agent simply operates inside it. The move is that the object of engineering jumps from
+    the agent to the governed environment the agent operates in.</desc>
 
   <defs>
-    <marker id="cf-1-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L7,3 L0,6 Z" fill="#1c1917"/>
+    <marker id="cf-1-eao-fleet" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
+    </marker>
+    <marker id="cf-1-eao-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a3f12"/>
     </marker>
   </defs>
 
-  <!-- faint synthesis connectors: from the two top corners down to the governance panel -->
-  <g fill="none" stroke="#e4e0d8" stroke-width="2" stroke-dasharray="5,7">
-    <path d="M295,470 C360,545 470,560 560,590"/>
-    <path d="M885,470 C820,545 710,560 620,590"/>
-  </g>
+  <rect x="0" y="0" width="1000" height="600" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The environment is the object of engineering</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">Everyone else engineers the agent. MAGE engineers the environment the agent operates in.</text>
 
-  <!-- ============ (a) Velocity-centric: role ring (top-left) ============ -->
-  <text x="295" y="46" text-anchor="middle" font-size="28.32" font-weight="700" fill="#1c1917">(a) Velocity-centric</text>
-  <g font-size="28" fill="#1c1917" text-anchor="middle">
-    <text x="295" y="112" font-weight="700">Human</text>
-    <text x="295" y="144" font-size="22" font-style="italic" fill="#57534e">goal ↓</text>
+  <line x1="500" y1="104" x2="500" y2="560" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="5 6"/>
 
-    <!-- six roles around a cycle -->
-    <text x="295" y="196">Planner</text>
-    <text x="411" y="256">Developer</text>
-    <text x="411" y="336">Tester</text>
-    <text x="295" y="396">Reviewer</text>
-    <text x="179" y="336">Security</text>
-    <text x="179" y="256">Deploy</text>
+  <!-- ===== LEFT PANEL — engineer the agent ===== -->
+  <text x="60" y="132" font-size="18" font-weight="700" letter-spacing="1" fill="#57534e">THE COMMON MOVE</text>
+  <text x="60" y="154" font-size="16" font-style="italic" fill="#57534e">work on the agent</text>
 
-    <!-- cycle arrows (clockwise) -->
-    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#cf-1-omArrow)">
-      <path d="M345,202 C383,214 403,232 406,236"/>
-      <path d="M431,276 C437,296 437,306 435,311"/>
-      <path d="M413,350 C403,366 383,384 359,391"/>
-      <path d="M243,398 C207,388 187,370 183,363"/>
-      <path d="M161,322 C155,306 155,290 156,287"/>
-      <path d="M177,246 C187,232 207,214 234,206"/>
-    </g>
-  </g>
-  <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#b23b3b">Insufficient quality control</text>
+  <!-- passive environment backdrop -->
+  <rect x="52" y="212" width="392" height="272" rx="12" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="4 6"/>
+  <text x="248" y="470" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">environment — a passive backdrop</text>
 
-  <!-- ============ (b) Oversight-centric: round trip (top-right) ============ -->
-  <text x="885" y="46" text-anchor="middle" font-size="28.32" font-weight="700" fill="#1c1917">(b) Oversight-centric</text>
-  <g font-size="28" fill="#1c1917">
-    <text x="753" y="266" text-anchor="middle" font-weight="700">Human</text>
-    <text x="1017" y="258" text-anchor="middle">Agent:</text>
-    <text x="1017" y="290" text-anchor="middle" font-size="22" fill="#57534e">bounded work</text>
+  <!-- engineer -->
+  <rect x="80" y="176" width="150" height="58" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="155" y="212" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Engineer</text>
 
-    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#cf-1-omArrow)">
-      <path d="M811,240 C871,206 899,206 959,240"/>
-      <path d="M959,282 C899,316 871,316 811,282"/>
-    </g>
-    <text x="885" y="196" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">prompt</text>
-    <text x="885" y="348" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">output</text>
-  </g>
-  <text x="885" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">Human attention gates progress</text>
+  <!-- arrow onto the agent -->
+  <path d="M200,266 C236,286 250,300 262,314" fill="none" stroke="#2f5169" stroke-width="2.6" marker-end="url(#cf-1-eao-fleet)"/>
+  <text x="150" y="300" font-size="16" font-style="italic" fill="#57534e">prompts · tunes · wraps</text>
 
-  <!-- ============ (c) Governance-centric: env box (bottom-center, the synthesis) ============ -->
-  <text x="590" y="606" text-anchor="middle" font-size="28.32" font-weight="700" fill="#1c1917">(c) Governance-centric</text>
-  <g font-size="28" fill="#1c1917">
-    <text x="452" y="674" text-anchor="middle" font-weight="700">Human</text>
+  <!-- the agent (the object, ring-marked) -->
+  <circle cx="290" cy="368" r="66" fill="none" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <circle cx="290" cy="368" r="54" fill="none" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <rect x="222" y="340" width="136" height="58" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.8"/>
+  <text x="290" y="376" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agent</text>
+  <text x="290" y="262" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">the object of engineering</text>
 
-    <rect x="518" y="638" width="272" height="150" rx="8" fill="none" stroke="#2f5169" stroke-width="2"/>
-    <text x="654" y="670" text-anchor="middle" font-size="24" fill="#2f5169">Governed</text>
-    <text x="654" y="696" text-anchor="middle" font-size="24" fill="#2f5169">engineering</text>
-    <text x="654" y="720" text-anchor="middle" font-size="24" fill="#2f5169">environment</text>
-    <rect x="584" y="726" width="140" height="46" rx="4" fill="none" stroke="#1c1917" stroke-width="1.4"/>
-    <text x="654" y="756" text-anchor="middle" font-size="24">Agent</text>
+  <!-- ===== RIGHT PANEL — engineer the environment ===== -->
+  <text x="560" y="132" font-size="18" font-weight="700" letter-spacing="1" fill="#155c38">THE MAGE MOVE</text>
+  <text x="560" y="154" font-size="16" font-style="italic" fill="#57534e">work on the environment</text>
 
-    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#cf-1-omArrow)">
-      <path d="M452,686 L452,738 L512,738"/>
-    </g>
-    <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
-  </g>
-  <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
+  <!-- the governed environment (the object, ring-marked, emphasized like the parent hub) -->
+  <rect x="548" y="206" width="404" height="284" rx="14" fill="#e3f0e7" stroke="#155c38" stroke-width="3.4"/>
+  <rect x="536" y="194" width="428" height="308" rx="18" fill="none" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <text x="750" y="242" text-anchor="middle" font-size="20" font-weight="700" fill="#155c38">Governed Engineering Environment</text>
+  <text x="750" y="180" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">the object of engineering</text>
+
+  <!-- obligations -> mechanisms bound INTO the environment -->
+  <rect x="576" y="288" width="150" height="52" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="651" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligations</text>
+  <path d="M726,314 L766,314" fill="none" stroke="#9a3f12" stroke-width="2.4" marker-end="url(#cf-1-eao-accent)"/>
+  <rect x="768" y="288" width="156" height="52" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="846" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanisms</text>
+
+  <!-- the agent OPERATES INSIDE the environment (not the object) -->
+  <rect x="686" y="404" width="128" height="56" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="750" y="439" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agent</text>
+  <text x="750" y="480" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">operates inside — not the object</text>
+
+  <!-- engineer works on the environment -->
+  <rect x="560" y="516" width="150" height="54" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="635" y="550" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Engineer</text>
+  <path d="M700,520 C740,502 754,498 762,494" fill="none" stroke="#2f5169" stroke-width="2.8" marker-end="url(#cf-1-eao-fleet)"/>
+  <text x="726" y="548" font-size="16" font-style="italic" fill="#57534e">governs · models</text>
+
+  <text x="500" y="590" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The move: the object of engineering jumps from the agent to the governed environment the agent operates in.</text>
 </svg></figure>
 <p>There are three ways to stand toward quality when a fleet writes the code, and they do not scale alike. Velocity-centric hands work around a ring of job titles and leaves quality implicit, hoping the process carries it. Oversight-centric parks a human beside each change to catch what the process missed — sound until the fleet outruns the reviewer, because human attention does not scale with the number of agents. Governance-centric pays attention differently: once per <em>class</em> of failure, at the moment you build the mechanism that retires it.</p>
 <p>Velocity-centric hands work around a ring of job titles and leaves quality implicit; oversight-centric parks a human beside each change, and attention does not scale with the fleet. Governance pays attention per class of failure instead: once, when you build the mechanism that retires it.</p>

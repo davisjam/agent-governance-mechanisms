@@ -3,12 +3,12 @@
   "_counts": {
     "tracked_slugs": 35,
     "slugs_rendered": 25,
-    "total_sites": 1414,
+    "total_sites": 1413,
     "by_projection": {
       "book-pdf": 24,
       "book-web": 1079,
       "website-catalogue": 221,
-      "website-concepts": 35,
+      "website-concepts": 34,
       "website-landing": 11,
       "website-misc": 44
     }
@@ -473,7 +473,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 10
+            "occ": 22
           }
         ],
         "website-concepts": [
@@ -491,7 +491,7 @@
           },
           {
             "file": "concept-governance-centric.html",
-            "occ": 11
+            "occ": 23
           },
           {
             "file": "concept-modeling-thesis.html",
@@ -951,7 +951,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 5
+            "occ": 3
           }
         ],
         "website-misc": [
@@ -1097,7 +1097,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 15
+            "occ": 11
           }
         ],
         "website-concepts": [
@@ -1805,7 +1805,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 37
+            "occ": 42
           }
         ],
         "website-concepts": [
@@ -1815,7 +1815,7 @@
           },
           {
             "file": "concept-governance-centric.html",
-            "occ": 6
+            "occ": 13
           },
           {
             "file": "concept-modeling-thesis.html",
@@ -2331,7 +2331,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 8
+            "occ": 7
           }
         ],
         "website-concepts": [
@@ -4063,7 +4063,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 5
+            "occ": 3
           }
         ],
         "website-concepts": [
@@ -4617,7 +4617,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 4
+            "occ": 3
           }
         ],
         "website-concepts": [
@@ -5118,10 +5118,6 @@
         ],
         "website-concepts": [
           {
-            "file": "concept-governance-centric.html",
-            "occ": 1
-          },
-          {
             "file": "concept-modeling-thesis.html",
             "occ": 1
           }
@@ -5601,7 +5597,7 @@
         "website-landing": [
           {
             "file": "index.html",
-            "occ": 11
+            "occ": 8
           }
         ],
         "website-concepts": [

@@ -32,7 +32,7 @@
     "order": 4,
     "kicker": "Big idea 4 · the object",
     "title": "The Engineered Environment",
-    "figure": "oversight-modes.svg",
+    "figure": "environment-as-object.svg",
     "book_home": "the-governed-environment",
     "claim": "The environment is the object of engineering. Encode each obligation as a mechanism it enforces, so quality is a property of the ground agents stand on.",
     "more": "Velocity-centric hands work around a ring of job titles and leaves quality implicit; oversight-centric parks a human beside each change, and attention does not scale with the fleet. Governance pays attention per class of failure instead: once, when you build the mechanism that retires it.",
@@ -105,7 +105,7 @@
     "entry_figures": []
   },
 
-  "_brick_only_note": "new-problem / independent-convergence / research-agenda are the three NEW landing ideas from the website-v2 reorg. They are BRICK-ONLY records: check_big_ideas gates their book_home/figure/claim/id (a-d) and the projector renders each as a landing band whose 'Read in the book' link points at book_home, but they are deliberately NOT in _order — so the two-tier Concept model (landing_big_ideas_model.py, which derives from _order) does not require a concept-<slug>.md ENTRY for them yet. Authoring those three rich Concept entries (their `more` prose is already drafted below) + folding them into _order is a later content wave. Until then convert-failures + seat-moves stay in _order (their entries + CQ1 answered_by join) but are DEMOTED off the six main bands into the back-matter reference strip (their bi-<slug> ids resolve there, keeping gate d + the orphan gate green). OWED figures: new-problem-flow.svg (new-problem, interim theory-of-mage-dynamics.svg) and env-as-object.svg (governance-centric, interim oversight-modes.svg).",
+  "_brick_only_note": "new-problem / independent-convergence / research-agenda are the three NEW landing ideas from the website-v2 reorg. They are BRICK-ONLY records: check_big_ideas gates their book_home/figure/claim/id (a-d) and the projector renders each as a landing band whose 'Read in the book' link points at book_home, but they are deliberately NOT in _order — so the two-tier Concept model (landing_big_ideas_model.py, which derives from _order) does not require a concept-<slug>.md ENTRY for them yet. Authoring those three rich Concept entries (their `more` prose is already drafted below) + folding them into _order is a later content wave. Until then convert-failures + seat-moves stay in _order (their entries + CQ1 answered_by join) but are DEMOTED off the six main bands into the back-matter reference strip (their bi-<slug> ids resolve there, keeping gate d + the orphan gate green). Both owed figures now carry their real shared-source assets, replacing the interims: new-problem shows new-engineering-problem.svg (Classical vs Agentic SE, the inserted Environment stage) and governance-centric shows environment-as-object.svg (the environment as the object of engineering, obligations bound into it as mechanisms). These are the same SVGs the book's 1.1-the-printer front-figures inline, so the landing band and the book chapter cannot diverge — one figure source, two surfaces.",
 
   "new-problem": {
     "id": "bi-new-problem",
@@ -113,7 +113,7 @@
     "order": 1,
     "kicker": "Big idea 1 · the problem",
     "title": "The New Engineering Problem",
-    "figure": "theory-of-mage-dynamics.svg",
+    "figure": "new-engineering-problem.svg",
     "book_home": "why-mage-follows-from-the-machine",
     "claim": "When intelligence becomes a commodity, implementation stops being scarce. What is scarce is trust — so the engineer's object of work shifts from code to environment.",
     "more": "Coding used to be the bottleneck. Once agents can build almost anything you can describe, the bottleneck moves: the hard part is governing the conditions under which fast code can be trusted. That shift changes the engineer's job — from writing the code to engineering the environment the agents write it in. Everything that follows answers the problem this idea names.",
