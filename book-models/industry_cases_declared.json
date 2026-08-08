@@ -143,7 +143,7 @@
         "semantic_compliance": "llm",
         "mechanically_checkable_compliance": "deterministic"
       },
-      "feedback_adaptation": "Representation evolution is automated (RFC change -> re-extract/compact); POLICY evolution is human-governed. Incident agent surfaces gaps but the source does NOT describe finding -> new obligation -> recurrence retired.",
+      "feedback_adaptation": "Representation evolution is automated (RFC change -> re-extract/compact); POLICY evolution is human-governed. The incident agent surfaces gaps, and the source (source D, 'Code Orange: Fail Small is complete') DOES describe finding -> new obligation -> enforcement (incident -> RFC -> Codex rule -> agent review); what the source does NOT describe is the measured recurrence-retired / recurrence-drop that would close the loop.",
       "org_memory": "Codex = curated RFC corpus as durable institutional knowledge outliving any engineer or team.",
       "implicit_theory": "The book reads Cloudflare as appearing to believe autonomous agents work when institutional standards are made machine-readable, given stable identities, retrieved at the point of work, and enforced by agents at review time.",
 
@@ -151,7 +151,7 @@
         {"construct": "thesis-alignment",      "strength": "strong",        "note": "the book reads this as the Alignment behavior: a policy decided once acts against later changes without the author present"},
         {"construct": "thesis-modeling",       "strength": "partial",       "note": "the book reads the policy as structured while the governed SYSTEM is largely not modeled"},
         {"construct": "bootstrap-governance",  "strength": "strong",        "note": "the book reads Codex as accumulated institutional knowledge serving as an initial E(0)"},
-        {"construct": "governance-conversion", "strength": "not-described", "note": "the incident reviewer surfaces gaps; the source describes no failure->new-obligation loop, so the book records this cell as not-described"},
+        {"construct": "governance-conversion", "strength": "partial",       "note": "the book reads Cloudflare's described incident->RFC->Codex-rule->enforcement loop (source D, 'Code Orange: Fail Small is complete') as a partial governance-conversion: the failure->new-obligation->enforcement loop IS described, but no measured recurrence-drop / recurrence-retirement is evidenced"},
         {"construct": "determinization",       "strength": "strong",        "note": "the book reads mechanically-checkable requirements becoming custom linters as determinization"},
         {"construct": "reasoning-horizon",     "strength": "strong",        "note": "the book reads the org-scale externalization (knowledge exceeds any engineer's memory -> push to E) as a reasoning-horizon move"},
         {"construct": "engineers-seat",        "strength": "strong",        "note": "the book reads humans propose/approve/promote while agents scale reach, not authority, as the engineer's seat"},
@@ -176,7 +176,7 @@
       "hypotheses": ["H3-mechanized-assurance", "H6-oversight-amortization", "H8-learning-propagation"],
       "adds_to_mage": ["organizational-scale-view", "stable-claim-identities", "policy-promotion-lifecycle"],
       "mage_explains_implicit": "MAGE connects Cloudflare's separately-described retrieval + linters + reviewer + human approval as representation + determinization + validation + authority-allocation inside ONE governed environment.",
-      "limitations": ["no-general-system-model-described", "no-failure-to-control-loop-established", "no-before-after-performance-data"],
+      "limitations": ["no-general-system-model-described", "no-measured-recurrence-drop-from-the-conversion-loop", "no-before-after-performance-data"],
       "candidate_insertions": ["brownfield", "governed-environment", "engineers-seat"],
       "result_sentence": "Cloudflare independently built a governed engineering environment whose strongest mechanisms fall under the Alignment Thesis, at an organizational scale the DocAble case cannot reach."
     },
@@ -311,7 +311,7 @@
         {"construct": "thesis-alignment",      "strength": "strong",   "note": "the book reads sandbox policy in profiles, the harness-outside-sandbox split, disposable sandboxes, Nix reproducibility, and Roast's deterministic steps + tool restrictions as reasoning autonomy inside bounded execution"},
         {"construct": "thesis-modeling",       "strength": "partial",  "note": "the book reads a broad representation surface (skills, conventions, intent, Nix) spanning the ladder, but with no invariant-bearing system/process models - Nix and Roast are the executable exceptions"},
         {"construct": "bootstrap-governance",  "strength": "strong",   "note": "the book reads the World monorepo + Nix + CI + merge queues stood up in 2024 (predating River, explicitly as an agent substrate) as an E(0) built ex-ante"},
-        {"construct": "governance-conversion", "strength": "strong",   "note": "the book reads private-learning->public-only, free-roaming->Roast, proliferation->Aquifer, and misuse->rate-limit as repeated failure->structure loops (the converted artifact often soft) - a sharp contrast with Cloudflare's not-described cell"},
+        {"construct": "governance-conversion", "strength": "strong",   "note": "the book reads private-learning->public-only, free-roaming->Roast, proliferation->Aquifer, and misuse->rate-limit as repeated failure->structure loops (the converted artifact often soft) - a strong-vs-partial contrast with Cloudflare, whose incident->RFC->rule loop is described but shows no measured recurrence-drop (partial)"},
         {"construct": "determinization",       "strength": "strong",   "note": "the book reads Roast/Boba as putting deterministic machinery (sed cleanup, Sorbet autocorrect, tests) on the decidable residue and probabilistic judgment only on the rest"},
         {"construct": "reasoning-horizon",     "strength": "strong",   "note": "the book reads on-demand skills, the durable-session != persistent-context-window split, World's context centralization, and Roast replay as reasoning-horizon management"},
         {"construct": "engineers-seat",        "strength": "strong",   "note": "the book reads humans supplying constraints/redirects, curating the environment, mining the corpus into skills, and owning merge + the platform boundary ('we've gotten good at saying no') as the engineer's seat"},
@@ -679,7 +679,7 @@
         "bucket": "universal",
         "maps_to_construct": "governance-conversion",
         "support": {"cloudflare-codex": "partial", "spotify-honk": "yes", "shopify": "yes", "docker": "yes", "siemens": "partial", "zenseact": "yes"},
-        "mage_generalization_note": "MAGE names the structural-diagnosis reflex; Siemens shows less evidence of changing the governance of future agents (the guidance's own qualification, the card §10 gap). Cloudflare downgraded yes->partial: it makes obligations machine-checkable and re-extracts on RFC change (a real environmental response), but the source shows no recurrence-closing conversion loop — matching the Cloudflare record's governance-conversion=not-described. FLAG: conservative interim per adversarial-review H1; author fork open (downgrade[applied]/upgrade-card/split) — see RATIFICATION-BATCH §E.1.",
+        "mage_generalization_note": "MAGE names the structural-diagnosis reflex; Siemens shows less evidence of changing the governance of future agents (the guidance's own qualification, the card §10 gap). Cloudflare is partial: it makes obligations machine-checkable and re-extracts on RFC change, and source D ('Code Orange: Fail Small is complete') describes the incident->RFC->Codex-rule->enforcement loop near-verbatim — but no measured recurrence-drop closes it, so partial is the ratified reading grounded in that described-but-unmeasured loop. Cloudflare discovered the loop; MAGE names and generalizes it.",
         "nearest_external": null
       },
 
@@ -690,7 +690,7 @@
         "bucket": "generalizes",
         "maps_to_construct": "governance-conversion",
         "support": {"cloudflare-codex": "partial", "spotify-honk": "partial", "shopify": "yes", "docker": "yes", "siemens": "no", "zenseact": "yes"},
-        "mage_generalization_note": "MAGE generalizes failure->diagnosis->durable mechanism; Spotify's Loop B is intent not measured (partial); Siemens's governance-conversion is not evidenced (the honest — cell). Cloudflare downgraded yes->partial: it makes obligations machine-checkable and re-extracts on RFC change, but the source shows no recurrence-closing conversion loop — matching the Cloudflare record's governance-conversion=not-described. FLAG: conservative interim per adversarial-review H1; author fork open (downgrade[applied]/upgrade-card/split) — see RATIFICATION-BATCH §E.1.",
+        "mage_generalization_note": "MAGE generalizes failure->diagnosis->durable mechanism; Spotify's Loop B is intent not measured (partial); Siemens's governance-conversion is not evidenced (the honest — cell). Cloudflare is partial: it makes obligations machine-checkable and re-extracts on RFC change, and source D ('Code Orange: Fail Small is complete') describes the incident->RFC->Codex-rule->enforcement loop — but no measured recurrence-drop closes it, so partial is the ratified reading grounded in that described-but-unmeasured loop. Cloudflare discovered the loop; MAGE names and generalizes it.",
         "nearest_external": null
       },
       {
@@ -777,7 +777,7 @@
         "bucket": "distinctive",
         "maps_to_construct": "governance-conversion",
         "support": {"cloudflare-codex": "no", "spotify-honk": "no", "shopify": "no", "docker": "no", "siemens": "no", "zenseact": "no"},
-        "mage_generalization_note": "MAGE names the abstraction, not the instance. Cloudflare (incident->RFC->Codex-rule->enforcement) is one instance of an environmental response — it makes institutional policy machine-checkable and enforces it at review time — but not a demonstrated recurrence-closing conversion loop; the generalized operation is MAGE-only. FLAG: conservative interim per adversarial-review H1 — Cloudflare softened from 'performs it cleanly' / cleanest exemplar to an instance; author fork open (downgrade[applied]/upgrade-card/split) — see RATIFICATION-BATCH §E.1.",
+        "mage_generalization_note": "MAGE names the abstraction, not the instance. Cloudflare (incident->RFC->Codex-rule->enforcement) is one described instance of an environmental response — source D ('Code Orange: Fail Small is complete') describes the loop and the record's governance-conversion cell reads partial — but the source shows no measured recurrence-closing conversion loop, so the generalized operation (classify-the-failure, then choose the durable mechanism) is MAGE-only. Cloudflare discovered the loop; MAGE names and generalizes it.",
         "nearest_external": "cloudflare-codex"
       },
       {
