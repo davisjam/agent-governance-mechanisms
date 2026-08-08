@@ -95,6 +95,28 @@
   a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
+  /* The standalone Big Question page: the three-step through-line + the answer cards. */
+  ol.cq-through { list-style:none; counter-reset:none; margin:14px 0 8px; padding:0; }
+  li.cq-step { display:flex; gap:14px; align-items:flex-start; margin:0 0 14px; }
+  .cq-num { flex:0 0 auto; width:1.7em; height:1.7em; display:inline-flex; align-items:center;
+            justify-content:center; border-radius:50%; background:var(--accent); color:var(--paper);
+            font-weight:700; font-size:var(--fs-meta); margin-top:2px; }
+  .cq-body { flex:1 1 auto; }
+  h3.cq-h { margin:0 0 3px; }
+  p.cq-text { margin:0 0 4px; }
+  p.cq-ideas { margin:0; font-size:var(--fs-meta); color:var(--muted); }
+  .cq-lbl { text-transform:uppercase; letter-spacing:.06em; font-size:var(--fs-micro); margin-right:6px; }
+  p.cq-ideas a { color:var(--accent); text-decoration:none; font-weight:600; }
+  p.cq-ideas a:hover { text-decoration:underline; }
+  p.cq-lead { color:var(--muted); margin:4px 0 12px; }
+  .cq-answers { display:grid; gap:10px; grid-template-columns:1fr; margin:8px 0 4px; }
+  a.cq-ans { display:block; text-decoration:none; color:var(--ink); border:var(--border-hairline) solid var(--rule);
+             border-left:var(--border-accent-bar) solid var(--accent); border-radius:0 var(--radius-code) var(--radius-code) 0;
+             padding:10px 14px; background:var(--panel); transition:border-color .12s, background .12s; }
+  a.cq-ans:hover { border-color:var(--accent); background:var(--accent-tint); }
+  a.cq-ans b { display:block; font-size:var(--fs-card-body); margin-bottom:2px; }
+  a.cq-ans span { display:block; font-size:var(--fs-meta); color:var(--muted); }
+  @media (min-width:760px){ .cq-answers { grid-template-columns:repeat(3,1fr); } }
 
   /* ============================================================================================
      THE BIG-IDEAS LANDING — a projection of book-models/landing-big-ideas.json (Option 3, "the
@@ -141,8 +163,11 @@
   .hero-lead .m-lead { max-width:82ch; font-size:20px; line-height:1.6; margin-left:auto; margin-right:auto; }
   /* The Main Question leads the hero — promoted from the Big-Ideas model's core_question node so the
      landing opens on the problem the whole argument answers (an _core_question_audit CQ4 pins it here). */
-  .hero-question { max-width:26ch; margin:0 auto 12px; font-family:var(--font-display); font-weight:700;
+  .hero-question { max-width:26ch; margin:0 auto 8px; font-family:var(--font-display); font-weight:700;
                    font-size:30px; line-height:1.22; color:var(--ink); }
+  .hero-q-link { margin:0 auto 12px; font-size:var(--fs-meta); }
+  .hero-q-link a { color:var(--accent); text-decoration:none; font-weight:600; }
+  .hero-q-link a:hover { text-decoration:underline; }
 
   /* ---- the Big-Ideas argument ---------------------------------------------------------------- */
   .big-ideas { margin:20px 0 4px; }
@@ -335,6 +360,7 @@
   <div class="hero-band">
     <div class="hero-lead">
       <p class="hero-question">How do we safely grant autonomy to commodity intelligence?</p>
+      <p class="hero-q-link"><a href="big-question.html">Why this question, and how the ideas answer it →</a></p>
       <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
       <p class="m-lead">Generative AI is making implementation abundant and cheap; the hard part becomes
       <span class="term">governing the conditions under which fast code can be trusted</span>.

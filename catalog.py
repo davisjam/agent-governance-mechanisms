@@ -945,6 +945,20 @@ def _core_question_audit() -> list[str]:
         if question not in open(idx, encoding="utf-8").read():
             out.append(f"CQ4 the core question does not resolve on the built landing (index.html) — the "
                        f"hero lead should render it verbatim (rebuild, or fix the hero)")
+    # CQ5/CQ6 — the standalone Big Question page projects the core_question node. CQ5: the question resolves
+    # verbatim on big-question.html (the page leads on it). CQ6: each `answered_by` concept's entry page is
+    # linked from big-question.html (the answer-constituent join the page must project). Best-effort: skip
+    # when the page is not built yet (mirrors the CQ4 landing best-effort).
+    bq = os.path.join(ROOT, "big-question.html")
+    if os.path.isfile(bq):
+        bq_html = open(bq, encoding="utf-8").read()
+        if question and question not in bq_html:
+            out.append("CQ5 the core question does not resolve on big-question.html (the page should lead on "
+                       "it verbatim — rebuild, or fix _big_question_body)")
+        for slug in cq.get("answered_by", []):
+            if f'href="concept-{slug}.html"' not in bq_html:
+                out.append(f"CQ6 big-question.html does not link the answer-constituent concept "
+                           f"{slug!r} (concept-{slug}.html) — the answered_by join is not projected")
     return out
 
 
@@ -1700,6 +1714,28 @@ PAGE_CSS = """
   a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
+  /* The standalone Big Question page: the three-step through-line + the answer cards. */
+  ol.cq-through { list-style:none; counter-reset:none; margin:14px 0 8px; padding:0; }
+  li.cq-step { display:flex; gap:14px; align-items:flex-start; margin:0 0 14px; }
+  .cq-num { flex:0 0 auto; width:1.7em; height:1.7em; display:inline-flex; align-items:center;
+            justify-content:center; border-radius:50%; background:var(--accent); color:var(--paper);
+            font-weight:700; font-size:var(--fs-meta); margin-top:2px; }
+  .cq-body { flex:1 1 auto; }
+  h3.cq-h { margin:0 0 3px; }
+  p.cq-text { margin:0 0 4px; }
+  p.cq-ideas { margin:0; font-size:var(--fs-meta); color:var(--muted); }
+  .cq-lbl { text-transform:uppercase; letter-spacing:.06em; font-size:var(--fs-micro); margin-right:6px; }
+  p.cq-ideas a { color:var(--accent); text-decoration:none; font-weight:600; }
+  p.cq-ideas a:hover { text-decoration:underline; }
+  p.cq-lead { color:var(--muted); margin:4px 0 12px; }
+  .cq-answers { display:grid; gap:10px; grid-template-columns:1fr; margin:8px 0 4px; }
+  a.cq-ans { display:block; text-decoration:none; color:var(--ink); border:var(--border-hairline) solid var(--rule);
+             border-left:var(--border-accent-bar) solid var(--accent); border-radius:0 var(--radius-code) var(--radius-code) 0;
+             padding:10px 14px; background:var(--panel); transition:border-color .12s, background .12s; }
+  a.cq-ans:hover { border-color:var(--accent); background:var(--accent-tint); }
+  a.cq-ans b { display:block; font-size:var(--fs-card-body); margin-bottom:2px; }
+  a.cq-ans span { display:block; font-size:var(--fs-meta); color:var(--muted); }
+  @media (min-width:760px){ .cq-answers { grid-template-columns:repeat(3,1fr); } }
 """
 
 ROLE_DISPLAY = {"agent": "Agent", "models-bridge": "Models-bridge", "product": "Product"}
@@ -2013,8 +2049,11 @@ LANDING_CSS = """
   .hero-lead .m-lead { max-width:82ch; font-size:20px; line-height:1.6; margin-left:auto; margin-right:auto; }
   /* The Main Question leads the hero — promoted from the Big-Ideas model's core_question node so the
      landing opens on the problem the whole argument answers (an _core_question_audit CQ4 pins it here). */
-  .hero-question { max-width:26ch; margin:0 auto 12px; font-family:var(--font-display); font-weight:700;
+  .hero-question { max-width:26ch; margin:0 auto 8px; font-family:var(--font-display); font-weight:700;
                    font-size:30px; line-height:1.22; color:var(--ink); }
+  .hero-q-link { margin:0 auto 12px; font-size:var(--fs-meta); }
+  .hero-q-link a { color:var(--accent); text-decoration:none; font-weight:600; }
+  .hero-q-link a:hover { text-decoration:underline; }
 
   /* ---- the Big-Ideas argument ---------------------------------------------------------------- */
   .big-ideas { margin:20px 0 4px; }
@@ -2595,6 +2634,7 @@ def _landing_reference() -> str:
 _IC_INDEX_PAGE = "industry-case-studies.html"
 _COMPARATIVE_PAGE = "comparative-analysis.html"
 _THEORY_PAGE = "theory.html"
+_BIG_QUESTION_PAGE = "big-question.html"
 
 #: The correspondence-strength glyph — the at-a-glance mark for the theory-coverage checklist. Shares the
 #: ✓ / ◐ / — shapes with the book's matrix glyphs; adds ~ for `tension` and ✗ for `counterexample`, the two
@@ -2894,6 +2934,9 @@ def _theory_body() -> str:
                "intelligence writes the code, quality stops belonging to any single change and becomes a "
                "property of the environment every change passes through. The theory says how to build that "
                "environment, and why the building compounds instead of dissipating.")
+    md1.append("It all answers one question: *how do we safely grant autonomy to commodity intelligence?* "
+               "The [Big Question page](big-question.html) traces the through-line from that question to the "
+               "ideas that answer it.")
     md1.append("## The two loops")
     md1.append("Two loops circulate through one shared hub, the governed engineering environment. The "
                "knowledge loop turns on the left. Structured models stretch an agent’s reasoning horizon; a "
@@ -2928,6 +2971,114 @@ def _theory_body() -> str:
                "produce.")
     p.append(render_md("\n\n".join(md2)))
     p.append(_theory_svg_figure("theory-of-mage-card.svg", "thy-card"))
+    return "\n".join(p)
+
+
+#: The three-step through-line's per-step display heading — a hand-authored label for each `step` key in
+#: core_question.through_line, so the page never composes a heading from the raw slug. A missing key falls
+#: back to the raw step name (surfaced by the drift check, never silently mislabelled).
+_CQ_STEP_HEADING = {
+    "problem": "The problem",
+    "answer": "The answer",
+    "dynamic-method": "The method that keeps it answered",
+}
+
+
+def _big_question_body() -> str:
+    """The standalone Big Question page — a projection of the `core_question` node in the Big-Ideas model.
+    STRUCTURE is projected (the question, its software specialization, the three-step through-line, and the
+    answer-constituent Big Ideas the `answered_by` join names); every reader-facing SENTENCE is hand-authored
+    — the connective prose here plus the through-line step texts reused verbatim from the model (themselves
+    authored strings). No sentence is machine-composed from a slug. Exactly one `<h1>`. Reachable from the
+    landing hero's 'why this question' link and the Theory page (its orphan-gate inbound edges)."""
+    raw = _load_big_ideas()
+    cq = raw.get("core_question", {}) or {}
+    question = (cq.get("question") or "").strip()
+    spec = (cq.get("software_specialization") or "").strip()
+    titles = {slug: (rec.get("title", "") if isinstance(rec, dict) else "")
+              for slug, rec in raw.items() if not slug.startswith("_")}
+
+    p: "list[str]" = []
+    p.append("<h1>The Big Question</h1>")
+    p.append('<div class="concept-band"><span class="concept-chip">The question</span>'
+             '<span class="concept-kicker">the umbrella over the whole argument</span></div>')
+
+    # The question itself, projected verbatim (CQ4/CQ5 pin it). The framing sentences are hand-authored.
+    intro: "list[str]" = []
+    intro.append("Every method needs a question it exists to answer. This one has a single question at its "
+                 "root, and each of the big ideas is a piece of the answer.")
+    intro.append(f"> **{_esc(question)}**")
+    intro.append("Commodity intelligence is the cheap, capable model that will write most of the code. "
+                 "Autonomy is letting it act without a human reading every change. Grant that autonomy "
+                 "carelessly and the system fills with fast, plausible, unverified work. The question asks "
+                 "how to grant it *safely* — and the whole method is the answer worked out in full.")
+    if spec:
+        intro.append("## The question, made specific to software")
+        intro.append("Stated for our field, the question sharpens:")
+        intro.append(f"> {_esc(spec)}")
+        intro.append("Implementation used to be the scarce thing. When it stops being scarce, the scarce "
+                     "thing becomes trust, and trust is a property of the environment the code is written "
+                     "in. So the question is really about the environment: what must it do so a fleet can "
+                     "act on its own without making the system untrustworthy?")
+    p.append(render_md("\n\n".join(intro)))
+
+    # The three-step through-line — the model's spine, each step's authored text reused verbatim, and the
+    # Big Ideas it invokes linked to their concept entries (the answered_by/through_line join, projected).
+    steps = cq.get("through_line", []) or []
+    if steps:
+        tl: "list[str]" = ["## The through-line, in three steps",
+                           "The argument moves from the problem to an answer to the practice that keeps the "
+                           "answer true as the system changes. Each step names the big ideas that carry it."]
+        p.append(render_md("\n\n".join(tl)))
+        rows: "list[str]" = []
+        for i, step in enumerate(steps, start=1):
+            heading = _CQ_STEP_HEADING.get(step.get("step", ""), step.get("step", ""))
+            text = (step.get("text") or "").strip()
+            ideas = [s for s in step.get("big_ideas", []) if s in titles]
+            links = " · ".join(
+                f'<a href="concept-{_attr(s)}.html">{_esc(titles[s])}</a>' for s in ideas)
+            carried = (f'<p class="cq-ideas"><span class="cq-lbl">Carried by</span> {links}</p>'
+                       if links else '<p class="cq-ideas"><span class="cq-lbl">Carried by</span> '
+                       'the question itself — this step states it, the later steps answer it.</p>')
+            rows.append(
+                f'<li class="cq-step"><span class="cq-num">{i}</span>'
+                f'<div class="cq-body"><h3 class="cq-h">{_esc(heading)}</h3>'
+                f'<p class="cq-text">{_esc(text)}</p>{carried}</div></li>')
+        p.append('<ol class="cq-through">\n' + "\n".join(rows) + "\n</ol>")
+
+    # How the ideas answer it — the answer-constituent Big Ideas (answered_by), each linked, with a
+    # hand-authored gloss; then the note that the other ideas frame problem, stance, and seat.
+    answered = [s for s in cq.get("answered_by", []) if s in titles]
+    if answered:
+        gloss = {
+            "modeling-thesis": "Give the fleet a structured, drift-checked model to reason through, so a "
+                               "context-bounded agent holds the part of the system a change needs instead of "
+                               "re-deriving it. This is how intent is made explicit enough to act on.",
+            "alignment-thesis": "Encode each obligation that matters as a mechanism the environment enforces "
+                                "— a type, a lint, a gate — so a decision made once holds against every later "
+                                "change, whether the agent cooperates or not.",
+            "convert-failures": "Autonomy surfaces failures no one foresaw. Convert each recurring one into a "
+                                "durable control, so the next agent inherits a safer, more capable "
+                                "environment than the last. The answer stays true as the system moves.",
+        }
+        head = ('<h2>How the big ideas answer it</h2>'
+                '<p class="cq-lead">Three of the ideas constitute the answer. The rest frame it — the stakes, '
+                'the object of the work, and the seat the engineer keeps.</p>')
+        cards: "list[str]" = []
+        for s in answered:
+            g = gloss.get(s, "")
+            cards.append(
+                f'<a class="cq-ans" href="concept-{_attr(s)}.html">'
+                f'<b>{_esc(titles[s])}</b><span>{_esc(g)}</span></a>')
+        p.append(head + '\n<div class="cq-answers">\n' + "\n".join(cards) + "\n</div>")
+        frame_note = (
+            "The three answer-constituents do not stand alone. **Engineering Capital** sets the stakes — "
+            "why the choice between churn and compounding is the choice worth making. **The Engineered "
+            "Environment** names the object the answer acts on. And **the engineer's seat** names what stays "
+            "human once the fleet writes the code. Read together, the six are one argument, and the question "
+            "above is what it answers.")
+        p.append(render_md(frame_note))
+
     return "\n".join(p)
 
 
@@ -3014,6 +3165,7 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
   <div class="hero-band">
     <div class="hero-lead">
       <p class="hero-question">How do we safely grant autonomy to commodity intelligence?</p>
+      <p class="hero-q-link"><a href="big-question.html">Why this question, and how the ideas answer it →</a></p>
       {book_title_block}
       <p class="m-lead">Generative AI is making implementation abundant and cheap; the hard part becomes
       <span class="term">governing the conditions under which fast code can be trusted</span>.
@@ -3940,6 +4092,13 @@ def cmd_build(_args) -> int:
                    _crumb("", [("The theory of MAGE", "")]),
                    _theory_body(), rel_root="")
     open(os.path.join(ROOT, _THEORY_PAGE), "w", encoding="utf-8").write(theory)
+    # The standalone Big Question page — projects the Big-Ideas model's core_question node (the question, its
+    # software specialization, the three-step through-line, and the answer-constituent ideas). Reachable from
+    # the landing hero's 'why this question →' link and the Theory page (its orphan-gate inbound edges).
+    big_question = _page("The Big Question",
+                         _crumb("", [("The Big Question", "")]),
+                         _big_question_body(), rel_root="")
+    open(os.path.join(ROOT, _BIG_QUESTION_PAGE), "w", encoding="utf-8").write(big_question)
     n_ic = 0
     for rec in ic_authored:
         cid = rec.get("id", "")
