@@ -53,10 +53,11 @@
         "constructing-the-gee.html",
         "development-workflow.html",
         "quick-start.html",
+        "big-question.html",
         "catalogue-figure.html",
         "book-models/models-view.html"
       ],
-      "note": "Supporting essays / glossary / quickstart / the browsable book-models reading view."
+      "note": "Supporting essays / glossary / quickstart / the standalone Big Question page / the browsable book-models reading view."
     }
   ]
 }

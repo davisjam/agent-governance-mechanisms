@@ -3,14 +3,14 @@
   "_counts": {
     "tracked_slugs": 38,
     "slugs_rendered": 28,
-    "total_sites": 1443,
+    "total_sites": 1450,
     "by_projection": {
       "book-pdf": 25,
       "book-web": 1083,
       "website-catalogue": 221,
       "website-concepts": 56,
       "website-landing": 13,
-      "website-misc": 45
+      "website-misc": 52
     }
   },
   "index": {
@@ -802,6 +802,10 @@
             "occ": 17
           },
           {
+            "file": "big-question.html",
+            "occ": 4
+          },
+          {
             "file": "book-models/models-view.html",
             "occ": 43
           },
@@ -1160,6 +1164,10 @@
         ],
         "website-misc": [
           {
+            "file": "big-question.html",
+            "occ": 1
+          },
+          {
             "file": "book-models/models-view.html",
             "occ": 5
           },
@@ -1295,6 +1303,12 @@
         "website-catalogue": [
           {
             "file": "agent/lifecycle-and-observability/cron-alerts-gate.html",
+            "occ": 1
+          }
+        ],
+        "website-misc": [
+          {
+            "file": "big-question.html",
             "occ": 1
           }
         ]
@@ -1892,6 +1906,10 @@
             "occ": 7
           },
           {
+            "file": "big-question.html",
+            "occ": 2
+          },
+          {
             "file": "book-models/models-view.html",
             "occ": 38
           },
@@ -2387,6 +2405,12 @@
           },
           {
             "file": "concept-research-agenda.html",
+            "occ": 1
+          }
+        ],
+        "website-misc": [
+          {
+            "file": "big-question.html",
             "occ": 1
           }
         ]
@@ -3490,6 +3514,10 @@
           {
             "file": "README.html",
             "occ": 14
+          },
+          {
+            "file": "big-question.html",
+            "occ": 5
           },
           {
             "file": "book-models/models-view.html",
@@ -5956,6 +5984,10 @@
           {
             "file": "ABSTRACTIONS.html",
             "occ": 1
+          },
+          {
+            "file": "big-question.html",
+            "occ": 3
           },
           {
             "file": "book-models/models-view.html",
