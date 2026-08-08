@@ -329,12 +329,111 @@ def figure_arrow_marker(marker_id: str, color: str, t: Tokens | None = None) -> 
     )
 
 
+# ── Figure-semantics projection (INV-SEM) ─────────────────────────────────────────────────────────────
+# The house colour LANGUAGE for scientific figures: a thin SEMANTIC-ALIAS layer over the palette. A figure
+# author picks a colour BY ROLE ("the governance colour"), not by the render-oriented palette key ("accent").
+# Each family aliases a palette reference-token by KEY, so the semantic layer never owns a hex — it points at
+# one. `role_to_family()` is the author's forward index; `family_of_hex()` the reverse index the family-budget
+# lint leans on; `semantics_check()` asserts the language can't silently collapse two roles onto one colour.
+
+
+def figure_semantics(t: Tokens | None = None) -> dict:
+    """The raw `figure_semantics` block (families + supporting neutrals) — the INV-SEM SSOT."""
+    t = t or load()
+    return t.raw["figure_semantics"]
+
+
+def _families(t: Tokens | None = None) -> dict:
+    return figure_semantics(t)["families"]
+
+
+def semantic_families(t: Tokens | None = None) -> frozenset[str]:
+    """The closed set of role-family names: {modeling, governance, agent, neutral, failure}."""
+    return frozenset(_families(t).keys())
+
+
+def _family_hexes(fam: dict) -> set[str]:
+    """The stroke / emphasis / fill hexes a family owns (lowercased), skipping absent slots."""
+    return {fam[k].lower() for k in ("stroke", "emphasis", "fill") if k in fam}
+
+
+def semantic_hexes(family: str, t: Tokens | None = None) -> frozenset[str]:
+    """Every hex (stroke/emphasis/fill, lowercased) owned by one family."""
+    return frozenset(_family_hexes(_families(t)[family]))
+
+
+def role_to_family(t: Tokens | None = None) -> dict[str, str]:
+    """Invert each family's `roles` list into the flat {role_word: family} lookup an author (or a lint)
+    uses to answer 'is `environment` modeling-green?'."""
+    out: dict[str, str] = {}
+    for name, fam in _families(t).items():
+        for role in fam.get("roles", []):
+            out[role] = name
+    return out
+
+
+def family_of_hex(hex_: str, t: Tokens | None = None) -> str | None:
+    """Reverse index: which family owns this hex, or None for supporting neutrals / non-family colours.
+    The family-budget lint keys off this — a hex that maps to a family must sit in a figure that declares it."""
+    h = hex_.lower()
+    for name, fam in _families(t).items():
+        if h in _family_hexes(fam):
+            return name
+    return None
+
+
+def semantics_check(t: Tokens | None = None) -> list[str]:
+    """Assert the colour LANGUAGE is well-formed: every family's convenience hex equals its palette
+    reference-token (the join-check — the copy beside `*_key` can never drift), and the family STROKE hexes
+    are pairwise distinct (so the language can't silently collapse two roles onto one colour). Returns a list
+    of problem strings; empty == clean."""
+    t = t or load()
+    pal = t.palette
+    problems: list[str] = []
+    fams = _families(t)
+    for name, fam in fams.items():
+        for slot, key_field in (("stroke", "stroke_key"), ("emphasis", "emphasis_key"), ("fill", "fill_key")):
+            if slot not in fam:
+                continue
+            key = fam.get(key_field)
+            if key is None:
+                problems.append(f"family {name!r}: has {slot!r} hex but no {key_field!r}")
+                continue
+            if key not in pal:
+                problems.append(f"family {name!r}: {key_field}={key!r} is not a palette key")
+                continue
+            if fam[slot].lower() != pal[key].lower():
+                problems.append(f"family {name!r}: {slot} copy {fam[slot]!r} != palette[{key!r}] {pal[key]!r} "
+                                f"(the convenience hex drifted from its reference token)")
+    # Pairwise-distinct family stroke hexes — the language must not put two roles on one colour.
+    seen: dict[str, str] = {}
+    for name, fam in fams.items():
+        stroke = fam.get("stroke", "").lower()
+        if stroke in seen:
+            problems.append(f"families {seen[stroke]!r} and {name!r} share stroke hex {stroke!r} — "
+                            f"a colour must not mean two roles")
+        else:
+            seen[stroke] = name
+    return problems
+
+
+def semantics_table(t: Tokens | None = None) -> str:
+    """A one-command role→colour reference so an author drafting a figure need not guess which palette key
+    is the governance one."""
+    t = t or load()
+    lines = ["family        token            stroke     roles"]
+    for name, fam in _families(t).items():
+        roles = ", ".join(fam.get("roles", []))
+        lines.append(f"{name:<13} {fam['token']:<16} {fam.get('stroke',''):<10} {roles}")
+    return "\n".join(lines) + "\n"
+
+
 # ── CLI ─────────────────────────────────────────────────────────────────────────────────────────────
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cmd", choices=["css", "typst", "palette", "figure-styles",
-                                    "emit-mermaid", "check-mermaid"])
+                                    "emit-mermaid", "check-mermaid", "semantics", "check"])
     args = ap.parse_args(argv)
     t = load()
     if args.cmd == "css":
@@ -354,6 +453,16 @@ def main(argv: list[str] | None = None) -> int:
             sys.stderr.write("mermaid-config.json is STALE — run: design_tokens.py emit-mermaid\n")
             return 1
         sys.stdout.write("mermaid-config.json is fresh\n")
+    elif args.cmd == "semantics":
+        sys.stdout.write(semantics_table(t))
+    elif args.cmd == "check":
+        problems = semantics_check(t)
+        if problems:
+            sys.stderr.write("figure_semantics is MALFORMED:\n")
+            for p in problems:
+                sys.stderr.write(f"  {p}\n")
+            return 1
+        sys.stdout.write("figure_semantics is well-formed — 5 families, hexes match palette keys, distinct\n")
     return 0
 
 

@@ -82,5 +82,49 @@
       "path": "M0 0 L10 5 L0 10 z"
     },
     "line": { "cap_decorative": "round", "join": "round" }
+  },
+  "figure_semantics": {
+    "_note": "The house colour LANGUAGE for scientific figures (INV-SEM). A figure author picks a colour BY ROLE, not by hex. Each family ALIASES one palette reference-token (by *_key), so the semantic layer never re-states a hex — the *_key is authoritative and design_tokens.py `check` asserts the convenience copy equals palette[*_key]. Readers read colour as meaning: green=modeling, rust=governance, blue=agent, gray=neutral, red=failure. See book/_design/drafts/figure-semantics-DESIGN-260807.md.",
+    "families": {
+      "modeling": {
+        "token": "modeling-green",
+        "stroke_key": "diagram-governed",    "stroke": "#1f7a4d",
+        "emphasis_key": "diagram-trust",      "emphasis": "#155c38",
+        "fill_key": "diagram-governed-fill",  "fill": "#e3f0e7",
+        "roles": ["modeling", "knowledge", "environment", "representation", "model", "invariant", "reasoning"],
+        "gloss": "the engineered object and its representations — what we model, know, and can reason over"
+      },
+      "governance": {
+        "token": "governance-rust",
+        "stroke_key": "accent",       "stroke": "#9a3f12",
+        "fill_key": "accent-tint",    "fill": "#faf1e6",
+        "roles": ["governance", "policy", "conversion", "control", "gate", "determinization", "guarantee"],
+        "gloss": "the controls that convert soft guidance into hard guarantees"
+      },
+      "agent": {
+        "token": "agent-blue",
+        "stroke_key": "diagram-fleet",       "stroke": "#2f5169",
+        "fill_key": "diagram-fleet-fill",    "fill": "#e7edf3",
+        "roles": ["engineer", "agent", "autonomy", "fleet", "human", "operator"],
+        "gloss": "the acting party — the human engineer or the agent fleet"
+      },
+      "neutral": {
+        "token": "neutral-gray",
+        "stroke_key": "muted",  "stroke": "#57534e",
+        "roles": ["neutral", "implementation", "artifact", "scaffold", "connector", "note", "axis"],
+        "gloss": "implementation-level artifacts and scaffolding that carry no thesis weight"
+      },
+      "failure": {
+        "token": "failure-red",
+        "stroke_key": "diagram-churn",      "stroke": "#b23b3b",
+        "fill_key": "diagram-churn-fill",   "fill": "#fbeaea",
+        "roles": ["failure", "alert", "problem", "churn", "unremediated", "before", "regression"],
+        "gloss": "the problem pole — unremediated churn, the failing before-state, the alert"
+      }
+    },
+    "supporting": {
+      "_note": "Non-semantic figure neutrals every figure uses — text, page ground, hairlines. NOT a role family; family_of_hex() returns None for these.",
+      "ink_key": "ink", "paper_key": "paper", "rule_key": "rule"
+    }
   }
 }

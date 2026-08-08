@@ -1081,6 +1081,20 @@ def cmd_validate(_args) -> int:
     if drift:
         print(f"  [tokens] AUDIT-ONLY: {len(drift)} design-token-drift finding(s) — "
               f"run `python3 book-models/lint_design_token_drift.py` (does not gate)")
+    # FIGURE-FAMILY-BUDGET — AUDIT-ONLY. The figure colour-LANGUAGE consistency gate: every house SVG using a
+    # role colour (green=modeling / rust=governance / blue=agent / gray=neutral / red=failure, the
+    # figure_semantics block in design-tokens.json) must DECLARE its allowed families in a one-line
+    # `<!-- semantic-families: … -->` header, and use only declared families — a coarse but real projection of
+    # INV-SEM (a governance-rust element cannot leak into an all-green modeling figure). Lands audit-only-first
+    # per the repo's blocking-lint discipline: the corpus predates the header convention, so it PRINTS the
+    # undeclared/leak worklist here (a committer sees the wiring backlog) but does NOT increment n_issues. A
+    # figure-wiring wave adds the headers, drains it to 0, and a follow-up flips `--strict` blocking. See
+    # book-models/lint_figure_family_budget.py + book/_design/drafts/figure-semantics-DESIGN-260807.md.
+    import lint_figure_family_budget as lffb2  # noqa: E402 — audit-only figure-family-budget sensor
+    fam_budget = lffb2.findings()
+    if fam_budget:
+        print(f"  [figfam] AUDIT-ONLY: {lffb2.summary_line(fam_budget)} — "
+              f"run `python3 book-models/lint_figure_family_budget.py` (does not gate)")
     # FIGURE OVERFLOW — the text-fits-its-box sensor over book/assets/*.svg. It landed AUDIT-ONLY-first per
     # the repo's blocking-lint discipline; a fix-wave has now drained its offenders to zero, so it is
     # FLIPPED BLOCKING: any label that overruns its padded box increments n_issues and reddens validate,
