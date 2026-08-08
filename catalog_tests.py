@@ -58,6 +58,7 @@ from tests.book_models import (
     check_outcomes_model,
     check_outline_model,
     check_print_appendix_projection,
+    check_research_agenda,
     check_projection_index,
     check_reverse_index,
     check_slogan_density,
@@ -379,6 +380,18 @@ CHECKS = [
     # blocking once a clean session confirms the drain. See tests/book_models.py.
     Check("book-models: supporting-sources schema + joins (supporting_sources_declared.json)", 1,
           lambda strict: check_supporting_sources(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the RESEARCH-AGENDA model — the book's forward program as a
+    # queryable INDEX over finished prose. Seven agenda items across four closed kinds (frontier / measurement
+    # / dynamics / generalization), each welded to the falsifiable hypotheses (H1-H8) it tests and pointing at
+    # the home chapter (6.5 / 6.1 / 6.2) that expands it. Reports the joins RA1 (schema — kind/status in the
+    # declared taxonomies) / RA2 (hypothesis join — every related_hypotheses[] id resolves in
+    # theory_of_mage_declared.json, IC4-style) / RA3 (section join — every source_section resolves to a real
+    # chapter page) / RA4 (count guard, 7 items) + RA5 parity (prose-parity ACTIVE once the 'Where the frontier
+    # goes next' coda is placed; figure-parity vacuous until the map SVG lands). Lands audit-only-first (green
+    # from birth — the coda index is authored from the projection); a follow-up flips RA1-RA4 to blocking once a
+    # clean session confirms the drain. See tests/book_models.py.
+    Check("book-models: research-agenda schema + joins (research_agenda_declared.json)", 1,
+          lambda strict: check_research_agenda(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.

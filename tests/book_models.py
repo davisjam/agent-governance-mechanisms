@@ -437,6 +437,28 @@ def check_supporting_sources():
     return (FAIL if issues else PASS), issues
 
 
+def check_research_agenda():
+    """The research-agenda model's schema + join check (audit-only first landing, rule-#55 discipline). The
+    book's forward program (`research_agenda_declared.json`) is a queryable INDEX over finished prose: seven
+    agenda items across four closed kinds (frontier / measurement / dynamics / generalization), each welded to
+    the falsifiable hypotheses it tests and pointing at the home chapter that expands it. Re-derives the model
+    and reports the joins — RA1 schema (kebab-unique id; non-empty title/one_line/source_section; kind + status
+    in the declared taxonomies), RA2 hypothesis join (every related_hypotheses[] id resolves in
+    theory_of_mage_declared.json — the weld to the testable substrate, IC4-style), RA3 section join (every
+    source_section resolves to a real book chapter page), RA4 count guard (7 items), and RA5 parity
+    (prose-parity ACTIVE once the 'Where the frontier goes next' coda is placed; figure-parity VACUOUS until
+    the map SVG lands). Keyed off `book-models/research_agenda_declared.json` + theory_of_mage_declared.json +
+    the book chapter pages."""
+    import research_agenda_model as ram  # noqa: E402 — path set above; the book-model package
+
+    issues = list(ram.all_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded from
+    # the fail tally. A follow-up flips RA1-RA4 to blocking once a clean session confirms the drain (and the
+    # figure wave wires RA5 figure-parity against the SVG's <desc> node enumeration).
+    return (FAIL if issues else PASS), issues
+
+
 def check_metaphor_spans():
     """The metaphor + slogan registry's structural + overlap check (audit-only first landing, rule-#55
     discipline). The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span —

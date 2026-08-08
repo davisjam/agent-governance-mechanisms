@@ -1276,6 +1276,24 @@ def cmd_validate(_args) -> int:
               f"run `python3 book-models/supporting_sources_model.py verify` (does not gate):")
         for f in ss_findings:
             print(f"               {f}")
+    # RESEARCH-AGENDA MODEL — AUDIT-ONLY (rule #55 first landing). The book's forward program
+    # (book-models/research_agenda_declared.json) is a queryable, drift-gated INDEX over finished prose: seven
+    # agenda items across four closed kinds (frontier / measurement / dynamics / generalization), each welded
+    # to the falsifiable hypotheses (H1-H8) it tests and pointing at the home chapter that expands it. This
+    # band reports the joins RA1 (schema — kind/status in taxonomy) / RA2 (hypothesis join — every
+    # related_hypotheses[] id resolves in theory_of_mage_declared.json, IC4-style) / RA3 (section join — every
+    # source_section resolves to a real chapter page) / RA4 (count guard) + RA5 parity (prose-parity ACTIVE
+    # once the 'Where the frontier goes next' coda is placed, figure-parity vacuous until the SVG lands) plus
+    # the coverage note — but does NOT increment n_issues on first landing. A follow-up flips RA1-RA4 to
+    # BLOCKING once a clean session confirms the drain. See book-models/research_agenda_model.py.
+    import research_agenda_model as ram  # noqa: E402 — audit-only research-agenda index model
+    ra_findings = ram.all_findings()
+    print(f"  [agenda] AUDIT-ONLY: {ram.coverage_note()}")
+    if ra_findings:
+        print(f"  [agenda] AUDIT-ONLY: {len(ra_findings)} research-agenda finding(s) — "
+              f"run `python3 book-models/research_agenda_model.py verify` (does not gate):")
+        for f in ra_findings:
+            print(f"           {f}")
     # SOAPBOX GATE — BLOCKING. The substantiation aggregator (book-models/substantiation.py) nests the three
     # evidence legs (data / literature / field-note) under the claim universe (spine + theory + discussion).
     # SOAPBOX is its sharp report: a reality-claim asserted with NO backing of any kind AND no honest
