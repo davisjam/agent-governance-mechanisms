@@ -114,6 +114,12 @@
   .nav-grid .ng-s { font-size:var(--fs-micro); color:var(--muted); line-height:1.25; }
   .nav-grid .ng-book { border-color:var(--accent); background:var(--accent-tint); }
   .nav-grid .ng-book .ng-t { color:var(--accent); }
+  .theory-glance { max-width:780px; margin:10px auto 2px; text-align:center; }
+  .theory-glance .tg-fig { margin:0 auto; min-width:0; }
+  .theory-glance .tg-fig svg { max-width:100%; height:auto; }
+  .theory-glance .tg-line { font-size:var(--fs-meta); color:var(--muted); line-height:1.5; margin:9px auto 0; max-width:64ch; }
+  .theory-glance .tg-line a { color:var(--accent); font-weight:600; text-decoration:none; white-space:nowrap; }
+  .theory-glance .tg-line a:hover { text-decoration:underline; }
   .site-foot .book-foot { white-space:nowrap; font-weight:600; }
   .lead, .m-lead { max-width:74ch; font-size:var(--fs-body); color:var(--ink); line-height:1.66; margin:0 0 13px; }
   .m-lead .term, .lead .term { font-weight:700; }
@@ -313,7 +319,7 @@
 </head>
 <body class="landing">
 <main>
-<nav class="nav-grid" aria-label="Primary"><a class="ng-cell" href="https://davisjam.github.io"><span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a><a class="ng-cell" href="https://github.com/davisjam/model-based-agentic-software-engineering"><span class="ng-t"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</span><span class="ng-s">the source repository</span></a><a class="ng-cell" href="quick-start.html"><span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a><a class="ng-cell ng-book ng-bottom" href="book/index.html"><span class="ng-t">Book</span><span class="ng-s">read the web book</span></a><a class="ng-cell ng-book ng-bottom" href="book/mage-book.pdf"><span class="ng-t"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M4 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4.5L9.5 0H4zm5 1.5L12.5 5H9V1.5zM4.9 8.2h1c.5 0 .9.4.9.9s-.4.9-.9.9h-.4v1.1h-.6V8.2zm.6.5v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg> Book (PDF)</span><span class="ng-s">download offline</span></a></nav>
+<nav class="nav-grid" aria-label="Primary"><a class="ng-cell" href="theory.html"><span class="ng-t">Theory</span><span class="ng-s">the two-loop dynamics of MAGE</span></a><a class="ng-cell" href="constructing-the-gee.html"><span class="ng-t">Method</span><span class="ng-s">build the governed environment</span></a><a class="ng-cell" href="industry-case-studies.html"><span class="ng-t">Industry case studies</span><span class="ng-s">six systems, read through MAGE</span></a><a class="ng-cell" href="catalogue-views.html"><span class="ng-t">Mechanisms</span><span class="ng-s">the full catalogue, by model</span></a><a class="ng-cell ng-book" href="book/index.html"><span class="ng-t">Book</span><span class="ng-s">read the web book</span></a><a class="ng-cell" href="https://github.com/davisjam/model-based-agentic-software-engineering"><span class="ng-t"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</span><span class="ng-s">the source repository</span></a></nav>
   <!-- ===================== HERO + BIG IDEA 1 =====================
        The landing is a PROJECTION of the Big-Ideas model (book-models/landing-big-ideas.json), laid out
        as the book's own argument in the book's own order (Option 3 "the argument"). The hero is a
@@ -342,6 +348,80 @@
       install the Skills for Claude in your own repo.</strong></a></p>
     </div>
   </div>
+
+  <aside class="theory-glance" aria-label="The theory at a glance">
+  <figure class="tg-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760"
+     role="group" aria-labelledby="cardTitle cardDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="tg-card-cardTitle">The Theory of MAGE — a one-page reference card</title>
+  <desc id="tg-card-cardDesc">A reference card titled The Theory of MAGE, with seven labelled panels. Problem:
+    How do we safely grant autonomy to commodity intelligence? Premise: Cheap implementation makes
+    engineering judgment the scarce resource. Two theses side by side — Modeling Thesis: Bind engineering
+    intent into structured models; Alignment Thesis: Bind engineering policy into deterministic
+    mechanisms. Below them, side by side — Governance Conversion: Convert recurring failures into
+    mechanisms; Engineering Capital: Mechanisms compound as engineering capital. Outcome: Governed
+    engineering environments safely scale autonomy. The green panels are the Modeling arm and the
+    compounding outcome; the rust panels are the Alignment arm and the mechanisms that compound as
+    capital.</desc>
+
+  <defs>
+    <marker id="tg-card-card-chev" viewBox="0 0 12 12" refX="6" refY="9" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M1,3 L6,8 L11,3" fill="none" stroke="#e4e0d8" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="760" fill="#fdfcf9"/>
+  <rect x="30" y="30" width="940" height="700" rx="16" fill="none" stroke="#e4e0d8" stroke-width="1.5"/>
+
+  <text x="500" y="82" text-anchor="middle" font-size="28" font-weight="700" fill="#1c1917">The Theory of MAGE</text>
+  <text x="500" y="112" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">One page to point to — the theory at a glance.</text>
+
+  <!-- flow chevrons down the spine (faint) -->
+  <g fill="none" stroke="none">
+    <line x1="500" y1="234" x2="500" y2="244" marker-end="url(#tg-card-card-chev)"/>
+    <line x1="500" y1="322" x2="500" y2="332" marker-end="url(#tg-card-card-chev)"/>
+    <line x1="500" y1="566" x2="500" y2="576" marker-end="url(#tg-card-card-chev)"/>
+  </g>
+
+  <!-- PROBLEM (full width, blue frame) -->
+  <rect x="70" y="140" width="860" height="92" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="96" y="171" font-size="16" font-weight="700" letter-spacing="2.5" fill="#2f5169">PROBLEM</text>
+  <text x="500" y="208" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">How do we safely grant autonomy to commodity intelligence?</text>
+
+  <!-- PREMISE (full width, neutral) -->
+  <rect x="70" y="248" width="860" height="80" rx="10" fill="#f3efe7" stroke="#57534e" stroke-width="2.2"/>
+  <text x="96" y="277" font-size="16" font-weight="700" letter-spacing="2.5" fill="#57534e">PREMISE</text>
+  <text x="500" y="308" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Cheap implementation makes engineering judgment the scarce resource.</text>
+
+  <!-- TWO THESES (side by side) -->
+  <rect x="70" y="344" width="418" height="118" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="96" y="374" font-size="16" font-weight="700" letter-spacing="2" fill="#1f7a4d">MODELING THESIS</text>
+  <text x="279" y="410" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Bind engineering intent into</text>
+  <text x="279" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">structured models.</text>
+
+  <rect x="512" y="344" width="418" height="118" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.6"/>
+  <text x="538" y="374" font-size="16" font-weight="700" letter-spacing="2" fill="#9a3f12">ALIGNMENT THESIS</text>
+  <text x="721" y="410" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Bind engineering policy into</text>
+  <text x="721" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">deterministic mechanisms.</text>
+
+  <!-- CONVERSION + CAPITAL (side by side) — both the Alignment/governance arm, so both rust -->
+  <rect x="70" y="478" width="418" height="110" rx="10" fill="#f6f4ef" stroke="#9a3f12" stroke-width="2.2"/>
+  <text x="96" y="508" font-size="16" font-weight="700" letter-spacing="2" fill="#9a3f12">GOVERNANCE CONVERSION</text>
+  <text x="279" y="544" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Convert recurring</text>
+  <text x="279" y="570" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">failures into mechanisms.</text>
+
+  <rect x="512" y="478" width="418" height="110" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.2"/>
+  <text x="538" y="508" font-size="16" font-weight="700" letter-spacing="2" fill="#9a3f12">ENGINEERING CAPITAL</text>
+  <text x="721" y="544" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Mechanisms compound</text>
+  <text x="721" y="570" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">as engineering capital.</text>
+
+  <!-- OUTCOME (full width, emphasized green) -->
+  <rect x="70" y="604" width="860" height="96" rx="10" fill="#e3f0e7" stroke="#155c38" stroke-width="3.2"/>
+  <text x="96" y="635" font-size="16" font-weight="700" letter-spacing="2.5" fill="#155c38">OUTCOME</text>
+  <text x="500" y="672" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Governed engineering environments safely scale autonomy.</text>
+</svg></figure>
+  <p class="tg-line">The whole argument on one page: the problem, the premise, the two theses, the conversion that drives the loops, and the outcome they produce. <a href="theory.html">See the theory →</a></p>
+</aside>
 
   <div class="big-ideas" id="concepts">
   <div class="idea-hero" id="bi-new-problem">
@@ -1039,7 +1119,7 @@
     </div>
   </div>
 </section>
-<footer class="site-foot"><span class="foot-line foot-copy">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span><span class="foot-line foot-links"><a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a></span><span class="foot-line foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>
+<footer class="site-foot"><span class="foot-line foot-copy">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span><span class="foot-line foot-links"><a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a>&nbsp;·&nbsp; <a class="book-foot" href="book/mage-book.pdf"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M4 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4.5L9.5 0H4zm5 1.5L12.5 5H9V1.5zM4.9 8.2h1c.5 0 .9.4.9.9s-.4.9-.9.9h-.4v1.1h-.6V8.2zm.6.5v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg> PDF</a></span><span class="foot-line foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>
 </main>
 </body>
 </html>

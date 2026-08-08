@@ -1562,7 +1562,9 @@ SITE_FOOTER = (f'<footer class="site-foot">'
                f'<span class="foot-line foot-links">'
                f'<a class="gh" href="{_REPO_URL}">{GITHUB_SVG} {_REPO_NAME}</a>'
                f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}book/index.html">'
-               f'Read the book →</a></span>'
+               f'Read the book →</a>'
+               f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}{_PDF_HREF}">'
+               f'{PDF_SVG} PDF</a></span>'
                f'<span class="foot-line foot-nsf">This work was supported by the U.S. National Science '
                f'Foundation under grants #2541917 and #2452533.</span></footer>')
 
@@ -1570,21 +1572,24 @@ TOPNAV = (f'<div class="topnav"><a href="{_SITE_URL}">James C. Davis, Purdue Uni
           f'<a class="gh" href="{_REPO_URL}">'
           f'{GITHUB_SVG} GitHub</a></div>')
 
-# Landing top-right 3×2 nav grid — bigger, higher-contrast tap targets than the old topnav link pair.
-# Layout:  Author | GitHub | Quick Start   (top row, 3 cells)
-#          Book | Book (PDF)                (bottom row, 2 cells centered under the 3-col track)
+# Landing primary nav — the six-item conceptual nav (website-v2 reorg): the reader's map of the whole
+# site. Theory · Method · Industry case studies · Mechanisms · Book · GitHub. The flex-wrap grid seats six
+# cells in two rows of three on a wide display and reflows on narrow. Quick Start + the PDF download left
+# the top nav; both stay reachable — Quick Start from the closing ways-in, the PDF from the footer.
 NAV_GRID = (
     '<nav class="nav-grid" aria-label="Primary">'
-    f'<a class="ng-cell" href="{_SITE_URL}">'
-    '<span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a>'
+    '<a class="ng-cell" href="theory.html">'
+    '<span class="ng-t">Theory</span><span class="ng-s">the two-loop dynamics of MAGE</span></a>'
+    '<a class="ng-cell" href="constructing-the-gee.html">'
+    '<span class="ng-t">Method</span><span class="ng-s">build the governed environment</span></a>'
+    '<a class="ng-cell" href="industry-case-studies.html">'
+    '<span class="ng-t">Industry case studies</span><span class="ng-s">six systems, read through MAGE</span></a>'
+    '<a class="ng-cell" href="catalogue-views.html">'
+    '<span class="ng-t">Mechanisms</span><span class="ng-s">the full catalogue, by model</span></a>'
+    '<a class="ng-cell ng-book" href="book/index.html">'
+    '<span class="ng-t">Book</span><span class="ng-s">read the web book</span></a>'
     f'<a class="ng-cell" href="{_REPO_URL}">'
     f'<span class="ng-t">{GITHUB_SVG} GitHub</span><span class="ng-s">the source repository</span></a>'
-    '<a class="ng-cell" href="quick-start.html">'
-    '<span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a>'
-    '<a class="ng-cell ng-book ng-bottom" href="book/index.html">'
-    '<span class="ng-t">Book</span><span class="ng-s">read the web book</span></a>'
-    f'<a class="ng-cell ng-book ng-bottom" href="{_PDF_HREF}">'
-    f'<span class="ng-t">{PDF_SVG} Book (PDF)</span><span class="ng-s">download offline</span></a>'
     '</nav>')
 
 
@@ -1981,6 +1986,12 @@ LANDING_CSS = """
   .nav-grid .ng-s { font-size:var(--fs-micro); color:var(--muted); line-height:1.25; }
   .nav-grid .ng-book { border-color:var(--accent); background:var(--accent-tint); }
   .nav-grid .ng-book .ng-t { color:var(--accent); }
+  .theory-glance { max-width:780px; margin:10px auto 2px; text-align:center; }
+  .theory-glance .tg-fig { margin:0 auto; min-width:0; }
+  .theory-glance .tg-fig svg { max-width:100%; height:auto; }
+  .theory-glance .tg-line { font-size:var(--fs-meta); color:var(--muted); line-height:1.5; margin:9px auto 0; max-width:64ch; }
+  .theory-glance .tg-line a { color:var(--accent); font-weight:600; text-decoration:none; white-space:nowrap; }
+  .theory-glance .tg-line a:hover { text-decoration:underline; }
   .site-foot .book-foot { white-space:nowrap; font-weight:600; }
   .lead, .m-lead { max-width:74ch; font-size:var(--fs-body); color:var(--ink); line-height:1.66; margin:0 0 13px; }
   .m-lead .term, .lead .term { font-weight:700; }
@@ -2590,6 +2601,7 @@ def _landing_reference() -> str:
 
 _IC_INDEX_PAGE = "industry-case-studies.html"
 _COMPARATIVE_PAGE = "comparative-analysis.html"
+_THEORY_PAGE = "theory.html"
 
 #: The correspondence-strength glyph — the at-a-glance mark for the theory-coverage checklist. Shares the
 #: ✓ / ◐ / — shapes with the book's matrix glyphs; adds ~ for `tension` and ✗ for `counterexample`, the two
@@ -2863,6 +2875,86 @@ def _comparative_body() -> str:
     return "\n".join(p)
 
 
+def _theory_svg_figure(asset: str, ns: str, caption: str = "") -> str:
+    """One shared-source book asset inlined as a figure, its ids namespaced so two figures on one page never
+    collide (check_no_duplicate_ids). Empty caption renders no figcaption. Falls back to "" if the asset is
+    missing."""
+    svg = _ns_svg_ids(_inline_svg("assets/" + asset), ns)
+    if not svg:
+        return ""
+    cap = f"<figcaption>{_inline(caption)}</figcaption>" if caption else ""
+    return f'<figure class="cc-body-fig">{svg}{cap}</figure>'
+
+
+def _theory_body() -> str:
+    """The standalone Theory page — the two-loop dynamics diagram, the two theses stated in prose, and the
+    inside-cover 'theory at a glance' card. Every reader-facing sentence is a hand-authored literal; nothing
+    is composed from a model. The two figures are the shared-source book assets (theory-of-mage-dynamics.svg
+    is also the book's Fig 0.1-2), inlined with their ids namespaced so they never collide. Exactly one
+    `<h1>`."""
+    p: "list[str]" = []
+    p.append("<h1>The theory of MAGE</h1>")
+    p.append('<div class="concept-band"><span class="concept-chip">Theory</span>'
+             '<span class="concept-kicker">two loops, one governed environment</span></div>')
+    md1: "list[str]" = []
+    md1.append("MAGE reads the engineering environment as the object of engineering. When commodity "
+               "intelligence writes the code, quality stops belonging to any single change and becomes a "
+               "property of the environment every change passes through. The theory says how to build that "
+               "environment, and why the building compounds instead of dissipating.")
+    md1.append("## The two loops")
+    md1.append("Two loops circulate through one shared hub, the governed engineering environment. The "
+               "knowledge loop turns on the left. Structured models stretch an agent’s reasoning horizon; a "
+               "longer horizon spends less effort rediscovering what it lost; less churn earns more "
+               "autonomy. The governance loop turns on the right. Autonomy meets a failure, a human reads "
+               "it, and governance conversion banks the lesson as a mechanism that accrues as engineering "
+               "capital. Both loops feed the same environment, and each turn of the pair grants more "
+               "autonomy. The circulation is the theory; the boxes are only its stations.")
+    p.append(render_md("\n\n".join(md1)))
+    p.append(_theory_svg_figure(
+        "theory-of-mage-dynamics.svg", "thy-dyn",
+        "*The Theory of MAGE.* The knowledge loop and the governance loop meet at the governed engineering "
+        "environment, and each revolution grants more autonomy."))
+    md2: "list[str]" = []
+    md2.append("## Bind intent into models — the modeling thesis")
+    md2.append("Documentation, carried to its limit, becomes a structured model. A context-bounded agent "
+               "cannot hold a whole system at once, so it reasons through the model instead: a typed, "
+               "drift-checked map of the parts and the paths between them. Models used to rot because "
+               "keeping one current was somebody’s unpaid job. An agent does that job now for cents, "
+               "re-checking the map against the code on every change. A drifted prose document lies quietly. "
+               "A drifted model fails the build.")
+    md2.append("## Bind policy into mechanisms — the alignment thesis")
+    md2.append("Each obligation the environment must hold becomes a mechanism that enforces it. A type the "
+               "compiler checks, a lint that blocks the commit, a gate that refuses the deploy: every one "
+               "holds a single decision against every later change, whether the agent cooperates or not. "
+               "Prevent first, so the wrong move is simply unavailable. Where prevention cannot reach, a "
+               "sensor catches the drift after the fact. What neither reaches stays a human’s call, and "
+               "naming that residue honestly is part of the method.")
+    md2.append("## The theory at a glance")
+    md2.append("One card carries the whole argument on a single page: the problem it answers, the premise "
+               "it stands on, the two theses, the conversion that drives the loops, and the outcome they "
+               "produce.")
+    p.append(render_md("\n\n".join(md2)))
+    p.append(_theory_svg_figure("theory-of-mage-card.svg", "thy-card"))
+    return "\n".join(p)
+
+
+def _landing_theory_glance() -> str:
+    """The hero-adjacent 'theory at a glance' element on the landing — the inside-cover card figure, one
+    hand-authored frame line, and a link to the standalone Theory page (F-theory: BOTH a landing element
+    and a page). The card is the shared-source theory-of-mage-card.svg, its ids namespaced against the
+    landing’s other inlined figures. Falls back to "" if the asset is missing."""
+    svg = _ns_svg_ids(_inline_svg("assets/theory-of-mage-card.svg"), "tg-card")
+    if not svg:
+        return ""
+    return (
+        '<aside class="theory-glance" aria-label="The theory at a glance">\n'
+        f'  <figure class="tg-fig">{svg}</figure>\n'
+        '  <p class="tg-line">The whole argument on one page: the problem, the premise, the two theses, '
+        'the conversion that drives the loops, and the outcome they produce. '
+        '<a href="theory.html">See the theory →</a></p>\n'
+        '</aside>')
+
+
 def reconstruction_site_findings() -> "list[str]":
     """The site drift-check for the Industry-case-studies pillar — the "site is a projection, can't drift"
     discipline extended from the catalogue to the pillar. Model-level joins always run; the page-level
@@ -2942,6 +3034,8 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
       install the Skills for Claude in your own repo.</strong></a></p>
     </div>
   </div>
+
+  {theory_glance}
 
   <div class="big-ideas" id="concepts">
   {big_ideas}
@@ -3813,6 +3907,7 @@ def cmd_build(_args) -> int:
     # The hero carries NO cover figure — the Big Idea 1 churn flowchart is the landing's lead visual now.
     landing_body = (NAV_GRID + "\n" + LANDING_INTRO.format(
         book_title_block=_book_title_block(),
+        theory_glance=_landing_theory_glance(),
         big_ideas=_landing_big_ideas(),
         closing=_landing_closing(),
     ) + '\n  <hr class="sep" />\n  ' + _landing_demoted_ideas())
@@ -3845,6 +3940,13 @@ def cmd_build(_args) -> int:
                         _crumb("", [("Industry case studies", _IC_INDEX_PAGE), ("Comparative analysis", "")]),
                         _comparative_body(), rel_root="")
     open(os.path.join(ROOT, _COMPARATIVE_PAGE), "w", encoding="utf-8").write(comparative)
+    # The standalone Theory page — the two-loop dynamics diagram + the two theses + the inside-cover card.
+    # Reachable from the primary nav's "Theory" cell (its orphan-gate inbound edge); the landing also carries
+    # a hero-adjacent 'theory at a glance' card linking here (F-theory: both a landing element and a page).
+    theory = _page("The theory of MAGE",
+                   _crumb("", [("The theory of MAGE", "")]),
+                   _theory_body(), rel_root="")
+    open(os.path.join(ROOT, _THEORY_PAGE), "w", encoding="utf-8").write(theory)
     n_ic = 0
     for rec in ic_authored:
         cid = rec.get("id", "")
