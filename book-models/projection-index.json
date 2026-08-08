@@ -3,14 +3,16 @@
   "_counts": {
     "tracked_slugs": 38,
     "slugs_rendered": 28,
-    "total_sites": 1450,
+    "total_sites": 1509,
     "by_projection": {
       "book-pdf": 25,
       "book-web": 1083,
       "website-catalogue": 221,
       "website-concepts": 56,
+      "website-industry-cases": 49,
       "website-landing": 13,
-      "website-misc": 52
+      "website-misc": 52,
+      "website-theory": 10
     }
   },
   "index": {
@@ -825,6 +827,46 @@
             "file": "quick-start.html",
             "occ": 31
           }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 4
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 6
+          },
+          {
+            "file": "industry-case-cloudflare-codex.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-docker.html",
+            "occ": 10
+          },
+          {
+            "file": "industry-case-shopify.html",
+            "occ": 8
+          },
+          {
+            "file": "industry-case-siemens.html",
+            "occ": 11
+          },
+          {
+            "file": "industry-case-spotify-honk.html",
+            "occ": 9
+          },
+          {
+            "file": "industry-case-studies.html",
+            "occ": 4
+          },
+          {
+            "file": "industry-case-zenseact.html",
+            "occ": 8
+          }
         ]
       }
     },
@@ -979,6 +1021,26 @@
         "website-misc": [
           {
             "file": "constructing-the-gee.html",
+            "occ": 1
+          }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 5
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 3
+          },
+          {
+            "file": "industry-case-cloudflare-codex.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-studies.html",
             "occ": 1
           }
         ]
@@ -1175,6 +1237,22 @@
             "file": "constructing-the-gee.html",
             "occ": 1
           }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 5
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "industry-case-studies.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-zenseact.html",
+            "occ": 1
+          }
         ]
       }
     },
@@ -1309,6 +1387,26 @@
         "website-misc": [
           {
             "file": "big-question.html",
+            "occ": 1
+          }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 1
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-shopify.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-studies.html",
             "occ": 1
           }
         ]
@@ -1929,6 +2027,46 @@
             "file": "quick-start.html",
             "occ": 10
           }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 25
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 16
+          },
+          {
+            "file": "industry-case-cloudflare-codex.html",
+            "occ": 6
+          },
+          {
+            "file": "industry-case-docker.html",
+            "occ": 4
+          },
+          {
+            "file": "industry-case-shopify.html",
+            "occ": 6
+          },
+          {
+            "file": "industry-case-siemens.html",
+            "occ": 18
+          },
+          {
+            "file": "industry-case-spotify-honk.html",
+            "occ": 5
+          },
+          {
+            "file": "industry-case-studies.html",
+            "occ": 8
+          },
+          {
+            "file": "industry-case-zenseact.html",
+            "occ": 10
+          }
         ]
       }
     },
@@ -2411,6 +2549,30 @@
         "website-misc": [
           {
             "file": "big-question.html",
+            "occ": 1
+          }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 6
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-shopify.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-studies.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-zenseact.html",
             "occ": 1
           }
         ]
@@ -3535,6 +3697,46 @@
             "file": "quick-start.html",
             "occ": 7
           }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 4
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 12
+          },
+          {
+            "file": "industry-case-cloudflare-codex.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-docker.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-shopify.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-siemens.html",
+            "occ": 9
+          },
+          {
+            "file": "industry-case-spotify-honk.html",
+            "occ": 9
+          },
+          {
+            "file": "industry-case-studies.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-zenseact.html",
+            "occ": 4
+          }
         ]
       }
     },
@@ -4027,6 +4229,12 @@
             "file": "book-models/models-view.html",
             "occ": 1
           }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 1
+          }
         ]
       }
     },
@@ -4186,6 +4394,18 @@
           {
             "file": "constructing-the-gee.html",
             "occ": 1
+          }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 5
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 3
           }
         ]
       }
@@ -4754,6 +4974,42 @@
           {
             "file": "book-models/models-view.html",
             "occ": 1
+          }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 2
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 4
+          },
+          {
+            "file": "industry-case-cloudflare-codex.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-docker.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-shopify.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-siemens.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-spotify-honk.html",
+            "occ": 2
+          },
+          {
+            "file": "industry-case-zenseact.html",
+            "occ": 2
           }
         ]
       }
@@ -5996,6 +6252,30 @@
           {
             "file": "constructing-the-gee.html",
             "occ": 2
+          }
+        ],
+        "website-theory": [
+          {
+            "file": "theory.html",
+            "occ": 7
+          }
+        ],
+        "website-industry-cases": [
+          {
+            "file": "comparative-analysis.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-cloudflare-codex.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-studies.html",
+            "occ": 1
+          },
+          {
+            "file": "industry-case-zenseact.html",
+            "occ": 4
           }
         ]
       }

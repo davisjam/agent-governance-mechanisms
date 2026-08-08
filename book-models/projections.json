@@ -58,6 +58,20 @@
         "book-models/models-view.html"
       ],
       "note": "Supporting essays / glossary / quickstart / the standalone Big Question page / the browsable book-models reading view."
+    },
+    {
+      "id": "website-theory",
+      "kind": "website",
+      "builder": "catalog.py",
+      "globs": ["theory.html"],
+      "note": "The standalone theory page — the site-side preview of the book's theory-of-MAGE material (its book projection lives in the Part 6 theory chapters)."
+    },
+    {
+      "id": "website-industry-cases",
+      "kind": "website",
+      "builder": "catalog.py",
+      "globs": ["comparative-analysis.html", "industry-case-*.html"],
+      "note": "The industry-evidence pages — the comparative-analysis view, the industry-case-studies index, and each per-case study page (industry-case-<id>.html). Site-side previews of the book's industry-cases material."
     }
   ]
 }
