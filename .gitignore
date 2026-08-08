@@ -24,6 +24,11 @@ node_modules/
 /_drafts/
 /book/_drafts/
 *.local.md
+# EXCEPTION — the local-adapter plug convention repurposes `*.local.md` UNDER the shipped skills as the
+# ADOPTER OVERLAY. This repo dogfoods as adopter #0: its own DocAble house dialect ships as the worked
+# example (e.g. writing/lexicon.local.md), tracked + vendored in the plugin bundle. The scratch guard
+# above still holds everywhere else. See the self-communicate SKILL.md `## Local adapter` block.
+!/plugin/mage/skills/**/*.local.md
 
 # dispatched-agent scratch briefs — belong in scratchpad, not the book tree; guards against a
 # stray brief being accidentally `git add -A`'d into a commit (does not match the real tracked

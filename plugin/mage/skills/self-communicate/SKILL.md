@@ -167,3 +167,22 @@ also has a **house dialect** — its own coinages and the terms it reuses. You d
   suggests is running the audit procedure as a gate over prose before it ships.
 - **Grade the prose, not the writer.** The audit procedure grades a passage and emits fixes. It is a
   checklist an agent runs, not a verdict on the author.
+
+## Local adapter (plug points)
+
+This skill is installed from its upstream source and refreshed in place (`bundle_skill.py --install` /
+`--refresh`). A refresh **overwrites every upstream file**, so put your local additions where the refresh
+never looks. Two adopter-owned surfaces, disjoint from the upstream set by naming alone:
+
+- **File overlays** — for a listed upstream file, create the named `*.local.md` sibling. The agent reads it
+  as an **APPEND** after the upstream file. There is no override mode — replacing an upstream file wholesale
+  is a fork, out of scope for the adapter. Declared overlays:
+  - `writing/lexicon.md` → `writing/lexicon.local.md` — your **house vocabulary** rows, appended to the
+    lexicon's portable base. This catalogue ships its own DocAble house dialect here as the worked example.
+- **Directory drop-in** — any file you place under `local/` is adopter-owned: the agent reads it on the
+  topic it names, and upstream never ships into `local/`. Use it for a standalone house style note this
+  skill does not already carry.
+
+A refresh never reads, writes, or deletes a `*.local.md` file or anything under `local/`, so your local
+tinkering survives every upstream update untouched. When you consult the lexicon, read `writing/lexicon.md`
+and its `writing/lexicon.local.md` overlay together — the portable terms plus your house dialect.
