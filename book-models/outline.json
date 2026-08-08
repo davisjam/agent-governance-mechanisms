@@ -5130,7 +5130,7 @@
           "heading_text": "Learning propagation",
           "topic_sentence": "H8 completes a chain the first seven leave open.",
           "id_source": "derived",
-          "block_index": 86,
+          "block_index": 87,
           "points": []
         },
         {
@@ -5139,7 +5139,7 @@
           "heading_text": "Two directional relations",
           "topic_sentence": "Two of the hypotheses have a form clean enough to write down.",
           "id_source": "derived",
-          "block_index": 93,
+          "block_index": 94,
           "points": []
         },
         {
@@ -5148,7 +5148,7 @@
           "heading_text": "The churn relation",
           "topic_sentence": "Durable throughput is raw velocity net of what churn eats:",
           "id_source": "derived",
-          "block_index": 95,
+          "block_index": 96,
           "points": []
         },
         {
@@ -5157,7 +5157,7 @@
           "heading_text": "Attention-based versus mechanized control",
           "topic_sentence": "The second relation contrasts two ways to hold a failure class.",
           "id_source": "derived",
-          "block_index": 107,
+          "block_index": 108,
           "points": []
         },
         {
@@ -5166,7 +5166,7 @@
           "heading_text": "Does governance eventually become a burden?",
           "topic_sentence": "The churn curve just showed that accumulation is non-monotonic: past the point of fit, more apparatus makes things worse.",
           "id_source": "derived",
-          "block_index": 112,
+          "block_index": 113,
           "points": []
         },
         {
@@ -5175,7 +5175,7 @@
           "heading_text": "Evolution of this theory",
           "topic_sentence": "The theory did not arrive whole — its empirical core came first, induced from a bounded case; the rest is later reflection.",
           "id_source": "derived",
-          "block_index": 124,
+          "block_index": 125,
           "points": []
         },
         {
@@ -5184,7 +5184,7 @@
           "heading_text": "Modeling expands what Alignment can determinize",
           "topic_sentence": "The book has carried the two theses side by side, as if Modeling and Alignment were parallel pillars holding up one roof.",
           "id_source": "derived",
-          "block_index": 133,
+          "block_index": 134,
           "points": []
         },
         {
@@ -5193,7 +5193,7 @@
           "heading_text": "What kind of theory this is",
           "topic_sentence": "Say plainly what kind of theory this is.",
           "id_source": "derived",
-          "block_index": 140,
+          "block_index": 141,
           "points": []
         },
         {
@@ -5202,7 +5202,7 @@
           "heading_text": "Research agenda",
           "topic_sentence": "The eight hypotheses suggest a focused program, not a scatter of disconnected tests.",
           "id_source": "derived",
-          "block_index": 144,
+          "block_index": 145,
           "points": []
         },
         {
@@ -5211,7 +5211,7 @@
           "heading_text": "Closing",
           "topic_sentence": "The claim of MAGE is not that more governance produces better software.",
           "id_source": "derived",
-          "block_index": 148,
+          "block_index": 149,
           "points": []
         }
       ],
