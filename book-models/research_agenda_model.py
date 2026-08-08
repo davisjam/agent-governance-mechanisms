@@ -85,10 +85,16 @@ class AgendaItem:
     related_hypotheses: "list[str]" = field(default_factory=list)
 
     @property
-    def section_label(self) -> str:
-        """The `§N.M` home pointer, derived from the leading token of the source_section stem
-        (`6.5-where-mage-fits` -> `§6.5`). Derived, never re-keyed."""
-        return "§" + str(self.source_section).split("-", 1)[0]
+    def home_title(self) -> str:
+        """The home pointer as the chapter's DESCRIPTIVE display title (the book names sections narratively,
+        never by a `§N` literal — a bare `§6.5` reddens the blocking no-hardcoded-ref gate). Derived via the
+        chapter-identity model from the source_section stem, so a retitle re-projects here and RA5 forces the
+        placed table to follow. Falls back to the raw stem when the section resolves to no chapter (RA3
+        reports that separately)."""
+        lab = chapter_identity.label_for_slug(self.source_section)
+        if lab is None:
+            return self.source_section
+        return chapter_identity.title(lab)
 
 
 @dataclass
@@ -174,7 +180,7 @@ def render_index_rows(model: "AgendaModel | None" = None) -> "list[str]":
         group = model.items_in(kind.id)
         for i, it in enumerate(group):
             lead = kind.label if i == 0 else ""
-            rows.append(f"| {lead} | **{it.title}.** {it.one_line} | {it.section_label} |")
+            rows.append(f"| {lead} | **{it.title}.** {it.one_line} | {it.home_title} |")
     return rows
 
 
@@ -343,7 +349,7 @@ def _cmd_show() -> int:
             continue
         print(f"{kind.label}:")
         for it in group:
-            print(f"  [{it.status:<12}] {it.title}  ({it.section_label})")
+            print(f"  [{it.status:<12}] {it.title}  ({it.home_title})")
             print(f"                 {it.one_line}")
     print(f"\n{len(model.items)} agenda items · {len(model.kinds)} kinds · {len(model.statuses)} statuses")
     return 0
