@@ -937,6 +937,14 @@ def _core_question_audit() -> list[str]:
         if question not in open(ap, encoding="utf-8").read():
             out.append(f"CQ3 Preface {anchor!r} does not yet contain the core question verbatim "
                        f"(pending the Preface prose wave that lands the bold question)")
+    # CQ4 — the question now leads the hero (promoted from core_question.question to a rendered element);
+    # assert it resolves verbatim on the built landing, the same "modeled but must project" discipline the
+    # slot ids follow (d). Best-effort: skip-silent when index.html is not built yet.
+    idx = os.path.join(ROOT, "index.html")
+    if question and os.path.isfile(idx):
+        if question not in open(idx, encoding="utf-8").read():
+            out.append(f"CQ4 the core question does not resolve on the built landing (index.html) — the "
+                       f"hero lead should render it verbatim (rebuild, or fix the hero)")
     return out
 
 
@@ -1984,6 +1992,10 @@ LANDING_CSS = """
   /* A wider, larger lead paragraph — a comfortable reading measure that better matches the full-width
      lead figure beneath it (author feedback: the intro read too narrow + too small on a wide display). */
   .hero-lead .m-lead { max-width:82ch; font-size:20px; line-height:1.6; margin-left:auto; margin-right:auto; }
+  /* The Main Question leads the hero — promoted from the Big-Ideas model's core_question node so the
+     landing opens on the problem the whole argument answers (an _core_question_audit CQ4 pins it here). */
+  .hero-question { max-width:26ch; margin:0 auto 12px; font-family:var(--font-display); font-weight:700;
+                   font-size:30px; line-height:1.22; color:var(--ink); }
 
   /* ---- the Big-Ideas argument ---------------------------------------------------------------- */
   .big-ideas { margin:20px 0 4px; }
@@ -2439,8 +2451,8 @@ def _landing_closing() -> str:
         '  <p class="close-lead">The code got cheap; the judgment got expensive. Govern the conditions '
         'under which fast code can be trusted — the machine can search faster than any of us, but it cannot '
         'tell us what is worth searching for. So start with one recurring failure your agents keep handing '
-        'you, and convert it: one type, one lint, one gate. The method grows from there; below are four '
-        'ways in.</p>\n'
+        'you, and convert it: one type, one lint, one gate. The theory and methodology grow from there; below '
+        'are four ways in.</p>\n'
         f'  <div class="close-ways">\n    {buttons}\n  </div>\n'
         '</section>')
 
@@ -2514,15 +2526,18 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
        No card masonry, no <details> peeks — a build renders every brick from the model. -->
   <div class="hero-band">
     <div class="hero-lead">
+      <p class="hero-question">How do we safely grant autonomy to commodity intelligence?</p>
       {book_title_block}
-      <p class="m-lead">Generative AI is shifting software engineering from a practice built around scarce
-      implementation toward one built around abundant, low-cost code. The hard part stops being writing
-      code and becomes <span class="term">governing the conditions under which fast code can be
-      trusted</span>. This site describes a method for doing that. The method is called <span class="term">Model-Based
-      Agentic Software Engineering (MAGE)</span>. MAGE has six big ideas described below. To learn more,
-      <a class="hero-cta" href="book/index.html"><strong>the book provides the full treatment.</strong></a></p>
-      <p class="m-lead"><a class="hero-cta" href="quick-start.html"><strong>QuickStart: Bootstrap MAGE in
-      your own project by installing the Skills for Claude.</strong></a></p>
+      <p class="m-lead">Generative AI is making implementation abundant and cheap; the hard part becomes
+      <span class="term">governing the conditions under which fast code can be trusted</span>.
+      <span class="term">Model-Based Agentic Software Engineering (MAGE)</span> is a <span class="term">theory
+      and methodology</span> for engineering the governed environments in which autonomous intelligence can
+      safely create software. Its six big ideas, below, trace the argument from problem to research frontier.</p>
+      <p class="m-lead">Developed through one deeply studied production system and interpreted against
+      independent industrial practice from Cloudflare, Docker, Shopify, Spotify, Siemens, and Zenseact.</p>
+      <p class="m-lead"><a class="hero-cta" href="book/index.html"><strong>The book provides the full
+      treatment.</strong></a> &nbsp;·&nbsp; <a class="hero-cta" href="quick-start.html"><strong>QuickStart:
+      install the Skills for Claude in your own repo.</strong></a></p>
     </div>
   </div>
 
