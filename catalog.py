@@ -1587,9 +1587,10 @@ TOPNAV = (f'<div class="topnav"><a href="{_SITE_URL}">James C. Davis, Purdue Uni
           f'{GITHUB_SVG} GitHub</a></div>')
 
 # Landing primary nav — the six-item conceptual nav (website-v2 reorg): the reader's map of the whole
-# site. Theory · Method · Industry case studies · Mechanisms · Book · GitHub. The flex-wrap grid seats six
-# cells in two rows of three on a wide display and reflows on narrow. Quick Start + the PDF download left
-# the top nav; both stay reachable — Quick Start from the closing ways-in, the PDF from the footer.
+# site. Theory · Method · Industry case studies · Mechanisms · Book · GitHub. A 3-column CSS grid seats six
+# cells in two rows of three, dropping to two columns then one as the viewport narrows (see .nav-grid CSS).
+# Quick Start + the PDF download left the top nav; both stay reachable — Quick Start from the closing
+# ways-in, the PDF from the footer.
 NAV_GRID = (
     '<nav class="nav-grid" aria-label="Primary">'
     '<a class="ng-cell" href="theory.html">'
@@ -1714,7 +1715,12 @@ PAGE_CSS = """
   a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
-  /* The standalone Big Question page: the three-step through-line + the answer cards. */
+  /* The standalone Big Question page: the question blockquote, the three-step through-line, answer cards. */
+  blockquote.cq-q { margin:14px 0; padding:10px 18px; border-left:var(--border-accent-bar) solid var(--accent);
+                    background:var(--accent-tint); border-radius:0 var(--radius-code) var(--radius-code) 0;
+                    font-size:var(--fs-card-body); color:var(--ink); }
+  blockquote.cq-q-main { font-family:var(--font-display); font-weight:700; font-size:var(--fs-card-title);
+                         line-height:1.24; }
   ol.cq-through { list-style:none; counter-reset:none; margin:14px 0 8px; padding:0; }
   li.cq-step { display:flex; gap:14px; align-items:flex-start; margin:0 0 14px; }
   .cq-num { flex:0 0 auto; width:1.7em; height:1.7em; display:inline-flex; align-items:center;
@@ -2012,7 +2018,13 @@ LANDING_CSS = """
   /* ---- shared chrome: title, nav pills, lead prose, dividers -------------------------------- */
   .book-h1 { font-weight:700; margin:6px 0 2px; }
   .book-sub { color:var(--accent); font-weight:700; font-size:var(--fs-body); letter-spacing:.01em; margin:0 0 12px; }
-  .nav-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin:0 0 22px; }
+  /* An explicit 3-column grid realises the intended two-rows-of-three deterministically — flex-wrap left
+     the sixth cell (GitHub) orphaned on its own row at mid widths (~1100px). Capped + centred so it stays
+     3x2 on wide screens; drops to 2 columns, then 1, as the viewport narrows. */
+  .nav-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:9px;
+              max-width:940px; margin:0 auto 22px; }
+  @media (max-width:600px){ .nav-grid { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+  @media (max-width:380px){ .nav-grid { grid-template-columns:1fr; } }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:1px;
               border:1.6px solid var(--rule); border-radius:10px; padding:7px 13px; background:var(--paper);
               text-decoration:none; color:var(--ink); transition:border-color .12s, background .12s; }
@@ -2856,10 +2868,12 @@ def _comparative_body() -> str:
     # Hand-authored framing + the verbatim model tables, assembled as one markdown document.
     md: "list[str]" = []
     md.append("This page reads the six reconstructions next to one another. It projects the book’s "
-              "Chapter 6 matrices straight to the web: the same tables the print edition lays out, drawn "
-              "from the same model, so the two surfaces stay in step. MAGE ran at none of these companies. "
-              "Every mark records how the book reads an independent report against the theory, never a "
-              "claim a company makes about MAGE.")
+              "Chapter 6 material straight to the web, drawn from the same model, so the two surfaces cannot "
+              "drift. The two convergence tables are the exact tables the print edition lays out; the "
+              "correspondence matrix and the modeling-ceiling ladder carry the same data the book renders, "
+              "shaped here as tables where print presents it as cards and prose. MAGE ran at none of these "
+              "companies. Every mark records how the book reads an independent report against the theory, "
+              "never a claim a company makes about MAGE.")
     md.append("## Reading the tables")
     md.append("The convergence and ceiling tables use a small set of marks. A check means the source "
               "establishes the pattern in full. A half-circle means it establishes the pattern in part. "
@@ -3003,24 +3017,25 @@ def _big_question_body() -> str:
     p.append('<div class="concept-band"><span class="concept-chip">The question</span>'
              '<span class="concept-kicker">the umbrella over the whole argument</span></div>')
 
-    # The question itself, projected verbatim (CQ4/CQ5 pin it). The framing sentences are hand-authored.
-    intro: "list[str]" = []
-    intro.append("Every method needs a question it exists to answer. This one has a single question at its "
-                 "root, and each of the big ideas is a piece of the answer.")
-    intro.append(f"> **{_esc(question)}**")
-    intro.append("Commodity intelligence is the cheap, capable model that will write most of the code. "
-                 "Autonomy is letting it act without a human reading every change. Grant that autonomy "
-                 "carelessly and the system fills with fast, plausible, unverified work. The question asks "
-                 "how to grant it *safely* — and the whole method is the answer worked out in full.")
+    # The question itself, projected verbatim (CQ4/CQ5 pin it) as an explicit blockquote (render_md has no
+    # blockquote syntax). The framing sentences are hand-authored.
+    p.append(render_md("Every method needs a question it exists to answer. This one has a single question "
+                       "at its root, and each of the big ideas is a piece of the answer."))
+    p.append(f'<blockquote class="cq-q cq-q-main">{_esc(question)}</blockquote>')
+    p.append(render_md(
+        "Commodity intelligence is the cheap, capable model that will write most of the code. Autonomy is "
+        "letting it act without a human reading every change. Grant that autonomy carelessly and the system "
+        "fills with fast, plausible, unverified work. The question asks how to grant it *safely* — and the "
+        "whole method is the answer worked out in full."))
     if spec:
-        intro.append("## The question, made specific to software")
-        intro.append("Stated for our field, the question sharpens:")
-        intro.append(f"> {_esc(spec)}")
-        intro.append("Implementation used to be the scarce thing. When it stops being scarce, the scarce "
-                     "thing becomes trust, and trust is a property of the environment the code is written "
-                     "in. So the question is really about the environment: what must it do so a fleet can "
-                     "act on its own without making the system untrustworthy?")
-    p.append(render_md("\n\n".join(intro)))
+        p.append(render_md("## The question, made specific to software\n\n"
+                           "Stated for our field, the question sharpens:"))
+        p.append(f'<blockquote class="cq-q">{_esc(spec)}</blockquote>')
+        p.append(render_md(
+            "Implementation used to be the scarce thing. When it stops being scarce, the scarce thing "
+            "becomes trust, and trust is a property of the environment the code is written in. So the "
+            "question is really about the environment: what must it do so a fleet can act on its own "
+            "without making the system untrustworthy?"))
 
     # The three-step through-line — the model's spine, each step's authored text reused verbatim, and the
     # Big Ideas it invokes linked to their concept entries (the answered_by/through_line join, projected).

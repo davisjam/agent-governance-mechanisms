@@ -95,7 +95,12 @@
   a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
-  /* The standalone Big Question page: the three-step through-line + the answer cards. */
+  /* The standalone Big Question page: the question blockquote, the three-step through-line, answer cards. */
+  blockquote.cq-q { margin:14px 0; padding:10px 18px; border-left:var(--border-accent-bar) solid var(--accent);
+                    background:var(--accent-tint); border-radius:0 var(--radius-code) var(--radius-code) 0;
+                    font-size:var(--fs-card-body); color:var(--ink); }
+  blockquote.cq-q-main { font-family:var(--font-display); font-weight:700; font-size:var(--fs-card-title);
+                         line-height:1.24; }
   ol.cq-through { list-style:none; counter-reset:none; margin:14px 0 8px; padding:0; }
   li.cq-step { display:flex; gap:14px; align-items:flex-start; margin:0 0 14px; }
   .cq-num { flex:0 0 auto; width:1.7em; height:1.7em; display:inline-flex; align-items:center;
@@ -126,7 +131,13 @@
   /* ---- shared chrome: title, nav pills, lead prose, dividers -------------------------------- */
   .book-h1 { font-weight:700; margin:6px 0 2px; }
   .book-sub { color:var(--accent); font-weight:700; font-size:var(--fs-body); letter-spacing:.01em; margin:0 0 12px; }
-  .nav-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin:0 0 22px; }
+  /* An explicit 3-column grid realises the intended two-rows-of-three deterministically — flex-wrap left
+     the sixth cell (GitHub) orphaned on its own row at mid widths (~1100px). Capped + centred so it stays
+     3x2 on wide screens; drops to 2 columns, then 1, as the viewport narrows. */
+  .nav-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:9px;
+              max-width:940px; margin:0 auto 22px; }
+  @media (max-width:600px){ .nav-grid { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+  @media (max-width:380px){ .nav-grid { grid-template-columns:1fr; } }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:1px;
               border:1.6px solid var(--rule); border-radius:10px; padding:7px 13px; background:var(--paper);
               text-decoration:none; color:var(--ink); transition:border-color .12s, background .12s; }

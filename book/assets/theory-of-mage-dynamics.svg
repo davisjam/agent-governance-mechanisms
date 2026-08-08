@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Hand-authored SVG (not Mermaid, label: theory-of-mage-dynamics). Figure 0.1-2, the companion
-     to the architecture figure: the theory drawn as DYNAMICS, two intersecting loops rather than a
-     stack of boxes. The two loops share two nodes on the vertical axis — More autonomy (top) and the
+<!-- Hand-authored SVG (not Mermaid, label: theory-of-mage-dynamics). Renders in Chapter 6.1
+     (Toward a Theory of MAGE) and on the site's Theory page: the theory drawn as DYNAMICS, two
+     intersecting loops rather than a stack of boxes. The two loops share two nodes on the vertical axis — More autonomy (top) and the
      Governed Engineering Environment (bottom). The GOVERNANCE loop (right, rust, the Alignment Thesis)
      runs down: autonomy -> failure -> human judgment -> governance conversion -> engineering capital ->
      stronger environment. The KNOWLEDGE loop (left, green, the Modeling Thesis) runs up: environment ->

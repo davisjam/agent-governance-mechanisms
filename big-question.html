@@ -95,7 +95,12 @@
   a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
-  /* The standalone Big Question page: the three-step through-line + the answer cards. */
+  /* The standalone Big Question page: the question blockquote, the three-step through-line, answer cards. */
+  blockquote.cq-q { margin:14px 0; padding:10px 18px; border-left:var(--border-accent-bar) solid var(--accent);
+                    background:var(--accent-tint); border-radius:0 var(--radius-code) var(--radius-code) 0;
+                    font-size:var(--fs-card-body); color:var(--ink); }
+  blockquote.cq-q-main { font-family:var(--font-display); font-weight:700; font-size:var(--fs-card-title);
+                         line-height:1.24; }
   ol.cq-through { list-style:none; counter-reset:none; margin:14px 0 8px; padding:0; }
   li.cq-step { display:flex; gap:14px; align-items:flex-start; margin:0 0 14px; }
   .cq-num { flex:0 0 auto; width:1.7em; height:1.7em; display:inline-flex; align-items:center;
@@ -191,11 +196,11 @@
 <h1>The Big Question</h1>
 <div class="concept-band"><span class="concept-chip">The question</span><span class="concept-kicker">the umbrella over the whole argument</span></div>
 <p>Every method needs a question it exists to answer. This one has a single question at its root, and each of the big ideas is a piece of the answer.</p>
-<p>&gt; <strong>How do we safely grant autonomy to commodity intelligence?</strong></p>
+<blockquote class="cq-q cq-q-main">How do we safely grant autonomy to commodity intelligence?</blockquote>
 <p>Commodity intelligence is the cheap, capable model that will write most of the code. Autonomy is letting it act without a human reading every change. Grant that autonomy carelessly and the system fills with fast, plausible, unverified work. The question asks how to grant it <em>safely</em> — and the whole method is the answer worked out in full.</p>
 <h2>The question, made specific to software</h2>
 <p>Stated for our field, the question sharpens:</p>
-<p>&gt; When implementation becomes cheap enough that agents can build almost anything you can describe, what must the surrounding engineering environment do so they can act autonomously without making the system untrustworthy?</p>
+<blockquote class="cq-q">When implementation becomes cheap enough that agents can build almost anything you can describe, what must the surrounding engineering environment do so they can act autonomously without making the system untrustworthy?</blockquote>
 <p>Implementation used to be the scarce thing. When it stops being scarce, the scarce thing becomes trust, and trust is a property of the environment the code is written in. So the question is really about the environment: what must it do so a fleet can act on its own without making the system untrustworthy?</p>
 <h2>The through-line, in three steps</h2>
 <p>The argument moves from the problem to an answer to the practice that keeps the answer true as the system changes. Each step names the big ideas that carry it.</p>
