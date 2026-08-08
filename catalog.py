@@ -2589,6 +2589,7 @@ def _landing_reference() -> str:
 # `<!-- case-onepager: -->` marker), so a projection can be joined back to the evidence it renders.
 
 _IC_INDEX_PAGE = "industry-case-studies.html"
+_COMPARATIVE_PAGE = "comparative-analysis.html"
 
 #: The correspondence-strength glyph — the at-a-glance mark for the theory-coverage checklist. Shares the
 #: ✓ / ◐ / — shapes with the book's matrix glyphs; adds ~ for `tension` and ✗ for `counterexample`, the two
@@ -2771,11 +2772,94 @@ def _ic_index_body(cases: "list[dict]", hedge: str) -> str:
             f'<a class="deep-item" href="{_attr(href)}">'
             f'<b>{_esc(org)}</b><span>{_esc(dom)}</span><span>{blurb}</span></a>')
     p.append('<div class="ic-cards">\n  ' + "\n  ".join(cards) + "\n</div>")
-    # The comparative page is a later wave — name it without a dead link (it does not exist yet).
+    # The comparative page reads all six at once — the pillar-index inbound edge the orphan gate needs.
     p.append("<h2>Across all six</h2>")
-    p.append("<p>A comparative analysis — the full correspondence matrix, the modeling-ceiling ladder, "
-             "and the convergence tables read across all six systems at once — is being drawn from the "
-             "same model, and will be linked here.</p>")
+    p.append("<p>One page reads the six side by side. The "
+             f'<a href="{_attr(_COMPARATIVE_PAGE)}">comparative analysis</a> projects the book’s '
+             "Chapter 6 matrices to the web — the correspondence matrix, the modeling-ceiling ladder, "
+             "and the convergence tables — from the same model the print edition builds, so the two "
+             "surfaces cannot fall out of step.</p>")
+    return "\n".join(p)
+
+
+def _comparative_body() -> str:
+    """The Comparative-analysis page body — a PROJECTION of the book's Chapter 6 matrices to the web. The
+    correspondence matrix, the modeling-ceiling ladder, and the two convergence tables are rendered by the
+    SAME model functions the book's Ch6 build calls (render_matrix_md / render_modeling_ceiling_md /
+    render_convergence_md / render_convergence_key_md), so the page cannot diverge from the book (the
+    ratified F-comparative exact-reuse decision). Every reader-facing SENTENCE is a hand-authored literal
+    or a verbatim authored string read from the model (the distinctive headline + hedge + statements); no
+    sentence is machine-composed from slug lists. The six-company placement map is the hero. Exactly one
+    `<h1>`; a `<!-- comparative-analysis: -->` trace marker leads the body (the pillar-page analogue)."""
+    import industry_cases_model as icm  # noqa: E402 — the Ch6 render functions, on sys.path since module load
+    model = icm.derive_model()
+    p: "list[str]" = []
+    p.append("<!-- comparative-analysis: ch6-projection -->")
+    p.append("<h1>Comparative analysis</h1>")
+    p.append('<div class="concept-band"><span class="concept-chip">Chapter 6, in miniature</span>'
+             '<span class="concept-kicker">the six reconstructions, read at once</span></div>')
+    hero = _ns_svg_ids(_inline_svg("assets/six-company-map.svg"), "cmp-hero")
+    if hero:
+        p.append(f'<figure class="cc-body-fig">{hero}</figure>')
+    # The distinctive material is data the model owns; the sentences below it are the model's authored
+    # strings, read verbatim (the design bans rendering the distinctive bucket as a support table).
+    dist_statements = [pat.statement for pat in model.patterns_in("distinctive")]
+    raw = _ic_declared()
+    ccp = raw.get("cross_case_patterns", {}) or {}
+    dist_headline = ccp.get("distinctive_headline", "")
+    dist_hedge = ccp.get("distinctive_hedge", "")
+    # Hand-authored framing + the verbatim model tables, assembled as one markdown document.
+    md: "list[str]" = []
+    md.append("This page reads the six reconstructions next to one another. It projects the book’s "
+              "Chapter 6 matrices straight to the web: the same tables the print edition lays out, drawn "
+              "from the same model, so the two surfaces stay in step. MAGE ran at none of these companies. "
+              "Every mark records how the book reads an independent report against the theory, never a "
+              "claim a company makes about MAGE.")
+    md.append("## Reading the tables")
+    md.append("The convergence and ceiling tables use a small set of marks. A check means the source "
+              "establishes the pattern in full. A half-circle means it establishes the pattern in part. "
+              "An em-dash means the source is silent. The modeling ceiling adds a hollow circle for a "
+              "representation a team exercises without naming it. The correspondence matrix keeps its "
+              "words — strong, partial, and the rest — because there the word carries the reading.")
+    md.append("## Correspondence: each system against each construct")
+    md.append("The matrix places every reconstruction against the MAGE constructs, with DocAble — the "
+              "system the theory was built on — as the first row. Read down a column to see how widely one "
+              "construct recurs across independent systems. Read across a row to see which arm of the "
+              "theory a single system leans on.")
+    md.append(icm.render_matrix_md(model))
+    md.append("## The modeling ceiling: how far each system’s models reach")
+    md.append("The ladder runs from the shallowest representation a system keeps to the deepest. A "
+              "system’s ceiling is the highest rung its described practice reaches. Some stop at topology "
+              "and policy; others climb into behavior, invariants, and model-derived verification. The "
+              "book reads the rung a source reaches, not a grade.")
+    md.append(icm.render_modeling_ceiling_md(model))
+    md.append("## What every system establishes")
+    md.append("These patterns recur across all six. Each was engineered independently, for one company’s "
+              "own reasons, yet every source lands on it. Convergence this broad is the evidence that a "
+              "pattern is structural rather than a house style.")
+    md.append(icm.render_convergence_md("universal", model))
+    md.append("The key names the construct each pattern instantiates and states what the source "
+              "establishes.")
+    md.append(icm.render_convergence_key_md("universal", model))
+    md.append("## What industry is independently discovering")
+    md.append("This second set recurs too, but the support varies from site to site. Some sources "
+              "establish the pattern in full, others only in part. MAGE generalizes what these systems "
+              "reach for; the gaps in a row mark where one source stops short.")
+    md.append(icm.render_convergence_md("generalizes", model))
+    md.append("The key for this bucket reads the same way.")
+    md.append(icm.render_convergence_key_md("generalizes", model))
+    md.append("## What none of the six generalizes")
+    # The headline, hedge, and statements are authored strings read verbatim from the model. They go into the
+    # markdown raw — render_md's inline pass escapes them once (double-escaping if pre-escaped here).
+    if dist_headline:
+        md.append(dist_headline)
+    if dist_hedge:
+        md.append(dist_hedge)
+    if dist_statements:
+        md.append("None of the reconstructions states the following machinery in the general form the "
+                  "theory does:")
+        md.extend(f"- {s}" for s in dist_statements)
+    p.append(render_md("\n\n".join(md)))
     return "\n".join(p)
 
 
@@ -3755,6 +3839,12 @@ def cmd_build(_args) -> int:
                      _crumb("", [("Industry case studies", "")]),
                      _ic_index_body(ic_authored, ic_hedge), rel_root="")
     open(os.path.join(ROOT, _IC_INDEX_PAGE), "w", encoding="utf-8").write(ic_index)
+    # The Comparative-analysis page — the book's Ch6 matrices projected to the web via the SAME model render
+    # functions, so it cannot drift from the book. Linked from the pillar index (its orphan-gate inbound edge).
+    comparative = _page("Comparative analysis",
+                        _crumb("", [("Industry case studies", _IC_INDEX_PAGE), ("Comparative analysis", "")]),
+                        _comparative_body(), rel_root="")
+    open(os.path.join(ROOT, _COMPARATIVE_PAGE), "w", encoding="utf-8").write(comparative)
     n_ic = 0
     for rec in ic_authored:
         cid = rec.get("id", "")
