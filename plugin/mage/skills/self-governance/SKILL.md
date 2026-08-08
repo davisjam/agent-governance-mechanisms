@@ -287,3 +287,20 @@ then **convert**.
   failures it feared. Default to *skip*; proportion governance to the operation
   ([`principles.md`](principles.md) A.1.4). A mechanism the user can't attach to a real, recurring
   failure is one they don't need — say so plainly, **even when they ask for more.**
+
+## Local adapter (plug points)
+
+This skill is installed from its upstream source and refreshed in place (`bundle_skill.py --install` /
+`--refresh`). A refresh **overwrites every upstream file**, so put your local additions where the refresh
+never looks. Two adopter-owned surfaces, disjoint from the upstream set by naming alone:
+
+- **File overlays** — for a listed upstream file, create the named `*.local.md` sibling. The agent reads it
+  as an **APPEND** after the upstream file. There is no override mode — replacing an upstream file wholesale
+  is a fork, out of scope for the adapter. Declared overlays:
+  - `principles.md` → `principles.local.md` — your house operating principles, appended to the portable method.
+- **Directory drop-in** — any file you place under `local/` is adopter-owned: the agent reads it on the
+  topic it names, and upstream never ships into `local/`. Use it for a standalone house note this skill
+  does not already carry.
+
+A refresh never reads, writes, or deletes a `*.local.md` file or anything under `local/`, so your local
+tinkering survives every upstream update untouched.

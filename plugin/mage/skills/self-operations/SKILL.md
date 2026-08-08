@@ -156,3 +156,20 @@ Copy a sample's shape, swap in this repo's tools, drop the rest.
   [`self-communicate`](../self-communicate/SKILL.md): its shared lexicon's **Operations** cluster keeps the
   terms consistent, and its engineering register keeps a runbook readable and correctly shaped.
 - **Stay in the operations lane.** This governs *operating the repo*, not the product's domain logic.
+
+## Local adapter (plug points)
+
+This skill is installed from its upstream source and refreshed in place (`bundle_skill.py --install` /
+`--refresh`). A refresh **overwrites every upstream file**, so put your local additions where the refresh
+never looks. Two adopter-owned surfaces, disjoint from the upstream set by naming alone:
+
+- **File overlays** — for a listed upstream file, create the named `*.local.md` sibling. The agent reads it
+  as an **APPEND** after the upstream file. There is no override mode — replacing an upstream file wholesale
+  is a fork, out of scope for the adapter. Declared overlays:
+  - `principles.md` → `principles.local.md` — your house operating mindset, appended to the portable base.
+- **Directory drop-in** — any file you place under `local/` is adopter-owned: the agent reads it on the
+  topic it names, and upstream never ships into `local/`. Use it for a standalone house runbook this skill
+  does not already carry.
+
+A refresh never reads, writes, or deletes a `*.local.md` file or anything under `local/`, so your local
+tinkering survives every upstream update untouched.
