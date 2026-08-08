@@ -50,6 +50,39 @@ architecture that primitive-passing leaves anonymous. Prefer one canonical seam 
 sanctioned way to do X), and make illegal states unrepresentable where you can (a typed model beats a
 runtime guard).
 
+## §3a Type-system posture (for any design that ships or touches typed code)
+
+*Types are how you name shapes.* A design that adds a data shape, migrates to a typed language, or moves a
+module across a boundary declares its type-**QUALITY** bar — not just "is it typed?" but "are the types
+*good*?" The failure this kills: code that is technically typed but leaks an escape hatch (`any`, a bare
+`object`, a blanket type-ignore) at every boundary — **fake types** that name no shape.
+
+Six facets — answer each YES or N/A-with-reason:
+
+1. **Strict compile.** Does the code compile under the language's *strict* tier, in the config that
+   actually ships — not only a parallel strict-overlay check? A strict lint over files the delivery build
+   compiles loosely is a half-measure: the shipped artifact was produced by the loose compile. If the
+   target tier isn't strict yet, name the gap and the path to it.
+2. **Escape-hatch budget = 0 (or justified).** New code adds no `any` / bare `object` / blanket type-ignore
+   at a type position. A genuinely dynamic value uses the "unknown-then-narrow" idiom; an external-library
+   gap gets a typed shim, not a blanket escape. Each surviving escape carries an inline `WHY:` comment.
+3. **Domain identifiers are branded, not bare strings.** An ID that travels across boundaries gets a
+   distinct type (a branded string, a `NewType`) so the compiler catches "passed a user-id where an
+   order-id was expected."
+4. **Variant shapes are discriminated unions, not optional-bag objects.** A value that is "shape A OR
+   shape B" is a tagged union, not one object with every field optional — the compiler then forces
+   exhaustive handling.
+5. **Boundary typing for fetch / parse / IPC.** Deserialized JSON, message payloads, and cross-service
+   data are typed at the seam (a declared shape plus a runtime-validated parse), not left as an untyped
+   value that propagates through every downstream consumer. The untyped-deserialization boundary is the
+   number-one escape-hatch amplifier.
+6. **Interface / event types are named, not cast away.** Event handlers and per-element augmentation use
+   the precise type or a declared interface, not an ad-hoc cast.
+
+Facets 1, 3, 4 apply to any typed language; 5–6 are boundary-typing ideas with an analogue in every
+ecosystem (a typed boundary model, a typed callback signature). Default-decline only with an explicit "no
+type-system surface — &lt;reason&gt;".
+
 ## §4 Invariants (the join key)
 
 Each invariant is a **tagged, testable predicate** with a stable ID and a `file:line` (or module)
@@ -98,6 +131,36 @@ test backlog the doc drives.
 Prefer converting a recurring manual audit into a **lint** whenever the signal is mechanically
 detectable: audit signals are expensive, deferrable, and post-hoc; lint signals are cheap, at-commit,
 and deterministic. Today's audit finding is tomorrow's lint.
+
+## §8a Static & dynamic analyses — the completeness roll-up
+
+§4 (invariants), §5 (dynamics), and §8 (enforcement) each name part of the analysis surface. This section
+rolls them into one visible checklist, so *analysis-completeness* becomes something you check rather than
+something a reader infers across four sections. For each invariant, name the STATIC analysis and the
+DYNAMIC analysis that holds it — or mark the gap.
+
+- **Static analyses — hold at build/commit time, before the code runs.**
+  - **Types.** The strict compile plus the type-quality bar (§3a). An illegal state the compiler rejects
+    needs no runtime check.
+  - **Lints.** A pattern-scanning check that fails the commit on a banned shape — the cheapest, most
+    deterministic control. Convert a recurring manual audit into a lint whenever the signal is
+    mechanically detectable (§8).
+- **Dynamic analyses — exercise the running system. Match the analysis to the invariant's shape.**
+  - **Example tests** — a pin test for a specific behavior, a seam test for a boundary the design moved.
+  - **Property tests** — for an invariant that quantifies over an input space (totality, round-trip,
+    idempotence): generate many inputs instead of enumerating examples. The right tool for a *linear
+    property*.
+  - **Exhaustive state-space search** — for a *safety* invariant over a small, reachable state set (a
+    state machine, a short protocol): enumerate every reachable state and assert the bad one is
+    unreachable. Catches the interleaving a hand-written test never thinks to try.
+  - **Model-checking** — for a *liveness* invariant ("the job eventually completes"): a temporal-logic
+    checker proves the system cannot get permanently stuck, which no finite test can.
+
+**The completeness check.** A *static-shape* model (a schema, a template) needs only static analyses plus
+example tests. A *dynamic-stateful* model that can stall owes BOTH a safety analysis AND a liveness one — a
+suite that proves only safety clears the safety bar while the system can still deadlock. An
+*external-input* model owes property tests over its input space. Name, per invariant, the static and
+dynamic analysis that holds it; a blank cell is the backlog.
 
 ## §9 (Optional) Open questions for the user
 

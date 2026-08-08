@@ -37,6 +37,53 @@ The reader must be able to re-derive "is this worth funding?" from this section 
 5. **What would tell us we picked the wrong shape?** — a failure mode you can detect early.
 6. **Empirical check recipe.** The concrete, runnable verification for this Epic's invariants, written *now* so the final reviewer doesn't have to invent it. E.g. "`grep -E <pattern>` across `<dir>` returns 0"; "`<lint>` exits 0"; "`<test>` pins the invariant — run it."
 
+## §1.1 Models & invariants — what this Epic reasons through
+
+*Which structured models does this Epic reason through, and what must hold?* Answer this **before**
+estimating cost — the models reveal the architecture, so naming them changes the plan. A **model** here is
+any declared, machine-checkable representation the fleet reasons through and the code is held against: a
+state machine, a typed registry, a component/zone map, a service-flow graph, a closed enum, a config
+schema. (If your project keeps such models, this is where an Epic declares which ones it disturbs.)
+
+**A. Models touched — STUDY / UPDATE / ADD.** For each model, say which:
+
+- **STUDIES** — read to understand the territory. Name the model and the one fact you needed from it.
+- **UPDATES** — the change touches a *modeled domain*, so the model and its invariants MUST change in the
+  SAME Epic. Name the model and what changes. This is the model-vs-code drift class the close-time audit
+  catches — catch it here at design time instead.
+- **ADDS** — a new stateful / typed / lifecycle / cross-service domain has no model yet, so register one.
+  The trigger: a state machine, a typed registry, a cross-service seam, a closed enum, or a fact now
+  re-derived in more than one place.
+
+**B. Invariants — stated in terms of those models.** For each model touched, state the load-bearing
+invariants as named, testable predicates with stable IDs (`INV-*` — the join key tests and audits cite).
+For each invariant give:
+
+- **What holds it (the enforcement grade).** Grade honestly: **ENFORCED-PROVEN** (a control *plus* a proof
+  it fires — an injected-violation test that goes red, a pinned known finding, or a shape the compiler
+  makes unrepresentable) · **ENFORCED-UNPROVEN** (a control exists but only the happy path is exercised —
+  a gap) · **DOCUMENTED-ONLY** (no executable check) · **DEFERRED** (honestly untested, marked). "Enforced"
+  with no proof-of-fire is the trap — it erases the proven-vs-hopeful line. Aim for proven, or an honest
+  deferral.
+- **Sensor or constraint (the right *kind*).** A build-time check cannot catch a *live runtime-state*
+  violation. If the invariant is about a running state, it needs a runtime **sensor** (an observability
+  assertion), not only a build-time **constraint** (a lint or test).
+- **Its verification tier (for a dynamic or cross-service invariant).** See "Static & dynamic analyses" in
+  the design-doc starter: a safety invariant over a small reachable state space wants an exhaustive search;
+  a liveness invariant wants a model-checker; a linear property wants a property test.
+
+**C. Is the invariant SET complete?** Classify each model — *static-shape* (a schema or template, no
+lifecycle), *dynamic-stateful* (a lifecycle that can stall), or *external-input* (parses untrusted data) —
+and confirm the bar for its class: a dynamic model owes BOTH a safety predicate AND a liveness one where
+the lifecycle can stall; an external-input model owes totality / round-trip / idempotence. Then write the
+retrodictive table: every failure mode you can name maps to an invariant. A model with only safety
+invariants and a stall-capable lifecycle is still incomplete — that is the gap a per-invariant tier check
+cannot see.
+
+**Honest escape.** If the Epic genuinely touches no modeled domain, write exactly: **No model touched —
+&lt;one-line reason&gt;** (e.g. "docs-only sweep"; "single-file mechanical fix"). Do not manufacture a
+vacuous model — a forced model is worse than none.
+
 ## §2 Cost calibration
 
 - Per-phase estimate (agent-hours/days) + total.
