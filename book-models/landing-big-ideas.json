@@ -7,7 +7,7 @@
 
   "_concept_card_fields": "Per-concept fields the two-tier Concept split (book-models/landing_big_ideas_model.py) reads on top of the nine the landing bricks read. `mechanisms`: the hand-declared Concept->mechanism edge — a list of catalogue entry slugs (agent/models-bridge/product) that instantiate or enforce this concept; the owning side of the edge, may be [] for a thin entry; every slug must resolve to a real catalogue entry (checked by CC2). `related_ideas`: an optional curated override for the Related-concepts section — a list of the six concept slugs; [] means the projector falls back to the _order-adjacency seed. `entry_figures`: the concept ENTRY's extra figures (fig[1..]) beyond the shared brick figure fig[0] (=`figure`) — a list of {asset, caption} objects, each asset under book/assets/. The entry markdown positions them with `<!-- fig: N -->` directives (0 = the brick figure) that the concept renderer projects from this list, so the model stays the figure SSOT; CC5 gates 1–3 RENDERED figures per entry. Two-tier note: the landing BRICK shows only figure/title/claim + a '→ read the concept' link; the rich material (the `more` intuition, the mechanisms, the related concepts, the extra figures) renders on the standalone `concept-<slug>.html` ENTRY. Distinct from book/data/concepts.json (the book's core-concept vocabulary model with its own card-<slug> landing lints) — this file is the six Big-Ideas / Concepts-section model. The gateway record is NOT a concept and carries none of these.",
 
-  "_order": ["churn", "governance-centric", "modeling-thesis", "alignment-thesis", "convert-failures", "seat-moves"],
+  "_order": ["churn", "governance-centric", "modeling-thesis", "alignment-thesis", "convert-failures", "seat-moves", "new-problem", "independent-convergence", "research-agenda"],
 
   "churn": {
     "id": "bi-churn",
@@ -101,11 +101,11 @@
     "claim": "SDLC becomes SELC: one seat reassigned, the lifecycle otherwise intact. The fleet writes the code; the engineer keeps the seats that were always the engineering.",
     "more": "The engineer flanks the fleet: models carry intent in on one side, judgment meets the output on the other. The seats the human keeps — requirements, specification, design, validation — were always the consequential ones; now they are the job.",
     "mechanisms": ["independent-design-review", "epic-and-design-templates", "epic-definition-of-done"],
-    "related_ideas": [],
+    "related_ideas": ["convert-failures"],
     "entry_figures": []
   },
 
-  "_brick_only_note": "new-problem / independent-convergence / research-agenda are the three NEW landing ideas from the website-v2 reorg. They are BRICK-ONLY records: check_big_ideas gates their book_home/figure/claim/id (a-d) and the projector renders each as a landing band whose 'Read in the book' link points at book_home, but they are deliberately NOT in _order — so the two-tier Concept model (landing_big_ideas_model.py, which derives from _order) does not require a concept-<slug>.md ENTRY for them yet. Authoring those three rich Concept entries (their `more` prose is already drafted below) + folding them into _order is a later content wave. Until then convert-failures + seat-moves stay in _order (their entries + CQ1 answered_by join) but are DEMOTED off the six main bands into the back-matter reference strip (their bi-<slug> ids resolve there, keeping gate d + the orphan gate green). Both owed figures now carry their real shared-source assets, replacing the interims: new-problem shows new-engineering-problem.svg (Classical vs Agentic SE, the inserted Environment stage) and governance-centric shows environment-as-object.svg (the environment as the object of engineering, obligations bound into it as mechanisms). These are the same SVGs the book's 1.1-the-printer front-figures inline, so the landing band and the book chapter cannot diverge — one figure source, two surfaces.",
+  "_brick_only_note": "new-problem / independent-convergence / research-agenda are the three landing ideas the website-v2 reorg added. They were once BRICK-ONLY (rendered as landing bands linking straight into the book, off _order so the two-tier Concept model exempted them). They are now FOLDED INTO _order: each carries a hand-authored concept-<slug>.md ENTRY, so the two-tier model (landing_big_ideas_model.py) gates them under CC1-CC6 and their landing bands link '→ read the concept' rather than 'Read in the book'. The six main bands render them + churn + governance-centric + the thesis pair; convert-failures + seat-moves stay in _order (their entries + CQ1 answered_by join) but are DEMOTED off the six main bands into the back-matter reference strip (their bi-<slug> ids resolve there, keeping gate d + the orphan gate green). seat-moves carries an explicit related_ideas override so the appended _order slugs do not shift its adjacency-seeded Related row. The band figures carry their real shared-source assets: new-problem shows new-engineering-problem.svg (Classical vs Agentic SE, the inserted Environment stage) and governance-centric shows environment-as-object.svg (the environment as the object of engineering, obligations bound into it as mechanisms). These are the same SVGs the book's 1.1-the-printer front-figures inline, so the landing band and the book chapter cannot diverge — one figure source, two surfaces.",
 
   "new-problem": {
     "id": "bi-new-problem",
@@ -117,9 +117,11 @@
     "book_home": "why-mage-follows-from-the-machine",
     "claim": "When intelligence becomes a commodity, implementation stops being scarce. What is scarce is trust — so the engineer's object of work shifts from code to environment.",
     "more": "Coding used to be the bottleneck. Once agents can build almost anything you can describe, the bottleneck moves: the hard part is governing the conditions under which fast code can be trusted. That shift changes the engineer's job — from writing the code to engineering the environment the agents write it in. Everything that follows answers the problem this idea names.",
-    "mechanisms": [],
-    "related_ideas": [],
-    "entry_figures": []
+    "mechanisms": ["self-governance", "content-validator", "staged-deploy-gates"],
+    "related_ideas": ["churn", "governance-centric"],
+    "entry_figures": [
+      {"asset": "environment-as-object.svg", "caption": "*Where the work moves.* Most of the field tunes the agent and treats the environment as a passive backdrop. The shift this idea names runs the other way: the object of engineering jumps to the governed environment the agent operates inside."}
+    ]
   },
 
   "independent-convergence": {
@@ -132,8 +134,8 @@
     "book_home": "where-mage-fits",
     "claim": "Six industrial systems, engineered independently, land on one set of principles. None generalizes the whole theory, yet each instantiates a distinct arm — convergence, not derivation.",
     "more": "The theory was developed on one deeply studied system, so the question is whether it travels. Reconstructed against six independent industrial systems — Cloudflare, Docker, Shopify, Spotify, Siemens, Zenseact — the same constructs recur: models, enforced mechanisms, failures converted into durable structure. Each system leans on a different arm, and MAGE names the fit, supplies the vocabulary, and marks what none of them generalizes.",
-    "mechanisms": [],
-    "related_ideas": [],
+    "mechanisms": ["executable-source-of-truth", "pre-commit-hook", "self-governance"],
+    "related_ideas": ["governance-centric", "convert-failures"],
     "entry_figures": []
   },
 
@@ -147,9 +149,11 @@
     "book_home": "a-new-empirical-regime",
     "claim": "Three open frontiers: how far judgment can migrate into deterministic machinery, how to census a governed environment's coverage and gaps, and what stronger models unlock.",
     "more": "A theory earns its keep by opening questions. **Determinization frontier:** each obligation migrates from prompt toward proof — skill, rule, lint, model-invariant, simulation — and how far it can go is an empirical question. **Governance census:** obligations, mechanisms, coverage, gaps, and orphans become measurable, so a governed environment can be audited rather than asserted. **Stronger models:** what each new tier of intelligence lets the environment stop enforcing by hand. This is the empirical regime the book opens, not closes.",
-    "mechanisms": [],
-    "related_ideas": [],
-    "entry_figures": []
+    "mechanisms": ["control-coverage-census", "governance-graph", "formal-invariant-verification"],
+    "related_ideas": ["convert-failures", "modeling-thesis"],
+    "entry_figures": [
+      {"asset": "governance-census.svg", "caption": "*The census frontier, drawn.* Match obligations against the mechanisms that meet them and three counts fall out — governed, under-governed, and governance debt — so an environment's coverage becomes something you measure rather than assert."}
+    ]
   },
 
   "gateway": {

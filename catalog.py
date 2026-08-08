@@ -2374,21 +2374,14 @@ def _concept_link(slug: str) -> str:
 
 
 def _big_idea_rec(slug: str) -> "dict | None":
-    """Fetch ANY Big-Idea record by slug from the raw model, tagged with its `_slug` — the brick-only path.
-    `_big_ideas_ordered()` only yields `_order` records (the six Concept entries); the three website-v2
-    ideas (new-problem, independent-convergence, research-agenda) live in the model but sit OUTSIDE `_order`
-    (they have no Concept entry yet), so the projector reaches them here. check_big_ideas still gates their
-    book_home/figure/claim/id — being off `_order` only exempts them from the two-tier Concept model."""
+    """Fetch a Big-Idea record by slug from the raw model, tagged with its `_slug`. The landing renderer
+    reaches new-problem / independent-convergence / research-agenda through here rather than the
+    `_big_ideas_ordered()` sequence because they render in bespoke band shapes (the lead hero, the
+    Independent-Convergence band, the enlarged Research-Agenda band) — all three are now in `_order` with a
+    concept-<slug>.html ENTRY, so they carry a '→ read the concept' link like the rest."""
     raw = _load_big_ideas()
     rec = raw.get(slug)
     return (rec | {"_slug": slug}) if isinstance(rec, dict) else None
-
-
-def _book_link(rec: dict) -> str:
-    """The brick's link straight into the book chapter — used by the brick-only ideas that have no Concept
-    ENTRY yet, so 'Read in the book →' replaces '→ read the concept'. Reuses the `s-concept` link styling."""
-    href = _chapter_href(rec.get("book_home", "")).split("#")[0]
-    return f'<a class="s-concept" href="{_attr(href)}">Read in the book →</a>'
 
 
 def _idea_figure(rec: dict) -> str:
@@ -2404,8 +2397,8 @@ def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False,
     block — no card, no thumbnail, no peek. Divider handled by the caller. `bigfig` renders the band
     stacked full-width (figure above centred words) for ideas whose figure needs the whole column to
     stay legible; it supersedes `figright` (side is moot when the figure spans the column). `link_html`
-    overrides the default '→ read the concept' link — a brick-only idea (not in `_order`, so it has no
-    Concept entry yet) passes `_book_link(rec)` to point straight at its book chapter instead."""
+    overrides the default '→ read the concept' link when a caller resolves the concept link itself (the
+    bands fetched via `_big_idea_rec` pass their own `_concept_link` so the brick still reads the entry)."""
     cls = "slot slot-bigfig" if bigfig else ("slot figright" if figright else "slot")
     return (
         f'<div class="{cls}" id="{_attr(rec.get("id", ""))}">\n'
@@ -2437,17 +2430,17 @@ def _landing_big_ideas() -> str:
     """The six Big Ideas of the website-v2 argument, rendered from problem to research frontier: idea 1
     (the New Engineering Problem) as the full-width lead band under the hero; Engineering Capital as one
     band; the Two Theses as a matched PAIR (Thesis 1 / Thesis 2); the Engineered Environment as a band;
-    then Independent Convergence and the Research Agenda. Three of the six (new-problem, independent-
-    convergence, research-agenda) are BRICK-ONLY records fetched via `_big_idea_rec` — off `_order`, so
-    they link straight into the book (`_book_link`) until their Concept entries are authored. The other
-    three plus the thesis pair are `_order` Concept entries and keep their '→ read the concept' link. The
-    thesis pair cells carry the thesis concepts' site ids (`card-thesis-*`)."""
+    then Independent Convergence and the Research Agenda. new-problem / independent-convergence /
+    research-agenda render in bespoke band shapes fetched via `_big_idea_rec`; all nine ideas are now in
+    `_order` with a concept-<slug>.html ENTRY, so every band — these three, churn, the Engineered
+    Environment, and both thesis cells — links '→ read the concept'. The thesis pair cells carry the thesis
+    concepts' site ids (`card-thesis-*`)."""
     by_slug = {r["_slug"]: r for r in _big_ideas_ordered()}
     np = _big_idea_rec("new-problem") or {}
     ic = _big_idea_rec("independent-convergence") or {}
     ra = _big_idea_rec("research-agenda") or {}
     parts: list[str] = []
-    # Idea 1 — the problem — the full-width lead band directly under the hero (brick-only → book link).
+    # Idea 1 — the problem — the full-width lead band directly under the hero (folded into _order → concept).
     parts.append(
         f'<div class="idea-hero" id="{_attr(np.get("id", ""))}">\n'
         f'  <figure class="ih-fig">{_idea_figure(np)}</figure>\n'
@@ -2455,7 +2448,7 @@ def _landing_big_ideas() -> str:
         f'    <p class="s-kick">{_esc(np.get("kicker", ""))}</p>\n'
         f'    <h2 class="s-title">{_esc(np.get("title", ""))}</h2>\n'
         f'    <p class="s-claim">{_esc(np.get("claim", ""))}</p>\n'
-        f'    {_book_link(np)}\n'
+        f'    {_concept_link(np.get("_slug", ""))}\n'
         '  </div>\n'
         '</div>')
     parts.append('<hr class="i-sep" />')
@@ -2472,11 +2465,11 @@ def _landing_big_ideas() -> str:
     # Idea 4 — the Engineered Environment (the environment is the object of engineering) — one band.
     parts.append(_big_idea_band(by_slug["governance-centric"], figright=True))
     parts.append('<hr class="i-sep" />')
-    # Idea 5 — Independent Convergence — brick-only band (→ book).
-    parts.append(_big_idea_band(ic, link_html=_book_link(ic)))
+    # Idea 5 — Independent Convergence — one band (folded into _order → concept).
+    parts.append(_big_idea_band(ic, link_html=_concept_link(ic.get("_slug", ""))))
     parts.append('<hr class="i-sep" />')
-    # Idea 6 — the Research Agenda — brick-only, enlarged full-width figure (→ book).
-    parts.append(_big_idea_band(ra, bigfig=True, link_html=_book_link(ra)))
+    # Idea 6 — the Research Agenda — enlarged full-width figure (folded into _order → concept).
+    parts.append(_big_idea_band(ra, bigfig=True, link_html=_concept_link(ra.get("_slug", ""))))
     return "\n\n  ".join(parts)
 
 
