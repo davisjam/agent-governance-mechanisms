@@ -72,7 +72,7 @@
           "heading_text": "What changed",
           "topic_sentence": "Scaling a fleet hits a wall, the way scaling a team does — but a different one.",
           "id_source": "derived",
-          "block_index": 9,
+          "block_index": 10,
           "points": []
         },
         {
@@ -81,7 +81,7 @@
           "heading_text": "Why I built a production system to study this",
           "topic_sentence": "My name is James Davis.",
           "id_source": "derived",
-          "block_index": 20,
+          "block_index": 21,
           "points": []
         },
         {
@@ -90,7 +90,7 @@
           "heading_text": "Why you can trust what follows",
           "topic_sentence": "I want to be plain about what this book is and is not.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 27,
           "points": []
         },
         {
@@ -99,7 +99,7 @@
           "heading_text": "What the method turned out to be",
           "topic_sentence": "Two theses drive this book, and they run through every chapter that follows.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 33,
           "points": []
         },
         {
@@ -108,7 +108,7 @@
           "heading_text": "Three ways to run a fleet",
           "topic_sentence": "The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable.",
           "id_source": "derived",
-          "block_index": 44,
+          "block_index": 45,
           "points": []
         },
         {
@@ -117,7 +117,7 @@
           "heading_text": "The through-line, and who it is for",
           "topic_sentence": "The through-line is a single idea; hold every chapter against it.",
           "id_source": "derived",
-          "block_index": 55,
+          "block_index": 56,
           "points": []
         }
       ],
@@ -133,12 +133,12 @@
           "heading_text": "What this book is about (and what it is not)",
           "topic_sentence": "Of course, not every programming task needs the machinery this book describes.",
           "id_source": "derived",
-          "block_index": 6,
+          "block_index": 9,
           "points": [
             {
               "slug": "task-mode-is-first-judgment",
               "text": "The first judgment is whether a task needs governed autonomy.",
-              "block_index": 8
+              "block_index": 11
             }
           ]
         },
@@ -148,27 +148,27 @@
           "heading_text": "The two modes",
           "topic_sentence": "Start at the decision on the left.",
           "id_source": "derived",
-          "block_index": 11,
+          "block_index": 14,
           "points": [
             {
               "slug": "two-modes-fork-on-size-and-difficulty",
               "text": "Mode forks on the task's reasoning horizon.",
-              "block_index": 13
+              "block_index": 16
             },
             {
               "slug": "one-shot-for-small-unsubtle-tasks",
               "text": "One-shot scripting fits a small, short-horizon task.",
-              "block_index": 18
+              "block_index": 21
             },
             {
               "slug": "supervised-autonomy-supplies-four-things",
               "text": "Supervised autonomy supplies four things in two groups.",
-              "block_index": 21
+              "block_index": 24
             },
             {
               "slug": "book-structure-fills-the-four",
               "text": "Each later part develops one of the four elements.",
-              "block_index": 27
+              "block_index": 30
             }
           ]
         },
@@ -178,37 +178,37 @@
           "heading_text": "Where the emphasis falls",
           "topic_sentence": "That fork runs along the reasoning horizon.",
           "id_source": "derived",
-          "block_index": 29,
+          "block_index": 32,
           "points": [
             {
               "slug": "reasoning-horizon-sorts-tasks",
               "text": "Tasks sort along the reasoning horizon, from short to long.",
-              "block_index": 32
+              "block_index": 35
             },
             {
               "slug": "mode-misjudgment-is-costly-both-ways",
               "text": "Misjudging the mode either way is expensive.",
-              "block_index": 34
+              "block_index": 37
             },
             {
               "slug": "leash-length-from-data-density-and-capability",
               "text": "Leash length follows training-data density and model capability.",
-              "block_index": 36
+              "block_index": 39
             },
             {
               "slug": "modularity-lowers-the-horizon-not-removes-it",
               "text": "Modularity lowers the reasoning horizon; it does not remove it.",
-              "block_index": 38
+              "block_index": 41
             },
             {
               "slug": "books-weight-is-supervised-autonomy",
               "text": "The book's weight falls on supervised autonomy.",
-              "block_index": 40
+              "block_index": 43
             },
             {
               "slug": "code-is-cheap-now-productionize-it",
               "text": "Code is cheap; turn the fabricator into a production line.",
-              "block_index": 42
+              "block_index": 45
             }
           ]
         },
@@ -218,12 +218,12 @@
           "heading_text": "The printer",
           "topic_sentence": "Think of a 3D printer.",
           "id_source": "derived",
-          "block_index": 44,
+          "block_index": 47,
           "points": [
             {
               "slug": "printer-is-the-governing-metaphor",
               "text": "The 3D printer is the book's governing metaphor.",
-              "block_index": 46
+              "block_index": 49
             }
           ]
         },
@@ -233,22 +233,22 @@
           "heading_text": "An open-ended technology",
           "topic_sentence": "A 3D printer belongs to a rare class of technology — the *open-ended* kind — alongside the invention of writing and the printing press.",
           "id_source": "derived",
-          "block_index": 49,
+          "block_index": 52,
           "points": [
             {
               "slug": "open-ended-technology-mints-genres",
               "text": "An open-ended technology arrives with no list; people invent genres.",
-              "block_index": 51
+              "block_index": 54
             },
             {
               "slug": "genai-is-open-ended-book-takes-one-genre",
               "text": "Generative AI is open-ended; this book takes one genre.",
-              "block_index": 53
+              "block_index": 56
             },
             {
               "slug": "quality-floor-was-always-the-price-now-cheap",
               "text": "The quality floor was the price; agents make it cheap.",
-              "block_index": 56
+              "block_index": 59
             }
           ]
         },
@@ -258,22 +258,22 @@
           "heading_text": "A picture is not enough",
           "topic_sentence": "Everyone can sketch a piece of software.",
           "id_source": "derived",
-          "block_index": 58,
+          "block_index": 61,
           "points": [
             {
               "slug": "everyone-can-sketch-software-but-a-picture-wont-print",
               "text": "Anyone can picture software, but a picture will not print.",
-              "block_index": 60
+              "block_index": 63
             },
             {
               "slug": "printer-needs-a-model-not-a-photo",
               "text": "A printer needs a structural model plus print notes.",
-              "block_index": 62
+              "block_index": 65
             },
             {
               "slug": "agents-need-the-instructions-not-just-the-picture",
               "text": "Agents need the build instructions, not just the picture.",
-              "block_index": 65
+              "block_index": 68
             }
           ]
         },
@@ -283,32 +283,32 @@
           "heading_text": "Suspect the instructions first",
           "topic_sentence": "Here is the shift in posture.",
           "id_source": "explicit",
-          "block_index": 68,
+          "block_index": 71,
           "points": [
             {
               "slug": "agent-is-a-printer-not-a-stapler-so-suspect-the-instructions",
               "text": "An agent is a printer, not a stapler; suspect instructions.",
-              "block_index": 70
+              "block_index": 73
             },
             {
               "slug": "models-can-build-anything-you-can-explain",
               "text": "Models build anything you can explain; explaining is the discipline.",
-              "block_index": 73
+              "block_index": 76
             },
             {
               "slug": "the-promise-is-also-the-danger",
               "text": "Building anything you describe is both promise and danger.",
-              "block_index": 76
+              "block_index": 79
             },
             {
               "slug": "speed-exposes-the-danger-not-causes-it",
               "text": "Speed does not cause the danger; it exposes it.",
-              "block_index": 79
+              "block_index": 82
             },
             {
               "slug": "running-example-is-a-real-shipped-system",
               "text": "The running example is a shipped system, not a toy.",
-              "block_index": 82
+              "block_index": 85
             }
           ]
         }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid, label: environment-as-object). A facet of the theory-of-mage-dynamics
+     parent: it enlarges the parent's bottom hub — the Governed Engineering Environment — and states the
+     conceptual move that hub encodes. TWO panels contrast WHAT is being engineered. LEFT (the common
+     move): the engineer works ON the agent — prompts it, fine-tunes it, wraps it; the environment is a
+     passive backdrop. RIGHT (the MAGE move): the engineer works ON the environment — obligations and
+     mechanisms are bound into it — and the agent merely OPERATES INSIDE that governed environment. The
+     target ring marks the object of engineering in each panel; the move is that the ring jumps from the
+     agent to the environment. The right panel quotes the parent's environment hub styling (emphasized
+     green) so a reader sees this as the parent's center, enlarged. Mermaid cannot seat a labelled
+     inside/outside containment where the emphasis and the target-ring placement ARE the argument. Palette:
+     Umber Monograph tokens (fleet #2f5169 engineer + agent, governed green #155c38/#1f7a4d the environment
+     object, accent #9a3f12 obligations->mechanisms + the object ring, muted #57534e captions, tints
+     #e7edf3/#e3f0e7/#faf1e6, rule #e4e0d8, page #fdfcf9). Fonts in the 16-28 band. -->
+<!-- semantic-families: agent, governance, modeling, neutral -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600"
+     role="group" aria-labelledby="eaoTitle eaoDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="eaoTitle">The environment is the object of engineering — everyone else engineers the agent; MAGE engineers the environment</title>
+  <desc id="eaoDesc">Two panels contrast what is being engineered. In the left panel, the common move,
+    the engineer works on the agent — prompting, fine-tuning, wrapping it — and a target ring marks the
+    agent as the object of engineering; the environment underneath is a passive backdrop. In the right
+    panel, the MAGE move, the engineer works on the environment: obligations and mechanisms are bound into
+    a governed engineering environment, and the target ring now marks the environment as the object of
+    engineering; the agent simply operates inside it. The move is that the object of engineering jumps from
+    the agent to the governed environment the agent operates in.</desc>
+
+  <defs>
+    <marker id="eao-fleet" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
+    </marker>
+    <marker id="eao-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a3f12"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="600" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The environment is the object of engineering</text>
+  <text x="500" y="70" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">Everyone else engineers the agent. MAGE engineers the environment the agent operates in.</text>
+
+  <line x1="500" y1="104" x2="500" y2="560" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="5 6"/>
+
+  <!-- ===== LEFT PANEL — engineer the agent ===== -->
+  <text x="60" y="132" font-size="18" font-weight="700" letter-spacing="1" fill="#57534e">THE COMMON MOVE</text>
+  <text x="60" y="154" font-size="16" font-style="italic" fill="#57534e">work on the agent</text>
+
+  <!-- passive environment backdrop -->
+  <rect x="52" y="212" width="392" height="272" rx="12" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="4 6"/>
+  <text x="248" y="470" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">environment — a passive backdrop</text>
+
+  <!-- engineer -->
+  <rect x="80" y="176" width="150" height="58" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="155" y="212" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Engineer</text>
+
+  <!-- arrow onto the agent -->
+  <path d="M200,266 C236,286 250,300 262,314" fill="none" stroke="#2f5169" stroke-width="2.6" marker-end="url(#eao-fleet)"/>
+  <text x="150" y="300" font-size="16" font-style="italic" fill="#57534e">prompts · tunes · wraps</text>
+
+  <!-- the agent (the object, ring-marked) -->
+  <circle cx="290" cy="368" r="66" fill="none" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <circle cx="290" cy="368" r="54" fill="none" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <rect x="222" y="340" width="136" height="58" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.8"/>
+  <text x="290" y="376" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agent</text>
+  <text x="290" y="262" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">the object of engineering</text>
+
+  <!-- ===== RIGHT PANEL — engineer the environment ===== -->
+  <text x="560" y="132" font-size="18" font-weight="700" letter-spacing="1" fill="#155c38">THE MAGE MOVE</text>
+  <text x="560" y="154" font-size="16" font-style="italic" fill="#57534e">work on the environment</text>
+
+  <!-- the governed environment (the object, ring-marked, emphasized like the parent hub) -->
+  <rect x="548" y="206" width="404" height="284" rx="14" fill="#e3f0e7" stroke="#155c38" stroke-width="3.4"/>
+  <rect x="536" y="194" width="428" height="308" rx="18" fill="none" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <text x="750" y="242" text-anchor="middle" font-size="20" font-weight="700" fill="#155c38">Governed Engineering Environment</text>
+  <text x="750" y="180" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">the object of engineering</text>
+
+  <!-- obligations -> mechanisms bound INTO the environment -->
+  <rect x="576" y="288" width="150" height="52" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="651" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Obligations</text>
+  <path d="M726,314 L766,314" fill="none" stroke="#9a3f12" stroke-width="2.4" marker-end="url(#eao-accent)"/>
+  <rect x="768" y="288" width="156" height="52" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.4"/>
+  <text x="846" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Mechanisms</text>
+
+  <!-- the agent OPERATES INSIDE the environment (not the object) -->
+  <rect x="686" y="404" width="128" height="56" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="750" y="439" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agent</text>
+  <text x="750" y="480" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">operates inside — not the object</text>
+
+  <!-- engineer works on the environment -->
+  <rect x="560" y="516" width="150" height="54" rx="9" fill="#e7edf3" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="635" y="550" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Engineer</text>
+  <path d="M700,520 C740,502 754,498 762,494" fill="none" stroke="#2f5169" stroke-width="2.8" marker-end="url(#eao-fleet)"/>
+  <text x="726" y="548" font-size="16" font-style="italic" fill="#57534e">governs · models</text>
+
+  <text x="500" y="590" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The move: the object of engineering jumps from the agent to the governed environment the agent operates in.</text>
+</svg>

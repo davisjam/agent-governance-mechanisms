@@ -14,8 +14,8 @@
     "universe": {
       "section_ids": 274,
       "concepts": 158,
-      "labels": 104,
-      "refs": 104,
+      "labels": 109,
+      "refs": 109,
       "chapters": 80,
       "parts": 8,
       "points": 551,
@@ -1159,7 +1159,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-70",
+          "element": "1.1-the-printer::block-73",
           "role": "paragraph-point"
         }
       ]
@@ -1259,7 +1259,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-65",
+          "element": "1.1-the-printer::block-68",
           "role": "paragraph-point"
         }
       ]
@@ -1489,7 +1489,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-27",
+          "element": "1.1-the-printer::block-30",
           "role": "paragraph-point"
         }
       ]
@@ -1499,7 +1499,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-40",
+          "element": "1.1-the-printer::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -1629,7 +1629,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-42",
+          "element": "1.1-the-printer::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -2179,7 +2179,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-60",
+          "element": "1.1-the-printer::block-63",
           "role": "paragraph-point"
         }
       ]
@@ -2509,7 +2509,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-53",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -2889,7 +2889,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-36",
+          "element": "1.1-the-printer::block-39",
           "role": "paragraph-point"
         }
       ]
@@ -3129,7 +3129,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-34",
+          "element": "1.1-the-printer::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -3339,7 +3339,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-73",
+          "element": "1.1-the-printer::block-76",
           "role": "paragraph-point"
         }
       ]
@@ -3359,7 +3359,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-38",
+          "element": "1.1-the-printer::block-41",
           "role": "paragraph-point"
         }
       ]
@@ -3559,7 +3559,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-point"
         }
       ]
@@ -3569,7 +3569,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-51",
+          "element": "1.1-the-printer::block-54",
           "role": "paragraph-point"
         }
       ]
@@ -3739,7 +3739,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-46",
+          "element": "1.1-the-printer::block-49",
           "role": "paragraph-point"
         }
       ]
@@ -3749,7 +3749,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-62",
+          "element": "1.1-the-printer::block-65",
           "role": "paragraph-point"
         }
       ]
@@ -3839,7 +3839,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-56",
+          "element": "1.1-the-printer::block-59",
           "role": "paragraph-point"
         }
       ]
@@ -3899,7 +3899,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-32",
+          "element": "1.1-the-printer::block-35",
           "role": "paragraph-point"
         }
       ]
@@ -4029,7 +4029,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-82",
+          "element": "1.1-the-printer::block-85",
           "role": "paragraph-point"
         }
       ]
@@ -4219,7 +4219,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-79",
+          "element": "1.1-the-printer::block-82",
           "role": "paragraph-point"
         }
       ]
@@ -4329,7 +4329,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-21",
+          "element": "1.1-the-printer::block-24",
           "role": "paragraph-point"
         }
       ]
@@ -4369,7 +4369,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-8",
+          "element": "1.1-the-printer::block-11",
           "role": "paragraph-point"
         }
       ]
@@ -5199,7 +5199,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-76",
+          "element": "1.1-the-printer::block-79",
           "role": "paragraph-point"
         }
       ]
@@ -5859,7 +5859,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-13",
+          "element": "1.1-the-printer::block-16",
           "role": "paragraph-point"
         }
       ]
@@ -9664,12 +9664,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-65",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-70",
+          "element": "1.1-the-printer::block-68",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9679,12 +9674,17 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-79",
+          "element": "1.1-the-printer::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-69",
+          "element": "1.1-the-printer::block-82",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-72",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9704,7 +9704,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-62",
+          "element": "1.1-the-printer::block-65",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -9779,7 +9779,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-42",
+          "element": "1.1-the-printer::block-45",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10154,7 +10154,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-40",
+          "element": "1.1-the-printer::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10279,7 +10279,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-21",
+          "element": "1.1-the-printer::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11809,17 +11809,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-51",
+          "element": "1.1-the-printer::block-54",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "1.1-the-printer::block-53",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-50",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13184,12 +13184,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-13",
+          "element": "1.1-the-printer::block-16",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-21",
+          "element": "1.1-the-printer::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14259,22 +14259,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-34",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-8",
+          "element": "1.1-the-printer::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-12",
+          "element": "1.1-the-printer::block-15",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14284,17 +14284,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-51",
+          "element": "1.1-the-printer::block-54",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "1.1-the-printer::block-53",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-50",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14539,12 +14539,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-60",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-62",
+          "element": "1.1-the-printer::block-63",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14554,7 +14549,12 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-59",
+          "element": "1.1-the-printer::block-68",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-62",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14624,12 +14624,12 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-46",
+          "element": "1.1-the-printer::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-76",
+          "element": "1.1-the-printer::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14644,7 +14644,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-45",
+          "element": "1.1-the-printer::block-48",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14744,12 +14744,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-53",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-56",
+          "element": "1.1-the-printer::block-59",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14869,7 +14869,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-56",
+          "element": "1.1-the-printer::block-59",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -14929,22 +14929,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-13",
+          "element": "1.1-the-printer::block-16",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-32",
+          "element": "1.1-the-printer::block-35",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-38",
+          "element": "1.1-the-printer::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14979,7 +14979,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-30",
+          "element": "1.1-the-printer::block-33",
           "role": "section-term[tier-1]"
         },
         {
@@ -15404,7 +15404,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-82",
+          "element": "1.1-the-printer::block-85",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16004,7 +16004,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-36",
+          "element": "1.1-the-printer::block-39",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16029,7 +16029,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-30",
+          "element": "1.1-the-printer::block-33",
           "role": "section-term[tier-1]"
         },
         {
@@ -16394,27 +16394,27 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-21",
+          "element": "1.1-the-printer::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-27",
+          "element": "1.1-the-printer::block-30",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-32",
+          "element": "1.1-the-printer::block-35",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-34",
+          "element": "1.1-the-printer::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-40",
+          "element": "1.1-the-printer::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16434,17 +16434,17 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-12",
+          "element": "1.1-the-printer::block-10",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-30",
+          "element": "1.1-the-printer::block-15",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-7",
+          "element": "1.1-the-printer::block-33",
           "role": "section-term[tier-1]"
         },
         {
@@ -16564,17 +16564,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-13",
+          "element": "1.1-the-printer::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-8",
+          "element": "1.1-the-printer::block-16",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-7",
+          "element": "1.1-the-printer::block-10",
           "role": "section-term[tier-1]"
         }
       ]
@@ -17134,7 +17134,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-36",
+          "element": "1.1-the-printer::block-39",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17369,12 +17369,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-76",
+          "element": "1.1-the-printer::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-79",
+          "element": "1.1-the-printer::block-82",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17514,12 +17514,12 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-70",
+          "element": "1.1-the-printer::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-73",
+          "element": "1.1-the-printer::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17529,7 +17529,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-69",
+          "element": "1.1-the-printer::block-72",
           "role": "section-term[tier-1]"
         }
       ]

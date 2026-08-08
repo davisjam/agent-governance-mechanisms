@@ -653,7 +653,90 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>Nearly every mature engineering organization now reports independently discovering some combination of structured representations, automated enforcement, deterministic validation, and environmental governance. MAGE's contribution is not to recommend these practices. It explains how they fit together, gives them a common vocabulary, and names the mechanisms and design spaces not yet explicit in those individual reports.</p></blockquote>
 <p>Those reports describe successful engineering practices; MAGE attempts something different. It tries to extract a coherent engineering theory from them — to relate the practices to one another, explain why they work, and name the engineering design spaces the individual reports leave implicit. That is worth doing because engineering advances when recurring structures become nameable. Once a failure pattern, an organizational investment, or a design tradeoff carries a shared name, engineers can compare systems, weigh alternatives, and deliberately improve them, instead of rediscovering the same ideas independently.</p>
 <p>This is a book about engineering — specifically, about what engineering work becomes when writing the code stops being the hard part. For most of the history of software, the scarce resource was implementation: someone had to sit down and type the thing into existence, and that typing was the bottleneck everything else queued behind. Coding agents have moved that bottleneck. Code is now cheap to produce and fast to change. What is not cheap is judging, constraining, validating, and maintaining it — deciding what to build, catching where fast code went wrong, and keeping a growing system trustworthy while it changes under you every day. That shift is the subject of this book.</p>
-<p>This book began as an attempt to solve one hard engineering problem, watched closely over months of building a real production system. The theory emerged from that one deeply studied system. The order was deliberate. I did not begin by surveying what other teams had built and distilling the common themes; I built and studied one system deeply enough to propose a theory, then asked whether it held up against independent industrial practice. As the manuscript developed, I turned its vocabulary outward, interpreting it against a growing body of independent engineering reports from organizations including Cloudflare, Docker, Shopify, Spotify, Siemens, and Zenseact. Those reports are not only corroboration. They are independent engineering systems against which the theory is tested — counterexamples as much as agreement — and across the book it is challenged against them, refined where they press on it, and occasionally extended to hold. They frequently converge on similar mechanisms, while revealing where MAGE supplies vocabulary and explanatory structure not explicit in the original reports. What emerges is not a common implementation. It is a recurring engineering grammar beneath very different systems.</p>
+<p>This book began as an attempt to solve one hard engineering problem, watched closely over months of building a real production system. The theory emerged from that one deeply studied system. The order was deliberate. I did not begin by surveying what other teams had built and distilling the common themes; I built and studied one system deeply enough to propose a theory, then asked whether it held up against independent industrial practice. As the manuscript developed, I turned its vocabulary outward, interpreting it against a growing body of independent engineering reports from organizations including Cloudflare, Docker, Shopify, Spotify, Siemens, and Zenseact. Those reports are not only corroboration. They are independent engineering systems against which the theory is tested — counterexamples as much as agreement — and across the book it is challenged against them, refined where they press on it, and occasionally extended to hold. They frequently converge on similar mechanisms, while revealing where MAGE supplies vocabulary and explanatory structure not explicit in the original reports. What emerges is not a common implementation. It is a recurring engineering grammar beneath very different systems. <a class="xref" href="0.4-preface.html#fig-0-4-1">Figure&nbsp;0.4-1</a> traces that path from the one case to the theory the closing chapters now carry.</p>
+<figure id="fig-0-4-1" class="book-figure" data-label="research-arc"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700"
+     role="group" aria-labelledby="raTitle raDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="raTitle">The research arc: how the book knows what it claims, one procedure read top to bottom</title>
+  <desc id="raDesc">A single vertical chain of six stages, read from top to bottom, each a titled box joined to
+    the next by a downward arrow. Stage one, DocAble — one production system, studied deeply over months.
+    Stage two, Induced MAGE — the theory proposed from that one case: the two theses, governance conversion,
+    engineering capital. Stage three, Industry reports — six independent organizations. Stage four,
+    Comparison — each system reconstructed in MAGE's vocabulary and put to three questions. Stage five,
+    Refinement — the theory corroborated, refined where the outside cases press, and occasionally extended.
+    Stage six, Theory — the refined MAGE theory the closing chapters carry. A thin dashed green feedback edge
+    returns from Refinement up to Induced MAGE, labelled the theory changed, marking that the comparison
+    altered the constructs rather than merely confirming them. The theory stages are green (modeling); the
+    evidence and procedure stages and the spine are gray (neutral). One deep case supplies mechanism; the
+    independent cases supply variation.</desc>
+
+  <defs>
+    <marker id="ra-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+    <marker id="ra-fb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="700" fill="#fdfcf9"/>
+  <text x="500" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1c1917">The research arc</text>
+  <text x="500" y="68" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">How the book knows what it claims — one procedure, read top to bottom.</text>
+
+  <!-- spine arrows (neutral) + edge labels naming the inference -->
+  <g stroke="#57534e" stroke-width="2.2" fill="none">
+    <line x1="500" y1="147" x2="500" y2="178" marker-end="url(#ra-ah)"/>
+    <line x1="500" y1="239" x2="500" y2="270" marker-end="url(#ra-ah)"/>
+    <line x1="500" y1="331" x2="500" y2="362" marker-end="url(#ra-ah)"/>
+    <line x1="500" y1="423" x2="500" y2="454" marker-end="url(#ra-ah)"/>
+    <line x1="500" y1="515" x2="500" y2="546" marker-end="url(#ra-ah)"/>
+  </g>
+  <g font-size="13" font-style="italic" fill="#57534e" text-anchor="start">
+    <text x="516" y="167">induces</text>
+    <text x="516" y="259">turned outward</text>
+    <text x="516" y="351">reconstructed</text>
+    <text x="516" y="443">tested against</text>
+    <text x="516" y="535">refined into</text>
+  </g>
+
+  <!-- N1 DocAble (neutral: the deep case) -->
+  <rect x="240" y="88" width="520" height="58" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="500" y="114" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">DocAble</text>
+  <text x="500" y="135" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">one production system, studied deeply over months</text>
+
+  <!-- N2 Induced MAGE (modeling: the proposed theory) -->
+  <rect x="240" y="180" width="520" height="58" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.2"/>
+  <text x="500" y="206" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Induced MAGE</text>
+  <text x="500" y="227" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">the two theses, governance conversion, engineering capital</text>
+
+  <!-- N3 Industry reports (neutral: external evidence) -->
+  <rect x="240" y="272" width="520" height="58" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="500" y="298" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Industry reports</text>
+  <text x="500" y="319" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">six independent organizations</text>
+
+  <!-- N4 Comparison (neutral: procedure) -->
+  <rect x="240" y="364" width="520" height="58" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="500" y="390" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Comparison</text>
+  <text x="500" y="411" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">each reconstructed in MAGE's vocabulary, put to three questions</text>
+
+  <!-- N5 Refinement (neutral: the test) -->
+  <rect x="240" y="456" width="520" height="58" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="500" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Refinement</text>
+  <text x="500" y="503" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">corroborated, refined where they press, occasionally extended</text>
+
+  <!-- N6 Theory (modeling, emphasis: the refined theory) -->
+  <rect x="240" y="548" width="520" height="64" rx="8" fill="#e3f0e7" stroke="#155c38" stroke-width="3"/>
+  <text x="500" y="576" text-anchor="middle" font-size="21" font-weight="700" fill="#155c38">Theory</text>
+  <text x="500" y="598" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">the refined MAGE theory the closing chapters carry</text>
+
+  <!-- feedback edge: Refinement -> Induced MAGE, "the theory changed" (dashed, thin, green, offset right) -->
+  <path d="M760,485 C824,470 824,225 760,209" fill="none" stroke="#1f7a4d" stroke-width="1.6"
+        stroke-dasharray="6 4" marker-end="url(#ra-fb)"/>
+  <text transform="rotate(-90 812 347)" x="812" y="347" text-anchor="middle" font-size="13"
+        font-style="italic" fill="#1f7a4d">the theory changed</text>
+
+  <text x="500" y="668" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">One deep case supplies mechanism; the independent cases supply variation — together they reach further than either alone.</text>
+</svg><figcaption data-short="The Research Arc"><span class="fig-label">Figure 0.4-1.</span> <em>The Research Arc.</em> The book's claims come from one procedure, read top to bottom. A single production system, DocAble, studied over months, induces the MAGE theory, which is then turned outward against six independent industrial reports, each reconstructed in the MAGE vocabulary and put to the same three questions. The comparison does not merely illustrate the theory; it tests it, refines it where the outside cases press, and occasionally extends it, before the refined theory is carried into the closing chapters. One deep case supplies mechanism; the independent cases supply variation; together they reach further than either could alone.</figcaption></figure>
 <p>This book ultimately argues something larger than a lesson about documentation: software engineering is a long-horizon reasoning task. Coding agents make implementation cheap, but they do not remove the finite reasoning capacity a growing system outruns. So the central role of a model is not to record the system after the fact; it is to extend how much of that system a human and an agent can hold in view and reason about coherently. What follows earns that claim; here it is only the direction the book heads.</p>
 <h2>What changed</h2>
 <blockquote id="idx-def-fleet" class="aside-sidenote def-inset"><p><strong>Fleet.</strong> The set of coding agents working the codebase — the agentic-era workforce this book governs, in place of a team of human engineers.</p></blockquote>
@@ -679,8 +762,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>Two theses drive this book, and they run through every chapter that follows.</p>
 <blockquote id="idx-def-thesis-modeling" class="thesis-box"><p><strong>The Modeling Thesis.</strong> Binding intent and system structure into an explicit, structured model gives agents a compact, coherent representation to reason through, and gives engineers a surface on which to specify, analyze, and predict the system.</p></blockquote>
 <blockquote id="idx-def-thesis-alignment" class="thesis-box"><p><strong>The Alignment Thesis.</strong> A governance mechanism the environment enforces keeps implementation aligned with intent — a policy decided once holds against every later change — so confidently-wrong work is prevented, or made visible, instead of shipped.</p></blockquote>
-<p>The two theses divide the three not-knowings named above. The Modeling Thesis treats the first two — knowing what to build and how to realize it — by binding intent to a model compact enough to hold in-window; the Alignment Thesis treats the third, changing the system without breaking it, by catching the confidently-wrong edit before it compounds. A model chapter is the Modeling Thesis worked out; a lint, gate, or validator chapter is the Alignment Thesis. Hold those two in mind and the book stops being a list of tricks and becomes two ideas applied over and over. <a class="xref" href="0.4-preface.html#fig-0-4-1">Figure&nbsp;0.4-1</a> draws the whole method in one picture.</p>
-<figure id="fig-0-4-1" class="book-figure" data-label="mage-overview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="mg-title mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+<p>The two theses divide the three not-knowings named above. The Modeling Thesis treats the first two — knowing what to build and how to realize it — by binding intent to a model compact enough to hold in-window; the Alignment Thesis treats the third, changing the system without breaking it, by catching the confidently-wrong edit before it compounds. A model chapter is the Modeling Thesis worked out; a lint, gate, or validator chapter is the Alignment Thesis. Hold those two in mind and the book stops being a list of tricks and becomes two ideas applied over and over. <a class="xref" href="0.4-preface.html#fig-0-4-2">Figure&nbsp;0.4-2</a> draws the whole method in one picture.</p>
+<figure id="fig-0-4-2" class="book-figure" data-label="mage-overview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="mg-title mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
   <desc id="mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
   <defs>
@@ -753,12 +836,12 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- takeaway caption -->
   <text x="540" y="497" text-anchor="middle" font-size="17.28" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
-</svg><figcaption data-short="The MAGE method in one picture"><span class="fig-label">Figure 0.4-1.</span> The MAGE method in one picture. A cheap agent fleet, left ungoverned, drifts into churn as its work outruns the context window it can hold. Governed through the two theses, the same fleet converges on trustworthy software at velocity: the Modeling Thesis binds intent to a compact model the fleet reasons through, so the work fits the window, and the Alignment Thesis catches the confidently-wrong change before it compounds. The two divide the three not-knowings a fleet hits — what to build, how to realize it, and how to change the system without breaking it. Hold both theses in mind and the book stops being a list of tricks and becomes two ideas applied over and over.</figcaption></figure>
+</svg><figcaption data-short="The MAGE method in one picture"><span class="fig-label">Figure 0.4-2.</span> The MAGE method in one picture. A cheap agent fleet, left ungoverned, drifts into churn as its work outruns the context window it can hold. Governed through the two theses, the same fleet converges on trustworthy software at velocity: the Modeling Thesis binds intent to a compact model the fleet reasons through, so the work fits the window, and the Alignment Thesis catches the confidently-wrong change before it compounds. The two divide the three not-knowings a fleet hits — what to build, how to realize it, and how to change the system without breaking it. Hold both theses in mind and the book stops being a list of tricks and becomes two ideas applied over and over.</figcaption></figure>
 <p id="idx-def-universal-language">Hold both theses at once and a larger claim comes into view — the one this whole book argues toward. <strong>Models are the universal language of engineering.</strong> Every mature engineering discipline reasons about the system it builds through models, not through the raw artifact: a load diagram, a circuit, a control loop. Software could rarely afford to, because keeping the model equal to fast-moving code cost a person's standing labor. Agents cut that recurring cost sharply. They make the code cheap and run the drift checks that keep the map in sync for almost nothing (someone still authors the model and the gate), and that shift relocates the engineer's job upward — to the essential part it could never fully reach before: deciding what the system is <em>for</em>, and authoring the models whose properties drive the tradeoffs. In the system that underpins this book, the code stopped being the bottleneck; the model became the work. For software engineering, models are an idea whose time has come.</p>
 <p>And a model cheap enough to keep true stops being a picture of the system and starts running it. The fleet reads its models at commit time to grade its own gates, and at measurement time to shape its own metrics. The map no longer merely stays equal to the territory; it steers the machinery that keeps it equal.</p>
 <h2>Three ways to run a fleet</h2>
-<p>The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable. A coding agent can produce more change in an afternoon than a team used to produce in a week, and some fraction of that change is confidently, plausibly wrong. Every account of how to work this way is really an answer to one question — where does the reliability come from? Three answers dominate. <a class="xref" href="0.4-preface.html#fig-0-4-2">Figure&nbsp;0.4-2</a> sets the three side by side.</p>
-<figure id="fig-0-4-2" class="book-figure" data-label="oversight-modes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
+<p>The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable. A coding agent can produce more change in an afternoon than a team used to produce in a week, and some fraction of that change is confidently, plausibly wrong. Every account of how to work this way is really an answer to one question — where does the reliability come from? Three answers dominate. <a class="xref" href="0.4-preface.html#fig-0-4-3">Figure&nbsp;0.4-3</a> sets the three side by side.</p>
+<figure id="fig-0-4-3" class="book-figure" data-label="oversight-modes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
      role="group" aria-labelledby="omTitle omDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="omTitle">Three process models for agentic software engineering</title>
@@ -844,7 +927,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
   </g>
   <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
-</svg><figcaption data-short="Three process models for agentic software engineering"><span class="fig-label">Figure 0.4-2.</span> Three process models for agentic software engineering. Velocity-centric rings job titles around the work — planner, developer, tester, reviewer — while the quality mechanism stays implicit, and implicit quality does not survive volume. Oversight-centric straddles a human over each bounded piece of work; it is honest about the failure mode, but human attention does not scale with the fleet, so the reviewer becomes the bottleneck. Governance-centric is the synthesis and the book's choice: agents work fast inside mechanisms the environment enforces, set up once, so reliability becomes a property of the ground they stand on rather than a toll paid per change. The first two are the two ends of one dial; governance steps off the dial entirely.</figcaption></figure>
+</svg><figcaption data-short="Three process models for agentic software engineering"><span class="fig-label">Figure 0.4-3.</span> Three process models for agentic software engineering. Velocity-centric rings job titles around the work — planner, developer, tester, reviewer — while the quality mechanism stays implicit, and implicit quality does not survive volume. Oversight-centric straddles a human over each bounded piece of work; it is honest about the failure mode, but human attention does not scale with the fleet, so the reviewer becomes the bottleneck. Governance-centric is the synthesis and the book's choice: agents work fast inside mechanisms the environment enforces, set up once, so reliability becomes a property of the ground they stand on rather than a toll paid per change. The first two are the two ends of one dial; governance steps off the dial entirely.</figcaption></figure>
 <p><strong>The first answer is velocity.</strong> Give the agents autonomy, and organize them the way you would organize people: a planner hands work to a developer, the developer to a tester, the tester to a reviewer, and around the loop it goes. Assigning agents job titles makes the work look like engineering, and the throughput is real. But process resemblance is not control. A ring of role-labeled agents can imitate the <em>form</em> of software work — the handoffs, the review step, the sign-off — without any of it actually catching a bad change. The quality mechanism is left implicit, and implicit quality does not survive contact with volume.</p>
 <p><strong>The second answer is oversight.</strong> Treat the agent as a useful but untrustworthy assistant, and keep a human next to the implementation loop. You prompt a bounded piece of work, the agent does it, you read the result, you prompt the next piece. This is honest about the failure mode, since agent output does need inspection, and for a while it works well. Its limit is arithmetic. The control is human attention, and attention does not scale with the agents. Turn the volume up and the human becomes the bottleneck: the fleet produces changes faster than any person can read them, and the reading is now the slow step in the whole line.</p>
 <p>Field work fills in what that oversight actually involves. Interviews with seventeen experienced developers working alongside coding agents identify four recurring forms — a priori control, co-planning, real-time monitoring, and post hoc review — and find that agent-written code is often hard to inspect directly, so developers lean on tests and other indirect evidence to judge it <sup class="cite-ref"><a href="#wc-0-4-preface-1" aria-label="citation 1">1</a></sup><span class="cite-note"><span class="cn-mark">1.</span> Shipi Dhanorkar et al., “Human Oversight of Agentic Systems in Practice: Examining the Oversight Work, Challenges, And Heuristics of Developers Using Software Agents,” 2026, <a href="https://arxiv.org/abs/2606.05391">https://arxiv.org/abs/2606.05391</a>.</span>. But naming the work does not repeal its arithmetic: every one of those forms still spends human attention per change.</p>
