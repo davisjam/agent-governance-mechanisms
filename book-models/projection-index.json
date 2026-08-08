@@ -1353,7 +1353,7 @@
           },
           {
             "file": "book/0.3-the-books-language.html",
-            "occ": 21
+            "occ": 23
           },
           {
             "file": "book/0.4-preface.html",
@@ -4081,7 +4081,7 @@
           },
           {
             "file": "book/0.3-the-books-language.html",
-            "occ": 3
+            "occ": 4
           },
           {
             "file": "book/0.4-preface.html",
@@ -4097,7 +4097,7 @@
           },
           {
             "file": "book/1.1-the-printer.html",
-            "occ": 22
+            "occ": 24
           },
           {
             "file": "book/1.2-mage-by-example.html",

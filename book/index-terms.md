@@ -155,6 +155,7 @@ concept the book can annotate with an inline `<!-- index-def: <slug> -->` at its
 index entry (`definition of:` / `examples of:`) and suppresses the plain occurrence entry for the same
 display name. A tag whose slug is absent here fails the build. Display names are authored here once.
 
+- concept: commodity-intelligence | Commodity intelligence
 - concept: churn | Churn
 - concept: fleet | The fleet
 - concept: printer-metaphor | The printer metaphor
