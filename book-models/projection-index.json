@@ -177,7 +177,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 52
+            "occ": 51
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -837,7 +837,7 @@
         "website-industry-cases": [
           {
             "file": "comparative-analysis.html",
-            "occ": 6
+            "occ": 5
           },
           {
             "file": "industry-case-cloudflare-codex.html",
@@ -1323,7 +1323,7 @@
           },
           {
             "file": "book/6.5-where-mage-fits.html",
-            "occ": 4
+            "occ": 5
           },
           {
             "file": "book/6.6-conclusion.html",
@@ -1399,7 +1399,7 @@
         "website-industry-cases": [
           {
             "file": "comparative-analysis.html",
-            "occ": 1
+            "occ": 2
           },
           {
             "file": "industry-case-shopify.html",
