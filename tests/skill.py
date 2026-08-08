@@ -7,7 +7,9 @@ import json
 import os
 import re
 import sys
+import tempfile
 
+import bundle_skill  # the SSOT of the managed-skill set + the install/refresh partition (INV-5/INV-6)
 from tests.common import BUNDLED_SKILLS, FAIL, PASS, ROOT, SKILL, SKILLS, run
 
 
@@ -82,4 +84,93 @@ def check_bundle_links():
                 tgt = m.split("#", 1)[0]
                 if tgt and not os.path.exists(os.path.normpath(os.path.join(base, tgt))):
                     issues.append(f"{name}/{os.path.relpath(f, sdir)} -> {m} (missing in bundle)")
+    return (FAIL if issues else PASS), issues
+
+
+# ── INV-5 / INV-6 — the local-adapter plug convention (Phase-1b design §3.6) ──────────────────────────
+_ADAPTER_HEADING = "## Local adapter"
+# A declared file overlay: `<base>.md` → `<base>.local.md`, both in backticks, arrow either glyph.
+_OVERLAY_RE = re.compile(r"`([^`]+\.md)`\s*(?:→|->)\s*`([^`]+\.local\.md)`")
+
+
+def _adapter_block(skill_md_text: str) -> str | None:
+    """The `## Local adapter` section body (heading → next `## ` heading or EOF), or None if absent."""
+    i = skill_md_text.find(_ADAPTER_HEADING)
+    if i == -1:
+        return None
+    rest = skill_md_text[i + len(_ADAPTER_HEADING):]
+    nxt = re.search(r"^## ", rest, re.M)
+    return rest[: nxt.start()] if nxt else rest
+
+
+def check_skill_local_adapter():
+    """INV-5 (plug-partition wiring): every MANAGED skill declares a `## Local adapter` block; every
+    declared file overlay names a real upstream base file and its correct `*.local.md` sibling; every
+    `*.local.md` present in a skill has a base file AND a matching declaration (no orphan overlay). The
+    partition is disjoint by construction — this asserts the DECLARATIONS match the tree."""
+    issues: list[str] = []
+    managed = {s.name for s in bundle_skill.SPECS}
+    for name, sdir, _ in SKILLS:
+        skmd = os.path.join(sdir, "SKILL.md")
+        text = open(skmd, encoding="utf-8").read() if os.path.isfile(skmd) else ""
+        block = _adapter_block(text)
+        if name in managed and block is None:
+            issues.append(f"{name}: managed skill has no `## Local adapter` block in SKILL.md")
+        declared: set[str] = set()
+        for base_rel, overlay_rel in (_OVERLAY_RE.findall(block) if block else []):
+            declared.add(overlay_rel.replace("\\", "/"))
+            if not os.path.isfile(os.path.join(sdir, base_rel)):
+                issues.append(f"{name}: declared overlay base `{base_rel}` does not exist")
+            if overlay_rel != base_rel[:-3] + ".local.md":
+                issues.append(f"{name}: `{overlay_rel}` is not the `.local.md` sibling of `{base_rel}`")
+        for f in glob.glob(os.path.join(sdir, "**", "*.local.md"), recursive=True):
+            rel = os.path.relpath(f, sdir).replace("\\", "/")
+            base = rel[: -len(".local.md")] + ".md"
+            if not os.path.isfile(os.path.join(sdir, base)):
+                issues.append(f"{name}: orphan overlay `{rel}` — no base `{base}`")
+            if rel not in declared:
+                issues.append(f"{name}: overlay `{rel}` present but not declared in `## Local adapter`")
+    return (FAIL if issues else PASS), issues
+
+
+def check_refresh_preserves_local():
+    """INV-6 (refresh preserves local): failure-injection over the install/refresh partition. Install a
+    managed skill to a temp dir, write a synthetic `*.local.md` overlay + a `local/` drop-in, tamper an
+    upstream file, then `--refresh` and assert: both adopter files survive byte-for-byte, the tampered
+    upstream file is overwritten clean, the manifest body lists no adopter path, and the result dict
+    reports the preserved files."""
+    issues: list[str] = []
+    name = "self-governance"  # a generated, managed skill
+    OVERLAY, DROPIN = "HOUSE-OVERLAY-SENTINEL\n", "LOCAL-DROPIN-SENTINEL\n"
+    with tempfile.TemporaryDirectory() as tmp:
+        bundle_skill.install_skill(name, tmp, refresh=False)
+        dest = os.path.join(tmp, name)
+        overlay_p = os.path.join(dest, "principles.local.md")
+        dropin_p = os.path.join(dest, "local", "adopter-note.md")
+        os.makedirs(os.path.dirname(dropin_p), exist_ok=True)
+        with open(overlay_p, "w", encoding="utf-8") as fh:
+            fh.write(OVERLAY)
+        with open(dropin_p, "w", encoding="utf-8") as fh:
+            fh.write(DROPIN)
+        up_p = os.path.join(dest, "principles.md")
+        pristine = open(up_p, encoding="utf-8").read()
+        with open(up_p, "a", encoding="utf-8") as fh:
+            fh.write("\nTAMPERED-BY-ADOPTER\n")
+
+        r = bundle_skill.install_skill(name, tmp, refresh=True)
+
+        if open(overlay_p, encoding="utf-8").read() != OVERLAY:
+            issues.append("refresh clobbered principles.local.md (adopter overlay not preserved)")
+        if open(dropin_p, encoding="utf-8").read() != DROPIN:
+            issues.append("refresh clobbered local/adopter-note.md (adopter drop-in not preserved)")
+        if open(up_p, encoding="utf-8").read() != pristine:
+            issues.append("refresh did not overwrite the tampered upstream principles.md")
+        manifest = os.path.join(dest, bundle_skill.MANIFEST_NAME)
+        body = [ln.strip() for ln in open(manifest, encoding="utf-8")
+                if ln.strip() and not ln.startswith("#")]
+        leaked = [ln for ln in body if ln.endswith(".local.md") or ln.split("/")[0] == "local"]
+        if leaked:
+            issues.append(f"manifest body lists adopter-owned path(s): {leaked}")
+        if "principles.local.md" not in r["preserved"] or "local/adopter-note.md" not in r["preserved"]:
+            issues.append(f"refresh result under-reported preserved files: {r['preserved']}")
     return (FAIL if issues else PASS), issues

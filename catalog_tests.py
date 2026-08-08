@@ -99,7 +99,13 @@ from tests.html import (
 )
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
 from tests.mermaid_lint import check_mermaid_edge_labels
-from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
+from tests.skill import (
+    check_bundle_links,
+    check_refresh_preserves_local,
+    check_skill_drift,
+    check_skill_local_adapter,
+    check_skill_structure,
+)
 from tests.svg_fit import check_svg_drawing_hygiene, check_svg_page_fit, check_svg_text_fit
 
 
@@ -426,6 +432,10 @@ CHECKS = [
     Check("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     Check("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
     Check("skill: bundle link integrity", 1, lambda strict: check_bundle_links()),
+    Check("skill: local-adapter plug wiring (INV-5 — declared overlays resolve, no orphan *.local.md)", 1,
+          lambda strict: check_skill_local_adapter()),
+    Check("skill: refresh preserves adopter overlays (INV-6 — install/refresh failure-injection)", 1,
+          lambda strict: check_refresh_preserves_local()),
     # BLOCKING Tier-1 stdlib twin of the axe pass: the deterministic, model-derived a11y coverage set is
     # sound (one canonical page per template family, DERIVED not hardcoded, order-independent) — so every
     # structural page-shape sits in the every-run scan and the gate stays trustworthy between the exhaustive
