@@ -392,7 +392,7 @@ def _collect_glossary(chapters: list[dict]) -> None:
                 _GLOSSARY[term] = m.group("def").strip()
 
 # Part number → the source subdirectory that holds its chapters. Front matter is part 0, the
-# six numbered parts are 1–6 (Part 4 is the Model Zoo, Part 6 is Reflections — the substantive
+# six numbered parts are 1–6 (Part 4 is the Model Zoo, Part 6 is The Profession — the substantive
 # closing chapters), true back matter (apparatus: about-the-author, colophon) is part 7. Appendix
 # parts follow.
 _PART_DIRS = {
@@ -415,7 +415,7 @@ _PART_TITLES = {
     3: "The Model Zoo",
     4: "Putting It to Work",
     5: "A MAGE Case Study",
-    6: "Reflections",
+    6: "The Profession",
     7: "Back Matter",
 }
 

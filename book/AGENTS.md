@@ -57,7 +57,7 @@ book/
   part3/          3.1-… … 3.4-…                             (Part 3 — The Governed Engineering Environment)
   part4/          4.1-… … 4.6-…                             (Part 4 — The Model Zoo)
   part5/          5.1-… … 5.5-…                             (Part 5 — Putting It to Work)
-  part6/          6.1-toward-a-theory-of-mage.md, 6.2-implications-for-se.md, 6.3-conclusion.md   (Part 6 — Reflections)
+  part6/          6.1-toward-a-theory-of-mage.md, 6.2-implications-for-se.md, 6.3-conclusion.md   (Part 6 — The Profession)
   part7/          7.1-about-the-author.md, 7.2-colophon.md  (Part 7 — Back Matter)
   data/metrics.json          # headline numbers, referenced from prose via {{token}}
   assets/                     # figure assets (inline SVGs, rasters)
@@ -65,7 +65,7 @@ book/
   index-terms.md             # curated supplement to the term index
 ```
 
-- **Part numbers:** front matter is Part 0, the numbered Parts are 1–6 (Part 6 — Reflections — holds the
+- **Part numbers:** front matter is Part 0, the numbered Parts are 1–6 (Part 6 — The Profession — holds the
   substantive closing chapters), true back matter (apparatus) is Part 7. Appendix Parts (A/B/C) are
   numbered after these.
 - **The filename's leading digit must match its directory** — a `2.1-…md` under `part1/` fails the build
